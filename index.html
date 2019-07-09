@@ -1,38 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="styles.css">
+    
 <head>
+    
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="buttons-style.css">
+    <link rel="stylesheet" href="page-style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="script.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
-    <h2>First test</h2>
 
-    <label class="switch">
-      <input type="checkbox">
-      <span class="slider round"></span>
-      <label class="popisek">Button 1</label>
-    </label>
-    
-    <br><br>
-    
-    
-    <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-        <label class="popisek">Button 2</label>
-    </label>
 
-    <br><br>
-    
-    
-    <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-        <label class="popisek">Button 3</label>
-    </label>
+    <div class="Header">
+          My Home
+    </div>
+
+
+    <main>
+        <div class="item item-toggle">
+            <img src="Img/light-bulb.png" class="item-image">
+            <div class="item-header">Table Lamp</div>
+            <div class="item-status">OFF</div>
+        </div>
+
+        <div class="item item-toggle">
+            <img src="Img/light-bulb.png" class="item-image">
+            <div class="item-header">LED Strip</div>
+            <div class="item-status">OFF</div>
+        </div>
+
+        <div class="item item-scroll overlay">
+            <div class="box"></div>
+            <img src="Img/light-bulb.png" class="item-image">
+            <div class="item-header">LED Strip</div>
+            <div class="item-status">OFF</div>
+        </div>
+
+        <div class="item item-scroll">
+            <div class="item-header">DebugPanel</div>
+            <div class="debug">Null</div>
+        </div>
+
+        <div id="Clicker">1</div>
+
+
+    </main>
+
+
     
     
 </body>
