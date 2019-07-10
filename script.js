@@ -1,5 +1,67 @@
 $(document).ready(function(){
 
+
+    var device_config_array;
+
+    $.get('device-config.txt', function(device_config_data) {
+        $.get('items.html.txt', function(items_data){
+
+            device_config_array = device_config_data.split('\n');
+            items_data_list = items_data.split('\n');
+            //console.log(device_config_array);
+
+            jQuery.each( device_config_array, function( i, val ) {
+
+                if(device_config_array[i].charAt(0) == "-")
+                {
+
+                    if (device_config_array[i].indexOf("STAT\"toggle\"") >= 0){ // Je tam toggle button
+                        var prepared_item = items_data_list[1];
+
+                        var newStr = device_config_array[i].split('NAME\"')[1].split('\"')[0];
+                        prepared_item = prepared_item.replace("<div class='item-header'></div>", "<div class='item-header'>" + newStr + "</div>");
+
+                        var prepared_item_data = device_config_array[i].substring(device_config_array[i].indexOf("NAME"));
+                        prepared_item = prepared_item.replace("<div class='item-info'></div>", "<div class='item-info' style='display:none;'>" + prepared_item_data + "</div>");
+                        
+                        $("main").append(prepared_item);   
+                    }
+
+                    if (device_config_array[i].indexOf("STAT\"scroll\"") >= 0){ // Je tam scroll button
+                        var prepared_item = items_data_list[3];
+
+                        var newStr = device_config_array[i].split('NAME\"')[1].split('\"')[0];
+                        prepared_item = prepared_item.replace("<div class=\"item-header\"></div>", "<div class='item-header'>" + newStr + "</div>");
+
+                        var prepared_item_data = device_config_array[i].substring(device_config_array[i].indexOf("NAME"));
+                        prepared_item = prepared_item.replace("<div class='item-info'></div>", "<div class='item-info' style='display:none;'>" + prepared_item_data + "</div>");
+                        
+                        $("main").append(prepared_item);   
+                    }
+
+
+                
+                }
+            });
+
+
+        }, 'text');
+     }, 'text');
+
+
+
+
+     
+        
+
+        
+
+     
+
+     
+
+
+
     var item_unactive_color = 'rgb(206, 206, 206)';
     var item_active_color = 'rgb(255, 255, 255)';
 
@@ -33,7 +95,8 @@ $(document).ready(function(){
 
     function map(){}
 
-    $(".item-toggle").click(function(){
+    //$(".item-toggle").click(function(){
+    $('body').on('click', '.item-toggle', function() {
         if($(this).css('background-color')==item_unactive_color)
         {
             $(this).css('background-color', item_active_color);
@@ -50,14 +113,13 @@ $(document).ready(function(){
     
     });
     
-    $('.item-scroll').click(function(e) {
-        var posX = $(this).position().left,posY = $(this).position().top;
-        //alert( (e.pageX - posX) + ' , ' + (e.pageY - posY));
+    $('body').on('click', '.item-scroll', function() {
+        var posY = $(this).position().top;
         
         var konstanta = parseFloat(0.476190476190476);
         
-        var overlayYpos = e.pageY - posY - 230;
-        var percentage = parseFloat(parseInt(Math.abs((e.pageY - posY - 440))) * konstanta);
+        var overlayYpos = event.pageY - posY - 230;
+        var percentage = parseFloat(parseInt(Math.abs((event.pageY - posY - 440))) * konstanta);
         var output = Math.round(percentage / 10) * 10;
 
         var outputText = "";
@@ -65,10 +127,8 @@ $(document).ready(function(){
         else outputText = output + "%"; 
         
         $(this).children('.item-status').text(outputText);
-        $(".debug").text(Math.round((e.pageY - posY - 230) / 10) * 10);
-        $('.overlay').append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>');
-        // 0 = 0%; 210 = 100%
-        // 230;440
+        $(".debug").text(Math.round((event.pageY - posY - 230) / 10) * 10);
+        $(this).closest('.overlay').prev().append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>');
     });
 
   });

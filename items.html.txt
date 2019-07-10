@@ -1,0 +1,4 @@
+; Item-toggle: (index = 1)
+ <div class='item item-toggle'><img src='Img/light-bulb.png' class='item-image'><div class='item-header'></div><div class='item-status'>OFF</div><div class='item-info'></div></div>
+ ; Item-scroll: (index = 3)
+ <div class="item item-scroll overlay"><div class="box"></div><img src="Img/light-bulb.png" class="item-image"><div class="item-header"></div><div class="item-status">OFF</div></div>

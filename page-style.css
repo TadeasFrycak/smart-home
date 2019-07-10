@@ -14,7 +14,6 @@ body{
     background-repeat: inherit;
 }
 
-
 img{
     width: 100%;
     height: auto;
@@ -94,6 +93,10 @@ main{
     margin-top: 15px;
     margin-left: 15px;
     text-align: left;
+}
+
+.item-info{
+    display: none;
 }
 
 .item-description{
