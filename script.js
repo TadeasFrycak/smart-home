@@ -1,5 +1,9 @@
 $(document).ready(function(){
-
+    // TODO BUGS TO FIX
+    // 1. Pøi vygenerování tlaèítka toggle button zeedlá
+    // 2. Pøi vygenerování tlaèítka scroll button vypnuté (ne bílé)
+    // 3. Chrome - vygenerování více tlaèítek nefunguje (v ostatních prohlíeèích ano)
+    // 4. Scroll Button - prev() dìlá bordel
 
     var device_config_array;
 
@@ -23,7 +27,6 @@ $(document).ready(function(){
 
                         var prepared_item_data = device_config_array[i].substring(device_config_array[i].indexOf("NAME"));
                         prepared_item = prepared_item.replace("<div class='item-info'></div>", "<div class='item-info' style='display:none;'>" + prepared_item_data + "</div>");
-                        
                         $("main").append(prepared_item);   
                     }
 
@@ -109,6 +112,12 @@ $(document).ready(function(){
             $(this).children('.item-status').text("OFF");
             $(this).children('.item-image').fadeTo("slow",0.33);
             $(this).children('.item-header').fadeTo("slow",0.33);
+            const {spawn} = require("child_process");
+            const script = spawn("python", ["communicate.py", "cmd", "turn off", "button_id"]);
+            
+            script.stdout.on("data", function(data) {
+                console.log(data.toString());
+            });
         }
     
     });
@@ -128,7 +137,8 @@ $(document).ready(function(){
         
         $(this).children('.item-status').text(outputText);
         $(".debug").text(Math.round((event.pageY - posY - 230) / 10) * 10);
-        $(this).closest('.overlay').prev().append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>');
+        $(this).closest('.overlay').append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>'); //$(this).closest('.overlay').prev().append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>');
+        // prev() d�l� bordel
     });
 
   });
