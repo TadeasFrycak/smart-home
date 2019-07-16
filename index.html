@@ -6,8 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="buttons-style.css">
     <link rel="stylesheet" href="page-style.css">
+    <link rel="stylesheet" href="slider-style.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="jquery.js"></script>
+    <script type="module" src="script.js"></script>
     <script src="script.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,17 +20,19 @@
 
 
     <div class="Header">
-          My Home
+          My Test
     </div>
 
 
-    <main>
 
-        <div class="item item-scroll overlay">
+    <main>
+        <div class="item item-scroll overlay selectDisable">
+            <input class="slider" type="range" orient="vertical" min="0" max="210">
             <div class="box"></div>
             <img src="Img/light-bulb.png" class="item-image">
-            <div class="item-header">LED Strip</div>
+            <div class="item-header">TEST</div>
             <div class="item-status">OFF</div>
+            
         </div>
 
         <div class="item item-scroll">

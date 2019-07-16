@@ -1,66 +1,19 @@
 ; This is a config file 
 
 ; first button, toggle 
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
--STAT"toggle", NAME"Lampicka", VAL"000", ID"h1-p3"
+
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+
+
+
 
 
 
