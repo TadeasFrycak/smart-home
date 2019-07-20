@@ -1,20 +1,17 @@
 ; This is a config file 
 
-; first button, toggle 
+; first button, scroll 
 
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
+<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
 <module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
-
-
-
-
-
-
-

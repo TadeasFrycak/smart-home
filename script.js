@@ -1,34 +1,31 @@
+$(document).ready(function(){      // Spustí se při načtení stránky
 
-const {spawn} = require("child_process");
-const script = spawn("python", ["home.py", "Hello from JavaScript!"]);  // Run Python script with arguments
+    console.log("aaaaaaaa");
 
-script.stdout.on("data", function(data) {
-    console.log(data.toString());  // Print returned data
-});
-
-
-$(document).ready(function(){
-    
-
-    $(document).on('input', '.slider', function() {
-
-        var output = $(this).val();
+    //$(document).on('input', '.slider', function() {      
+    //$('body').on('click', '.item-toggle', function() {   
+    //$(".item" ).on('input', '.slider', function() {   
+    $(document).on('input', '.slider', function() {     
+    //$( ".slider" ).on( "click", function() {            // Spustí se při kliknutí nebo posunutím scroll modulu
+    //$(".slider").on("click"),function(
         
-        
+        var output = $(this).val();                                     // Načítá hodnotu scroll modulu 
+        var konstanta = parseFloat(0.476190476190476);                  // Konstanta pro přepočítávání pozice
 
-        var konstanta = parseFloat(0.476190476190476);
-
-        var procenta = Math.round(output * konstanta / 10) * 10;
+        var procenta = Math.round(output * konstanta / 10) * 10;        // Počítání procent 
         var outputText = "";
-        if (procenta == 0)  outputText = "OFF";
+        if (procenta == 0)  outputText = "OFF";                         // Rozhodování mezi stavem OFF nebo číselnou hodnotou
         else outputText = procenta + "%"; 
 
-        var overlayYpos = Math.abs((output - 210));
+        var overlayYpos = Math.abs((output - 210));                     // Počítání relatvní pozice pro .box (overlay)
         $('.debug').html(output - 210);
         
-        //$(this).children('.item-status').text(overlayYpos);
-        $(document).find(".box").css("top",overlayYpos + "px");
-        $(document).find(".item-status").text(outputText);
+        $(this).parent().children(".item-status").text(outputText);
+        $(this).parent().children(".box").css("top",overlayYpos + "px");
+
+        //console.log($(this).parent().children(".item-status").html());
+        //$(document).find(".box").css("top",overlayYpos + "px");
+        //$(document).find(".item-status").text(outputText);
         
        //$(this).closest(".overlay").append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>');
        
@@ -140,25 +137,4 @@ $(document).ready(function(){
         }
     
     });
-
-
-    
-    // $('body').on('click', '.item-scroll', function() {
-    //     var posY = $(this).position().top;
-        
-    //     var konstanta = parseFloat(0.476190476190476);
-        
-    //     var overlayYpos = event.pageY - posY - 230;
-    //     var percentage = parseFloat(parseInt(Math.abs((event.pageY - posY - 440))) * konstanta);
-    //     var output = Math.round(percentage / 10) * 10;
-
-    //     var outputText = "";
-    //     if (output == 0)  outputText = "OFF";
-    //     else outputText = output + "%"; 
-        
-    //     $(this).children('.item-status').text(outputText);
-    //     $(".debug").text(Math.round((event.pageY - posY - 230) / 10) * 10);
-    //     $(this).closest('.overlay').append('<style>.overlay:before{top:'+overlayYpos+'px;}</style>');
-    // });
-
   });
