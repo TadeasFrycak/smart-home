@@ -1,7 +1,4 @@
 $(document).ready(function(){      // Spustí se při načtení stránky
-
-    console.log("aaaaaaaa");
-
     //$(document).on('input', '.slider', function() {      
     //$('body').on('click', '.item-toggle', function() {   
     //$(".item" ).on('input', '.slider', function() {   
@@ -31,22 +28,14 @@ $(document).ready(function(){      // Spustí se při načtení stránky
        
     });
 
-
-
-
-
-
     var device_config_array;
 
-    $.get('http://127.0.0.1:5000/static/device-config.txt', function(device_config_data) {
-        $.get('http://127.0.0.1:5000/static/items.html.txt', function(items_data){
-
+    $.get('/static/device-config.txt', function(device_config_data) {
+        $.get('/static/items.html.txt', function(items_data){
             device_config_array = device_config_data.split('\n');
             items_data_list = items_data.split('\n');
-            //console.log(device_config_array);
 
             jQuery.each( device_config_array, function( i, val ) {
-
 
                 if(device_config_array[i].indexOf("<module>") >= 0 && device_config_array[i].indexOf("</module") >= 0 && device_config_array[i].indexOf(";") == -1)
                 {
@@ -84,9 +73,6 @@ $(document).ready(function(){      // Spustí se při načtení stránky
 
      
 
-     
-
-
 
     var item_unactive_color = 'rgb(206, 206, 206)';
     var item_active_color = 'rgb(255, 255, 255)';
@@ -94,28 +80,28 @@ $(document).ready(function(){      // Spustí se při načtení stránky
 
     switch(Math.floor(Math.random() * 8) + 1){
         case 1:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg1.dms")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg1.dms")');
             break;
         case 2:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg2.jpg")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg2.jpg")');
             break;
         case 3:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg4.jpg")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg4.jpg")');
             break;
         case 4:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg5.jpg")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg5.jpg")');
             break;
         case 5:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg6.jpg")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg6.jpg")');
             break;
         case 6:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg7.jpg")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg7.jpg")');
             break;
         case 7:
-                $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg8.jpg")');
+                $('body').css('background-image', 'url("/static/Img/bcgImg8.jpg")');
             break;
         case 8:
-            $('body').css('background-image', 'url("http://127.0.0.1:5000/static/Img/bcgImg9.jpg")');
+            $('body').css('background-image', 'url("/static/Img/bcgImg9.jpg")');
         break;
     }
 
