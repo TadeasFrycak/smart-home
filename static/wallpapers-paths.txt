@@ -1,6 +1,6 @@
-; Relaticni odkazy pro fotky na pozadi
+; Relativni odkazy pro fotky na pozadi
 ../static/Img/bcgImg1.dms
-../static/Img/bckImg2.jpg
+../static/Img/bcgImg2.jpg
 ../static/Img/bcgImg3.jpg
 ../static/Img/bcgImg4.jpg
 ../static/Img/BcgImg5.jpg
@@ -12,3 +12,7 @@
 ../static/Img/bcgImg11.jpg
 ../static/Img/bcgImg12.jpg
 ../static/Img/bcgImg13.jpg
+../static/Img/bcgImg14.jpg
+../static/Img/bcgImg15.jpg
+../static/Img/bcgImg16.jpg
+../static/Img/bcgImg17.jpg

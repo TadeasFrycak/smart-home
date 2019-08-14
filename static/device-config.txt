@@ -5,7 +5,7 @@
 ; <value>       hidden intiger for storing value of item
 ; <page-id>     id of a page for the item to be displayed ( 1 is first, 2 is second, ... )
 ; <icon-id>
-; Example:      <module> <type>scroll</type> <name>Scroll_ID1</name> <value>0</value> <icon-id>1</icon-id> <page-id>1</page-id> <id>12</id> </module>
+; Example:      <module> <type>scroll</type> <name>Scroll_ID1</name> <value>0</value> <page-id>1</page-id> <id>12</id> </module>
 
 <module> <type>toggle</type> <name>Lustr</name> <value>0</value> <icon-id>1</icon-id> <page-id>1</page-id> <id>1</id> </module>
 <module> <type>toggle</type> <name>Lampička</name> <value>0</value> <icon-id>2</icon-id> <page-id>1</page-id> <id>2</id> </module>

@@ -3,7 +3,12 @@
 
 $(document).ready(function(){      
 // Spustí se při načtení stránky
-
+    // Asynchroní přijem dat
+    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+    socket.on('newstate', function(msg) {
+        console.log("Received msg: " + msg.mac);    
+    });
+    
     // Initializace Swiperu 
     var swiper = new Swiper('.swiper-container', {
         pagination: {

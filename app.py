@@ -1,28 +1,56 @@
-if __name__ == "__main__":
-    pass
+from flask_socketio import SocketIO, emit
+from flask import Flask, render_template, url_for, copy_current_request_context, request
+from random import random
+from time import sleep
+from threading import Thread, Event
+import subprocess
 
-from flask import Flask, jsonify, request, render_template
+app = Flask(__name__)
+socketio = SocketIO(app)
 
-app = Flask(__name__, static_url_path='/static')
+thread = Thread()
+thread_stop_event = Event()
 
-@app.route("/hello", methods=["GET", "POST"])
-def hello():
-    if request.method == "POST":
-        print("Method: POST")
-        test = request.get_json()
-        print(test)
-        return "Success", 200
+class RandomThread(Thread):
+    def __init__(self):
+        self.delay = 1
+        super(RandomThread, self).__init__()
 
-    else:
-        print("Method: GET")
-        return "Hello from Python-Flask"
+    def randomNumberGenerator(self):
+        while not thread_stop_event.isSet():
+            socketio.emit("newstate", {"mac": "helllo"}, namespace="/test")
+            sleep(self.delay)
 
-@app.route("/run")
-def test_page():
+    def run(self):
+        self.randomNumberGenerator()
+
+
+
+# Server diagnostic
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    global thread
+    print('Client connected')
+
+    if not thread.isAlive():
+        print("Starting Thread")
+        thread = RandomThread()
+        thread.start()
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    print('Client disconnected')
+
+@app.route("/post", methods = ["POST"])
+def get_mac():
+    data = request.form["data"]
+    print(data.split("<mac>")[1].split("</mac>")[0])
+    wakeonlan.send_magic_packet(data.split("<mac>")[1].split("</mac>")[0])
     return render_template("index.html")
 
-@app.route("/test")
-def test():
-    return "<a href='/hello'>Odkaz z Pythonu</a>"
-
-Flask.run(self=None)
+if __name__ == '__main__':
+    socketio.run(app)
