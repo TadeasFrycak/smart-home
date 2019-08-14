@@ -1,0 +1,14 @@
+; Relaticni odkazy pro fotky na pozadi
+../static/Img/bcgImg1.dms
+../static/Img/bckImg2.jpg
+../static/Img/bcgImg3.jpg
+../static/Img/bcgImg4.jpg
+../static/Img/BcgImg5.jpg
+../static/Img/BcgImg6.jpg
+../static/Img/BcgImg7.jpg
+../static/Img/BcgImg8.jpg
+../static/Img/bcgImg9.jpg
+../static/Img/bcgImg10.jpg
+../static/Img/bcgImg11.jpg
+../static/Img/bcgImg12.jpg
+../static/Img/bcgImg13.jpg

@@ -1,17 +1,21 @@
-; This is a config file 
+; This is a config file for items
+; <module>      an object to be generated - Only one object per line!
+; <type>        type of item, for example - toggle/scroll
+; <name> 
+; <value>       hidden intiger for storing value of item
+; <page-id>     id of a page for the item to be displayed ( 1 is first, 2 is second, ... )
+; <icon-id>
+; Example:      <module> <type>scroll</type> <name>Scroll_ID1</name> <value>0</value> <icon-id>1</icon-id> <page-id>1</page-id> <id>12</id> </module>
 
-; first button, scroll 
+<module> <type>toggle</type> <name>Lustr</name> <value>0</value> <icon-id>1</icon-id> <page-id>1</page-id> <id>1</id> </module>
+<module> <type>toggle</type> <name>Lampička</name> <value>0</value> <icon-id>2</icon-id> <page-id>1</page-id> <id>2</id> </module>
+<module> <type>toggle</type> <name>Větrák</name> <value>0</value> <icon-id>3</icon-id> <page-id>1</page-id> <id>3</id> </module>
+<module> <type>toggle</type> <name>Zesilovač</name> <value>0</value> <icon-id>4</icon-id> <page-id>1</page-id> <id>4</id> </module>
 
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>scroll</type> <name>scroll</name> <value>0</value> <id>12</id> </module>
-<module> <type>toggle</type> <name>Toggle</name> <value>0</value> <id>12</id> </module>
+<module> <type>toggle</type> <name>Lampička 1</name> <value>0</value> <icon-id>2</icon-id> <page-id>2</page-id> <id>5</id> </module>
+<module> <type>toggle</type> <name>Lampička 2</name> <value>0</value> <icon-id>2</icon-id> <page-id>2</page-id> <id>6</id> </module>
+<module> <type>toggle</type> <name>Lampička 3</name> <value>0</value> <icon-id>4</icon-id> <page-id>2</page-id> <id>7</id> </module>
+<module> <type>toggle</type> <name>Lampička 4</name> <value>0</value> <icon-id>5</icon-id> <page-id>2</page-id> <id>811</id> </module>
+
+<module> <type>scroll</type> <name>LED pásek</name> <value>0</value> <icon-id>1</icon-id> <page-id>3</page-id> <id>9</id> </module>
+

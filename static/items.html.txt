@@ -1,4 +1,4 @@
 ; Item-toggle: (index = 1)
- <div class='item item-toggle selectDisable'><img src='/static/Img/light-bulb.png' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'></div><div class='item-status'>OFF</div><div class='item-info'></div></div>
+ <div class='item item-toggle selectDisable'><img src='' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'></div><div class='item-status'>OFF</div><div class='item-info'></div></div>
  ; Item-scroll: (index = 3)
- <div class='item item-scroll overlay selectDisable'><input class="slider" type="range" orient="vertical" min="0" max="210"><div class='box'></div><img src='/static/Img/light-bulb.png' class='item-image'><div class='item-header'></div><div class='item-status'>OFF</div></div>
+ <div class='item item-scroll overlay selectDisable'><input class="slider" type="range" orient="vertical" min="0" max="210"><div class='box'></div><img src='' class='item-image'><div class='item-header'></div><div class='item-status'>OFF</div></div>

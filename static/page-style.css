@@ -3,12 +3,40 @@
     --item-border-color: rgb(204, 204, 204);
     --item-bcg-unactive-color: rgb(206, 206, 206);
     --item-bcg-active-color: rgb(255, 255, 255);
+    --konstanta_pro_pocet_itemu: 30;
 }
 
+.swiper-container {
+    width: 100%;
+    height: 100%;
+
+}
+
+.swiper-pagination-bullets{
+    background-color: red;
+}
+.swiper-slide {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background-color: transparent;
+}
+
+html,body{
+    position: relative;
+    height: 100%;
+}
 
 body{
-   
-    background-image: url("/static/Img/bcgImg4.jpg");
+    overflow: hidden;
+    
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Source Sans Pro', sans-serif;
@@ -27,9 +55,7 @@ div.Header{
     color: white;
     background-color:transparent;
     text-align: left;
-    position: -webkit-sticky;
     text-indent: 20px;
-    position: sticky;
     z-index: 10;
 }
 
@@ -43,8 +69,8 @@ div.Header{
 
 main{
     position: absolute;
-    left: 250px;
     top: 190px;
+    margin-left: 10%;
 }
 
 .selectDisable {
@@ -58,7 +84,7 @@ main{
 .item{
     z-index: 0;
     background-color: var(--item-bcg-unactive-color);
-    margin: 40px;
+    margin: 50px;
     padding: 10px;
     padding-top: 20px;
     border-radius: 20px;
@@ -66,6 +92,9 @@ main{
     width: 180px;
     overflow: hidden;
     float: left;
+
+    margin: calc(100% / var(--konstanta_pro_pocet_itemu));  
+    display: inline-block;
 }
 
 .box{
@@ -107,6 +136,7 @@ main{
     z-index: 1;
     height: 80px;
     width: 80px;
+    opacity: 0.33;
 }
 .item-header{
     z-index: 1;
