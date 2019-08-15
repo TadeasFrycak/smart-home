@@ -17,5 +17,5 @@
 <module> <type>toggle</type> <name>Lampička 3</name> <value>0</value> <icon-id>4</icon-id> <page-id>2</page-id> <id>7</id> </module>
 <module> <type>toggle</type> <name>Lampička 4</name> <value>0</value> <icon-id>5</icon-id> <page-id>2</page-id> <id>811</id> </module>
 
-<module> <type>scroll</type> <name>LED pásek</name> <value>0</value> <icon-id>1</icon-id> <page-id>3</page-id> <id>9</id> </module>
+<module> <type>scroll</type> <name>LED pásek</name> <value>0</value> <icon-id>2</icon-id> <page-id>3</page-id> <id>9</id> </module>
 

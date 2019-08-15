@@ -36,7 +36,6 @@ html,body{
 
 body{
     overflow: hidden;
-    background-image: url("/static/Img/bcgImg4.jpg");
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Source Sans Pro', sans-serif;
@@ -88,6 +87,9 @@ main{
     padding: 10px;
     padding-top: 20px;
     border-radius: 20px;
+    border-width: 2px;
+    border-color: transparent;
+    border-style: solid;
     height: 180px;
     width: 180px;
     overflow: hidden;
