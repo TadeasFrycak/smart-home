@@ -1,4 +1,8 @@
-; Item-toggle: (index = 1)
- <div class='item item-toggle selectDisable'><img src='' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'></div><div class='item-status'>OFF</div><div class='item-info'></div></div>
- ; Item-scroll: (index = 3)
- <div class='item item-scroll overlay selectDisable'><input class="slider" type="range" orient="vertical" min="0" max="210"><div class='box'></div><img src='' class='item-image'><div class='item-header'></div><div class='item-status'>OFF</div></div>
+<type='toggle'>
+<div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;>INSERT_INFO</div></div>
+<type='scroll'>
+<div class='item item-scroll overlay selectDisable'><input class="slider" type="range" orient="vertical" min="0" max="210"><div class='box'></div><img src='INSERT_IMAGE' class='item-image'><div class='item-header' style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
+<type='spacer'>
+<div class="item" style="background-color: transparent"></div>
+<type='page'>
+<div class="swiper-slide"><div class="Header">INSERT_HEADER</div><main id="INSERT_ID"></main></div>

@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, copy_current_request_context, request
+from templates.html_to_json_parser import HTMLtoJSONParser
 from flask_socketio import SocketIO, emit
+from templates.arduino import Arduino
 from threading import Thread, Event
 import subprocess
 import os.path
@@ -12,6 +14,7 @@ import os
 SEPARATORS = (",", ":")
 IMG_PATH = "static/Img"
 IMG_BCG = "bcg"
+ICON = "icon"
 
 CURRENT_FOLDER = os.getcwd()
 CURRENT_FILE = __file__
@@ -41,6 +44,9 @@ socketio = SocketIO(app)
 thread = Thread()
 thread_stop_event = Event()
 
+arduino = Arduino()
+
+data = ["","0","0","0"]
 
 class AsynCommunication(Thread):
     """
@@ -78,15 +84,25 @@ class AsynCommunication(Thread):
         self.test_generator()
 
 
-@app.route("/change_item_state/<data>")
+@app.route("/chang/<data>")
 def change_item_state(data):
     """
     Change item state
     :data: data
     :return: JSON
     """
+    name = data.split("<name>")[1].split("</name>")[0]
     
-    return json.dumps({"status": random.choice(["ok", "not ok", "pending"]), "debug_data": json.loads(data)}, separators=SEPARATORS)
+    if name == "g":
+        arduino.write(str(int(data[0].split("<value>")[1].split("</value>")[0])*2.55)+";0;0-")
+
+    elif name == "r":
+        arduino.write("0;"+str(int(data[0].split("<value>")[1].split("</value>")[0])*2.55)+";0-")
+
+    elif name == "b":
+        arduino.write("0;0;"+str(int(data[0].split("<value>")[1].split("</value>")[0])*2.55)+"-")
+    
+    return json.dumps({"status": random.choice(["ok", "not ok", "pending"]), "debug_data": json.loads(data)})
 
 
 @app.route("/get_background_images")
@@ -106,8 +122,56 @@ def get_background_images():
             
     os.chdir("../../")
     
-    return json.dumps({"status": "ok", "images": backgrounds}, separators=SEPARATORS)
+    return json.dumps({"status": "ok", "images": backgrounds, "random_image": random.choice(backgrounds)}, separators=SEPARATORS)
 
+
+@app.route("/get_icons")
+def get_icons():
+    """
+    Get background images
+    :return: background images
+    """
+
+    icons = {}
+    
+    os.chdir(IMG_PATH)
+
+    for file in glob.glob("*.*"):
+        if ICON in file:
+            icons["icon" + file.split("-")[1]] = "../" + IMG_PATH + "/" + file
+            
+    os.chdir("../../")
+    
+    return json.dumps({"status": "ok", "icons": icons}, separators=SEPARATORS)
+
+
+@app.route("/html_json")
+def html_json():
+    return HTMLtoJSONParser.to_json(data[0])
+
+@app.route("/post", methods = ["POST"])
+def get_mac():
+    data[0] = request.form["data"]
+
+    name = data[0].split("<name>")[1].split("</name>")[0]
+    print(name)
+    
+    if name == "G":
+        green = str(int(data[0].split("<value>")[1].split("</value>")[0])*2.55)
+        data[1] = green
+        arduino.write(green+";"+data[2]+";"+data[3]+"-")
+
+    elif name == "R":
+        red = str(int(data[0].split("<value>")[1].split("</value>")[0])*2.55)
+        data[2] = red
+        arduino.write(data[1]+";"+red+";" +data[3]+"-")
+
+    elif name == "B":
+        blue = str(int(data[0].split("<value>")[1].split("</value>")[0])*2.55)
+        data[3] = blue
+        arduino.write(data[1]+";"+data[2]+";"+blue+"-")
+    
+    return "ok"
 
 @app.route("/")
 def index():

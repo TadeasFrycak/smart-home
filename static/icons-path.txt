@@ -1,6 +1,0 @@
-; Relaticni odkazy na ikony pro itemy
-/static/Img/icon-1-light-bulb.png
-/static/Img/icon-2-desk-lamp.png
-/static/Img/icon-3-fan.png
-/static/Img/icon-4-audio.png
-/static/Img/icon-5-computer.png

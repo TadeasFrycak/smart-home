@@ -5,8 +5,8 @@ $(document).ready(function(){
 // Spustí se při načtení stránky
 
     console.log("+----------------------------------+");
-    console.log("|     IoT Project, version 5.4     |");
-    console.log("|     Last modified: 15.8.2019     |");
+    console.log("|     IoT Project, version 5.5     |");
+    console.log("|     Last modified: 18.8.2019     |");
     console.log("|                                  |");
     console.log("|              © 2019              |");
     console.log("+----------------------------------+");
@@ -15,7 +15,7 @@ $(document).ready(function(){
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
     socket.on('newstate', function(msg) {
         console.log("Received message: ");
-        console.log(msg.mac);    
+        console.log(msg.mac);     
     });
     
     // Initializace Swiperu 
@@ -29,7 +29,6 @@ $(document).ready(function(){
     var overlayYpos = 210;
     
     $(document).on('input', '.slider', function() {                     // Spustí se při kliknutí nebo posunutím scroll modulu
-        
         var output = $(this).val();                                     // Načítá okamžitou hodnotu kurzoru
         var konstanta = parseFloat(0.47619);                            // Konstanta pro přepočítávání pozice na pixely
 
@@ -44,7 +43,7 @@ $(document).ready(function(){
         $('.debug').html(output - 210);
         
         if (procenta != PredchoziProcenta){
-            
+            console.log("released!");
             if (procenta == 0){
                 $(this).parent().children('.item-image').fadeTo("slow",0.33);
                 $(this).parent().children('.item-header').fadeTo("slow",0.33);
@@ -54,7 +53,17 @@ $(document).ready(function(){
                 $(this).parent().children('.item-header').fadeTo("fast",1);
             }
             PredchoziProcenta = procenta;
-        }
+            
+            $(this).parent().children().find("value").text(procenta);
+            var Data_of_element = $(this).parent().children().find("module").html();
+            
+            $.post( "/post", {
+                    data: Data_of_element
+            });
+            //$.get('/html_json', function(data) {
+            //    console.log($.parseJSON(data));
+            //});
+            }
 
         if (procenta == 0) overlayYpos = 210;
         if (procenta == 100) overlayYpos = 0;
@@ -64,52 +73,92 @@ $(document).ready(function(){
     });
 
 
-
     /*  -- Generování modulů -- */
     
     var device_config_array;
-
+    var icons_array = null;
+    
     // Načítání souborů 
     $.get('/static/device-config.txt', function(device_config_data) {
         $.get('/static/items.html.txt', function(items_data){
-            $.get('/static/icons-path.txt', function(icons_path_file) {
+            $.get('/get_icons', function(data) {
+                
+                var current_page = 0;
 
                 // Generuje pole z konfiguračních složek
                 device_config_array = device_config_data.split('\n');
                 items_data_list = items_data.split('\n');
-                icons_array = icons_path_file.split('\n');
+                icons_array = $.parseJSON(data).icons;
 
                 // Pro každý item zvlášť
                 jQuery.each( device_config_array, function( i, val ) {
+                    
+                    var is_line_commented = device_config_array[i].indexOf(";"); // -1 = is not commented
 
-                    if(device_config_array[i].indexOf("<module>") >= 0 && device_config_array[i].indexOf("</module") >= 0 && device_config_array[i].indexOf(";") == -1)
+                    if (device_config_array[i].indexOf("<page>") >= 0 && is_line_commented == -1)
                     {
-                        
-                        var type = $.trim(device_config_array[i].split("<type>")[1].split("</type")[0]);;
-                        var name = $.trim(device_config_array[i].split("<name>")[1].split("</name>")[0]);
-                        var pageForItem = $.trim(device_config_array[i].split("<page-id>")[1].split("</page-id>")[0]);
-                        var iconID = $.trim(device_config_array[i].split("<icon-id>")[1].split("</icon-id>")[0]);
+                        current_page++;
+                        var item_index = items_data_list.indexOf("<type='page'>") + 1;
+                        var prepared_item = items_data_list[item_index];
 
+                        var name = $.trim(device_config_array[i].split("<name>")[1].split("</name>")[0]);
+                        prepared_item = prepared_item.replace("INSERT_HEADER", name);
+                        prepared_item = prepared_item.replace("INSERT_ID","p" + current_page);
+                        swiper.appendSlide([prepared_item]);
+
+                        console.log("page added, " + name + " on page: " + current_page);
+                    }
+                    
+                    if(device_config_array[i].indexOf("<module>") >= 0 && device_config_array[i].indexOf("</module") >= 0 && is_line_commented == -1)
+                    {
+                         var type = $.trim(device_config_array[i].split("<type>")[1].split("</type")[0]);
+                         var name = $.trim(device_config_array[i].split("<name>")[1].split("</name>")[0]);
+                         //var pageForItem = $.trim(device_config_array[i].split("<page-id>")[1].split("</page-id>")[0]);
+                         var iconID = $.trim(device_config_array[i].split("<icon-id>")[1].split("</icon-id>")[0]);
+
+                         var icon_prepare = "icon" + iconID;
+                                         
                         // Generuje toggle item
                         if (type == "toggle") 
                         {
-                            var prepared_item = items_data_list[1];
-                            prepared_item = prepared_item.replace("<div class='item-header'style='opacity:0.33;'></div>", "<div class='item-header'style='opacity:0.33;'>" + name + "</div>");
-                            prepared_item = prepared_item.replace("<div class='item-info'></div>", "<div class='item-info' style='display:none;'>" + String(device_config_array[i]) + "</div>");
-                            prepared_item = prepared_item.replace("<img src=''", "<img src='" + icons_array[iconID] + "'");
-                            $("#" + pageForItem).append(prepared_item);  
+                            var item_index = items_data_list.indexOf("<type='toggle'>") + 1;
+                            var prepared_item = items_data_list[item_index];
+                            
+                            prepared_item = prepared_item.replace("INSERT_HEADER", name);
+                            prepared_item = prepared_item.replace("INSERT_INFO", device_config_array[i]);
+                            prepared_item = prepared_item.replace("INSERT_IMAGE", icons_array[icon_prepare]);
+                            console.log("Try to: " + current_page);
+                            //$("#p" + current_page).append("<div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;>INSERT_INFO</div></div>")
+                            //$("#p1").append(prepared_item);
+                            $("#p" + current_page).append(prepared_item);  
+                            swiper.update();
                         }
+                        
 
                         // Generuje scroll item
                         if (type == "scroll") 
                         {
-                            var prepared_item = items_data_list[3];
-                            prepared_item = prepared_item.replace("<div class='item-header'></div>", "<div class='item-header'style='opacity:0.33;'>" + name + "</div>");
-                            prepared_item = prepared_item.replace("<div class='item-info'></div>", "<div class='item-info' style='display:none;'>" + device_config_array[i] + "</div>");
-                            prepared_item = prepared_item.replace("<img src=''", "<img src='" + icons_array[iconID] + "'");
-                            $("#" + pageForItem).append(prepared_item);  
-                        }   
+                            var item_index = items_data_list.indexOf("<type='scroll'>") + 1;
+                            var prepared_item = items_data_list[item_index];
+
+                            prepared_item = prepared_item.replace("INSERT_HEADER", name);
+                            prepared_item = prepared_item.replace("INSERT_INFO", device_config_array[i]);
+                            prepared_item = prepared_item.replace("INSERT_IMAGE", icons_array[icon_prepare]);
+                            console.log("stranka: " + current_page);
+                            $("#p" + current_page).append(prepared_item);  
+                            swiper.update();
+                        } 
+                        
+                        
                     }
+
+                    if (device_config_array[i].indexOf("<spacer>") >= 0 && is_line_commented == -1)
+                    {
+                        var item_index = items_data_list.indexOf("<type='spacer'>") + 1;
+                        //$("#" + current_page).append(items_data_list[item_index]);
+                    }
+
+
                 });
 
             }, 'text');
@@ -126,19 +175,13 @@ $(document).ready(function(){
     /*  -- Načítání pbrázků na pozadí -- */
 
     $.get('/get_background_images', function(data) {
-        var wallpper_array = $.parseJSON(data).images;
-        console.log($.parseJSON(data));
-        console.log(wallpper_array);
-        var wallpaper_index = Math.floor(Math.random() * wallpper_array.length)
-
-        $('body').css('background-image', 'url("' + wallpper_array[wallpaper_index] + '")');
+        $('body').css('background-image', 'url("' + $.parseJSON(data).random_image + '")');
     });
      
 
     /*  -- Detekování stisku toggle itemu -- */
 
     $('body').on('click', '.item-toggle', function() {
-        //ChangeItemState(this,2); // DRUHY CISLO MUSI BYT 2 VZDYCKY POKUD NECHCEEM NIC KONKRETNIHO!!!
 
         var value = 0;
 
@@ -152,55 +195,23 @@ $(document).ready(function(){
             ChangeItemState(this,0);
             value = 0;
         }
-
-        $(this).animate({
-            "color": "#ffffff"
-        }, 1500);
-
         
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $(this).find("value").text(value);
+        
         var Data_of_element = $(this).find("module").html();
-        Jasonify = Data_of_element.split(' ');
-        //console.log(Jasonify);
-        Jasonify.forEach(function(entry) {
-            if (entry != ""){
-                entry = entry.replace("<","\"")
-                console.log(entry);
-            }
-        });
         
-        var element = Data_of_element;
-        //console.log(element);
-        //  This gives you a string representing that element and its content
-        var html = element.oute; 
-        //console.log(html);      
-        //  This gives you a JSON object that you can send with jQuery.ajax's `data`
-        // option, you can rename the property to whatever you want.
-        var data = { html: html }; 
-
-        //  This gives you a string in JSON syntax of the object above that you can 
-        // send with XMLHttpRequest.
-        var json = JSON.stringify(data);
-
-        //console.log(json);
+        //$.post( "/post", {
+             //       data: "x"
+            //});
+        //$.get('/html_json', function(data) {
+        //    console.log($.parseJSON(data));
+        //});
         
-        $.get('/change_item_state/{"item_id":' + "ID_of_element" + ', "value":' + "value" + '}', function(data) {
-            //console.log("Sending data, synchronized..");
-            //console.log("Response: " + $.parseJSON(data));
-            //  This gives you an HTMLElement object
-
-
-            //console.log($.parseJSON(data))
-        });
-
-        // JEN PRO TEST! NASTAVUJI OD KTERE SE MA ZAPNOUT
-        //toggleButton(3,1);
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
 
 
     function ChangeItemState(button, stav){
+
 
         if(stav == 100)
         {

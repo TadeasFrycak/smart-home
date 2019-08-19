@@ -6,6 +6,7 @@ input[type=range][orient=vertical]
     height: 210px;
     padding: 0 5px;
     position: absolute;
+    z-index: 2;
 }
 
 input[type=range] {
