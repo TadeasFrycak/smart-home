@@ -11,9 +11,12 @@
 
 <page><name>Obývák</name>
 
-
+<module> <type>rgbw_slider</type> <name>RGBW Controller</name> <icon-id>1</icon-id> <value>0</value> <l>50</l> <r>50</r> <u>50</u> <d>50</d>  </module>
+<module> <type>rgb_slider</type> <name>RGB Controller</name> <icon-id>1</icon-id> <r>50</r> <g>50</g> <b>50</b> </module>
+<module> <type>gauge</type> <name>Potenciometer</name> <value>74</value> <icon-id>1</icon-id> <id>g1</id> <value-from>0</value-from> <value-to>1024</value-to> <end-char></end-char> <gauge-color>blue</gauge-color> </module>
 <module> <type>scroll</type> <name>R</name> <value>0</value> <icon-id>1</icon-id> <id>1</id> </module>
 <module> <type>scroll</type> <name>G</name> <value>0</value> <icon-id>2</icon-id> <id>2</id> </module>
+<module> <type>gauge</type> <name>Water level</name> <value>98</value> <icon-id>1</icon-id> <id>g2</id> <value-from>0</value-from> <value-to>1000</value-to> <end-char>ml</end-char> <gauge-color>red</gauge-color> </module>
 <module> <type>scroll</type> <name>B</name> <value>0</value> <icon-id>1</icon-id> <id>3</id> </module>
 <module> <type>scroll</type> <name>Stolní lampička</name> <value>0</value> <icon-id>2</icon-id> <id>4</id> </module>
 

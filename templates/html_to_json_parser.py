@@ -1,8 +1,18 @@
 import html.parser
 import json
 
+
 class HTMLtoJSONParser(html.parser.HTMLParser):
-    def __init__(self, raise_exception = True):
+    """
+    Class HTMLtoJSONParser
+    """
+
+    def __init__(self, raise_exception=True):
+        """
+        Init of class HTMLtoJSONParser
+        :param raise_exception:
+        """
+
         html.parser.HTMLParser.__init__(self)
         self.doc = {}
         self.path = []
@@ -15,39 +25,46 @@ class HTMLtoJSONParser(html.parser.HTMLParser):
         return self.doc
     
     @staticmethod
-    def to_json(content, raise_exception = True):
-        parser = HTMLtoJSONParser(raise_exception = raise_exception)
+    def to_json(content, raise_exception=True):
+        parser = HTMLtoJSONParser(raise_exception=raise_exception)
         parser.feed(content)
-        json_splitted = json.dumps(parser.json).split('{"": ')
+        json_split = json.dumps(parser.json).split('{"": ')
         
-        for num,i in enumerate(json_splitted):
+        for num, i in enumerate(json_split):
             if num > 0:
                 k = list(i)
                 
-                for num2,j in enumerate(k):
+                for num2, j in enumerate(k):
                     if j == "}":
                         del(k[num2])
-                        json_splitted[num] = "".join(k)
+                        json_split[num] = "".join(k)
                         break
 
-        return "".join(json_splitted)
+        return "".join(json_split)
     
     def handle_starttag(self, tag, attrs):
+        """
+        Handle start tag
+        :param tag:
+        :param attrs:
+        :return:
+        """
+
         self.path.append(tag)
-        attrs = { k:v for k,v in attrs}
+        attrs = {k: v for k, v in attrs}
         
-        if tag in self.cur :
-            if isinstance(self.cur[tag],list) :
-                self.cur[tag].append({ "__parent__": self.cur } )
+        if tag in self.cur:
+            if isinstance(self.cur[tag], list):
+                self.cur[tag].append({"__parent__": self.cur})
                 self.cur = self.cur[tag][-1]
                 
             else:
-                self.cur[tag] = [ self.cur[tag] ]
-                self.cur[tag].append({ "__parent__": self.cur } )
+                self.cur[tag] = [self.cur[tag]]
+                self.cur[tag].append({"__parent__": self.cur})
                 self.cur = self.cur[tag][-1]
                 
         else:
-            self.cur[tag] = { "__parent__": self.cur }
+            self.cur[tag] = {"__parent__": self.cur}
             self.cur = self.cur[tag]
             
         for a, v in attrs.items():
@@ -56,8 +73,16 @@ class HTMLtoJSONParser(html.parser.HTMLParser):
         self.cur[""] = ""
         
     def handle_endtag(self, tag):
-        if tag != self.path[-1] and self.raise_exception :
-            raise Exception("html error around line: {0} (it might be because of a tag <br>, <hr>, <img> not closed)".format(self.line))
+        """
+        Handle endtag
+        :param tag:
+        :return:
+        """
+
+        if tag != self.path[-1] and self.raise_exception:
+            raise Exception(
+                "html error around line: {0} (it might be because of a tag <br>, <hr>, <img> not closed)".format(
+                    self.line))
         
         del self.path[-1]
         
@@ -66,28 +91,38 @@ class HTMLtoJSONParser(html.parser.HTMLParser):
         self.clean(memo)
         
     def handle_data(self, data):
+        """
+        Handle data
+        :param data:
+        :return:
+        """
+
         self.line += data.count("\n")
         
-        if "" in self.cur :
+        if "" in self.cur:
             self.cur[""] += data
             
-    def clean(self, values):
+    @staticmethod
+    def clean(values):
+        """
+        Clean
+        :param values:
+        :return:
+        """
+
         keys = list(values.keys())
         
         for k in keys:
             v = values[k]
             
-            if isinstance(v, str) :
+            if isinstance(v, str):
                 c = v.strip(" \n\r\t")
                 
-                if c != v : 
-                    if len(c) > 0 : 
+                if c != v:
+                    if len(c) > 0:
                         values[k] = c
                         
                     else: 
                         del values[k]
                         
         del values["__parent__"]
-
-
-

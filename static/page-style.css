@@ -3,7 +3,13 @@
     --item-border-color: rgb(204, 204, 204);
     --item-bcg-unactive-color: rgb(206, 206, 206);
     --item-bcg-active-color: rgb(255, 255, 255);
+
+    --item-red: rgba(250, 39, 39, 0.671);
+    --item-green: rgba(82, 212, 82, 0.671);
+    --item-blue: rgba(73, 73, 214, 0.671);
+
     --konstanta_pro_pocet_itemu: 30;
+    --border-radius: 20px;
 }
 
 .swiper-container {
@@ -88,7 +94,7 @@ main{
     padding: 10px;
     padding-top: 20px;
 
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     
     height: 180px;
     width: 180px;
@@ -104,16 +110,28 @@ main{
     margin: 50px;
     padding: 10px;
     padding-top: 20px;
+    position: relative;
 
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     
     height: 180px;
-    width: 360px;
+    width: 420px;
     overflow: hidden;
 
     margin: 20px;
     float: left;
 }
+
+.gauge-holder{
+    position: absolute;
+    display: inline-block;
+    width: 220px;
+    height: 190px;
+    background-color: transparent;
+    left: 150px;
+    top: 10px;
+}
+
 
 .box{
     position: absolute;
@@ -150,12 +168,116 @@ main{
   }
 
 
+
 .item-image{
     z-index: 1;
     height: 80px;
     width: 80px;
     opacity: 0.33;
 }
+
+.rgbw-plot{
+    position: absolute;
+    top: 10px;
+    left: 180px;
+    width: 260px;
+    height: 200px;
+    background-color: transparent;
+}
+
+.rgbw-slide-wrapper{
+    height: 190px;
+    width: 54px;
+    padding: 0px;
+    margin-left: 2px;
+    margin-right: 2px;
+    display: inline-block;
+}
+
+.rgbw-slide{
+    background-color: var(--item-bcg-unactive-color);
+    height: 160px;
+    border-radius: var(--border-radius);
+    border-width: 1px;
+    border-style: solid;
+    position: relative;
+    top: 10px;
+    width: 50px;
+    height: 150px;
+    float: left;
+    overflow: hidden;
+}
+
+
+.rgb-plot{
+    position: absolute;
+    top: 10px;
+    left: 180px;
+    width: 260px;
+    height: 200px;
+    background-color: transparent;
+}
+
+.rgb-slide-wrapper{
+    height: 190px;
+    width: 64px;
+    padding: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.rgb-slide{
+    background-color: var(--item-bcg-unactive-color);
+    height: 160px;
+    border-radius: var(--border-radius);
+    border-width: 1px;
+    border-style: solid;
+    position: relative;
+    top: 10px;
+    width: 60px;
+    height: 150px;
+    float: left;
+    overflow: hidden;
+}
+
+.rgb-label{
+    position: relative;
+    text-align: center;
+    top: 15px;
+    font-size: 20px;
+}
+
+.rgb-Rs{
+    border-color: var(--item-red);
+}
+.rgb-Gs{
+    border-color: var(--item-green);
+}
+.rgb-Bs{
+    border-color: var(--item-blue);
+}
+
+.rgb-R{
+    background-color: var(--item-red);
+}
+.rgb-G{
+    background-color: var(--item-green);
+}
+.rgb-B{
+    background-color: var(--item-blue);
+}
+
+
+.rgb-slider-blanket{
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    top: 75px;
+    left: -1px;
+    overflow: hidden;
+}
+
 .item-header{
     z-index: 1;
     max-width: 150px;

@@ -1,4 +1,4 @@
-input[type=range][orient=vertical]
+.slider[type=range][orient=vertical]
 {
     writing-mode: bt-lr; /* IE */
     -webkit-appearance: slider-vertical; /* WebKit */
@@ -9,20 +9,20 @@ input[type=range][orient=vertical]
     z-index: 2;
 }
 
-input[type=range] {
+.slider[type=range] {
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
     background: transparent; /* Otherwise white in Chrome */
   }
   
-  input[type=range]::-webkit-slider-thumb {
+  .slider[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
   }
   
-  input[type=range]:focus {
+  .slider[type=range]:focus {
     outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
   }
   
-  input[type=range]::-ms-track {
+  .slider[type=range]::-ms-track {
     width: 100%;
     cursor: pointer;
   
@@ -31,3 +31,45 @@ input[type=range] {
     border-color: transparent;
     color: transparent;
   }
+
+
+.rgb-slider[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 100%;
+    height: 102%;
+    position: absolute;
+    z-index: 2;
+    top: -3px;
+    background: transparent; /* Otherwise white in Chrome */  
+    opacity: 0;
+}
+
+.rgb-slider[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+.rgb-slider[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: transparent;
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+.rgb-slider[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  background: transparent;
+}
+
+.rgb-slider[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
