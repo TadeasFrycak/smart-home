@@ -1,14 +1,15 @@
 from flask import Flask, render_template, url_for, copy_current_request_context, request
-from templates.html_to_json_parser import HTMLtoJSONParser
-from templates.console_interact import PythonConsole
+#from html_to_json_parser import HTMLtoJSONParser
+from console_interact import PythonConsole
 from flask_socketio import SocketIO, emit
-from templates.arduino import Arduino
+from arduino import Arduino
 from threading import Thread, Event
 import os.path
 import random
 import json
 import glob
 import os
+import time
 
 SEPARATORS = (",", ":")
 IMG_PATH = "static/Img"
@@ -16,7 +17,13 @@ IMG_BCG = "bcg"
 ICON = "icon"
 
 pythonConsole = PythonConsole()
-pythonConsole.introduction()
+
+try:    
+    pythonConsole.introduction()
+
+except Exception as e:
+    pythonConsole.error(e)
+    input()
 
 # Create app
 app = Flask(__name__)
@@ -52,39 +59,24 @@ class AsynCommunication(Thread):
         Send some test data to script
         :return:
         """
+        pass
+        #while not thread_stop_event.isSet():
+          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>100</l> <r>100</r> <u>100</u> <d>100</d>")
+          #time.sleep(0.05)
+          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>0</l> <r>0</r> <u>0</u> <d>0</d>")
+          #time.sleep(0.1)
+          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>100</l> <r>100</r> <u>100</u> <d>100</d>")
+          #time.sleep(0.05)
+          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>0</l> <r>0</r> <u>0</u> <d>0</d>")
+          #time.sleep(2)
+
+        # TODO NAMESPACE i v disconnect a connect
         
         while not thread_stop_event.isSet():
-            socketio.emit(self.NAME, {"type": "console", "status": "error", "message": "Just a test"},
+            socketio.emit(self.NAME, json.dumps({"type": "console", "status": "error", "message": "Just a test"}),
                            namespace=self.NAMESPACE)
-            # socketio.emit(self.NAME, {"type": "console", "status": "error", "message": "Just a test"},
-            #               namespace=self.NAMESPACE)
-            # data = arduino.write_read(data="g1;?")
-            #
-            # if data is not False:
-            #    print(data)
-            #    socketio.emit(self.NAME, {"type": "temperature_sensor", "id": data.split(";")[0],
-            #                              "value": data.split(";")[1], "color": "red"}, namespace=self.NAMESPACE)
-            #
-            # f = open("static/device-config.txt", "r")
-            # content = f.readlines()
-            # f.close()
-            #
-            # for i in content:
-            #    if ";" not in i and i.strip() != "" and "<page>" not in i:
-            #        if i.split("<type>")[1].split("</type>")[0] == "gauge":
-            #            before_rand = data[0]
-            #            rand = random.randint(0,255)
-            #            data[0] = rand
-            #            for j in range(before_rand, rand):
-            #                print(j)
-            #                socketio.emit(self.NAME, {"type": "temperature_sensor",
-            #                                          "id": i.split("<id>")[1].split("</id>")[0], "value": j,
-            #                                          "color": "red"}, namespace=self.NAMESPACE)
-            #               "color": random.choice(["red", "yellow", "green", "blue", "black", "white", "orange",
-            #                                       "gold", "silver", "pink", "purple", "gray", "brown"])},
-            #                                      namespace=self.NAMESPACE)  # Send message
-            #                time.sleep(0.01)
-            #            time.sleep(self.DELAY)  # Sleep
+
+            time.sleep(self.DELAY)
 
     def run(self):
         """
@@ -136,14 +128,11 @@ def get_icons():
     return json.dumps({"status": "ok", "icons": icons}, separators=SEPARATORS)
 
 
-# @app.route("/html_json")
-# def html_json():
-#    return HTMLtoJSONParser.to_json(data[0])
-
-
 @app.route("/post", methods=["POST"])
-def get_mac():
-    pythonConsole.debug(request.form["data"])
+def receive():
+    d = request.form["data"]
+    pythonConsole.debug(d)
+    arduino.write(d)
 
     return "ok"
 
@@ -154,6 +143,11 @@ def index():
     Render index.html file
     :return: template to render
     """
+    # supported_languages = ["en", "cs", "sk", "ru"]
+    # lang = request.accept_languages.best_match(supported_languages)
+    # print(request.accept_languages)
+    # print(lang)
+    # print(request.headers)
     
     return render_template("index.html")
 
@@ -166,7 +160,14 @@ def client_connect():
     """
 
     pythonConsole.debug("Client connected")
-    pythonConsole.print(request.environ.get('HTTP_X_REAL_IP', request.remote_addr))
+    pythonConsole.debug("\t- Client IP: " + str(request.environ.get("HTTP_X_REAL_IP", request.remote_addr)))
+    pythonConsole.debug("\t- Language: " + str(request.accept_languages))
+    pythonConsole.debug("\t- Header: " + str(request.user_agent))
+    pythonConsole.debug("\t\t- Browser: " + str(request.user_agent.browser))
+    pythonConsole.debug("\t\t- Version: " + str(request.user_agent.version))
+    pythonConsole.debug("\t\t- Platform: " + str(request.user_agent.platform))
+    print(request.host)
+    
     global thread
 
     if not thread.isAlive():  # When Asynchronous communication is not started
@@ -185,6 +186,6 @@ def client_disconnect():
     
     pythonConsole.debug("Client disconnected")
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
 
-# if __name__ == "__main__":
-#    socketio.run(app)

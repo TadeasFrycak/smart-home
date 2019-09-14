@@ -87,12 +87,39 @@ main{
     user-select: none;
 }
 
+.time-input{
+    opacity: 1;
+    position: absolute;
+    left: 200px;
+    top: 20px;
+}
+
+.time-settings-item{
+    height: 60px;
+    font-size: 20px;
+    line-height: 60px;
+    position: relative;
+    left: 10px;
+}
+
+.time-settings{
+    position: absolute;
+    left: 200px;
+    top: 20px;
+    height: 200px;
+    width: 200px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+}
+
 .item{
     z-index: 0;
     background-color: var(--item-bcg-unactive-color);
     margin: 50px;
     padding: 10px;
     padding-top: 20px;
+    position: relative;
 
     border-radius: var(--border-radius);
     
@@ -313,13 +340,6 @@ main{
     color: grey;
 }
 
-.switch{
-    align-content: center;
-    position: relative;
-    top: 20px;
-    left: 70px;
-}
-
 
 .item.toggled{
     background-color: var(--item-bcg-active-color);
@@ -342,4 +362,8 @@ input:checked  {
 -webkit-transform: translateX(26px);
 -ms-transform: translateX(26px);
 transform: translateX(26px);
+}
+
+.timepicker-modal{
+    top: 1%;
 }

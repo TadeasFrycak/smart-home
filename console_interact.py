@@ -1,8 +1,9 @@
 import os
+import glob
 import time
 import sys
-import colorama
-colorama.init()
+import socket
+
 
 
 class PythonConsole:
@@ -61,23 +62,36 @@ class PythonConsole:
         self.current_version = self.current_version[len(self.current_version)-1].strip()
 
     def introduction(self):
+        """
+        Print intro to console
+        :return:
+        """
+        
+        print()
         self.print(self.SEPARATOR, color="blue")
         self.print(data="Smart Home - App", align="center", color="light_cyan")
         self.print(self.SEPARATOR, color="blue")
         self.print(self.FG_COLORS["light_cyan"] + "Version: " + self.FG_COLORS["light_blue"] + self.current_version)
-        self.print(self.FG_COLORS["light_cyan"] + "Authors:" + self.FG_COLORS["light_blue"] + "Filip Szkandera, Tadeáš Fryčák")
-        self.print(self.FG_COLORS["light_cyan"] + "IP: " + self.FG_COLORS["light_blue"] + "127.0.0.1")
+        self.print(self.FG_COLORS["light_cyan"] + "Authors: " + self.FG_COLORS["light_blue"] + "Filip Szkandera, Tadeáš Fryčák")
+        self.print(self.FG_COLORS["light_cyan"] + "IP: " + self.FG_COLORS["light_blue"] + socket.gethostbyname(socket.gethostname()))
+        self.print(self.FG_COLORS["light_cyan"] + "Flask local IP: " + self.FG_COLORS["light_blue"] + "127.0.0.1")
         self.print(self.FG_COLORS["light_cyan"] + "Port: " + self.FG_COLORS["light_blue"] + "5000")
 
-        # TODO: Automatically files print
-        self.print("Working directory: ", color="light_cyan")
-        self.print("  - Path: " + self.current_folder, color="light_blue")
-        self.print("  - Created: %s" % time.ctime(os.path.getctime(self.current_folder)), color="light_blue")
-        self.print("  - Last modified: %s" % time.ctime(os.path.getmtime(self.current_folder)), color="light_blue")
-        self.print("Flask Python file:", color="light_cyan")
-        self.print("  - Path: " + self.current_file, color="light_blue")
-        self.print("  - Created: %s" % time.ctime(os.path.getctime(self.current_file)), color="light_blue")
-        self.print("  - Last modified: %s" % time.ctime(os.path.getmtime(self.current_file)), color="light_blue")
+        startpath = "static"
+        
+        for root, dirs, files in os.walk(startpath):
+            level = root.replace(startpath, '').count(os.sep)
+
+            indent = " " * 4 * (level)
+            self.print("{}{}/".format(indent, os.path.basename(root)), color="light_cyan")
+            
+            subindent = ' ' * 4 * (level + 1)
+            for f in files:
+                self.print("{}{}".format(subindent, f), color="light_cyan")
+                self.print("{}    Path: {}".format(subindent, os.path.join(root, f)), color="light_blue")
+                self.print("{}    Created: {}".format(subindent, time.ctime(os.path.getctime(os.path.join(root, f)))), color="light_blue")
+                self.print("{}    Last modifed: {}".format(subindent, time.ctime(os.path.getmtime(os.path.join(root, f)))), color="light_blue")
+
         self.print(self.SEPARATOR, color="blue")
 
     def print(self, data=None, align=None, color=None):
@@ -89,20 +103,26 @@ class PythonConsole:
         
         if align == "center":
             if color is not None:
-                print((self.FG_COLORS[color] + data + self.END).center(len(self.SEPARATOR)))
+                print((self.FG_COLORS[color] + str(data) + self.END).center(len(self.SEPARATOR)))
 
             else:
-                print(data.center(len(self.SEPARATOR)))
+                print(str(data).center(len(self.SEPARATOR)))
 
         else:
             if color is not None:
-                print(self.FG_COLORS[color] + data + self.END)
+                print(self.FG_COLORS[color] + str(data) + self.END)
 
             else:
-                print(data)
+                print(str(data))
 
 
     def error(self, data):
+        """
+        Print error to console
+        :data: Data to print
+        :return:
+        """
+        
         self.print(self.NEWLINE)
         self.print(self.ERROR, color="fail")
         self.print(data, color="fail")
@@ -110,6 +130,12 @@ class PythonConsole:
         self.print(self.NEWLINE)
 
     def warning(self, data):
+        """
+        Print Warning to console
+        :data: Data to print
+        :return:
+        """
+        
         self.print(self.NEWLINE)
         self.print(self.WARNING, color="yellow")
         self.print(data, color="yellow")
@@ -117,4 +143,10 @@ class PythonConsole:
         self.print(self.NEWLINE)
         
     def debug(self, data):
+        """
+        Debug print to console
+        :data: Data to print
+        :return:
+        """
+        
         self.print(data, color="light_green")

@@ -5,13 +5,47 @@ $(document).ready(function(){
 // Spustí se při načtení stránky
 
     console.log("+----------------------------------+");
-    console.log("|     IoT Project, version 5.6     |");
-    console.log("|     Last modified: 20.8.2019     |");
+    console.log("|     IoT Project, version 6.0     |");
+    console.log("|     Last modified: 10.09.2019     |");
     console.log("|                                  |");
     console.log("|              © 2019              |");
     console.log("+----------------------------------+");
+    
+    // var w = window.innerWidth;
+    // var h = window.innerHeight;
+    // let bw = $('body').width();
+    // var ratio = w/h;
+    // if (ratio > 1)
+    //  {
+    //     console.log("pc");
+    //  }
+    // else
+    // {
+    //        console.log("mobile");
+    // }
+    // console.log(w);
+    // console.log(h);
+    // $('html').css('zoom', ratio);
 
     // vytviří radiální ukazatel
+
+    // Initialize a new plugin instance for all
+    // e.g. $('input[type="range"]') elements.
+    $('.testInput').rangeslider();
+
+    // Destroy all plugin instances created from the
+    // e.g. $('input[type="range"]') elements.
+    //$('.testInput').rangeslider('destroy');
+
+    // Update all rangeslider instances for all
+    // e.g. $('input[type="range"]') elements.
+    // Usefull if you changed some attributes e.g. `min` or `max` etc.
+    //$('.testInput').rangeslider('update', true);
+
+    $('.testInput').on('touchmove mousemove', function(e){
+        e.stopPropagation();
+        console.log("aslkdmsjdn");
+    });
 
     var GaugesByID = [];
     var GaugesNumber = 0;
@@ -29,9 +63,11 @@ $(document).ready(function(){
     
     // Asynchroní přijem dat
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+    console.log(socket);
+    console.log("-----------------")
     socket.on('newstate', function(msg) {
-        //console.log("Received message: ");
-        console.log(msg.type);     
+        console.log("Received message: ");
+        console.log(msg);     
         
         if (msg.type="console")
         {
@@ -63,11 +99,16 @@ $(document).ready(function(){
     
     // Initializace Swiperu 
     var swiper = new Swiper('.swiper-container', {
-        pagination: { el: '.swiper-pagination', },
-        threshold: '10'
+        pagination: { el: '.swiper-pagination'},
+        threshold: '10',
+        //allowTouchMove: false,
+        //simulateTouch: false,
+        //touchStartPreventDefault: true,
+        //noSwiping: true,
+        //noSwipingClass = 'swiper-no-swiping'
       });
 
-    
+      $('.timepicker').timepicker();
 
 
     // Vypocet pozice pro scroll objekty
@@ -84,9 +125,9 @@ $(document).ready(function(){
         var hodnota = Math.round(output /1.5);
         var name_of_color = $(this).parent().parent().children(".rgb-label").html().toLowerCase();
 
-        var Data_of_element = $(this).parent().parent().parent().parent().find("module").html();
-
         $(this).parent().parent().parent().parent().find(name_of_color).text(hodnota);
+        
+        var Data_of_element = $(this).parent().parent().parent().parent().find("module").html();
 
 
         //console.log(Data_of_element);
@@ -295,6 +336,29 @@ $(document).ready(function(){
     });
      
 
+    $('body').on('click', '.item-enlarge', function(e) {
+        var target = $(e.target);
+        console.log(target);
+        if(!target.is('.noClick')) {
+            if($(this).css('width')=="180px")
+            {
+                $(this).animate({
+                    height:'420px',
+                    width:'420px'
+                })
+            }
+            else
+            {
+                $(this).animate({
+                    height:'180px',
+                    width:'180px'
+                })
+            }
+        }
+    
+    });
+    
+
     /*  -- Detekování stisku toggle itemu -- */
 
     $('body').on('click', '.item-toggle', function(e) {
@@ -323,15 +387,11 @@ $(document).ready(function(){
             $.get('/html_json', function(data) {
                 console.log($.parseJSON(data));
             });
-
-         }
-
-        
+         } 
     });
 
 
     function ChangeItemState(button, stav){
-
 
         if(stav == 100)
         {
@@ -345,21 +405,19 @@ $(document).ready(function(){
             $(button).children('.item-status').text("OFF");
             $(button).children('.item-image').fadeTo("slow",0.33);
             $(button).children('.item-header').fadeTo("slow",0.33);
-
         }
     }
 
+    // function toggleButton(id,stav){
+    //     $( "body .item-info id" ).each(function( index ) {
 
-    function toggleButton(id,stav){
-        $( "body .item-info id" ).each(function( index ) {
-
-            if ($( this ).html() == id){console.log("found: " + id); 
-            var itemToToggle = $( this ).parent().parent().parent();
+    //         if ($( this ).html() == id){console.log("found: " + id); 
+    //         var itemToToggle = $( this ).parent().parent().parent();
             
-            ChangeItemState(itemToToggle,stav);
-        }
-        });
-    }
+    //         ChangeItemState(itemToToggle,stav);
+    //     }
+    //     });
+    // }
 
   });
 

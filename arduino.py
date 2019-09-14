@@ -9,13 +9,14 @@ class Arduino:
 
     BAUDRATE = 9600
     TIMEOUT = 0.1
-    END_CHAR = "-"
+    END_CHAR = "$"
     WRITE_READ_DELAY = 0.5
     SEPARATOR = ";"
 
-    WINDOWS_PORT = "COM14"
+    WINDOWS_PORT = "COM3"
     MAC_PORT = "/dev/cu.wchusbserialfd120"
-    LINUX_PORT = None
+    LINUX_PORT = "/dev/ttyACM0"
+    LINUX_PORT2 = "/dev/ttyACM1"
     
     def __init__(self, console_log):
         """
@@ -35,8 +36,20 @@ class Arduino:
                 self.arduino = serial.Serial(self.MAC_PORT, self.BAUDRATE, timeout=self.TIMEOUT)
 
             except Exception as e2:
-                self.arduino = None
                 self.__console_log.warning("Error in opening port due {0}".format(e2))
+
+                try:
+                    self.arduino = serial.Serial(self.LINUX_PORT, self.BAUDRATE, timeout=self.TIMEOUT)
+
+                except Exception as e3:
+                    self.__console_log.warning("Error in opening port due {0}".format(e3))
+
+                    try:
+                        self.arduino = serial.Serial(self.LINUX_PORT2, self.BAUDRATE, timeout=self.TIMEOUT)
+
+                    except Exception as e4:
+                        self.arduino = None
+                        self.__console_log.warning("Error in opening port due {0}".format(e4))
 
     def write(self, data):
         """
@@ -65,7 +78,7 @@ class Arduino:
                 return str(data).split("'")[1]
 
             else:
-                return False
+                return None
 
         else:
             return False
