@@ -57,7 +57,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     return frag.body.childNodes;
   }
-
   function onReady(fn) {
     if (doc.readyState !== "loading") {
       fn();
@@ -3100,7 +3099,7 @@ $jscomp.polyfill = function (e, r, p, m) {
           // Normal modal animation
         } else {
           $.extend(enterAnimOptions, {
-            top: [this.options.startingTop, this.options.endingTop],
+            //top: [this.options.startingTop, this.options.endingTop],
             opacity: 1,
             scaleX: [0.8, 1],
             scaleY: [0.8, 1]
@@ -3896,6 +3895,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         var parallaxDist = imgHeight - containerHeight;
         var bottom = this.$el.offset().top + containerHeight;
         var top = this.$el.offset().top;
+        
         var scrollTop = M.getDocumentScrollTop();
         var windowHeight = window.innerHeight;
         var windowBottom = scrollTop + windowHeight;
@@ -10003,8 +10003,8 @@ $jscomp.polyfill = function (e, r, p, m) {
       key: "_updateAmPmView",
       value: function _updateAmPmView() {
         if (this.options.twelveHour) {
-          this.$amBtn.toggleClass('text-primary', this.amOrPm === 'AM');
-          this.$pmBtn.toggleClass('text-primary', this.amOrPm === 'PM');
+          this.$amBtn.toggleClass('text-pri', this.amOrPm === 'AM');
+          this.$pmBtn.toggleClass('text-pri', this.amOrPm === 'PM');
         }
       }
     }, {
@@ -10045,8 +10045,8 @@ $jscomp.polyfill = function (e, r, p, m) {
             hideView = isHours ? this.minutesView : this.hoursView;
         this.currentView = view;
 
-        $(this.spanHours).toggleClass('text-primary', isHours);
-        $(this.spanMinutes).toggleClass('text-primary', !isHours);
+        $(this.spanHours).toggleClass('text-pri', isHours);
+        $(this.spanMinutes).toggleClass('text-pri', !isHours);
 
         // Transition view
         hideView.classList.add('timepicker-dial-out');
@@ -10277,7 +10277,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     return Timepicker;
   }(Component);
 
-  Timepicker._template = ['<div class= "modal timepicker-modal">', '<div class="modal-content timepicker-container">', '<div class="timepicker-digital-display">', '<div class="timepicker-text-container">', '<div class="timepicker-display-column">', '<span class="timepicker-span-hours text-primary"></span>', ':', '<span class="timepicker-span-minutes"></span>', '</div>', '<div class="timepicker-display-column timepicker-display-am-pm">', '<div class="timepicker-span-am-pm"></div>', '</div>', '</div>', '</div>', '<div class="timepicker-analog-display">', '<div class="timepicker-plate">', '<div class="timepicker-canvas"></div>', '<div class="timepicker-dial timepicker-hours"></div>', '<div class="timepicker-dial timepicker-minutes timepicker-dial-out"></div>', '</div>', '<div class="timepicker-footer"></div>', '</div>', '</div>', '</div>'].join('');
+  Timepicker._template = ['<div class= "modal timepicker-modal">', '<div class="modal-content timepicker-container">', '<div class="timepicker-digital-display">', '<div class="timepicker-text-container">', '<div class="timepicker-display-column">', '<span class="timepicker-span-hours text-pri"></span>', ':', '<span class="timepicker-span-minutes"></span>', '</div>', '<div class="timepicker-display-column timepicker-display-am-pm">', '<div class="timepicker-span-am-pm"></div>', '</div>', '</div>', '</div>', '<div class="timepicker-analog-display">', '<div class="timepicker-plate">', '<div class="timepicker-canvas"></div>', '<div class="timepicker-dial timepicker-hours"></div>', '<div class="timepicker-dial timepicker-minutes timepicker-dial-out"></div>', '</div>', '<div class="timepicker-footer"></div>', '</div>', '</div>', '</div>'].join('');
 
   M.Timepicker = Timepicker;
 

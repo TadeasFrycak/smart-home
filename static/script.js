@@ -63,11 +63,9 @@ $(document).ready(function(){
     
     // Asynchroní přijem dat
     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
-    console.log(socket);
-    console.log("-----------------")
     socket.on('newstate', function(msg) {
-        console.log("Received message: ");
-        console.log(msg);     
+        //console.log("Received message: ");
+        console.log(msg.type);     
         
         if (msg.type="console")
         {
@@ -387,11 +385,15 @@ $(document).ready(function(){
             $.get('/html_json', function(data) {
                 console.log($.parseJSON(data));
             });
-         } 
+
+         }
+
+        
     });
 
 
     function ChangeItemState(button, stav){
+
 
         if(stav == 100)
         {
@@ -405,19 +407,21 @@ $(document).ready(function(){
             $(button).children('.item-status').text("OFF");
             $(button).children('.item-image').fadeTo("slow",0.33);
             $(button).children('.item-header').fadeTo("slow",0.33);
+
         }
     }
 
-    // function toggleButton(id,stav){
-    //     $( "body .item-info id" ).each(function( index ) {
 
-    //         if ($( this ).html() == id){console.log("found: " + id); 
-    //         var itemToToggle = $( this ).parent().parent().parent();
+    function toggleButton(id,stav){
+        $( "body .item-info id" ).each(function( index ) {
+
+            if ($( this ).html() == id){console.log("found: " + id); 
+            var itemToToggle = $( this ).parent().parent().parent();
             
-    //         ChangeItemState(itemToToggle,stav);
-    //     }
-    //     });
-    // }
+            ChangeItemState(itemToToggle,stav);
+        }
+        });
+    }
 
   });
 

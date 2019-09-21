@@ -3,7 +3,7 @@
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
-.materialize-red {
+ .materialize-red {
   background-color: #e51c23 !important;
 }
 
@@ -3436,13 +3436,13 @@ table span.badge {
 
 @media only screen and (min-width: 601px) {
   .container {
-    width: 85%;
+    width: 100%;
   }
 }
 
 @media only screen and (min-width: 993px) {
   .container {
-    width: 70%;
+    width: 100%;
   }
 }
 
@@ -5769,7 +5769,7 @@ body.keyboard-focused .dropdown-content li:focus {
 
 @media only screen and (max-width: 992px) {
   .modal {
-    width: 80%;
+    width: 100%;
   }
 }
 
@@ -8268,7 +8268,7 @@ input[type=range]::-ms-thumb {
 
 .slider {
   position: relative;
-  height: 400px;
+  height: 30px;
   width: 100%;
 }
 
@@ -8486,10 +8486,19 @@ input[type=range]::-ms-thumb {
   visibility: visible;
   -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
           animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-  -webkit-transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
-  transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
-  transition: opacity .3s, transform .3s, visibility 0s 1s;
-  transition: opacity .3s, transform .3s, visibility 0s 1s, -webkit-transform .3s;
+  -webkit-transition: opacity .3s,
+ visibility 0s 1s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ visibility 0s 1s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s 1s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s 1s,
+ -webkit-transform .3s;
 }
 
 .tap-target {
@@ -8542,10 +8551,19 @@ input[type=range]::-ms-thumb {
 
 .tap-target-wave::after {
   visibility: hidden;
-  -webkit-transition: opacity .3s, visibility 0s, -webkit-transform .3s;
-  transition: opacity .3s, visibility 0s, -webkit-transform .3s;
-  transition: opacity .3s, transform .3s, visibility 0s;
-  transition: opacity .3s, transform .3s, visibility 0s, -webkit-transform .3s;
+  -webkit-transition: opacity .3s,
+ visibility 0s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ visibility 0s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s,
+ -webkit-transform .3s;
   z-index: -1;
 }
 
@@ -8848,7 +8866,7 @@ input[type=range]::-ms-thumb {
 
 /* Timepicker Containers */
 .timepicker-modal {
-  max-width: 325px;
+  max-width: 99%;
   max-height: none;
 }
 
@@ -8865,7 +8883,7 @@ input[type=range]::-ms-thumb {
   padding: 0;
 }
 
-.text-primary {
+.text-pri {
   color: white;
 }
 
@@ -9045,7 +9063,7 @@ input[type=range]::-ms-thumb {
 /* Media Queries */
 @media only screen and (min-width: 601px) {
   .timepicker-modal {
-    max-width: 600px;
+    max-width: 100%;
   }
   .timepicker-container.modal-content {
     -webkit-box-orient: horizontal;

@@ -2,8 +2,11 @@ import os
 import glob
 import time
 import sys
+import colorama
 import socket
 
+
+colorama.init()
 
 
 class PythonConsole:
@@ -79,18 +82,18 @@ class PythonConsole:
 
         startpath = "static"
         
-        for root, dirs, files in os.walk(startpath):
-            level = root.replace(startpath, '').count(os.sep)
+        #for root, dirs, files in os.walk(startpath):
+        #    level = root.replace(startpath, '').count(os.sep)
 
-            indent = " " * 4 * (level)
-            self.print("{}{}/".format(indent, os.path.basename(root)), color="light_cyan")
+        #    indent = " " * 4 * (level)
+        #    self.print("{}{}/".format(indent, os.path.basename(root)), color="light_cyan")
             
-            subindent = ' ' * 4 * (level + 1)
-            for f in files:
-                self.print("{}{}".format(subindent, f), color="light_cyan")
-                self.print("{}    Path: {}".format(subindent, os.path.join(root, f)), color="light_blue")
-                self.print("{}    Created: {}".format(subindent, time.ctime(os.path.getctime(os.path.join(root, f)))), color="light_blue")
-                self.print("{}    Last modifed: {}".format(subindent, time.ctime(os.path.getmtime(os.path.join(root, f)))), color="light_blue")
+        #    subindent = ' ' * 4 * (level + 1)
+        #    for f in files:
+        #        self.print("{}{}".format(subindent, f), color="light_cyan")
+        #        self.print("{}    Path: {}".format(subindent, os.path.join(root, f)), color="light_blue")
+        #        self.print("{}    Created: {}".format(subindent, time.ctime(os.path.getctime(os.path.join(root, f)))), color="light_blue")
+        #        self.print("{}    Last modifed: {}".format(subindent, time.ctime(os.path.getmtime(os.path.join(root, f)))), color="light_blue")
 
         self.print(self.SEPARATOR, color="blue")
 

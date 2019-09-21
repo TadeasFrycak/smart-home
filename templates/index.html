@@ -1,120 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
-    
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/buttons-style.css">
-    <link rel="stylesheet" href="/static/page-style.css">
-    <link rel="stylesheet" href="/static/slider-style.css">
-    <link rel="stylesheet" href="/static/gauge.css">
-    <link rel="stylesheet" href="/static/rangeslider.css">
-    
-    <link rel="stylesheet" href="/static/bootstrap.min.css">
-
-    
-    <!-- Swiper JS -->
-    <script src="/static/jquery.js"></script> 
-    <script src="/static/swiper.min.js"></script>
-    <script src="/static/rangeslider.min.js"></script>
-
-    <script src="/static/jquery.animate-colors-min.js"></script>
-    
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>  
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.min.css"  media="screen,projection"/>
-    <script type="text/javascript" src="/static/materialize/js/materialize.min.js"></script>
-    <script src="/static/script.js"></script>
-    
-    <script src="/static/bootstrap.min.js"></script>
-
-  
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes"> -->
-    <link rel="stylesheet" href="/static/swiper.min.css">
-    
-    <title>Document</title>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+        <script src="/static/jquery.js"></script> 
+        <script src="/static/bootstrap/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="/static/dist/hexagon.css">
+        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
+        <link rel="stylesheet" href="/static/main.css">
+        <link rel="stylesheet" href="/static/swiper.min.css">
+        
+        <script type="text/javascript" src="/static/dist/hexagon.js"></script>
+        <script type="text/javascript" src="/static/materialize/js/materialize.js"></script>
+        <script src="/static/moment/moment.js"></script>
+        <script src="/static/Chart.js-2.8.0/dist/Chart.js"></script>
+        <script src="/static/hammer.js"></script>
+        <script src="/static/swiper.min.js"></script>
+        <script src="/static/main.js"></script>
+        
 
 
-</head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-<body>
-          
-<!-- Swiper -->    
-  <div class="swiper-container">
-        <div class="swiper-wrapper">         
-            <div class="swiper-slide">
-              <div class="Header">INSERT_HEADER</div>
-              <main id="INSERT_ID">
-                  <input type="text" class="timepicker">
-                  <div class="input-field col s12 m12">
-                      <input id="dtp" type="text" class="datepicker">
-                      <label for="dtp">Birthday</label>
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <div class="container">
+            <!-- Tohle Bootstrap upravuje-->
+
+            <header>
+                IoT v10 for testing
+            </header>
+
+
+            <main>
+                <div class="tile">
+                    <div class="tileTextLayer">
+                        <img src="/static/Img/icon-3-fan.png" class="tileImage">
+                        <span class="tileDescription">DESK FAN</span>
+                        <span class="tileStatus">OFF</span>
+                    </div>
+                    <div class="titeAtributes">test</div>
+                    <div class="tileTouchLayer tileToggle tileModal"></div>
+                </div>
+
+                <div class="tile">
+                    <div class="tileTextLayer">
+                        <img src="/static/Img/icon-1-light-bulb.png" class="tileImage">
+                        <span class="tileDescription">MY DESK LAMP</span>
+                        <span class="tileStatus">OFF</span>
+                    </div>
+                    <div class="titeAtributes">test</div>
+                    <div class="tileTouchLayer tileToggle tileModal"></div>
+                </div>
+
+                <div class="tile">
+                    <div class="tileTextLayer">
+                        <div class="tileInputVal">14<span style="font-size: 15px;"> %</span></div>
+                        <span class="tileDescription">Humidity Bathroom</span>
+                        <span class="tileStatus">1hr ago</span>
+                    </div>
+                    <div class="tileTouchLayer tileModal"></div>
+                </div>
+
+                <div class="tile">
+                        <div class="tileTextLayer">
+                            <div class="tileInputVal">23:59</div>
+                            <span class="tileDescription">Alarm clock</span>
+                            <span class="tileStatus">Active</span>
+                        </div>
+                        <div class="tileTouchLayer tileToggle tileModal"></div>
                     </div>
 
-                    <input class="testInput" type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
 
-                    <input type="range"  min="0" max="100">
-                    <input type="range"  min="0" max="100">
-                    <input type="range"  min="0" max="100">
-                    <a href="/static/test.html">aaaaahref</a>
-
-               
-
-                    <div class='item item-enlarge selectDisable'>
-                      <img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'>
-                      <div class='item-header'style='opacity:0.33;'>Budík</div>
-                      <div class='item-status'>6AM - OFF</div>
-                      <div class='item-info' style='display:none;'>INSERT_INFO</div>
-                      <div class="noClick">
-                          <input type="text" class="form-control js-date-picker" value="Oct 24, 2048">
-                      </div>
-                      
-                      <div class="time-settings noClick">
-                        <div class="time-settings-item noClick ">Active:
-                          <label class="switch noClick">
-                              <input type="checkbox" class="noClick">
-                              <span class="slider round  noClick"></span>
-                          </label>
-                      </div>
-                      <div class="time-settings-item noClick ">Active:
-                          <label class="switch noClick">
-                              <input type="checkbox" class="noClick">
-                              <span class="slider round  noClick"></span>
-                          </label>
-                      </div>
-                      <div class="time-settings-item noClick ">Active:
-                          <label class="switch noClick">
-                              <input type="checkbox" class="noClick">
-                              <span class="slider round  noClick"></span>
-                          </label>
-                      </div>
-                      </div>
+                <div class="tile">
+                    <div class="tileTextLayer">
+                        <div class="tileInputVal">255<span style="font-size: 15px;"> ml</div>
+                        <span class="tileDescription">WATER LEVEL</span>
                     </div>
-
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
-                    <div class='item item-toggle selectDisable'><img src='INSERT_IMAGE' class='item-image' style='opacity:0.33;'><div class='item-header'style='opacity:0.33;'>INSERT_HEADER</div><div class='item-status'>OFF</div><div class='item-info' style='display:none;'>INSERT_INFO</div></div>
+                    <div class="tileTouchLayer tileModal"></div>
+                </div>
 
 
-              </main>
+            </main> 
+
+
+
+
+
+
+            <!-- The Modal -->
+        <div id="tile-Modal" class="tile-modal">
+            <!-- Modal content -->
+            <div class="tile-modal-content">
+            <span class="close">&times;</span>
+            <div class="modalContent">
+                <div class="modalHeader">UNDEFINED</div>
+                <hr>
+
+                <div class="sliderModule" data-id="0" >
+                    <span class="sliderModuleLabel">Slider 1</span>
+                    <div class="slider" class="hx-slider"></div>
+                </div>
+
+                <div class="sliderModule" data-id="0" >
+                    <span class="sliderModuleLabel">Slider 2</span>
+                    <div class="slider" class="hx-slider"></div>
+                </div>
+                <hr>
+
+                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
+                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
+                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
+                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
+                <hr>
+
+                <div class="graphModul" data-header="Last Week">
+                        <canvas id="myChart"></canvas>
+                </div>
+                <hr>
+                <div class="graphModul" data-header="Last Month">
+                        <canvas id="myChart"></canvas>
+                </div>
+                <hr>
+
+
+                <div class="modalTimer">Timer Settings
+                    Timer
+                    <input type="text" class="timepicker">
+                </div>
             </div>
-
+            </div>
         </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-      </div>    
-</body>
+
+
+        </div> 
+    </body>
 </html> 

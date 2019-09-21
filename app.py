@@ -1,5 +1,4 @@
 from flask import Flask, render_template, url_for, copy_current_request_context, request
-#from html_to_json_parser import HTMLtoJSONParser
 from console_interact import PythonConsole
 from flask_socketio import SocketIO, emit
 from arduino import Arduino
@@ -9,7 +8,6 @@ import random
 import json
 import glob
 import os
-import time
 
 SEPARATORS = (",", ":")
 IMG_PATH = "static/Img"
@@ -60,23 +58,13 @@ class AsynCommunication(Thread):
         :return:
         """
         pass
-        #while not thread_stop_event.isSet():
-          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>100</l> <r>100</r> <u>100</u> <d>100</d>")
-          #time.sleep(0.05)
-          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>0</l> <r>0</r> <u>0</u> <d>0</d>")
-          #time.sleep(0.1)
-          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>100</l> <r>100</r> <u>100</u> <d>100</d>")
-          #time.sleep(0.05)
-          #arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>0</l> <r>0</r> <u>0</u> <d>0</d>")
-          #time.sleep(2)
-
         # TODO NAMESPACE i v disconnect a connect
         
-        while not thread_stop_event.isSet():
-            socketio.emit(self.NAME, json.dumps({"type": "console", "status": "error", "message": "Just a test"}),
-                           namespace=self.NAMESPACE)
+        #while not thread_stop_event.isSet():
+        #    socketio.emit(self.NAME, {"type": "console", "status": "error", "message": "Just a test"},
+        #                   namespace=self.NAMESPACE)
 
-            time.sleep(self.DELAY)
+        #    time.sleep(self.DELAY)
 
     def run(self):
         """
@@ -132,7 +120,18 @@ def get_icons():
 def receive():
     d = request.form["data"]
     pythonConsole.debug(d)
-    arduino.write(d)
+     
+    if d.split("<value>")[1].split("</value>")[0] == "100":
+        for i in range(256):
+            i = str(i)
+            arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>"+i+"</l> <r>"+i+"</r> <u>"+i+"</u> <d>"+i+"</d>")
+    
+    else:
+        #for i in range(255,-1,-1):
+        #    i = str(i)
+        #    arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>"+i+"</l> <r>"+i+"</r> <u>"+i+"</u> <d>"+i+"</d>")        
+        
+        arduino.write(d)
 
     return "ok"
 
