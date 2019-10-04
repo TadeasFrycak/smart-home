@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
-        <script src="/static/jquery.js"></script> 
-        <script src="/static/bootstrap/bootstrap.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">        
+        <link type="text/css" rel="stylesheet" href="/static/dist/hexagon.css">
+        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css">
+        <link type="text/css" rel="stylesheet" href="/static/main.css">
+        <link type="text/css" rel="stylesheet" href="/static/swiper.min.css">
+        <link type="text/css" rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="/static/rangeslider.css">
         
-        <link rel="stylesheet" href="/static/dist/hexagon.css">
-        <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css"  media="screen,projection"/>
-        <link rel="stylesheet" href="/static/main.css">
-        <link rel="stylesheet" href="/static/swiper.min.css">
-        
+        <script type="text/javascript" src="/static/jquery.js"></script>         
         <script type="text/javascript" src="/static/dist/hexagon.js"></script>
         <script type="text/javascript" src="/static/materialize/js/materialize.js"></script>
-        <script src="/static/moment/moment.js"></script>
-        <script src="/static/Chart.js-2.8.0/dist/Chart.js"></script>
-        <script src="/static/hammer.js"></script>
-        <script src="/static/swiper.min.js"></script>
-        <script src="/static/main.js"></script>
+        <script type="text/javascript" src="/static/moment/moment.js"></script>
+        <script type="text/javascript" src="/static/Chart.js-2.8.0/dist/Chart.js"></script>
+        <script type="text/javascript" src="/static/hammer.js"></script>
+        <script type="text/javascript" src="/static/swiper.min.js"></script>
+        <script type="text/javascript" src="/static/main.js"></script>
+        <script type="text/javascript" src="/static/bootstrap/bootstrap.min.js"></script>  
         
-
+        <script src="/static/swiper.min.js"></script>
+        <script src="/static/rangeslider.min.js"></script>     
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -27,67 +29,76 @@
     </head>
     
     <body>
-        <div class="container">
-            <!-- Tohle Bootstrap upravuje-->
-
-            <header>
-                IoT v10 for testing
-            </header>
 
 
-            <main>
-                <div class="tile">
-                    <div class="tileTextLayer">
-                        <img src="/static/Img/icon-3-fan.png" class="tileImage">
-                        <span class="tileDescription">DESK FAN</span>
-                        <span class="tileStatus">OFF</span>
-                    </div>
-                    <div class="titeAtributes">test</div>
-                    <div class="tileTouchLayer tileToggle tileModal"></div>
-                </div>
+<div class="container">  
+    <header>
+        IoT v10 for testing
+    </header>
 
-                <div class="tile">
-                    <div class="tileTextLayer">
-                        <img src="/static/Img/icon-1-light-bulb.png" class="tileImage">
-                        <span class="tileDescription">MY DESK LAMP</span>
-                        <span class="tileStatus">OFF</span>
-                    </div>
-                    <div class="titeAtributes">test</div>
-                    <div class="tileTouchLayer tileToggle tileModal"></div>
-                </div>
-
-                <div class="tile">
-                    <div class="tileTextLayer">
-                        <div class="tileInputVal">14<span style="font-size: 15px;"> %</span></div>
-                        <span class="tileDescription">Humidity Bathroom</span>
-                        <span class="tileStatus">1hr ago</span>
-                    </div>
-                    <div class="tileTouchLayer tileModal"></div>
-                </div>
-
-                <div class="tile">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">         
+            <div class="swiper-slide">
+                        
+                        
+                <main>
+                    <div class="tile">
                         <div class="tileTextLayer">
-                            <div class="tileInputVal">23:59</div>
-                            <span class="tileDescription">Alarm clock</span>
-                            <span class="tileStatus">Active</span>
+                            <img src="/static/Img/icon-3-fan.png" class="tileImage">
+                            <span class="tileDescription">DESK FAN</span>
+                            <span class="tileStatus">OFF</span>
+                        </div>
+                        <div class="titeAtributes">test</div>
+                        <div class="tileTouchLayer tileToggle tileModal"></div>
+                    </div>
+
+                    <div class="tile">
+                        <div class="tileTextLayer">
+                            <img src="/static/Img/icon-1-light-bulb.png" class="tileImage">
+                            <span class="tileDescription">MY DESK LAMP</span>
+                            <span class="tileStatus">30%</span>
                         </div>
                         <div class="tileTouchLayer tileToggle tileModal"></div>
                     </div>
 
-
-                <div class="tile">
-                    <div class="tileTextLayer">
-                        <div class="tileInputVal">255<span style="font-size: 15px;"> ml</div>
-                        <span class="tileDescription">WATER LEVEL</span>
+                    <div class="tile">
+                        <div class="tileTextLayer">
+                            <div class="tileInputVal">14<span style="font-size: 15px;"> %</span></div>
+                            <span class="tileDescription">Humidity Bathroom</span>
+                            <span class="tileStatus">1hr ago</span>
+                        </div>
+                        <div class="tileTouchLayer tileModal"></div>
                     </div>
-                    <div class="tileTouchLayer tileModal"></div>
-                </div>
+
+                    <div class="tile">
+                            <div class="tileTextLayer">
+                                <div class="tileInputVal">06<sup class="upper-index">25</sup></div>
+                                <span class="tileDescription">Alarm clock</span>
+                                <span class="tileStatus">Active</span>
+                            </div>
+                            <div class="tileTouchLayer tileToggle tileModal"></div>
+                        </div>
 
 
-            </main> 
+                    <div class="tile">
+                        <div class="tileTextLayer">
+                            <div class="tileInputVal">255<span style="font-size: 15px;"> ml</div>
+                            <span class="tileDescription">WATER LEVEL</span>
+                        </div>
+                        <div class="tileTouchLayer tileModal"></div>
+                    </div>
+                </main> 
+                
+            </div>  <!--konec prvni stranky-->
+            <div class="swiper-slide">Stranka 2</div>
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+        
+    </div>
 
-
-
+            
+        
 
 
 
@@ -109,33 +120,81 @@
                     <span class="sliderModuleLabel">Slider 2</span>
                     <div class="slider" class="hx-slider"></div>
                 </div>
+
                 <hr>
 
-                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
-                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
-                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
-                <div class="toggleModule">This is a Toggle switch<div class="toggle"></div></div>
+
+
+
+                <div class="buttonModule" data-id="toggle1">
+                    <div class="toggle-slider-div">This is a Toggle switch
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="buttonModule" data-id="toggle2">
+                    <div class="toggle-slider-div">This is a Toggle switch
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="buttonModule" data-id="toggle3">
+                    <div class="toggle-slider-div">This is a Toggle switch
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="buttonModule" data-id="toggle4">
+                    <div class="toggle-slider-div">This is a Toggle switch
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                
                 <hr>
 
-                <div class="graphModul" data-header="Last Week">
+                <div class="graphModul modalModule" data-header="Last Week">
                         <canvas id="myChart"></canvas>
                 </div>
-                <hr>
-                <div class="graphModul" data-header="Last Month">
-                        <canvas id="myChart"></canvas>
-                </div>
+
                 <hr>
 
-
-                <div class="modalTimer">Timer Settings
-                    Timer
-                    <input type="text" class="timepicker">
+                <div class="dropDownModule modalModule">
+                    <div class="input-field col s12">
+                        <select>
+                            <option value="" disabled selected>Choose your color</option>
+                            <option value="1">RED</option>
+                            <option value="2">GREEN</option>
+                            <option value="3">BLUE</option>
+                        </select>
+                        <label>Select your color</label>
+                    </div>
                 </div>
+
+                <hr>
+
+                <div class="timerModule modalModule">
+                    <div class="modalTimer">Timer Settings
+                        Timer
+                        <input type="text" class="timepicker">
+                    </div>
+                </div>
+
             </div>
             </div>
         </div>
-
-
         </div> 
     </body>
 </html> 

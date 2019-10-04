@@ -1,6 +1,6 @@
 main{
     position: absolute;
-    top: 190px;
+    top: 90px;
 }
 
 .tile{
@@ -167,13 +167,9 @@ main{
     font-size: 40px;
 }
 
-
 .modal{
     top: 1%;
 }
-
-
-
 
 .sliderModule{
     position: relative;
@@ -191,7 +187,6 @@ main{
     margin-bottom: 30px;
 }
 
-
 .slider{
     height: 30px;
 }
@@ -203,3 +198,38 @@ main{
 }
 
 
+.upper-index{
+    font-size: 60%;
+  }
+
+  .modalModule{
+      padding-top: 3px;
+      padding-bottom: 3px;
+  }
+
+  .buttonModule{
+      margin-top: 15px;
+      margin-bottom: 15px;
+  }
+
+  .swiper-container {
+    width: 90vw;
+    height: 90vh;
+}  
+
+.swiper-pagination-bullets{
+    background-color: red;
+}
+.swiper-slide {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background-color: transparent;
+}
