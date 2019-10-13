@@ -1,0 +1,15 @@
+{
+    "modal": {
+        "slider": "<div class='sliderModule' data-id='::id::' ><span class='sliderModuleLabel'>::label::</span><div class='slider' class='hx-slider'></div></div>",
+        "separator": "<hr>",
+        "toggle": "<div class='buttonModule' data-id='::id::'><div class='toggle-slider-div'>::label::<label class='switch'><input type='checkbox'><span class='toggle-slider round'></span></label></div></div>",
+        "graph": "<div class='graphModul modalModule' data-header='::label::'><canvas></canvas></div>",
+        "dropdown_menu":  "<div class='dropDownModule modalModule'><div class='input-field col s12'><select><option value='' disabled selected>::LABEL::</option><option value='1'>RED</option><option value='2'>GREEN</option><option value='3'>BLUE</option></select><label>::LABEL::</label></div></div>",
+        "timer_module": "<div class='timerModule modalModule'><div class='modalTimer'>::LABEL::<input type='text' class='timepicker'></div></div>"
+    },
+    
+    "items": {
+        "toggle": "<div class='tile' data-id='::id::'><div class='tileTextLayer'><img src='::img_src::' class='tileImage'><span class='tileDescription'>::label::</span><span class='tileStatus'>OFF</span></div><div class='titeAtributes'>test</div><div class='tileTouchLayer tileToggle tileModal'></div></div>",    
+        "percentage": "<div class='tile' data-id='::id::'><div class='tileTextLayer'><div class='tileInputVal'>::percentage::<span style='font-size: 15px;'> ::suffix::</span></div><span class='tileDescription'>::label::</span><span class='tileStatus'>1hr ago</span></div><div class='tileTouchLayer tileModal'></div></div>"
+    }
+}

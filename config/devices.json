@@ -1,0 +1,151 @@
+{
+    "title": "Smart Home",
+    "items": [
+        [
+            {
+                "type": "percentage",
+                "data": {
+                    "id": "item1",
+                    "label": "Hladina vody",
+                    "percentage": "58",
+                    "suffix": "ml"
+                },
+                "modal": [
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle",
+                            "label": "Tohle jesť toggle"
+                        }
+                    },
+                    {
+                        "type": "separator",
+                        "data": {
+                            "id": "toggl2e",
+                            "label": "Tohle jesť toggle"
+                        }
+                    },
+                    {
+                        "type": "dropdown_menu",
+                        "data": {
+                            "id": "toggle2",
+                            "label": "Tohle jesť toggle2"
+                        }
+                    },
+                    {
+                        "type": "graph",
+                        "data": {
+                            "label": "FRAF9K"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "percentage",
+                "data": {
+                    "id": "item2",
+                    "label": "Vlkost vzduchu",
+                    "percentage": "12",
+                    "suffix": "%"
+                },
+                "modal": [
+                    {
+                        "type": "timer_module",
+                        "data": {
+                            "id": "toggle",
+                            "label": "Čerpadlo"
+                        }
+                    },
+                    {
+                        "type": "slider",
+                        "data": {
+                            "id": "toggle2",
+                            "label": "zapnuto"
+                        }
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "type": "percentage",
+                "data": {
+                    "id": "item3",
+                    "label": "Templota vzduchu",
+                    "percentage": "23",
+                    "suffix": "°C"
+                },
+                "modal": [
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle",
+                            "label": "Tohle jesť toggle"
+                        }
+                    },
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle2",
+                            "label": "Tohle jesť toggle2"
+                        }
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "type": "percentage",
+                "data": {
+                    "id": "item4",
+                    "label": "Vlhokst",
+                    "percentage": "58",
+                    "suffix": "%"
+                },
+                "modal": [
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle",
+                            "label": "Tohle jesť toggle"
+                        }
+                    },
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle2",
+                            "label": "Tohle jesť toggle2"
+                        }
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "type": "percentage",
+                "data": {
+                    "id": "item5",
+                    "label": "Ahojky",
+                    "percentage": "58",
+                    "suffix": "%"
+                },
+                "modal": [
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle",
+                            "label": "Tohle jesť toggle"
+                        }
+                    },
+                    {
+                        "type": "toggle",
+                        "data": {
+                            "id": "toggle2",
+                            "label": "Tohle jesť toggle2"
+                        }
+                    }
+                ]
+            }
+        ]
+    ]
+}

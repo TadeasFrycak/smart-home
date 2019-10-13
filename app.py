@@ -1,190 +1,35 @@
-from flask import Flask, render_template, url_for, copy_current_request_context, request
-from console_interact import PythonConsole
-from flask_socketio import SocketIO, emit
-from arduino import Arduino
-from threading import Thread, Event
-import os.path
-import random
-import json
-import glob
-import os
+from flask import Flask, render_template, request
+from library.file_manager import FileManager
+from library.template_manager import TemplateManager
+import socket
 
-SEPARATORS = (",", ":")
-IMG_PATH = "static/Img"
-IMG_BCG = "bcg"
-ICON = "icon"
+CONTENT = "::content::"
 
-pythonConsole = PythonConsole()
+fmng = FileManager()
+tmng = TemplateManager()
 
-try:    
-    pythonConsole.introduction()
-
-except Exception as e:
-    pythonConsole.error(e)
-    input()
-
-# Create app
 app = Flask(__name__)
-socketio = SocketIO(app)
 
-thread = Thread()
-thread_stop_event = Event()
-
-arduino = Arduino(console_log=pythonConsole)
-
-data = [0, "0", "0", "0"]
-
-
-class AsynCommunication(Thread):
-    """
-    Asynchronous communication class
-    """
-    
-    # Define some constants
-    DELAY = 2
-    NAMESPACE = "/test"
-    NAME = "newstate"
-    
-    def __init__(self):
-        """
-        Init of class AsynCommunication
-        """
-        
-        super(AsynCommunication, self).__init__()
-
-    def test_generator(self):
-        """
-        Send some test data to script
-        :return:
-        """
-        pass
-        # TODO NAMESPACE i v disconnect a connect
-        
-        #while not thread_stop_event.isSet():
-        #    socketio.emit(self.NAME, {"type": "console", "status": "error", "message": "Just a test"},
-        #                   namespace=self.NAMESPACE)
-
-        #    time.sleep(self.DELAY)
-
-    def run(self):
-        """
-        Run Asynchronous Communication
-        :return:
-        """
-        
-        self.test_generator()
-
-
-@app.route("/get_background_images")
-def get_background_images():
-    """
-    Get background images
-    :return: background images
-    """
-
-    backgrounds = []
-    
-    os.chdir(IMG_PATH)
-
-    for file in glob.glob("*.*"):
-        if IMG_BCG in file:
-            backgrounds.append("../" + IMG_PATH + "/" + file)
-            
-    os.chdir("../../")
-    
-    return json.dumps({"status": "ok", "images": backgrounds, "random_image": random.choice(backgrounds)},
-                      separators=SEPARATORS)
-
-
-@app.route("/get_icons")
-def get_icons():
-    """
-    Get background images
-    :return: background images
-    """
-
-    icons = {}
-    
-    os.chdir(IMG_PATH)
-
-    for file in glob.glob("*.*"):
-        if ICON in file:
-            icons["icon" + file.split("-")[1]] = "../" + IMG_PATH + "/" + file
-            
-    os.chdir("../../")
-    
-    return json.dumps({"status": "ok", "icons": icons}, separators=SEPARATORS)
-
-
-@app.route("/post", methods=["POST"])
-def receive():
-    d = request.form["data"]
-    pythonConsole.debug(d)
-     
-    if d.split("<value>")[1].split("</value>")[0] == "100":
-        for i in range(256):
-            i = str(i)
-            arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>"+i+"</l> <r>"+i+"</r> <u>"+i+"</u> <d>"+i+"</d>")
-    
-    else:
-        #for i in range(255,-1,-1):
-        #    i = str(i)
-        #    arduino.write("<type>rgbw_slider</type> <name>Postel</name> <id>bed</id> <icon-id>1</icon-id> <value>0</value> <l>"+i+"</l> <r>"+i+"</r> <u>"+i+"</u> <d>"+i+"</d>")        
-        
-        arduino.write(d)
-
-    return "ok"
-
-
+print(socket.gethostbyname(socket.gethostname()))
 @app.route("/")
 def index():
-    """
-    Render index.html file
-    :return: template to render
-    """
-    # supported_languages = ["en", "cs", "sk", "ru"]
-    # lang = request.accept_languages.best_match(supported_languages)
-    # print(request.accept_languages)
-    # print(lang)
-    # print(request.headers)
-    
-    return render_template("index.html")
+    return tmng.complete_template(template=fmng.load_file(fmng.path_join(fmng.TEMPLATES_DIR, "index.html"), False), devices=fmng.devices(), items=fmng.items())
 
 
-@socketio.on("connect", namespace="/test")
-def client_connect():
-    """
-    Event on user connect
-    :return:
-    """
+@app.route("/get_modal", methods=["POST"])
+def rec():
+    return tmng.complete_modal(id=request.form["id"], devices=fmng.devices(), items=fmng.items())
+    #return """<div id="tile-Modal" class="tile-modal"> <!-- Modal content --> <div class="tile-modal-content"> <span class="close">&times;</span> <div class="modalContent"> <div class="modalHeader">UNDEFINED</div> <hr> <div class="sliderModule" data-id="0"> <span class="sliderModuleLabel">Slider 1</span> <div class="slider" class="hx-slider"></div> </div> <hr> <div class="buttonModule" data-id="toggle4"> <div class="toggle-slider-div">This is a Toggle switch <label class="switch"> <input type="checkbox"> <span class="toggle-slider round"></span> </label> </div> </div> <hr> <div class="graphModul modalModule" data-header="Last Week"> <canvas id="myChart"></canvas> </div> <hr> <div class="dropDownModule modalModule"> <div class="input-field col s12"> <select> <option value="" disabled selected>Choose your color</option> <option value="1">RED</option> <option value="2">GREEN</option> </select> <label>Select your color</label> </div> </div> <hr> <div class="timerModule modalModule"> <div class="modalTimer">Timer Settings Timer <input type="text" class="timepicker"> </div> </div> </div> </div></div>"""
 
-    pythonConsole.debug("Client connected")
-    pythonConsole.debug("\t- Client IP: " + str(request.environ.get("HTTP_X_REAL_IP", request.remote_addr)))
-    pythonConsole.debug("\t- Language: " + str(request.accept_languages))
-    pythonConsole.debug("\t- Header: " + str(request.user_agent))
-    pythonConsole.debug("\t\t- Browser: " + str(request.user_agent.browser))
-    pythonConsole.debug("\t\t- Version: " + str(request.user_agent.version))
-    pythonConsole.debug("\t\t- Platform: " + str(request.user_agent.platform))
-    print(request.host)
-    
-    global thread
+@app.route("/io", methods=["POST"])
+def receive():
+    d = request.form["data"]
+    print(d)
+    return "ok"
 
-    if not thread.isAlive():  # When Asynchronous communication is not started
-        pythonConsole.debug("Starting Thread")
-        
-        thread = AsynCommunication()
-        thread.start()  # Start Asynchronous communication
+if __name__ == "__main__" and bool(fmng.config()["run"]) is True:
+    app.run(host=str(fmng.config()["host"]), debug=bool(fmng.config()["debug"]))
 
-
-@socketio.on("disconnect", namespace="/test")
-def client_disconnect():
-    """
-    Event on user discconnect
-    :return:
-    """
-    
-    pythonConsole.debug("Client disconnected")
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+else:
+    print("Stopped - see config")
 
