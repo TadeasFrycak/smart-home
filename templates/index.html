@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">        
-        <link type="text/css" rel="stylesheet" href="/static/dist/hexagon.css">
+        <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">        
+        <link type="text/css" rel="stylesheet" href="/static/hexagon/hexagon.css">
         <link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.css">
         <link type="text/css" rel="stylesheet" href="/static/main.css">
-        <link type="text/css" rel="stylesheet" href="/static/swiper.min.css">
-        <link type="text/css" rel="stylesheet" href="/static/styles.css">
-        <link rel="stylesheet" href="/static/rangeslider.css">
+        <link type="text/css" rel="stylesheet" href="/static/swiper/swiper.min.css">
+        <link type="text/css" rel="stylesheet" href="/static/toggle-button.css">
         
-        <script type="text/javascript" src="/static/jquery.js"></script>         
-        <script type="text/javascript" src="/static/dist/hexagon.js"></script>
+        <script type="text/javascript" src="/static/jquery/jquery.min.js"></script>         
+        <script type="text/javascript" src="/static/hexagon/hexagon.js"></script>
         <script type="text/javascript" src="/static/materialize/js/materialize.js"></script>
-        <script type="text/javascript" src="/static/moment/moment.js"></script>
-        <script type="text/javascript" src="/static/Chart.js-2.8.0/dist/Chart.js"></script>
-        <script type="text/javascript" src="/static/hammer.js"></script>
-        <script type="text/javascript" src="/static/swiper.min.js"></script>
-        <script type="text/javascript" src="/static/main.js"></script>
-        <script type="text/javascript" src="/static/bootstrap/bootstrap.min.js"></script>  
-        
-        <script src="/static/swiper.min.js"></script>
-        <script src="/static/rangeslider.min.js"></script>     
 
+        <script type="text/javascript" src="/static/chart/dist/Chart.js"></script>
+        <script type="text/javascript" src="/static/hammer/hammer.js"></script>
+        <script type="text/javascript" src="/static/swiper/swiper.min.js"></script>
+        <script type="text/javascript" src="/static/main.js"></script>
+        <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>       
+
+        <style>
+            body {
+              background-image: url("::background_image::");
+            };
+        </style>
+        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
@@ -29,21 +31,14 @@
     </head>
     
     <body>
-
-
-        <div class="swipe-body">  
-            
-
+        <div class="swipe-body">
             <div class="swiper-container">
-                <div class="swiper-wrapper">    
-
-                    ::content:: 
-                    
+                <div class="swiper-wrapper">
+                    ::content::    
+                </div>
+                <div class="swiper-pagination"></div>
             </div>
-            <!-- If we need pagination -->
-            <div class="swiper-pagination"></div>
         </div>
         <div class="modalHere"></div>
-  
     </body>
 </html> 

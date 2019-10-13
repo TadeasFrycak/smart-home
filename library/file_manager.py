@@ -29,20 +29,20 @@ class FileManager:
         f.close()
         return data
 
-    def config(self):
-        if self.config_data is None:
+    def config(self, overwrite):
+        if self.config_data is None or overwrite is True:
             self.config_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_JSON), is_json=True)
 
         return self.config_data
 
-    def devices(self):
-        if self.devices_data is None:
+    def devices(self, overwrite):
+        if self.devices_data is None or overwrite is True:
             self.devices_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES), is_json=True)
             
         return self.devices_data
 
-    def items(self):
-        if self.items_data is None:
+    def items(self, overwrite):
+        if self.items_data is None or overwrite is True:
             self.items_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_ITEMS), is_json=True)
             
         return self.items_data
