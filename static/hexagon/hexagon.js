@@ -9934,6 +9934,7 @@ var hx = (function (exports) {
           if (item === value$1 || item.value === value$1) {
             this.current = item;
             this.view.apply(this.options.items);
+
             this.emit('change', {
               value: item,
               cause: arguments$1[1] ? 'user' : 'api'
@@ -14766,8 +14767,8 @@ var hx = (function (exports) {
     prevValue = this.value();
     this.value(val);
     
-    if (prevValue !== this.value()) {
-      this.emit('change', this.value());
+    if (Math.round(prevValue) !== Math.round(this.value())) {
+      this.emit('change', {"html": this.selector.offsetParent.outerHTML, "value": this.value()});
     }
   };
 

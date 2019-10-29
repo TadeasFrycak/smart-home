@@ -4,7 +4,7 @@ main{
 }
 
 .tile{
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(173, 173, 173);
     height: 100px;
     width: 100px;
     border-radius: 10px;
@@ -12,10 +12,14 @@ main{
     float: left;
     position: relative;
     overflow: hidden;
+    -webkit-box-shadow: 2px 4px 3px 0px rgba(0,0,0,0.4);
+    -moz-box-shadow: 2px 4px 3px 0px rgba(0,0,0,0.4);
+    box-shadow: 2px 4px 3px 0px rgba(0,0,0,0.4);
 }
 
 .tileActive{
-    background-color: rgb(255, 10, 255);
+    transition: 1s;
+    background-color: #ffffff;
 }
 
 .titeAtributes{
@@ -48,14 +52,15 @@ main{
     margin-top: 5px;
     color: #888
 }
-.tileInputVal{
-    width: 80%;
+
+.tileDisplay{
     font-size: 30px;
     margin: 0;
     color: green;
     text-align: center;
     position: absolute;
     line-height: 35px;
+    display: -webkit-inline-box;
 }
 
 
@@ -72,7 +77,6 @@ main{
     height: 100%;
     width: 100%;
     margin: 10px;
-
 }
 
 
@@ -115,6 +119,7 @@ main{
     height: 30px;
     line-height: 30px;
     font-size: 20px;
+    
 }
 
 /* The Modal (background) */
@@ -219,26 +224,15 @@ main{
   }
 
   .swiper-container {
-    width: 100vw;
+    width: auto;
     height: 90vh;
 }  
 
-.swiper-pagination-bullets{
-    background-color: red;
+.swiper-pagination {
+    bottom: 50%;
 }
-.swiper-slide {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    background-color: transparent;
-}
+
+
 
 .swiper-slide {
     display: -webkit-box;
@@ -249,7 +243,8 @@ main{
     -ms-flex-pack: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     background-color: transparent;
 }
@@ -259,11 +254,38 @@ main{
     line-height: 40px;
     width: 100%;
     margin-bottom: 80px;
+    color: #fafafa;
+    text-shadow: horizontal-offset vertical-offset blur color;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.4);
 }
-.swipe-content{
 
-}
 
 .swipe-body{
     padding: 40px;
+}
+
+.end-block{
+    margin-bottom: 200px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+
+}
+
+@media (max-width: 700px) {
+    .swipe-header{
+        text-align: center;
+        padding-top: 70px;
+    }
+    .swipe-body{
+        padding: 2px;
+    }
+    .swipe-content{
+        padding: 40px;
+        height: 100%;
+    }
+    .swiper-container{
+        height: 100vh;
+    }
+
 }

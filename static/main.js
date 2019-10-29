@@ -1,11 +1,60 @@
 $(document).ready(function(){ 
   
   console.log("+----------------------------------+");
-  console.log("|     IoT Project, version 12.2     |");
-  console.log("|     Last modified: 13.10.2019     |");
+  console.log("|     IoT Project, version 10.4    |");
+  console.log("|     Last modified: 27.10.2019    |");
   console.log("|                                  |");
   console.log("|              © 2019              |");
   console.log("+----------------------------------+");
+
+  var slider_prew_val = 0;
+
+  var sliders = [];
+  // Asynchroní přijem dat
+    var socket = io.connect("http://" + document.domain + ":" + location.port + "/acom");
+    socket.on("tile", function(msg) {
+      // console.log($(document).find(msg.i).html());
+      $(".tile").each(function() {
+        var atributeOfCurrentItem = $(this).attr("data-id");
+        if (atributeOfCurrentItem == msg.i)
+        { 
+          var typeOfItem = $(this).attr("data-type");
+
+          if (typeOfItem == "toggle"){
+
+            var prewTileState = $(this).find(".tileStatus").text();
+            var curTileState = msg.v;
+
+            if (prewTileState == "ON" && curTileState == 0)     { $(this).find(".tileStatus").text("OFF"); $(this).toggleClass('tileActive'); }
+            else if (prewTileState== "OFF" && curTileState > 0) { $(this).find(".tileStatus").text("ON"); $(this).toggleClass('tileActive'); } 
+          
+          } 
+          else if (typeOfItem == "percentage")
+          {
+            $(this).find(".tileInputVal").text(msg.v);
+          }
+
+        }
+      });
+    });
+
+    socket.on("slider", function(msg) {
+      for (i=0; i< sliders.length; i++) {
+        var slider_html = sliders[i].selector.offsetParent.outerHTML;
+        var slider_detect_id = $($.parseHTML(slider_html)).attr("data-id");
+        if (slider_detect_id == msg.i){
+          sliders[i].value(msg.v);
+        }
+      };
+    });
+
+  $(".tileStatus").each(function() {
+    //console.log($(this).parent().parent().attr("data-id"));
+    if ($(this).text() == "ON"){
+      $(this).parent().parent().toggleClass('tileActive');
+    }
+  });
+
 
 
   /**
@@ -38,22 +87,57 @@ $(document).ready(function(){
     });
 */    
 
-function initModules(){
-  $(".slider").each(function() {
+function initModules(value){
+  $(".slider").each(function(test) {
     slider = new hx.Slider(this, {max:100});
+    sliders[test] = slider;
+    slider.on('change', function(data){
+        //console.log(data.html.getAttribute("data-id"));
+        //console.log(data.html);
 
-    slider.on('change', function(value){
-      // var target = $( slider.target );
-      value = Math.round(value);
-      //   console.log(target.parent().parent().parent().html());
-      //   console.log(x);
-        $.post( "/io", {
-                data: value
-            },
-        function(result){
-                console.log(result);
-            });
+        var string = data.html;
+        var slider_id = $($.parseHTML(string)).attr("data-id");
+        var slider_value = Math.round(data.value);
+        //console.log(jqueryObject.attr("data-id"));
+        if (slider_prew_val != slider_value)
+        {
+          slider_prew_val = slider_value;  
+          $.post( "/slider", {
+                  "i": slider_id,
+                  "v": slider_value,
+                  "id_tile": value
+          },
+          function(result){
+                  // console.log(result);
+          });
+        }
+
     });
+    $(slider).each(function() {
+      var slider_html = slider.selector.offsetParent.outerHTML;
+      var slider_detect_id = $($.parseHTML(slider_html)).attr("data-id");
+      $.post("/slider_setting", {
+        "i": slider_detect_id,
+        "id_tile": value
+      },
+      function(result){
+        $(slider).each(function() {
+          /*var slider_html = slider.selector.offsetParent.outerHTML;
+          var slider_detect_id = $($.parseHTML(slider_html)).attr("data-id");
+          console.log("Found " + slider_detect_id + ", searching for: ");
+          if (slider_detect_id == JSON.parse(result).i){
+            slider.value(JSON.parse(result).v);
+            console.log(JSON.parse(result).v);
+          }*/
+        });
+
+
+        console.log(result);
+        //slider.value(JSON.parse(result).v);
+        
+      });
+    });
+    
 
   });
 
@@ -110,8 +194,11 @@ function initModules(){
 
   
   // CheckBox; 
-  $('input[type="checkbox"]').click(function(){
+  //$('input[type="checkbox"]').click(function(){
+  //$('.toggle-slider').click(function(){
+  $('.input[type="checkbox"]').on('click', function(e) {
     var IDofObject = $(this).parent().parent().parent().attr("data-id");
+    console.log("aaa");
 
     if($(this).prop("checked") == true){
       var stateOfObject = "checked";
@@ -126,9 +213,24 @@ function initModules(){
 
   $('.tileToggle').each(function(){
       var $this = $(this);
-      var mc = new Hammer(this);
+      var mc = new Hammer(this); 
       mc.on("tap", function() {
+
           $this.parent().toggleClass('tileActive');
+          
+          var tile_id = $this.parent().attr("data-id");
+          var tile_state = 0;
+
+          var tile_state = $this.parent().find(".tileStatus").text();
+          if (tile_state == "ON") { $this.parent().find(".tileStatus").text("OFF"); tile_state = 0; }
+          else if (tile_state == "OFF") { $this.parent().find(".tileStatus").text("ON"); tile_state = 1; }
+
+          $.post("/tile", {
+              "i": tile_id,
+              "v": tile_state
+          },
+              function(result){
+          });
       });
   });
 
@@ -136,13 +238,14 @@ function initModules(){
     var $this = $(this);
     var mc = new Hammer(this);
     mc.on("press", function() {
+      // console.log($this.parent().attr("data-id"));
       var IDofObject = $this.parent().attr("data-id");
       //console.log(IDofObject);
       var value = IDofObject
 
       $.post( "/get_modal", {
-            type: "modal",
-            id: value
+            "type": "modal",
+            "i": value
         },
         
         function(result){
@@ -150,10 +253,13 @@ function initModules(){
           //console.log(data);
           $(".modalHere").append(result);
           genModal().style.display = "block";
-          initModules();
+          initModules(value);
           var header = tileGetAtributeByName($this.parent(),"tileDescription");
           $(".modalHeader").text(header);
       });
+
+      
+
 
     });
   });
