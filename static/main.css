@@ -12,9 +12,7 @@ main{
     float: left;
     position: relative;
     overflow: hidden;
-    -webkit-box-shadow: 2px 4px 3px 0px rgba(0,0,0,0.4);
-    -moz-box-shadow: 2px 4px 3px 0px rgba(0,0,0,0.4);
-    box-shadow: 2px 4px 3px 0px rgba(0,0,0,0.4);
+    box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
 }
 
 .tileActive{
@@ -289,3 +287,11 @@ main{
     }
 
 }
+
+.page_settings_icon{
+    position: absolute;
+    width: 40px;
+    right: 10px;
+}
+
+

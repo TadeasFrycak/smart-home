@@ -19,9 +19,9 @@ class FileManager:
         Init of class FileManager
         """
 
-        self.config_data = None
-        self.devices_data = None
-        self.items_data = None
+        self.__config_data = None
+        self.__devices_data = None
+        self.__items_data = None
         
         # self.root_dir = os.path.dirname(sys.modules["__main__"].__file__)
 
@@ -47,6 +47,14 @@ class FileManager:
 
     @staticmethod
     def write_file(path, data, is_json):
+        """
+        Write to file
+        :param path: path to file
+        :param data: data
+        :param is_json: is JSON?
+        :return:
+        """
+
         f = open(path, "w")
 
         if is_json is True:
@@ -57,6 +65,15 @@ class FileManager:
 
         f.close()
 
+    def write_devices(self, path, data, is_json):
+        """
+        Write to RAM
+        :param path: old
+        :param data: data
+        :return:
+        """
+        self.__devices_data = data
+
     def config(self, overwrite=False):
         """
         Get config
@@ -64,10 +81,10 @@ class FileManager:
         :return:
         """
 
-        if self.config_data is None or overwrite is True:
-            self.config_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_JSON), is_json=True)
+        if self.__config_data is None or overwrite is True:
+            self.__config_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_JSON), is_json=True)
 
-        return self.config_data
+        return self.__config_data
 
     def devices(self, overwrite=False):
         """
@@ -76,10 +93,10 @@ class FileManager:
         :return:
         """
 
-        if self.devices_data is None or overwrite is True:
-            self.devices_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES), is_json=True)
+        if self.__devices_data is None or overwrite is True:
+            self.__devices_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES), is_json=True)
             
-        return self.devices_data
+        return self.__devices_data
 
     def items(self, overwrite=False):
         """
@@ -88,10 +105,10 @@ class FileManager:
         :return:
         """
 
-        if self.items_data is None or overwrite is True:
-            self.items_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_ITEMS), is_json=True)
+        if self.__items_data is None or overwrite is True:
+            self.__items_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_ITEMS), is_json=True)
             
-        return self.items_data
+        return self.__items_data
 
     @staticmethod
     def path_join(path1, path2):

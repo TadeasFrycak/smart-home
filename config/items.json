@@ -2,10 +2,11 @@
     "modal": {
         "slider": "<div class='sliderModule' data-id='::id::' ><span class='sliderModuleLabel'>::label::</span><div class='slider' class='hx-slider'></div></div>",
         "separator": "<hr>",
-        "toggle": "<div class='buttonModule' data-id='::id::'><div class='toggle-slider-div'>::label::<label class='switch'><input type='checkbox'><span class='toggle-slider round'></span></label></div></div>",
+        "toggle": "<div class='buttonModule' data-id='::id::'><div class='toggle-slider-div'>::label::<label class='switch'><input type='checkbox' class='modal_toggle'><span class='toggle-slider round'></span></label></div></div>",
         "graph": "<div class='graphModul modalModule' data-header='::label::'><canvas></canvas></div>",
         "dropdown_menu":  "<div class='dropDownModule modalModule'><div class='input-field col s12'><select><option value='' disabled selected>::label::</option><option value='1'>RED</option><option value='2'>GREEN</option><option value='3'>BLUE</option></select><label>::LABEL::</label></div></div>",
-        "timer_module": "<div class='timerModule modalModule'><div class='modalTimer'>::label::<input type='text' class='timepicker'></div></div>"
+        "timer_module": "<div class='timerModule modalModule'><div class='modalTimer'>::label::<input type='text' class='timepicker'></div></div>",
+        "progress_bar": "<div class='progress'><div class='progress-bar progress-bar-::color::' role='progressbar' aria-valuenow='70' aria-valuemin='0' aria-valuemax='100' style='width:::value::%'>::label::</div></div>"
     },
     
     "items": {

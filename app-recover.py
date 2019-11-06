@@ -15,20 +15,19 @@ import time
 import subprocess
 
 PRIORITY = [logging.DEBUG, logging.WARNING, logging.ERROR, logging.CRITICAL, logging.FATAL]
+STATUS = ["OFF", "ON"]
 ID = "i"
 VALUE = "v"
 
-
-app = Flask(__name__)
-socket_io = SocketIO(app)
-
-console = Console(socket_io=socket_io)
+console = Console()
 fmng = FileManager()
 tmng = TemplateManager(fmng=fmng, console=console)
 arduino = Arduino(console=console)
 html_json = HTML_JSON()
 auth = Auth()
 
+app = Flask(__name__)
+socket_io = SocketIO(app)
 
 thread = Thread()
 thread_stop_event = Event()
@@ -105,15 +104,40 @@ def access_denied():
 def get_modal():
     """
     Get modal
-    :return: modal, slider and toggle values
+    :return: modal and slider values
     """
 
-    console.print("Loading modal...")
+    console.print("Loaded modal")
 
     id_tile = request.form[ID]
 
-    return json.dumps({"modal": tmng.complete_modal(element_id=id_tile), "sliders": tmng.get_sliders(id_tile=id_tile),
-                       "toggles": tmng.get_toggles(id_tile=id_tile)})
+    data = fmng.devices()
+
+    sliders = {}
+    for page_num, page_content in enumerate(data[tmng.ITEMS]):
+        for item_num, item_content in enumerate(data[tmng.ITEMS][page_num][tmng.DATA]):
+            if data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.DATA][tmng.ID] == id_tile:
+                for modal_item in item_content[tmng.MODAL]:
+                    if modal_item[tmng.TYPE] == tmng.SLIDER:
+                        sliders[modal_item[tmng.DATA][tmng.ID]] = modal_item[tmng.VALUE]
+                break
+        else:
+            continue
+        break
+
+    toggles = {}
+    for page_num, page_content in enumerate(data[tmng.ITEMS]):
+        for item_num, item_content in enumerate(data[tmng.ITEMS][page_num][tmng.DATA]):
+            if data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.DATA][tmng.ID] == id_tile:
+                for modal_item in item_content[tmng.MODAL]:
+                    if modal_item[tmng.TYPE] == tmng.TOGGLE:
+                        toggles[modal_item[tmng.DATA][tmng.ID]] = modal_item[tmng.VALUE]
+                break
+        else:
+            continue
+        break
+
+    return json.dumps({"modal": tmng.complete_modal(element_id=id_tile), "sliders": sliders, "toggles": toggles})
 
 
 @app.route("/slider", methods=["POST"])
@@ -123,14 +147,22 @@ def slider():
     :return:
     """
 
-    # json_data = request.form.to_dict(flat=True)
+    json_data = request.form.to_dict(flat=True)
     id = request.form[ID]
     state = request.form[VALUE]
     id_tile = request.form["id_tile"]
 
-    tmng.slider_rwr(id_tile=id_tile, state=state, element_id=id)
+    data = fmng.devices()
+    for page_num, page_content in enumerate(data[tmng.ITEMS]):
+        for item_num, item_content in enumerate(data[tmng.ITEMS][page_num][tmng.DATA]):
+            if data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.DATA][tmng.ID] == id_tile:
+                for modal_num, modal_item in enumerate(item_content[tmng.MODAL]):
+                    if modal_item[tmng.TYPE] == tmng.SLIDER and modal_item[tmng.DATA][tmng.ID] == id:
+                        data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.MODAL][modal_num][tmng.VALUE] = state
+                        fmng.write_file(path=fmng.path_join(fmng.CONFIG_DIR, fmng.CONFIG_DEVICES), data=data, is_json=True)
 
-    socket_io.emit("notify", {"title": id, "message": state, "type": "info"}, namespace="/acom")
+    # socket_io.emit("slider", {ID: id, VALUE: state}, namespace="/acom")
+    # arduino.write(html_json.to_html(json_data=json_data))
 
     return "ok"
 
@@ -148,10 +180,17 @@ def toggle():
     state = request.form[VALUE]
     id_tile = request.form["id_tile"]
 
-    tmng.toggle_rwr(id_tile=id_tile, state=state, element_id=id)
+    data = fmng.devices()
+    for page_num, page_content in enumerate(data[tmng.ITEMS]):
+        for item_num, item_content in enumerate(data[tmng.ITEMS][page_num][tmng.DATA]):
+            if data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.DATA][tmng.ID] == id_tile:
+                for modal_num, modal_item in enumerate(item_content[tmng.MODAL]):
+                    if modal_item[tmng.TYPE] == tmng.TOGGLE and modal_item[tmng.DATA][tmng.ID] == id:
+                        data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.MODAL][modal_num][tmng.VALUE] = state
+                        fmng.write_file(path=fmng.path_join(fmng.CONFIG_DIR, fmng.CONFIG_DEVICES), data=data, is_json=True)
 
     # socket_io.emit("slider", {ID: id, VALUE: state}, namespace="/acom")
-    arduino.write(html_json.to_html(json_data=json_data))
+    # arduino.write(html_json.to_html(json_data=json_data))
 
     return "ok"
 
@@ -168,11 +207,22 @@ def tile():
     id = request.form[ID]
     state = request.form[VALUE]
 
-    # socket_io.emit("tile", {ID: id, VALUE: state}, namespace="/acom")
+    socket_io.emit("tile", {ID: id, VALUE: state}, namespace="/acom")
 
-    tmng.tile_rwr(state=state, element_id=id)
+    data = fmng.devices()
+    for page_num, page_content in enumerate(data[tmng.ITEMS]):
+        for item_num, item_content in enumerate(data[tmng.ITEMS][page_num][tmng.DATA]):
+            if data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.DATA][tmng.ID] == id:
+                data[tmng.ITEMS][page_num][tmng.DATA][item_num][tmng.DATA][tmng.STATUS] = STATUS[int(state)]
+                fmng.write_file(path=fmng.path_join(fmng.CONFIG_DIR, fmng.CONFIG_DEVICES), data=data, is_json=True)
+                break
+        else:
+            continue
 
-    # arduino.write(html_json.to_html(json_data=json_data))
+        break
+
+    console.print(json_data)
+    arduino.write(html_json.to_html(json_data=json_data))
     return "ok"
 
 

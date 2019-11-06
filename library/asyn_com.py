@@ -1,4 +1,6 @@
 from threading import Thread, Event
+import time
+import json
 
 
 class AsynchronousCommunication(Thread):
@@ -9,7 +11,7 @@ class AsynchronousCommunication(Thread):
     # Define some constants
     DELAY = 2
     NAMESPACE = "/acom"
-    NAME = "test"
+    NAME = "tile"
 
     def __init__(self):
         """
@@ -24,20 +26,14 @@ class AsynchronousCommunication(Thread):
         :return:
         """
 
-        # while not thread_stop_event.isSet():
-        # while not thread_stop_event.isSet():
-        # if random.choice([0, 1]) == 1:
-        #    socket_io.emit(self.NAME, {"id": random.choice(
-        #        ["toggle-1", "toggle-2", "toggle-3", "toggle-4", "toggle-6", "toggle-7", "toggle-8", "toggle-9"]),
-        #                               "value": random.randint(0, 1)}, namespace=self.NAMESPACE)
+        while not thread_stop_event.isSet():
+            data = arduino.read()
+            if data is not None:
+                console.print(data)
+                console.print(html_json.to_json(data))
+                socket_io.emit(self.NAME, json.loads(html_json.to_json(data)),  namespace=self.NAMESPACE)
 
-        # else:
-        #    socket_io.emit(self.NAME, {"id": random.choice(
-        #        ["percentage-1", "percentage-2", "percentage-3", "percentage-4", "percentage-5"]),
-        #                               "value": random.randint(0, 100)}, namespace=self.NAMESPACE)
-        # socket_io.emit(self.NAME, {"id": "toggle-" + str(random.randint(100, 200)),
-        #                           "value": random.randint(0, 1)}, namespace=self.NAMESPACE)
-        # time.sleep(self.DELAY)
+            time.sleep(0.1)
 
     def run(self):
         """
