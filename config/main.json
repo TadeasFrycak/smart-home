@@ -1,6 +1,6 @@
 {
     "run": true,
-    "debug": true,
+    "debug": false,
     "flask_priority": 1,
     "host": "0.0.0.0",
     "whitelist": false

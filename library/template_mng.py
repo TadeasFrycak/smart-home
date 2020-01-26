@@ -5,7 +5,7 @@ import os
 
 class TemplateManager:
     """
-    Template Manager
+    Template Manager class
     """
 
     ITEMS = "items"
@@ -19,8 +19,15 @@ class TemplateManager:
     STATUS = "status"
     VALUE = "value"
 
+    HEADER = "header"
+    ERROR = "error"
+
     SLIDER = "slider"
     TOGGLE = "toggle"
+    GRAPH = "graph"
+
+    DATA_X = "data_x"
+    DATA_Y = "data_y"
 
     STATUSES = ["OFF", "ON"]
 
@@ -40,6 +47,7 @@ class TemplateManager:
         self.__console = console
 
         self.__template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "index.html"), False)
+        self.__error = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "error.html"), False)
         self.__page_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "page.html"),
                                                      False)
         self.__modal_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "modal.html"),
@@ -93,7 +101,17 @@ class TemplateManager:
                                                      False)
         self.__modal_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "modal.html"),
                                                       False)
-        
+
+    def error_page(self, header, error):
+        """
+        Generate error page
+        :param header: header of page
+        :param error: error
+        :return: page
+        """
+
+        return self.__error.replace(self.__value(self.HEADER), header).replace(self.__value(self.ERROR), error)
+
     def index(self):
         """
         Complete index.html template by devices config and items config
@@ -207,6 +225,29 @@ class TemplateManager:
 
                     return toggles
 
+    def get_graphs(self, id_tile):
+        """
+        Return all toggles in modal by id_tile
+        :param id_tile: id of tile
+        :return: toggles in modal
+        """
+
+        # Get pages (number and content)
+        for page_num, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            # Get tiles (number and content)
+            for item_num, item_content in enumerate(self.__fmng.devices()[self.ITEMS][page_num][self.DATA]):
+                # If that tile is current opened tile
+                if self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.DATA][self.ID] == id_tile:
+                    graphs = {}
+
+                    # Get modal items
+                    for modal_item in item_content[self.MODAL]:
+                        # If that item is toggle, append
+                        if modal_item[self.TYPE] == self.GRAPH:
+                            graphs[modal_item[self.DATA][self.ID]] = {self.DATA_X: modal_item[self.DATA_X],
+                                                                      self.DATA_Y: modal_item[self.DATA_Y]}
+                    return graphs
+
     def tile_rwr(self, state, element_id):
         """
         Rewrite tile status
@@ -272,6 +313,33 @@ class TemplateManager:
                         # If that item is slider rewrite
                         if modal_item[self.TYPE] == self.SLIDER and modal_item[self.DATA][self.ID] == element_id:
                             self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.MODAL][modal_num][self.VALUE] = state
+                            self.__fmng.write_devices(path=self.__fmng.path_join(self.__fmng.CONFIG_DIR,
+                                                                                 self.__fmng.CONFIG_DEVICES),
+                                                      data=self.__fmng.devices(), is_json=True)
+                            return True
+
+    def graph_rwr(self, id_tile, data_x, data_y, element_id):
+        """
+        Rewrite graph data
+        :param id_tile: ID of graph parent (tile)
+        :param data_x: data on X
+        :param data_y: data on Y
+        :param element_id: ID of current graph
+        :return:
+        """
+
+        # Get pages (number and content)
+        for page_num, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            # Get tiles (number and content)
+            for item_num, item_content in enumerate(self.__fmng.devices()[self.ITEMS][page_num][self.DATA]):
+                # If that tile is current opened tile
+                if self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.DATA][self.ID] == id_tile:
+                    # Get modal items
+                    for modal_num, modal_item in enumerate(item_content[self.MODAL]):
+                        # If that item is graph rewrite
+                        if modal_item[self.TYPE] == self.GRAPH and modal_item[self.DATA][self.ID] == element_id:
+                            self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.MODAL][modal_num][self.DATA_X].append(data_x)
+                            self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.MODAL][modal_num][self.DATA_Y].append(data_y)
                             self.__fmng.write_devices(path=self.__fmng.path_join(self.__fmng.CONFIG_DIR,
                                                                                  self.__fmng.CONFIG_DEVICES),
                                                       data=self.__fmng.devices(), is_json=True)

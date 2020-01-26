@@ -15,8 +15,48 @@ main{
     box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
 }
 
+.tile_gauge{
+    background-color: rgb(173, 173, 173);
+    height: 212px;
+    width: 212px;
+    border-radius: 10px;
+    margin: 6px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
+}
+
+.tile_chart{
+    background-color: rgb(173, 173, 173);
+    height: 212px;
+    width: 212px;
+    border-radius: 10px;
+    margin: 6px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
+}
+
+.tile_gauge_header{
+    max-width: 200px;
+    height: 65px;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    margin: 0 auto;
+    line-height: 1em;
+    display: table-cell; 
+    vertical-align: middle;
+    position: relative;
+}
+
 .tileActive{
-    transition: 1s;
     background-color: #ffffff;
 }
 
@@ -293,5 +333,4 @@ main{
     width: 40px;
     right: 10px;
 }
-
 

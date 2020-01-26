@@ -2,6 +2,10 @@ import inspect
 
 
 class Console:
+    """
+    Console class
+    """
+
     NEWLINE = ""
     SEPARATOR = "------------------------------------------------------------"
     SEPARATOR_START = "/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ "
@@ -51,10 +55,23 @@ class Console:
     END = "\033[0m"
 
     def __init__(self, socket_io=None, priority_level=1):
+        """
+        Init of Console class
+        :param socket_io: socket_io
+        :param priority_level: define priority log printing
+        """
+
         self.__priority_level = priority_level
         self.__socket_io = socket_io
 
     def print(self, data=None, priority=1):
+        """
+        Print to console
+        :param data:
+        :param priority:
+        :return:
+        """
+
         cur_frame = inspect.currentframe()
         cal_frame = inspect.getouterframes(cur_frame, 2)
         source = cal_frame[1][1].split("/")

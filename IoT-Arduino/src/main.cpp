@@ -146,6 +146,7 @@ void setup() {
   Serial.begin(BAUD);
   
   setUpIO();
+  Serial.println("aa");
 }
 
 void loop() {
@@ -154,7 +155,7 @@ void loop() {
       String received_string = Serial.readStringUntil('$');
       Serial.flush();
       
-      String id    = received_string.substring(received_string.indexOf("<i>"),received_string.indexOf("</i>"));
+      String id    = received_string.substring(received_string.indexOf("<i>"),received_string.indexOf("</i>")); 
       String value = received_string.substring(received_string.indexOf("<v>"),received_string.indexOf("</v>"));
 
       value = value.substring(value.indexOf(">")+1);

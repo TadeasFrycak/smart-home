@@ -24,9 +24,22 @@ class HTML_JSON(html.parser.HTMLParser):
 
     @property
     def json(self):
+        """
+        json
+        :return:
+        """
+
         return self.doc
 
     def to_html(self, json_data):
+        """
+        JSON to HTML
+        :param json_data:
+        :return: HTML
+        """
+
+        # TODO convert JSON to HTML with childrens
+
         html = ""
         for i in json_data:
             html += self.HTML_TAG.format(i, json_data[i])
@@ -35,6 +48,13 @@ class HTML_JSON(html.parser.HTMLParser):
 
     @staticmethod
     def to_json(content, raise_exception=True):
+        """
+        HTML to JSON
+        :param content:
+        :param raise_exception:
+        :return: JSON
+        """
+
         parser = HTML_JSON(raise_exception=raise_exception)
         parser.feed(content)
         json_split = json.dumps(parser.json).split('{"": ')

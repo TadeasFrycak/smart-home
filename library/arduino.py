@@ -56,7 +56,7 @@ class Arduino:
             return self.arduino.write(bytes(data, encoding="utf8"))
 
         else:
-            self.__console.print("Error in writing to Arduino - not defined", priority=3)
+            # self.__console.print("Error in writing to Arduino - not defined", priority=3)
             return False
 
     def read(self):

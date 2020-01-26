@@ -1,1 +1,4924 @@
-{"items": [{"name": "Kuchyn\u011b", "data": [{"type": "toggle", "data": {"id": "toggle-1", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "0", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "progress_bar", "value": "38", "data": {"id": "modal-progress-1", "color": "info", "value": "30", "label": "Instalace..."}}, {"type": "progress_bar", "value": "38", "data": {"id": "modal-progress-1", "color": "success", "value": "40", "label": "Instalace..."}}, {"type": "progress_bar", "value": "38", "data": {"id": "modal-progress-1", "color": "warning", "value": "50", "label": "Instalace..."}}, {"type": "progress_bar", "value": "38", "data": {"id": "modal-progress-1", "color": "danger", "value": "60", "label": "Instalace..."}}, {"type": "separator"}, {"type": "slider", "value": "38", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "69", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-2", "label": "Postel", "status": "ON", "img_src": "/static/images/icons/desk-lamp.png"}, "modal": [{"type": "toggle", "value": "0", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "18", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "89", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-3", "label": "Stoln\u00ed lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/desk-lamp.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "62", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-4", "label": "Lustr", "status": "OFF", "img_src": "/static/images/icons/chandelier.png"}, "modal": [{"type": "toggle", "value": "0", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "0", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "2", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-5", "label": "Klimatizace", "status": "ON", "img_src": "/static/images/icons/climatisation.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "6", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "71", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-6", "label": "Ventil\u00e1tor", "status": "OFF", "img_src": "/static/images/icons/fan.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "100", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "15", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-7", "label": "R\u00e1dio", "status": "OFF", "img_src": "/static/images/icons/radio.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "44", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "65", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-8", "label": "Zesilova\u010d", "status": "OFF", "img_src": "/static/images/icons/amplifier.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "19", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-9", "label": "Repro", "status": "OFF", "img_src": "/static/images/icons/reproductor.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-1", "label": "Teplota", "percentage": "25", "suffix": "\u00b0C"}, "modal": [{"type": "toggle", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}, "value": "1"}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-2", "label": "De\u0161\u0165ov\u00e1 voda", "percentage": "12", "suffix": "l"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "0", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-3", "label": "Vodn\u00ed n\u00e1dr\u017e", "percentage": "97", "suffix": "%"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "100", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-4", "label": "Akumul\u00e1tor", "percentage": "12.1", "suffix": "V"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-5", "label": "Sol\u00e1rn\u00ed panel", "percentage": "2.3", "suffix": "A"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}]}, {"name": "Koupelna", "data": [{"type": "toggle", "data": {"id": "toggle-21", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-23", "label": "Stoln\u00ed lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/desk-lamp.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-24", "label": "Lustr", "status": "ON", "img_src": "/static/images/icons/chandelier.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-25", "label": "Klimatizace", "status": "ON", "img_src": "/static/images/icons/climatisation.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-6", "label": "Ventil\u00e1tor", "status": "OFF", "img_src": "/static/images/icons/fan.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "100", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "15", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-27", "label": "R\u00e1dio", "status": "ON", "img_src": "/static/images/icons/radio.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-28", "label": "Zesilova\u010d", "status": "ON", "img_src": "/static/images/icons/amplifier.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-29", "label": "Repro", "status": "ON", "img_src": "/static/images/icons/reproductor.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-22", "label": "Tepl\u00e1 voda", "percentage": "48", "suffix": "\u00b0C"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-23", "label": "Vodn\u00ed n\u00e1dr\u017e", "percentage": "97", "suffix": "%"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-25", "label": "Sol\u00e1rn\u00ed panel", "percentage": "11.9", "suffix": "V"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}]}, {"name": "Pokoj\u00ed\u010dek", "data": [{"type": "toggle", "data": {"id": "toggle-31", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "toggle", "data": {"id": "toggle-33", "label": "Stoln\u00ed lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/desk-lamp.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}]}, {"name": "Kontrolovna", "data": [{"type": "percentage", "data": {"id": "percentage-51", "label": "Teplota", "percentage": "24", "suffix": "\u00b0C"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-52", "label": "\u010cerpadlo", "percentage": "23", "suffix": "l/min"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-53", "label": "Vodn\u00ed n\u00e1dr\u017e", "percentage": "95", "suffix": "%"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": "39", "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": "22", "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-54", "label": "Sol\u00e1rn\u00ed panel", "percentage": "12.3", "suffix": "V"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-54", "label": "Restart", "percentage": "12:30", "suffix": ""}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-55", "label": "Akumul\u00e1tor", "percentage": "4.4", "suffix": "Ah"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}, {"type": "percentage", "data": {"id": "percentage-56", "label": "V\u011btrn\u00e1 turb\u00edna", "percentage": "53", "suffix": "km/h"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "modal-toggle-1", "label": "Lampi\u010dka"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-2", "label": "Bo\u010dn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-3", "label": "Spodn\u00ed LED"}}, {"type": "toggle", "value": "1", "data": {"id": "modal-toggle-4", "label": "Auto OFF"}}, {"type": "separator"}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-1", "label": "Jas"}}, {"type": "slider", "value": 50, "data": {"id": "modal-slider-2", "label": "Kontrast"}}, {"type": "separator"}, {"type": "graph", "data": {"id": "modal-graph-1", "label": "Graf"}}, {"type": "separator"}, {"type": "timer_module", "data": {"id": "modal-timermodule-1", "label": "Zadejte \u010das.."}}, {"type": "separator"}, {"type": "dropdown_menu", "data": {"id": "modal-choose-1", "label": "Vyberte.."}}]}]}, {"name": "D\u00edlna", "data": [{"type": "toggle", "data": {"id": "toggle-100", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-101", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-102", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-103", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-104", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-105", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-106", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-107", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-108", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-109", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-110", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-111", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-112", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-113", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-114", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-115", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-116", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-117", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-118", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-119", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-120", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-121", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-122", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-123", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-124", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-125", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-126", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-127", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-128", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-129", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-130", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-131", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-132", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-133", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-134", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-135", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-136", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-137", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-138", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-139", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-140", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-141", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-142", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-143", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-144", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-145", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-146", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-147", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-148", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-149", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-150", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-151", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-152", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-153", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-154", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-155", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-156", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-157", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-158", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-159", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-160", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-161", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-162", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-163", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-164", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-165", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-166", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-167", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-168", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-169", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-170", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-171", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-172", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-173", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-174", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-175", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-176", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-177", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-178", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-179", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-180", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-181", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-182", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-183", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-184", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-185", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-186", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-187", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-188", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-189", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-190", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-191", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-192", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-193", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-194", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-195", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-196", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-197", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-198", "label": "Lampi\u010dka", "status": "OFF", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}, {"type": "toggle", "data": {"id": "toggle-199", "label": "Lampi\u010dka", "status": "ON", "img_src": "/static/images/icons/light-bulb.png"}, "modal": [{"type": "toggle", "value": "1", "data": {"id": "toggle", "label": "Tohle jes\u0165 toggle"}}, {"type": "toggle", "value": "0", "data": {"id": "toggle2", "label": "Tohle jes\u0165 toggle2"}}]}]}]}
+{
+	"items": [{
+		"name": "Pokoj\u00ed\u010dek",
+		"data": [{
+			"type": "toggle",
+			"data": {
+				"id": "bed-toggle",
+				"label": "Postel",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/desk-lamp.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "bed-toggle",
+					"label": "Cel\u00e1 postel"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "0",
+				"data": {
+					"id": "bed-left",
+					"label": "Lev\u00e1 strana"
+				}
+			}, {
+				"type": "slider",
+				"value": "0",
+				"data": {
+					"id": "bed-right",
+					"label": "Prav\u00e1 strana"
+				}
+			}, {
+				"type": "slider",
+				"value": "0",
+				"data": {
+					"id": "bed-up",
+					"label": "Horn\u00ed strana"
+				}
+			}, {
+				"type": "slider",
+				"value": "0",
+				"data": {
+					"id": "bed-down",
+					"label": "Doln\u00ed strana"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "raspberry-1",
+				"label": "Server Pi",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/raspberry.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "raspberry-cpu-fan",
+					"label": "CPU ventil\u00e1tor"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "raspberry-birds",
+					"label": "Imagine Dragons - birds"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "raspberry-alarm",
+					"label": "Pozor pozor"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "raspberry-save",
+					"label": "Ulo\u017eit devices.json"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "raspberry-halt",
+					"label": "Vypnout"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "0",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "CPU ventil\u00e1tor [%]"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["2005", "2006", "2007", "2008"],
+				"data_y": [23, 28, 43, 23],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "CPU teplota"
+				}
+			}]
+		}]
+	}, {
+		"name": "Kuchyn\u011b",
+		"data": [{
+			"type": "gauge",
+			"data": {
+				"id": "gauge_01",
+				"label": "\u00darov\u011b\u0148 osv\u011btlen\u00ed",
+				"min_val": "0",
+				"max_val": "120",
+				"suffix": "%",
+				"color": "green",
+				"value": "90"
+			}
+		}, {
+			"type": "gauge",
+			"data": {
+				"id": "gauge_02",
+				"label": "Rychlost v\u011btru",
+				"min_val": "0",
+				"max_val": "100",
+				"suffix": "Km\/h",
+				"color": "purple",
+				"value": "11"
+			}
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-1",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "progress_bar",
+				"value": "38",
+				"data": {
+					"id": "modal-progress-1",
+					"color": "info",
+					"value": "30",
+					"label": "Instalace..."
+				}
+			}, {
+				"type": "progress_bar",
+				"value": "38",
+				"data": {
+					"id": "modal-progress-1",
+					"color": "success",
+					"value": "40",
+					"label": "Instalace..."
+				}
+			}, {
+				"type": "progress_bar",
+				"value": "38",
+				"data": {
+					"id": "modal-progress-1",
+					"color": "warning",
+					"value": "50",
+					"label": "Instalace..."
+				}
+			}, {
+				"type": "progress_bar",
+				"value": "38",
+				"data": {
+					"id": "modal-progress-1",
+					"color": "danger",
+					"value": "60",
+					"label": "Instalace..."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "button",
+				"data": {
+					"id": "modal-button-1",
+					"color": "default",
+					"label": "Tla\u010d\u00edtko 1"
+				}
+			}, {
+				"type": "button",
+				"data": {
+					"id": "modal-button-2",
+					"color": "primary",
+					"label": "Tla\u010d\u00edtko 2"
+				}
+			}, {
+				"type": "button",
+				"data": {
+					"id": "modal-button-3",
+					"color": "success",
+					"label": "Tla\u010d\u00edtko 3"
+				}
+			}, {
+				"type": "button",
+				"data": {
+					"id": "modal-button-6",
+					"color": "info",
+					"label": "Tla\u010d\u00edtko 4"
+				}
+			}, {
+				"type": "button",
+				"data": {
+					"id": "modal-button-4",
+					"color": "warning",
+					"label": "Tla\u010d\u00edtko 4"
+				}
+			}, {
+				"type": "button",
+				"data": {
+					"id": "modal-button-5",
+					"color": "danger",
+					"label": "Tla\u010d\u00edtko 5"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "38",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": "69",
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "apex_graph",
+                "data": {"id": "test-graph"}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf1"
+				}
+			}, {
+				"type": "graph-picker",
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf1"
+				}
+			}, {
+				"type": "graph",
+				"data_x": ["12.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [-10, 0, 100, 90, 40],
+				"data": {
+					"id": "modal-graph-2",
+					"label": "Graf2"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-3",
+				"label": "Stoln\u00ed lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/desk-lamp.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "62",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-5",
+				"label": "Klimatizace",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/climatisation.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "6",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": "71",
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-6",
+				"label": "Ventil\u00e1tor",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/fan.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "100",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": "15",
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-7",
+				"label": "R\u00e1dio",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/radio.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "44",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": "65",
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-8",
+				"label": "Zesilova\u010d",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/amplifier.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "19",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-9",
+				"label": "Repro",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/reproductor.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-1",
+				"label": "Teplota",
+				"percentage": "25",
+				"suffix": "\u00b0C"
+			},
+			"modal": [{
+				"type": "toggle",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				},
+				"value": "1"
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "apex_graph"
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-2",
+				"label": "De\u0161\u0165ov\u00e1 voda",
+				"percentage": "12",
+				"suffix": "l"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-3",
+				"label": "Vodn\u00ed n\u00e1dr\u017e",
+				"percentage": "97",
+				"suffix": "%"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "100",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-4",
+				"label": "Akumul\u00e1tor",
+				"percentage": "12.1",
+				"suffix": "V"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-5",
+				"label": "Sol\u00e1rn\u00ed panel",
+				"percentage": "2.3",
+				"suffix": "A"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}]
+	}, {
+		"name": "Koupelna",
+		"data": [{
+			"type": "toggle",
+			"data": {
+				"id": "toggle-21",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-23",
+				"label": "Stoln\u00ed lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/desk-lamp.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-24",
+				"label": "Lustr",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/chandelier.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-25",
+				"label": "Klimatizace",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/climatisation.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-6",
+				"label": "Ventil\u00e1tor",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/fan.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "100",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": "15",
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-27",
+				"label": "R\u00e1dio",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/radio.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-28",
+				"label": "Zesilova\u010d",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/amplifier.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-29",
+				"label": "Repro",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/reproductor.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-22",
+				"label": "Tepl\u00e1 voda",
+				"percentage": "48",
+				"suffix": "\u00b0C"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-23",
+				"label": "Vodn\u00ed n\u00e1dr\u017e",
+				"percentage": "97",
+				"suffix": "%"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-25",
+				"label": "Sol\u00e1rn\u00ed panel",
+				"percentage": "11.9",
+				"suffix": "V"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}]
+	}, {
+		"name": "Kontrolovna",
+		"data": [{
+			"type": "percentage",
+			"data": {
+				"id": "percentage-51",
+				"label": "Teplota",
+				"percentage": "24",
+				"suffix": "\u00b0C"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-52",
+				"label": "\u010cerpadlo",
+				"percentage": "23",
+				"suffix": "l\/min"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-53",
+				"label": "Vodn\u00ed n\u00e1dr\u017e",
+				"percentage": "95",
+				"suffix": "%"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": "39",
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": "22",
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-54",
+				"label": "Sol\u00e1rn\u00ed panel",
+				"percentage": "12.3",
+				"suffix": "V"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-48",
+				"label": "Restart",
+				"percentage": "12:30",
+				"suffix": ""
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-55",
+				"label": "Akumul\u00e1tor",
+				"percentage": "4.4",
+				"suffix": "Ah"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}, {
+			"type": "percentage",
+			"data": {
+				"id": "percentage-56",
+				"label": "V\u011btrn\u00e1 turb\u00edna",
+				"percentage": "53",
+				"suffix": "km\/h"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-1",
+					"label": "Lampi\u010dka"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-2",
+					"label": "Bo\u010dn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-3",
+					"label": "Spodn\u00ed LED"
+				}
+			}, {
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "modal-toggle-4",
+					"label": "Auto OFF"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-1",
+					"label": "Jas"
+				}
+			}, {
+				"type": "slider",
+				"value": 50,
+				"data": {
+					"id": "modal-slider-2",
+					"label": "Kontrast"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "graph",
+				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
+				"data_y": [50, 65, 78, 64, 53],
+				"data": {
+					"id": "modal-graph-1",
+					"label": "Graf"
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "timer_module",
+				"data": {
+					"id": "modal-timermodule-1",
+					"label": "Zadejte \u010das.."
+				}
+			}, {
+				"type": "separator"
+			}, {
+				"type": "dropdown_menu",
+				"data": {
+					"id": "modal-choose-1",
+					"label": "Vyberte.."
+				}
+			}]
+		}]
+	}, {
+		"name": "D\u00edlna",
+		"data": [{
+			"type": "toggle",
+			"data": {
+				"id": "toggle-100",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-101",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-102",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-103",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-104",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-105",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-106",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-107",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-108",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-109",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-110",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-111",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-112",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-113",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-114",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-115",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-116",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-117",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-118",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-119",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-120",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-121",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-122",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-123",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-124",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-125",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-126",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-127",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-128",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-129",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-130",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-131",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-132",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-133",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-134",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-135",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-136",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-137",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-138",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-139",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-140",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-141",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-142",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-143",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-144",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-145",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-146",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-147",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-148",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-149",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-150",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-151",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-152",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-153",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-154",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-155",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-156",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-157",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-158",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-159",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-160",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-161",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-162",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-163",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-164",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-165",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-166",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-167",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-168",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-169",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-170",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-171",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-172",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-173",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-174",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-175",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-176",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-177",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-178",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-179",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-180",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-181",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-182",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-183",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-184",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-185",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-186",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-187",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-188",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-189",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-190",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-191",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-192",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-193",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-194",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-195",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-196",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-197",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-198",
+				"label": "Lampi\u010dka",
+				"status": "OFF",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}, {
+			"type": "toggle",
+			"data": {
+				"id": "toggle-199",
+				"label": "Lampi\u010dka",
+				"status": "ON",
+				"img_src": "\/static\/images\/icons\/light-bulb.png"
+			},
+			"modal": [{
+				"type": "toggle",
+				"value": "1",
+				"data": {
+					"id": "toggle",
+					"label": "Tohle jes\u0165 toggle"
+				}
+			}, {
+				"type": "toggle",
+				"value": "0",
+				"data": {
+					"id": "toggle2",
+					"label": "Tohle jes\u0165 toggle2"
+				}
+			}]
+		}]
+	}]
+}

@@ -3,14 +3,19 @@
         "slider": "<div class='sliderModule' data-id='::id::' ><span class='sliderModuleLabel'>::label::</span><div class='slider' class='hx-slider'></div></div>",
         "separator": "<hr>",
         "toggle": "<div class='buttonModule' data-id='::id::'><div class='toggle-slider-div'>::label::<label class='switch'><input type='checkbox' class='modal_toggle'><span class='toggle-slider round'></span></label></div></div>",
-        "graph": "<div class='graphModul modalModule' data-header='::label::'><canvas></canvas></div>",
+        "graph": "<div class='graphModul modalModule'data-id='::id::' data-header='::label::'><canvas></canvas></div>",
         "dropdown_menu":  "<div class='dropDownModule modalModule'><div class='input-field col s12'><select><option value='' disabled selected>::label::</option><option value='1'>RED</option><option value='2'>GREEN</option><option value='3'>BLUE</option></select><label>::LABEL::</label></div></div>",
         "timer_module": "<div class='timerModule modalModule'><div class='modalTimer'>::label::<input type='text' class='timepicker'></div></div>",
-        "progress_bar": "<div class='progress'><div class='progress-bar progress-bar-::color::' role='progressbar' aria-valuenow='70' aria-valuemin='0' aria-valuemax='100' style='width:::value::%'>::label::</div></div>"
+        "progress_bar": "<div class='progress'><div class='progress-bar progress-bar-::color::' role='progressbar' aria-valuenow='70' aria-valuemin='0' aria-valuemax='100' style='width:::value::%'>::label::</div></div>",
+        "button": "<button type='button' class='btn btn-::color::' style='margin-bottom:15px;width100%'>::label::</button><br>",
+        "graph-picker": "<div class='btn-group btn-group-toggle' data-id='::id::' data-toggle='buttons'><label class='btn btn-secondary active'><input type='radio' name='options' id='option1' autocomplete='off' checked> Last Week</label><label class='btn btn-secondary'><input type='radio' name='options' id='option2' autocomplete='off'> Last day</label><label class='btn btn-secondary'><input type='radio' name='options' id='option3' autocomplete='off'> All</label></div>",
+        "apex_graph": "<div id='chart-container'></div>"
     },
     
     "items": {
         "toggle": "<div class='tile' data-id='::id::' data-type='toggle'><div class='tileTextLayer'><img src='::img_src::' class='tileImage'><span class='tileDescription'>::label::</span><span class='tileStatus'>::status::</span></div><div class='titeAtributes'>test</div><div class='tileTouchLayer tileToggle tileModal'></div></div>",
-        "percentage": "<div class='tile' data-id='::id::' data-type='percentage'><div class='tileTextLayer'><div class='tileDisplay'><div class='tileInputVal'>::percentage::</div><span style='font-size: 15px;'>  ::suffix::</span></div><span class='tileDescription'>::label::</span><span class='tileStatus'>1hr ago</span></div><div class='tileTouchLayer tileModal'></div></div>"
+        "percentage": "<div class='tile' data-id='::id::' data-type='percentage'><div class='tileTextLayer'><div class='tileDisplay'><div class='tileInputVal'>::percentage::</div><span style='font-size: 15px;'>  ::suffix::</span></div><span class='tileDescription'>::label::</span><span class='tileStatus'>1hr ago</span></div><div class='tileTouchLayer tileModal'></div></div>",
+        "gauge": "<div class='tile_gauge' data-min_val='::min_val::' data-max_val='::max_val::' data-suffix='::suffix::' data-color='::color::' data-target_id='::id::' data-target_value='::value::'><div class='tile_gauge_header'>::label::</div><div class='gauge-holder'><div id='::id::'></div></div></div>",
+        "gauge_apex": "<div class='tile_chart' id='chart'></div>"
     }
 }

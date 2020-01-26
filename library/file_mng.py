@@ -4,26 +4,39 @@ import os
 
 class FileManager:
     """
-    File Manager
+    File Manager class
     """
 
     CONFIG_DIR = "config"
     CONFIG_JSON = "main.json"
     CONFIG_DEVICES = "devices.json"
     CONFIG_ITEMS = "items.json"
+    CONFIG_WHITELIST = "whitelist.json"
 
     TEMPLATES_DIR = "templates"
     
     def __init__(self):
         """
-        Init of class FileManager
+        Init of class FileManager class
         """
 
         self.__config_data = None
         self.__devices_data = None
         self.__items_data = None
-        
+        self.__whitelist_data = None
+
         # self.root_dir = os.path.dirname(sys.modules["__main__"].__file__)
+
+    def reload_files(self):
+        """
+        Set all files data to None
+        :return:
+        """
+
+        self.__config_data = None
+        self.__devices_data = None
+        self.__items_data = None
+        self.__whitelist_data = None
 
     @staticmethod
     def load_file(path, is_json):
@@ -109,6 +122,19 @@ class FileManager:
             self.__items_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_ITEMS), is_json=True)
             
         return self.__items_data
+
+    def whitelist(self, overwrite=False):
+        """
+        Get whitelist
+        :param overwrite: overwrite?
+        :return:
+        """
+
+        if self.__whitelist_data is None or overwrite is True:
+            self.__whitelist_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_WHITELIST),
+                                                   is_json=True)
+
+        return self.__whitelist_data
 
     @staticmethod
     def path_join(path1, path2):
