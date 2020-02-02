@@ -289,39 +289,123 @@ $(document).ready(function(){
 
                     // ----------------------------------------------
                     // Generuje graf
-                    // ----------------------------------------------
-                    $(".graphModul").each(function(){
+                    // ----------------------------------------------                    
+                    $(".apex-graph").each(function(){
                         for (k in json.graphs){
                             if (k == $(this).attr("data-id")){ // Nasel graf sse setejným ID
 
-                                var ctx = $(this).children();
-                                var new_chart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                        labels: json.graphs[k].data_x,
-                                        datasets: [{
-                                            label: $(this).attr("data-header"),
-                                            borderColor: 'rgb(255, 99, 132)',
-                                            data: json.graphs[k].data_y
-                                        }]
+                                var myData = json.graphs[k].values;
+                                var graph_name = json.graphs[k].label;
+                                var x_min = json.graphs[k].max_min.x.min;
+                                var x_max = json.graphs[k].max_min.x.max;
+                                var y_min = json.graphs[k].max_min.y.min;
+                                var y_max = json.graphs[k].max_min.y.max;
+                                
+                                var options = {
+                                    series: [{
+                                        name: graph_name,
+                                        data: myData
+                                    }],
+                                    chart: {
+                                        id: k+'chart2',
+                                        type: 'line',
+                                        height: 230,
+                                        toolbar: {
+                                            autoSelected: 'pan',
+                                            show: false
+                                        }
                                     },
-                                    options: {
-                                        scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
+                                    colors: ['#546E7A'],
+                                    stroke: {
+                                        width: 7,
+                                        curve: 'smooth'
+                                    },
+                                    dataLabels: {
+                                        enabled: false
+                                    },
+                                    fill: {
+                                          type: 'gradient',
+                                          gradient: {
+                                            shade: 'dark',
+                                            gradientToColors: [ '#FDD835'],
+                                            shadeIntensity: 1,
+                                            type: 'horizontal',
+                                            opacityFrom: 1,
+                                            opacityTo: 1,
+                                            stops: [0, 100, 100, 100]
+                                          },
+                                        },
+                                        markers: {
+                                          size: 4,
+                                          colors: ["#FFA41B"],
+                                          strokeColors: "#fff",
+                                          strokeWidth: 2,
+                                          hover: {
+                                            size: 7,
+                                          }
+                                        },
+                                    xaxis: {
+                                        type: 'datetime',
+                                    },
+                                    yaxis: {
+                                        title: {
+                                            text: graph_name,
+                                          }
+                                    }
+                                };
+                                
+                                var chart = new ApexCharts(document.querySelector("#"+k), options);
+                                chart.render();
+                                
+                                var optionsLine = {
+                                    series: [{
+                                        data: myData
+                                    }],
+                                    chart: {
+                                        id: k+'chart1',
+                                        height: 130,
+                                        type: 'area',
+                                        brush: {
+                                            target: k+'chart2',
+                                            enabled: true
+                                        },
+                                        selection: {
+                                            enabled: true,
+                                            xaxis: {
+                                                min: x_min,
+                                                max: x_max
                                             }
-                                        }]
-                                    }}
-                                });
-                                graphs[graphs.length] = new_chart;
-                                graphs_id[graphs_id.length] =  $(this).attr("data-id");
-                            }   
+                                        },
+                                    },
+                                    
+                                    colors: ['#FFA41B'],
+                                    fill: {
+                                        type: 'gradient',
+                                        gradient: {
+                                            opacityFrom: 0.91,
+                                            opacityTo: 0.1,
+                                        }
+                                    },
+                                    xaxis: {
+                                        type: 'datetime',
+                                        tooltip: {
+                                            enabled: false
+                                        }
+                                    },
+                                    yaxis: {
+                                        tickAmount: 2,
+                                        min: y_min,
+                                        max: y_max,
+                                        
+                                    }
+                                };
+                                
+                                var chartLine = new ApexCharts(document.querySelector("#"+k+"_brush"), optionsLine);
+                                chartLine.render();
+                            }
                         }
-
-
                     });
-
+    
 
                     // $('.modal_toggle').prop('checked', true);
                     $(".modal_toggle").each(function(){

@@ -1,5 +1,0 @@
-incomming = "test"
-
-char charBuf[incoming.length() + 1];
-incoming.toCharArray(charBuf,incoming.length() + 1);
-client.publish(mqtt_topic_pub, charBuf);

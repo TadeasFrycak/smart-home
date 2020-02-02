@@ -103,8 +103,8 @@
 				"type": "separator"
 			}, {
 				"type": "graph",
-				"data_x": ["2005", "2006", "2007", "2008"],
-				"data_y": [23, 28, 43, 23],
+				"data_x": [],
+				"data_y": [],
 				"data": {
 					"id": "modal-graph-1",
 					"label": "CPU teplota"
@@ -272,12 +272,15 @@
 			}, {
 				"type": "separator"
 			}, {
-				"type": "apex_graph",
+				"type": "graph",
+                "data_x": ["2005", "2006", "2007", "2008"],
+				"data_y": [23, 28, 43, 23],
+                "label": "LABEL VOE",
                 "data": {"id": "test-graph"}
 			}, {
 				"type": "separator"
 			}, {
-				"type": "graph",
+				"type": "old_graph",
 				"data_x": ["19.00", "20.00", "21.00", "22.00", "23.00"],
 				"data_y": [50, 65, 78, 64, 53],
 				"data": {
@@ -285,13 +288,7 @@
 					"label": "Graf1"
 				}
 			}, {
-				"type": "graph-picker",
-				"data": {
-					"id": "modal-graph-1",
-					"label": "Graf1"
-				}
-			}, {
-				"type": "graph",
+				"type": "old_graph",
 				"data_x": ["12.00", "20.00", "21.00", "22.00", "23.00"],
 				"data_y": [-10, 0, 100, 90, 40],
 				"data": {

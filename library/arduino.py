@@ -23,26 +23,21 @@ class Arduino:
             self.arduino = serial.Serial(self.WINDOWS_PORT, self.BAUDRATE, timeout=self.TIMEOUT)
 
         except Exception as e:
-            self.__console.print("Error in opening port due {0}".format(e), priority=2)
-
             try:
                 self.arduino = serial.Serial(self.MAC_PORT, self.BAUDRATE, timeout=self.TIMEOUT)
 
             except Exception as e2:
-                self.__console.print("Error in opening port due {0}".format(e2), priority=2)
-
                 try:
                     self.arduino = serial.Serial(self.LINUX_PORT, self.BAUDRATE, timeout=self.TIMEOUT)
 
                 except Exception as e3:
-                    self.__console.print("Error in opening port due {0}".format(e3), priority=2)
-
                     try:
                         self.arduino = serial.Serial(self.LINUX_PORT2, self.BAUDRATE, timeout=self.TIMEOUT)
 
                     except Exception as e4:
                         self.arduino = None
-                        self.__console.print("Error in opening port due {0}".format(e4), priority=2)
+                        self.__console.print("Error in opening port due: {0},{1},{2},{3}".format(e, e2, e3, e4),
+                                             priority=2)
 
     def write(self, data):
         """

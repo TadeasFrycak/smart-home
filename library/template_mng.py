@@ -18,6 +18,12 @@ class TemplateManager:
     NAME = "name"
     STATUS = "status"
     VALUE = "value"
+    VALUES = "values"
+    LABEL = "label"
+
+    MAX = "max"
+    MIN = "min"
+    MAX_MIN = "max_min"
 
     HEADER = "header"
     ERROR = "error"
@@ -34,6 +40,9 @@ class TemplateManager:
     SEPARATOR = "::"
 
     BACK = "../"
+
+    X = "x"
+    Y = "y"
 
     IMG_PATH = "static/images/backgrounds"
     
@@ -143,6 +152,29 @@ class TemplateManager:
         return self.__template.replace(self.__value(self.CONTENT), "".join(to_render)).replace(
             self.__value(self.BACKGROUND), self.__random_background())
 
+    def check_duplicity_ids(self):
+        return True
+        # Check duplicity for tiles
+        for page, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            IDs = []
+
+            for device in self.__fmng.devices()[self.ITEMS][page][self.DATA]:
+                # Check duplicity for current device
+                if device[self.DATA][self.ID] not in IDs:
+                    IDs.append(device[self.DATA][self.ID])
+
+                else:
+                    return device
+
+        # Check duplicity for items in modals
+        for page, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            for device in self.__fmng.devices()[self.ITEMS][page][self.DATA]:
+                # Check duplicity for current device
+                for modal_item in device[self.MODAL]:
+                    pass
+
+        return True
+
     def complete_modal(self, element_id):
         """
         Complete modal from config by ID
@@ -244,8 +276,20 @@ class TemplateManager:
                     for modal_item in item_content[self.MODAL]:
                         # If that item is toggle, append
                         if modal_item[self.TYPE] == self.GRAPH:
-                            graphs[modal_item[self.DATA][self.ID]] = {self.DATA_X: modal_item[self.DATA_X],
-                                                                      self.DATA_Y: modal_item[self.DATA_Y]}
+                            data_x = modal_item[self.DATA_X]
+                            data_y = modal_item[self.DATA_Y]
+
+                            data = []
+                            for i in range(len(data_x)):
+                                data.append({self.X: data_x[i], self.Y: data_y[i]})
+
+                            graphs[modal_item[self.DATA][self.ID]] = {}
+                            graphs[modal_item[self.DATA][self.ID]][self.VALUES] = data
+                            graphs[modal_item[self.DATA][self.ID]][self.LABEL] = modal_item[self.LABEL]
+                            graphs[modal_item[self.DATA][self.ID]][self.MAX_MIN] = {self.X: {self.MAX: max(data_x),
+                                                                                             self.MIN: min(data_x)},
+                                                                                    self.Y: {self.MAX: max(data_y),
+                                                                                             self.MIN: min(data_y)}}
                     return graphs
 
     def tile_rwr(self, state, element_id):

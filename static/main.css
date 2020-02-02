@@ -94,7 +94,7 @@ main{
 .tileDisplay{
     font-size: 30px;
     margin: 0;
-    color: green;
+    color: #3b3b3b;
     text-align: center;
     position: absolute;
     line-height: 35px;
@@ -183,6 +183,9 @@ main{
     border: 1px solid #888;
     height: auto;
     width: 99%; /* Could be more or less, depending on screen size */
+}
+.svg_select_points_r .svg_select_points {
+    r: 7.7;
 }
 }
 @media (min-width: 700px) {

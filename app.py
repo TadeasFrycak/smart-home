@@ -2,7 +2,6 @@ from library.logger import WerkzeugLogger, AuthLogger
 from library.template_mng import TemplateManager
 from library.file_mng import FileManager
 from library.html_json import HTML_JSON
-#from library.raspberry import Raspberry
 from library.console import Console
 from library.arduino import Arduino
 from library.auth import Auth
@@ -17,6 +16,12 @@ import datetime
 import random
 import json
 import time
+
+try:
+    from library.raspberry import Raspberry
+
+except Exception as e:
+    pass
 
 # Define some global variables
 ID = "i"
@@ -43,7 +48,20 @@ tmng = TemplateManager(fmng=fmng, console=console)
 arduino = Arduino(console=console)
 html_json = HTML_JSON()
 auth = Auth(fmng=fmng, logger=auth_logger)
-#raspberry = Raspberry()
+
+try:
+    raspberry = Raspberry()
+
+except Exception as e:
+    console.print("This device is not a Raspberry! Some functions may not work correctly!", 2)
+
+validate = fmng.validate_jsons()
+if validate is not True:
+    console.print("Error in JSON due: {0}".format(validate), 3)
+
+check_duplicity = tmng.check_duplicity_ids()
+if check_duplicity is not True:
+    console.print("Duplicity detected in: {0}".format(check_duplicity), 2)
 
 # Multi-threading
 mqtt_thread = Thread()
@@ -78,23 +96,28 @@ class MQTT_BROKER(Thread):
                            namespace=self.NAMESPACE)
 
         else:
-            print(id_tile, element_id, msg.payload.decode())
+            arduino.write(
+                html_json.to_html(json_data={ID: "bed-toggle", ID_TILE: "bed-toggle", VALUE: msg.payload.decode()}))
+
             socket_io.emit("slider", {ID_TILE: id_tile, ID: element_id, VALUE: msg.payload.decode()},
                            namespace=self.NAMESPACE)
 
             socket_io.emit("toggle", {ID_TILE: id_tile, ID: element_id, VALUE: msg.payload.decode()},
                            namespace=self.NAMESPACE)
 
-
         # self.client.disconnect()
 
     def run(self):
         self.client = mqtt.Client()
-        self.client.connect(BROKER, 1883, 60)
+
+        try:
+            self.client.connect(BROKER, 1883, 60)
+
+        except:
+            console.print("MQTT is not working. Some functions may not work", priority=3)
 
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
-
         self.client.loop_forever()
 
 
@@ -413,6 +436,7 @@ if not arduino_thread.is_alive():
 # Run whole application
 if __name__ == "__main__" and bool(fmng.config()["run"]) is True:
     app.run(host=str(fmng.config()["host"]), debug=bool(fmng.config()["debug"]))
+    print("AGDFJHSDGFJGSDFHSADFGKDSJFGKJGHASDKJFGHSDFJKHSDGFKJHSDGFKAJSGHFKSJHFGKASDJFGSKJFGSDJKFGJASDFH")
 
 else:
     console.print("Stopped - see config", priority=3)
