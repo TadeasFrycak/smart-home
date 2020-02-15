@@ -1,0 +1,64 @@
+main {
+    position: absolute;
+    top: 90px;
+}
+
+.selectDisable {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.text-primary {
+    color: #ffffff;
+}
+
+.slide-header{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    
+}
+
+.graphModul{
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.toggle{
+    position: relative;
+    float: right;
+    right: 10px;
+}
+
+.upper-index{
+    font-size: 60%;
+}
+
+.modalModule{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.buttonModule{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.end-block{
+    margin-bottom: 200px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.page_settings_icon{
+    position: absolute;
+    width: 40px;
+    right: 10px;
+}

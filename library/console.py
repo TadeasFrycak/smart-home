@@ -54,17 +54,12 @@ class Console:
 
     END = "\033[0m"
 
-    def __init__(self, socket_io=None, priority_level=1):
-        """
-        Init of Console class
-        :param socket_io: socket_io
-        :param priority_level: define priority log printing
-        """
-
-        self.__priority_level = priority_level
+    def __init__(self, socket_io, priority, logger):
+        self.__logger = logger
+        self.__priority = priority
         self.__socket_io = socket_io
 
-    def print(self, data=None, priority=1):
+    def print(self, data=None, priority=0):
         """
         Print to console
         :param data:
@@ -78,21 +73,28 @@ class Console:
         source = source[len(source) - 1]
 
         if priority is None:
+            self.__logger.debug(str(data))
             print(data)
 
-        elif priority == 1 and self.__priority_level <= 1:
-            print(self.FG_COLORS["light_cyan"] + self.SPECIAL["bold"] + "Debug: " + self.END + self.SPECIAL["bold"] + str(data) + self.END)
+        elif priority == 0 and self.__priority == 0:
+            self.__logger.debug(str(data))
+            print(self.FG_COLORS["light_cyan"] + self.SPECIAL["bold"] + "Debug: " + self.END + self.SPECIAL["bold"] +
+                  str(data) + self.END)
 
-        elif priority == 2 and self.__priority_level <= 2:
+        elif priority == 1 and self.__priority <= 1:
+            self.__logger.warning(str(data))
             self.__socket_io.emit("notify", {"title": "WARNING", "message": data, "type": "warning"}, namespace="/acom")
             print(self.FG_COLORS["yellow"] + self.SPECIAL["bold"] + self.WARNING + self.END)
-            print("{0}{1}{2} - ln {3}:\t{4}{5}{6}{7}".format(self.FG_COLORS["yellow"], self.SPECIAL["bold"],
+            print("{0}{1}{2} - ln {3}: {4}{5}{6}{7}".format(self.FG_COLORS["yellow"], self.SPECIAL["bold"],
                                                              str(source), str(cal_frame[1][2]), self.END,
                                                              self.SPECIAL["bold"], str(data), self.END))
             print(self.FG_COLORS["yellow"] + self.SPECIAL["bold"] + self.WARNING + self.END)
 
-        elif priority == 3 and self.__priority_level <= 3:
+        elif priority == 2 and self.__priority <= 2:
+            self.__logger.error(str(data))
             self.__socket_io.emit("notify", {"title": "ERROR", "message": data, "type": "danger"}, namespace="/acom")
             print(self.FG_COLORS["fail"] + self.SPECIAL["bold"] + self.ERROR + self.END)
-            print("{0}{1}{2} - ln {3}:\t{4}{5}{6}{7}".format(self.FG_COLORS["fail"], self.SPECIAL["bold"], str(source), str(cal_frame[1][2]), self.END, self.SPECIAL["bold"], str(data), self.END))
+            print("{0}{1}{2} - ln {3}: {4}{5}{6}{7}".format(self.FG_COLORS["fail"], self.SPECIAL["bold"], str(source),
+                                                             str(cal_frame[1][2]), self.END, self.SPECIAL["bold"],
+                                                             str(data), self.END))
             print(self.FG_COLORS["fail"] + self.SPECIAL["bold"] + self.ERROR + self.END)

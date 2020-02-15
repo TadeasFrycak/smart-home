@@ -44,6 +44,12 @@ class TemplateManager:
     X = "x"
     Y = "y"
 
+    OPTIONS = "options"
+
+    INPUT_HTML = "<input type='text'>"
+    INPUT_AND_STRING = "<div class='edit_list_item_dropdown'>{0}: {1}</div>"
+    OPTION_FORMULA = "<div class='edit_list_source_item list-group-item'>{0}<div class='edit_list_dropdown'>{1}</div></div>"
+
     IMG_PATH = "static/images/backgrounds"
     
     def __init__(self, fmng, console):
@@ -55,7 +61,9 @@ class TemplateManager:
         self.__fmng = fmng
         self.__console = console
 
-        self.__template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "index.html"), False)
+        self.__index_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "index.html"),
+                                                      False)
+        self.__edit_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "edit.html"), False)
         self.__error = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "error.html"), False)
         self.__page_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "page.html"),
                                                      False)
@@ -84,8 +92,8 @@ class TemplateManager:
             os.chdir(self.BACK*len(self.IMG_PATH.split("\\")))
 
         else:
-            self.__console.print("TMNG - error in part background", priority="error")
-            
+            self.__console.print("TMNG - fatal error in part background", priority=2)
+
         return random.choice(backgrounds)
 
     def __value(self, data):
@@ -104,7 +112,10 @@ class TemplateManager:
         :return:
         """
 
-        self.__template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "index.html"), False)
+        self.__index_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "index.html"),
+                                                      False)
+        self.__edit_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "edit.html"),
+                                                     False)
         self.__items = self.__fmng.items(overwrite=True)
         self.__page_template = self.__fmng.load_file(self.__fmng.path_join(self.__fmng.TEMPLATES_DIR, "page.html"),
                                                      False)
@@ -120,6 +131,48 @@ class TemplateManager:
         """
 
         return self.__error.replace(self.__value(self.HEADER), header).replace(self.__value(self.ERROR), error)
+
+    def edit(self):
+        # Define arrays
+        to_render_tiles = []
+
+        # Get pages (number and content)
+        for page, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            items = []
+
+            # Get item for current device
+            for device in self.__fmng.devices()[self.ITEMS][page][self.DATA]:
+                item = self.__items[self.ITEMS][device[self.TYPE]]
+
+                # Replace variables in item
+                for value in device[self.DATA].keys():
+                    if device[self.TYPE] == self.TOGGLE and value == self.STATUS:
+                        item = item.replace(self.__value(value), self.STATUSES[0])
+
+                    else:
+                        item = item.replace(self.__value(value), device[self.DATA][value])
+
+                items.append(item)
+
+            to_render_tiles.append(
+                self.__page_template.replace(self.__value(self.CONTENT), "".join(items)).replace(
+                    self.__value(self.NAME), page_content[self.NAME]))
+
+        to_render_modal_opt = []
+
+        for i in self.__fmng.items()[self.MODAL]:
+            to_render_modal_val = []
+
+            for num, j in enumerate(self.__fmng.items()[self.MODAL][i].split(self.SEPARATOR)):
+                if (num-1) % 2 == 0:
+                    to_render_modal_val.append(self.INPUT_AND_STRING.format(str(j).lower().capitalize(), self.INPUT_HTML))
+
+            to_render_modal_opt.append(self.OPTION_FORMULA.format(i.capitalize(), "".join(to_render_modal_val)))
+
+        # Return completed template
+        return self.__edit_template.replace(self.__value(self.CONTENT), "".join(to_render_tiles)).replace(
+            self.__value(self.BACKGROUND), self.__random_background()).replace(self.__value(self.OPTIONS),
+                                                                               "".join(to_render_modal_opt))
 
     def index(self):
         """
@@ -149,11 +202,10 @@ class TemplateManager:
                     self.__value(self.NAME), page_content[self.NAME]))
 
         # Return completed template
-        return self.__template.replace(self.__value(self.CONTENT), "".join(to_render)).replace(
+        return self.__index_template.replace(self.__value(self.CONTENT), "".join(to_render)).replace(
             self.__value(self.BACKGROUND), self.__random_background())
 
     def check_duplicity_ids(self):
-        return True
         # Check duplicity for tiles
         for page, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
             IDs = []
@@ -169,8 +221,16 @@ class TemplateManager:
         # Check duplicity for items in modals
         for page, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
             for device in self.__fmng.devices()[self.ITEMS][page][self.DATA]:
-                # Check duplicity for current device
-                for modal_item in device[self.MODAL]:
+                try:
+                    IDs = []
+                    for modal_item in device[self.MODAL]:
+                        if modal_item[self.DATA][self.ID] not in IDs:
+                            IDs.append(modal_item[self.DATA][self.ID])
+
+                        else:
+                            return device
+
+                except Exception as e:
                     pass
 
         return True
@@ -388,3 +448,35 @@ class TemplateManager:
                                                                                  self.__fmng.CONFIG_DEVICES),
                                                       data=self.__fmng.devices(), is_json=True)
                             return True
+
+    def title_rwr(self, index, value):
+        self.__fmng.devices()[self.ITEMS][index][self.NAME] = value
+
+    def append_slide(self, index, value):
+        self.__fmng.devices()[self.ITEMS].append({self.NAME: value, self.DATA: []})
+
+    def remove_slide(self, index):
+        self.__fmng.devices()[self.ITEMS].pop(index)
+
+    def tile_title_rwr(self, element_id, name):
+        # Get pages (number and content)
+        for page_num, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            # Get tiles (number and content)
+            for item_num, item_content in enumerate(self.__fmng.devices()[self.ITEMS][page_num][self.DATA]):
+                # If that tile is current opened tile, rewrite
+                if self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.DATA][self.ID] == element_id:
+                    self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.DATA][self.LABEL] = name
+
+                    return True
+
+    def change_tile_type(self, element_id, type):
+        print("Aalsdhfjksdhlfkjhd")  # TODO
+        # Get pages (number and content)
+        for page_num, page_content in enumerate(self.__fmng.devices()[self.ITEMS]):
+            # Get tiles (number and content)
+            for item_num, item_content in enumerate(self.__fmng.devices()[self.ITEMS][page_num][self.DATA]):
+                # If that tile is current opened tile, rewrite
+                if self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.DATA][self.ID] == element_id:
+                    self.__fmng.devices()[self.ITEMS][page_num][self.DATA][item_num][self.TYPE] = type
+
+                    return True

@@ -36,8 +36,9 @@ class Arduino:
 
                     except Exception as e4:
                         self.arduino = None
-                        self.__console.print("Error in opening port due: {0},{1},{2},{3}".format(e, e2, e3, e4),
-                                             priority=2)
+                        self.__console.print("Error in opening port due:\nPORT 1: {0},\nPORT 2: {1},\nPORT 3: {2},"
+                                             "\nPORT 4: {3}.\nAre the Arduinos connected?".format(e, e2, e3, e4),
+                                             priority=1)
 
     def write(self, data):
         """
@@ -51,7 +52,7 @@ class Arduino:
             return self.arduino.write(bytes(data, encoding="utf8"))
 
         else:
-            # self.__console.print("Error in writing to Arduino - not defined", priority=3)
+            # self.__console.print("Error in writing to Arduino - not defined", priority=2)
             return False
 
     def read(self):
@@ -70,5 +71,5 @@ class Arduino:
                 return None
 
         else:
-            # self.__console.print("Error in writing to Arduino - not defined", priority=3)
+            # self.__console.print("Error in writing to Arduino - not defined", priority=2)
             return None

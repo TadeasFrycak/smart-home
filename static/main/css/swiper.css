@@ -1,0 +1,54 @@
+.swiper-container {
+    width: auto;
+    height: 90vh;
+}
+
+.swiper-pagination {
+    bottom: 50%;
+}
+
+.swiper-slide {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: block;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: transparent;
+}
+
+.swipe-header{
+    font-size:40px;
+    line-height: 40px;
+    width: 100%;
+    margin-bottom: 80px;
+    color: #fafafa;
+    text-shadow: horizontal-offset vertical-offset blur color;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.4);
+}
+
+.swipe-body{
+    padding: 40px;
+}
+
+@media (max-width: 700px) {
+    .swipe-header{
+        text-align: center;
+        padding-top: 70px;
+    }
+    .swipe-body{
+        padding: 2px;
+    }
+    .swipe-content{
+        padding: 40px;
+        height: 100%;
+    }
+    .swiper-container{
+        height: 100vh;
+    }
+}

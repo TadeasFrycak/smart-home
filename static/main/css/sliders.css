@@ -1,0 +1,13 @@
+.slider{
+    height: 30px;
+}
+
+.sliderModule{
+    position: relative;
+    display: block;
+}
+
+.sliderModuleLabel{
+    font-weight: bold;
+    font-size: 15px;
+}

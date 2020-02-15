@@ -1,4 +1,4 @@
-from library.logger import WerkzeugLogger, AuthLogger
+from library.logger import WerkzeugLogger, AuthLogger, ConsoleLogger
 from library.template_mng import TemplateManager
 from library.file_mng import FileManager
 from library.html_json import HTML_JSON
@@ -16,6 +16,7 @@ import datetime
 import random
 import json
 import time
+import os
 
 try:
     from library.raspberry import Raspberry
@@ -27,6 +28,10 @@ except Exception as e:
 ID = "i"
 ID_TILE = "id_tile"
 VALUE = "v"
+INDEX = "index"
+NAME = "name"
+TYPE = "type"
+
 BROKER = "192.168.0.100"
 PORT = 1883
 USER = "username"
@@ -40,10 +45,11 @@ app = Flask(__name__)
 socket_io = SocketIO(app)
 
 # Initialise modules
-werkzeug_logger = WerkzeugLogger()
-auth_logger = AuthLogger()
-console = Console(socket_io=socket_io)
 fmng = FileManager()
+werkzeug_logger = WerkzeugLogger(priority=fmng.config()["werkzeug_priority"])
+auth_logger = AuthLogger(priority=fmng.config()["auth_priority"])
+console_logger = ConsoleLogger(priority=fmng.config()["console_priority"])
+console = Console(logger=console_logger, priority=fmng.config()["console_priority"], socket_io=socket_io)
 tmng = TemplateManager(fmng=fmng, console=console)
 arduino = Arduino(console=console)
 html_json = HTML_JSON()
@@ -53,15 +59,16 @@ try:
     raspberry = Raspberry()
 
 except Exception as e:
-    console.print("This device is not a Raspberry! Some functions may not work correctly!", 2)
+    console.print("This device is not a Raspberry! Some\nfunctions may not work correctly!", 1)
 
 validate = fmng.validate_jsons()
 if validate is not True:
-    console.print("Error in JSON due: {0}".format(validate), 3)
+    console.print("Error in JSON due: {0}".format(validate), 2)
+    exit()
 
 check_duplicity = tmng.check_duplicity_ids()
 if check_duplicity is not True:
-    console.print("Duplicity detected in: {0}".format(check_duplicity), 2)
+    console.print("Duplicity detected in: {0}".format(check_duplicity), 1)
 
 # Multi-threading
 mqtt_thread = Thread()
@@ -114,7 +121,8 @@ class MQTT_BROKER(Thread):
             self.client.connect(BROKER, 1883, 60)
 
         except:
-            console.print("MQTT is not working. Some functions may not work", priority=3)
+            console.print("MQTT is not working. Some functions may\nnot work."
+                          "Is this device Raspberry Pi? See line above", priority=2)
 
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
@@ -259,6 +267,15 @@ def internal_server_error(e):
     return tmng.error_page(header="500", error=str(e))
 
 
+@app.after_request
+def add_meta(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+    response.headers["Expires"] = "0"
+    response.headers["Pragma"] = "no-cache"
+
+    return response
+
+
 @app.route("/")
 def index():
     """
@@ -277,6 +294,16 @@ def index():
 
     else:
         return tmng.index()
+
+
+@app.route("/edit")
+def edit():
+    """
+    Render edit page
+    :return:
+    """
+    tmng.reload_files()
+    return tmng.edit()
 
 
 @app.route("/get_modal", methods=["POST"])
@@ -324,7 +351,7 @@ def toggle():
 
     element_id = request.form[ID]
     state = request.form[VALUE]
-    id_tile = request.form["id_tile"]
+    id_tile = request.form[ID_TILE]
 
     socket_io.emit("toggle", json_data, namespace="/acom")
     arduino.write(html_json.to_html(json_data=json_data))
@@ -376,14 +403,78 @@ def tile():
 
     json_data = request.form.to_dict(flat=True)
 
-    id = request.form[ID]
+    element_id = request.form[ID]
     state = request.form[VALUE]
 
-    socket_io.emit("tile", {ID: id, VALUE: state}, namespace="/acom")
+    socket_io.emit("tile", {ID: element_id, VALUE: state}, namespace="/acom")
 
-    tmng.tile_rwr(state=state, element_id=id)
+    tmng.tile_rwr(state=state, element_id=element_id)
 
     arduino.write(html_json.to_html(json_data=json_data))
+    return "ok"
+
+
+@app.route("/change_tile", methods=["POST"])
+def change_tile_type():
+    """
+    Tile event
+    :return:
+    """
+
+    json_data = request.form.to_dict(flat=True)
+
+    element_id = request.form[ID]
+    type = request.form[TYPE]
+
+    tmng.change_tile_type(type=type, element_id=element_id)
+
+    arduino.write(html_json.to_html(json_data=json_data))
+    return "ok"
+
+
+@app.route("/test")
+def test():
+    return render_template("test.html")
+
+
+@app.route("/title", methods=["POST"])
+def title():
+    index = int(request.form[INDEX])
+    value = request.form[VALUE]
+
+    tmng.title_rwr(index=index, value=value)
+
+    return "ok"
+
+
+@app.route("/append_slide", methods=["POST"])
+def append_slide():
+    index = int(request.form[INDEX])
+    value = request.form[VALUE]
+    tmng.append_slide(index=index, value=value)
+
+    return "ok"
+
+
+@app.route("/remove_slide", methods=["POST"])
+def remove_slide():
+    index = int(request.form[INDEX])
+    tmng.remove_slide(index=index)
+
+    return "ok"
+
+
+@app.route("/tile_title", methods=["POST"])
+def tile_title():
+    """
+    Toggle event
+    :return:
+    """
+
+    element_id = request.form[ID]
+    name = request.form[NAME]
+    tmng.tile_title_rwr(element_id=element_id, name=name)
+
     return "ok"
 
 
@@ -433,10 +524,12 @@ if not arduino_thread.is_alive():
     arduino_thread = Arduino()
     arduino_thread.start()
 
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+os.environ["WERKZEUG_RUN_MAIN"] = "true"  # Turn off first Werkzeug log to console
+
 # Run whole application
 if __name__ == "__main__" and bool(fmng.config()["run"]) is True:
     app.run(host=str(fmng.config()["host"]), debug=bool(fmng.config()["debug"]))
-    print("AGDFJHSDGFJGSDFHSADFGKDSJFGKJGHASDKJFGHSDFJKHSDGFKJHSDGFKAJSGHFKSJHFGKASDJFGSKJFGSDJKFGJASDFH")
 
 else:
-    console.print("Stopped - see config", priority=3)
+    console.print("Stopped - see config", priority=2)
