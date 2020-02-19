@@ -136,26 +136,6 @@ class FileManager:
 
         return self.__whitelist_data
 
-    def validate_jsons(self):
-        try:
-            with open(self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES), "r") as f:
-                json.load(f)
-
-            with open(self.path_join(self.CONFIG_DIR, self.CONFIG_ITEMS), "r") as f:
-                json.load(f)
-
-            with open(self.path_join(self.CONFIG_DIR, self.CONFIG_JSON), "r") as f:
-                json.load(f)
-
-            with open(self.path_join(self.CONFIG_DIR, self.CONFIG_WHITELIST), "r") as f:
-                json.load(f)
-
-        except Exception as e:
-            return e
-
-        else:
-            return True
-
     @staticmethod
     def path_join(path1, path2):
         """

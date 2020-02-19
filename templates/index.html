@@ -11,13 +11,14 @@
         <link type="text/css" rel="stylesheet" href="/static/main/css/main.css">
         <link type="text/css" rel="stylesheet" href="/static/main/css/tiles.css">
         <link type="text/css" rel="stylesheet" href="/static/main/css/toggles.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/gauges.css">
         <link type="text/css" rel="stylesheet" href="/static/main/css/time_pickers.css">
         <link type="text/css" rel="stylesheet" href="/static/main/css/progress_bars.css">
         <link type="text/css" rel="stylesheet" href="/static/main/css/sliders.css">
         <link type="text/css" rel="stylesheet" href="/static/main/css/swiper.css">
 
-        <script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/jquery/lib/jquery.js"></script>
+        <script type="text/javascript" src="/static/jquery/jquery.bgswitcher.js"></script>
+        <script type="text/javascript" src="/static/popper/popper.min.js"></script>
         <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/static/bootstrap/js/bootstrap-notify.min.js"></script>
         <script type="text/javascript" src="/static/hammer/hammer.js"></script>
@@ -27,14 +28,21 @@
         <script type="text/javascript" src="/static/TimePicki/js/timepicki.js"></script>
         <script type="text/javascript" src="/static/apexcharts/apexcharts.js"></script>
         <script type="text/javascript" src="/static/gauge/GaugeMeter.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/highcharts-more.js"></script>
+        <script src="http://code.highcharts.com/modules/solid-gauge.js"></script>
+
+
+        <script type="text/javascript" src="/static/sortable/Sortable.min.js"></script>
 
         <script type="text/javascript" src="/static/main/js/main.js"></script>
         <script type="text/javascript" src="/static/main/js/init.js"></script>
         <script type="text/javascript" src="/static/main/js/asyn_com.js"></script>
         <script type="text/javascript" src="/static/main/js/events.js"></script>
         <script type="text/javascript" src="/static/main/js/swiper.js"></script>
+        <script type="text/javascript" src="/static/main/js/modal_init.js"></script>
 
-
+        
 
         <style>
             body {
@@ -49,12 +57,18 @@
                 -moz-user-select: none;
                 -ms-user-select: none;
                 user-select: none;
+            
+                -webkit-transition: background 0.5s linear;
+                -moz-transition: background 0.5s linear;
+                -o-transition: background 0.5s linear;
+                transition: background 0.5s linear;
             }
+
         </style>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <meta http-equiv="refresh" content="600">
+        <meta http-equiv="refresh" content="2400">
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, public, max-age=0">
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="0">
@@ -63,17 +77,18 @@
     </head>
 
     <body>
-        <div class="container-fluid">
-            <div class="swipe-body">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        ::content::
+        <div class="bcg-image"></div>
+            <div class="container-fluid">
+                <div class="swipe-body">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            ::content::
+                        </div>
+                        <div id="center-pagination" class="swiper-pagination"></div>
                     </div>
-                    <div id="center-pagination" class="swiper-pagination"></div>
                 </div>
-            </div>
 
-            <div class="modalHere"></div>
-        </div>
+                <div class="modalHere"></div>
+            </div>
     </body>
 </html>

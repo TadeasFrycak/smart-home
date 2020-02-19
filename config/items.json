@@ -14,10 +14,16 @@
     
     "items": {
         "toggle": "<div class='grid-square'><div class=' tile' data-id='::id::' data-type='toggle'><span class='toggle-dot'></span><div class='tileTextLayer'><img src='::img_src::' class='tileImage'><span class='tileDescription'>::label::</span><span class='tileStatus'>::status::</span></div><div class='titeAtributes'>test</div><div class='tileTouchLayer tileToggle tileModal'></div></div></div>",
-        "percentage": "<div class='tile' data-id='::id::' data-type='percentage'><div class='tileTextLayer'><div class='tileDisplay'><div class='tileInputVal'>::percentage::</div><span style='font-size: 15px;'>  ::suffix::</span></div><span class='tileDescription'>::label::</span><span class='tileStatus'>1hr ago</span></div><div class='tileTouchLayer tileModal'></div></div>",
-        "gauge": "<div class='tile_gauge' data-min_val='::min_val::' data-max_val='::max_val::' data-suffix='::suffix::' data-color='::color::' data-target_id='::id::' data-target_value='::value::'><div class='tile_gauge_header'>::label::</div><div class='gauge-holder'><div id='::id::'></div></div></div>",
-        "gauge_apex": "<div class='tile_chart' id='chart'></div>",
-        "gaugeMeter": "<div class='GaugeMeter' data-percent='60' data-label='Percent'> </div>"
+        "percentage": "<div class='tile' data-id='::id::' data-type='percentage'><div class='tileTextLayer'><div class='tileDisplay'><div class='tileInputVal'>::percentage::</div><span style='font-size: 15px'>  ::suffix::</span></div><span class='tileDescription'>::label::</span><span class='tileStatus'>před 1h</span></div><div class='tileTouchLayer tileModal'></div></div>",
+        "gauge": "<div class='tile_gauge'><div style='width: 190px; height: 190px; margin: 0 auto'><div id='container-speed' style='color:black; width: 190px; height: 190px; float: right'></div></div></div>"
+    },
+
+    "modal_edit": {
+        "add_item": "<button type='button' class='btn btn-outline-info btn-sm modal_add_new_item' style='margin-right:5px; margin-bottom:5px;'></span> ::text::</button>",
+        "tile_type": "<label class='modal_edit_tile_type btn btn-secondary ::active::'><input type='radio' name='options' autocomplete='off' ::checked::><span class='modal_edit_type_text'>::text::</span></label>",
+        "item_value": "<div class='form-group-sm row'><label class='modal_edit_item_textbox_label col-sm-2 col-form-label'>::label::</label><div class='col-sm-10'><input class='modal_edit_item_textbox form-control form-control-sm' type='text' placeholder='::value::' value='::value::'></div></div>",
+        "item_close_button": "<button type='button' class='modal_edit_dropdown_delete btn-sm btn btn-outline-danger'>Smazat tento item</button>",
+        "items_sort": "<div id=''class='modal_items_edit_sortable_item list-group-item'></span><img src='/static/images/static/menu.png' class='handle' style='height: 13px;margin-right: 10px;width:15px; cursor:pointer;'><span style='font-weight:bold;font-size:15px;'>::type::</span><span style='margin-left:10px;margin-right:10px;'>-</span><span style='font-style:italic;'>::name::</span><div class='modal_items_edit_sortable_item_dropdown'><form>::items::</form><div class='modal_edit_preview_wrapper'><span style='font-size:15px; font-weight:bold;'>Náhled</span><div class='modal_edit_preview'>::preview::</div></div><div class='modal_edit_dropwown_delete'>::close_button::</div></div></div>"
     }
 }
 

@@ -18,7 +18,6 @@ class Console:
         "fail": "\033[91m",
         "orange": "\033[33m",
         "yellow": "\033[93m",
-        "pink": "\033[95m",
         "purple": "\033[35m",
         "light_blue": "\033[94m",
         "blue": "\033[34m",

@@ -24,7 +24,6 @@ class Auth:
         """
 
         data = subprocess.check_output(["arp", ip]).decode("utf-8")
-
         for i in data.split(" "):
             if ":" in i:
                 return i
