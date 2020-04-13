@@ -8,9 +8,39 @@
     background-image: url("/static/images/static/edit_bg.jpg");
 }
 
+html,
+body {
+    overflow: hidden;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    -webkit-transition: background 0.5s linear;
+    -moz-transition: background 0.5s linear;
+    -o-transition: background 0.5s linear;
+    transition: background 0.5s linear;
+}
+
+.swiper-pagination {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 main {
     position: absolute;
     top: 90px;
+}
+
+.grid-square{
+    display: inline-block;
+    margin: 6px;
 }
 
 
@@ -18,15 +48,19 @@ main {
     opacity: 70%;   
 }
 
-.btn_exit_edit_mode{
+.btn-exit-edit-mode{
     position: absolute;
     top: 2px;
     right: 80px;
 }
 
-.modal_edit_dropwown_delete{
+.modal-edit-item-delete{
     float: right;
     margin-top: 20px;
+}
+
+#tile_type{
+    margin-left: 0.4em;
 }
 
 .modal_items_edit_sortable_item_dropdown{
@@ -37,6 +71,11 @@ main {
 .modal_edit_tile_types{
     margin-bottom: 20px;
     flex-wrap: wrap;
+}
+
+.modal_edit_tile_type{
+    margin-right: 3px;
+    margin-bottom: 3px;
 }
 
 .modal_edit_title{
@@ -111,3 +150,26 @@ main {
 .page_settings_icon:hover {
     cursor: pointer;
 }
+
+.modal_edit_pick_image{
+    width: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.modal-edit-select-img{
+    width: 35px;
+    transition: 0.5s;
+    padding: 3px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.modal-edit-selected-img{
+    border: 2px solid rgb(23, 162, 184);
+}
+
+.modal-img-select-wrapeper{
+    margin: 10px 0px 10px 0px;
+}
+

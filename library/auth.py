@@ -16,7 +16,8 @@ class Auth:
         self.__fmng = fmng
         self.__logger = logger
 
-    def get_mac(self, ip):
+    @staticmethod
+    def get_mac(ip):
         """
         Get MAC address from IP
         :param ip: IP address of user

@@ -8,7 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                ::content::
+                {% if content %}
+                    {{ content | safe }}
+                {% else %}
+                    <p>Žádný obsah</p>
+                {% endif %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Zavřít</button>

@@ -17,6 +17,11 @@ class Arduino:
     LINUX_PORT2 = "/dev/ttyACM1"
     
     def __init__(self, console):
+        """
+        Init of Arduino class
+        :param console: Console class
+        """
+
         self.__console = console
 
         try:

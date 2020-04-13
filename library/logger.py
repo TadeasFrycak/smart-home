@@ -12,6 +12,7 @@ class WerkzeugLogger:
         """
         Init of WerkzeugLogger class
         """
+
         self.__priority = self.PRIORITY[priority]
 
         self.__log = logging.getLogger("werkzeug")

@@ -14,6 +14,8 @@ class FileManager:
     CONFIG_WHITELIST = "whitelist.json"
 
     TEMPLATES_DIR = "templates"
+
+    CHARSET = "utf-8"
     
     def __init__(self):
         """
@@ -47,15 +49,15 @@ class FileManager:
         :return:
         """
 
-        f = open(path, "r")
-        
         if is_json is True:
-            data = json.load(f)
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
                 
         else:
-            data = "".join(f.readlines())
-                
-        f.close()
+            f = open(path, "r")
+            data = f.read()
+            f.close()
+
         return data
 
     @staticmethod
@@ -85,6 +87,7 @@ class FileManager:
         :param data: data
         :return:
         """
+        # TODO Property
         self.__devices_data = data
 
     def config(self, overwrite=False):
@@ -107,10 +110,12 @@ class FileManager:
         """
 
         if self.__devices_data is None or overwrite is True:
-            self.__devices_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES), is_json=True)
+            self.__devices_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES),
+                                                 is_json=True)
             
         return self.__devices_data
 
+    @property
     def items(self, overwrite=False):
         """
         Get items

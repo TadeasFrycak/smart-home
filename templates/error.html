@@ -4,6 +4,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+        <title>Error - {% if header %} {{ header }} {% else %} Smart Home {% endif %}</title>
+
         <style>
             @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
             /*Variables*/
@@ -198,7 +200,6 @@
                 }
             }
         </style>
-        <title>Error - ::header::</title>
     </header>
     <body>
         <div class="background">
@@ -207,8 +208,12 @@
         <div class="container">
             <div class="left-section">
                 <div class="inner-content">
-                    <h1 class="heading">::header::</h1>
-                    <p class="subheading">::error::</p>
+                    <h1 class="heading">{% if header %} {{ header }} {% else %} Chyba {% endif %}</h1>
+                    <p class="subheading">{% if message %} {{ message }} {% else %} Žádná zpráva {% endif %}</p>
+                    <script type="text/javascript">
+                        setTimeout(() => {window.location.href = "http://" + window.location.hostname + ":" + window.location.port;}, 2000);
+                    </script>
+
                 </div>
             </div>
             <div class="right-section">

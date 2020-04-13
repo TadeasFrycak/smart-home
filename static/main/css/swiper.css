@@ -39,7 +39,7 @@
 @media (max-width: 700px) {
     .swipe-header{
         text-align: center;
-        padding-top: 70px;
+        padding-top: 100px;
     }
     .swipe-body{
         padding: 2px;
@@ -50,5 +50,12 @@
     }
     .swiper-container{
         height: 100vh;
+    }
+    .page_settings_icon {
+        top: 20px;
+        right: 20px;
+    }
+    .btn-exit-edit-mode {
+        top:20px;
     }
 }

@@ -1,0 +1,49 @@
+{% for slide in slides %}
+    <div class="swiper-slide">
+        <div class="dropdown">
+            <img src="/static/images/static/settings-icon.png" class="page_settings_icon" data-toggle="dropdown">
+            <div class="dropdown-menu">
+                <a class="dropdown-item" id="edit-page">Upravit tuto stránku</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" id="append-slide">Přidat novou stránku</a>
+                <a class="dropdown-item" id="remove-slide">Odebrat tuto stránku</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item">Nastavení</a>
+                <!--<a class="dropdown-item">Uložit devices.json</a>-->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" id="shutdown">Vypnout server</a>
+                <a class="dropdown-item" id="restart">Restartovat server</a>
+            </div>
+        </div>
+
+        <div class="swipe-header">
+            {{ slide.name }}
+        </div>
+
+        <div class="swipe-content">
+
+            <div class='grid-square'>
+                <div style="width: 224px" class=' tile' data-id='::id::' data-type='toggle'>
+                    <span class='toggle-dot'></span>
+                    <label id="music_name" for="" style="max-height: 20px;position: absolute;top: 20px;left: 105px;max-width: 100px;overflow:hidden">Bon Jovi - It's my life</label>
+                    <div class="music-track-01el" style="position: absolute; left:105px; width:100px; height:3px; top:45px; background-color:#989898;"></div>
+                    <div class="music-track-02el" style="position: absolute; left:105px; width:0px; height:3px; top:45px; background-color:grey;"></div>
+                    <div class='tileTextLayer' style='margin: 0px;'>
+                        <img id="thumbnail" src="/static/images/static/BJ_Greatest.jpg" style="width: 80px; position: absolute;;transition: 1s;left: 10px;top: 10px;border-radius:10px;">
+                        <img id='music-return' src="/static/images/static/previous3.png" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 115px;top: 75px;">
+                        <img class="stop" src="/static/images/static/pause2.png" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 158px;top: 75px;">
+                        <img class="play" src="/static/images/static/play.png" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 158px;top: 75px;">
+                        <img id='music-skip'src="/static/images/static/next3.png" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 195px;top: 75px;">
+                    </div>
+                    <!-- <div class='tileTouchLayer tileModal'></div> -->
+                </div>
+            </div>
+
+            <div class="zoomable c_sortable_page_grid" id="sortable_page_grid" style="display:inline-block;">
+                {{ slide.content | safe }}
+            </div>
+            <div class="end-block"></div>
+        </div>
+    </div>
+
+{% endfor %}

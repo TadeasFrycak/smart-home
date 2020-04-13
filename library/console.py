@@ -54,6 +54,13 @@ class Console:
     END = "\033[0m"
 
     def __init__(self, socket_io, priority, logger):
+        """
+        Init of console class
+        :param socket_io: declare of socket_io
+        :param priority: priority of logger
+        :param logger: Logger class
+        """
+
         self.__logger = logger
         self.__priority = priority
         self.__socket_io = socket_io
@@ -66,6 +73,7 @@ class Console:
         :return:
         """
 
+        # Get source of message
         cur_frame = inspect.currentframe()
         cal_frame = inspect.getouterframes(cur_frame, 2)
         source = cal_frame[1][1].split("/")
@@ -85,8 +93,8 @@ class Console:
             self.__socket_io.emit("notify", {"title": "WARNING", "message": data, "type": "warning"}, namespace="/acom")
             print(self.FG_COLORS["yellow"] + self.SPECIAL["bold"] + self.WARNING + self.END)
             print("{0}{1}{2} - ln {3}: {4}{5}{6}{7}".format(self.FG_COLORS["yellow"], self.SPECIAL["bold"],
-                                                             str(source), str(cal_frame[1][2]), self.END,
-                                                             self.SPECIAL["bold"], str(data), self.END))
+                                                            str(source), str(cal_frame[1][2]), self.END,
+                                                            self.SPECIAL["bold"], str(data), self.END))
             print(self.FG_COLORS["yellow"] + self.SPECIAL["bold"] + self.WARNING + self.END)
 
         elif priority == 2 and self.__priority <= 2:
@@ -94,6 +102,6 @@ class Console:
             self.__socket_io.emit("notify", {"title": "ERROR", "message": data, "type": "danger"}, namespace="/acom")
             print(self.FG_COLORS["fail"] + self.SPECIAL["bold"] + self.ERROR + self.END)
             print("{0}{1}{2} - ln {3}: {4}{5}{6}{7}".format(self.FG_COLORS["fail"], self.SPECIAL["bold"], str(source),
-                                                             str(cal_frame[1][2]), self.END, self.SPECIAL["bold"],
-                                                             str(data), self.END))
+                                                            str(cal_frame[1][2]), self.END, self.SPECIAL["bold"],
+                                                            str(data), self.END))
             print(self.FG_COLORS["fail"] + self.SPECIAL["bold"] + self.ERROR + self.END)

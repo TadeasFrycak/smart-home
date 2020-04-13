@@ -1,16 +1,21 @@
+# -*- coding: utf-8 -*-
+
 from library.logger import WerkzeugLogger, AuthLogger, ConsoleLogger
 from library.tmng_rewrite import TemplateManagerRewrite
+from library.default_values import DefaultValues
 from library.tmng import TemplateManager
 from library.html_json import HTML_JSON
 from library.validator import Validator
 from library.fmng import FileManager
 from library.console import Console
 from library.arduino import Arduino
+from library.acom import Acom
 from library.auth import Auth
 
 from flask import Flask, request, render_template, abort
 from flask_socketio import SocketIO
 from threading import Thread, Event
+from subprocess import Popen
 
 import paho.mqtt.client as mqtt
 import subprocess
@@ -19,6 +24,7 @@ import socket
 import random
 import json
 import time
+import sys
 import os
 
 try:
@@ -27,40 +33,27 @@ try:
 except Exception as e:
     pass
 
-# Define some global variables
-ID = "i"
-ID_TILE = "id_tile"
-VALUE = "v"
-INDEX = "index"
-NAME = "name"
-TYPE = "type"
-EDIT = "edit"
-# TODO to templates
-
-BROKER = "192.168.0.100"
-PORT = 1883
-USER = "username"
-PASSWORD = "12345678"
-
-HOME = "home"
-
+# Define constants
+OK = "ok"
 
 # Initialise Flask
 app = Flask(__name__)
 socket_io = SocketIO(app)
 
-# Initialise modules
+# Initialise own modules
 fmng = FileManager()
 werkzeug_logger = WerkzeugLogger(priority=fmng.config()["werkzeug_priority"])
 auth_logger = AuthLogger(priority=fmng.config()["auth_priority"])
 console_logger = ConsoleLogger(priority=fmng.config()["console_priority"])
 console = Console(logger=console_logger, priority=fmng.config()["console_priority"], socket_io=socket_io)
-tmng = TemplateManager(fmng=fmng, console=console)
-tmng_rwr = TemplateManagerRewrite(fmng=fmng, tmng=tmng)
+default_values = DefaultValues()
+tmng = TemplateManager(fmng=fmng, console=console, default_values=default_values)
+tmng_rwr = TemplateManagerRewrite(fmng=fmng, tmng=tmng, default_values=default_values)
 arduino = Arduino(console=console)
 html_json = HTML_JSON()
 auth = Auth(fmng=fmng, logger=auth_logger)
 validator = Validator(fmng=fmng, tmng=tmng)
+acom = Acom(console=console, socket_io=socket_io, arduino=arduino)
 
 try:
     raspberry = Raspberry()
@@ -68,216 +61,28 @@ try:
 except Exception as e:
     console.print("This device is not a Raspberry! Some\nfunctions may not work correctly!", 1)
 
+
+# Validate files
 validate = validator.validate_jsons()
 if validate is not True:
     console.print("Error in JSON due: {0}".format(validate), 2)
     exit()
 
+# Check duplicities
 check_duplicity = validator.check_duplicity_ids()
 if check_duplicity is not True:
     console.print("Duplicity detected in: {0}".format(check_duplicity), 1)
 
-# Multi-threading
-mqtt_thread = Thread()
-mqtt_stop = Event()
 
-raspberry_thread = Thread()
-raspberry_stop = Event()
-
-arduino_thread = Thread()
-arduino_stop = Event()
-
-
-class MQTT_BROKER(Thread):
-    DELAY = 2
-    NAMESPACE = "/acom"
-
-    def __init__(self):
-        super(MQTT_BROKER, self).__init__()
-
-    def on_connect(self, client, userdata, flags, rc):
-        print("Connected with result code " + str(rc))
-        self.client.subscribe(HOME + "/#")
-
-    def on_message(self, client, userdata, msg):
-        topic = msg.topic
-        id_tile = topic.split("/")[1]
-        try:
-            element_id = topic.split("/")[2]
-
-        except:
-            socket_io.emit("tile", {ID: id_tile, VALUE: msg.payload.decode()},
-                           namespace=self.NAMESPACE)
-
-        else:
-            arduino.write(
-                html_json.to_html(json_data={ID: "bed-toggle", ID_TILE: "bed-toggle", VALUE: msg.payload.decode()}))
-
-            socket_io.emit("slider", {ID_TILE: id_tile, ID: element_id, VALUE: msg.payload.decode()},
-                           namespace=self.NAMESPACE)
-
-            socket_io.emit("toggle", {ID_TILE: id_tile, ID: element_id, VALUE: msg.payload.decode()},
-                           namespace=self.NAMESPACE)
-
-        # self.client.disconnect()
-
-    def run(self):
-        self.client = mqtt.Client()
-
-        try:
-            self.client.connect(BROKER, 1883, 60)
-
-        except:
-            console.print("MQTT is not working. Some functions may\nnot work."
-                          "Is this device Raspberry Pi? See line above", priority=2)
-
-        self.client.on_connect = self.on_connect
-        self.client.on_message = self.on_message
-        self.client.loop_forever()
-
-
-class Arduino(Thread):
-    """
-    Arduino
-    """
-
-    DELAY = 0.1
-
-    def __init__(self):
-        super(Arduino, self).__init__()
-
-    def arduino(self):
-        raw_data = arduino.read()
-
-        if raw_data is not None:
-            data = json.loads(html_json.to_json(raw_data))
-
-            if "alarm" in data.keys():
-                # subprocess.check_output(["omxplayer", "alarm.mp3"]).decode("utf-8")
-                socket_io.emit("notify", {"title": "Poplach", "message": "Senzor - postel", "type": "info"}, namespace="/acom")
-
-    def run(self):
-        """
-        Sending commands
-        :return:
-        """
-
-        while not arduino_stop.isSet():
-            self.arduino()
-            time.sleep(self.DELAY)
-
-
-class Raspberry(Thread):
-    """
-    Raspberry
-    """
-
-    DELAY = 300
-    NAMESPACE = "/acom"
-
-    def __init__(self):
-        super(Raspberry, self).__init__()
-
-    def cpu_temp(self):
-        """
-        Measure CPU temp, append to Raspberry item (graph)
-        :return:
-        """
-
-        data_x = str(datetime.datetime.now().strftime("%H:%M"))
-        data_y = raspberry.cpu_temp()
-        element_id = "modal-graph-1"
-        id_tile = "raspberry-1"
-
-        tmng.graph_rwr(id_tile=id_tile, data_x=data_x, data_y=data_y, element_id=element_id)
-        socket_io.emit("graphs", {tmng.DATA_Y: data_y, tmng.DATA_X: data_x, ID: element_id, ID_TILE: id_tile},
-                       namespace=self.NAMESPACE)
-
-    def test_graph(self):
-        """
-        Test
-        :return:
-        """
-
-        data_x = str(datetime.datetime.now().strftime("%H:%M"))
-        data_y = random.randint(0, 100)
-        element_id = "modal-graph-1"
-        id_tile = "raspberry-1"
-
-        tmng.graph_rwr(id_tile=id_tile, data_x=data_x, data_y=data_y, element_id=element_id)
-        socket_io.emit("graphs", {tmng.DATA_Y: data_y, tmng.DATA_X: data_x, ID: element_id, ID_TILE: id_tile},
-                       namespace=self.NAMESPACE)
-
-    def run(self):
-        """
-        Sending commands
-        :return:
-        """
-
-        while not raspberry_stop.isSet():
-            # self.cpu_temp()
-            time.sleep(self.DELAY)
-
-
-# Error pages
-@app.errorhandler(401)
-def access_denied(e):
-    """
-    401 error
-    :param e:
-    :return: error page
-    """
-
-    return tmng.error_page(header="401", error=str(e))
-
-
-@app.errorhandler(403)
-def access_denied(e):
-    """
-    403 error
-    :param e: event
-    :return: error page
-    """
-
-    return tmng.error_page(header="403", error=str(e))
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    """
-    404 error
-    :param e: event
-    :return: error page
-    """
-
-    return tmng.error_page(header="404", error=str(e))
-
-
-@app.errorhandler(410)
-def gone(e):
-    """
-    410 error
-    :param e: event
-    :return: error page
-    """
-
-    return tmng.error_page(header="410", error=str(e))
-
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    """
-    500 error
-    :param e: event
-    :return: error page
-    """
-
-    return tmng.error_page(header="500", error=str(e))
-
-
-# Add meta
+# Add meta header
 @app.after_request
 def add_meta(response):
+    """
+    Add meta to HTMLs - it doesn't cache in Chrome, Safari, ...
+    :param response: header
+    :return: response
+    """
+
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
     response.headers["Expires"] = "0"
     response.headers["Pragma"] = "no-cache"
@@ -285,109 +90,318 @@ def add_meta(response):
     return response
 
 
-# Pages - templates
+# Error pages
+@app.errorhandler(401)
+def access_denied(event):
+    """
+    401 error
+    :param event: event
+    :return: error page
+    """
+
+    return render_template("error.html", header="401", message=str(event))
+
+
+@app.errorhandler(403)
+def access_denied(event):
+    """
+    403 error
+    :param event: event
+    :return: error page
+    """
+
+    return render_template("error.html", header="403", message=str(event))
+
+
+@app.errorhandler(404)
+def page_not_found(event):
+    """
+    404 error
+    :param event: event
+    :return: error page
+    """
+
+    return render_template("error.html", header="404", message=str(event))
+
+
+@app.errorhandler(410)
+def gone(event):
+    """
+    410 error
+    :param event: event
+    :return: error page
+    """
+
+    return render_template("error.html", header="410", message=str(event))
+
+
+@app.errorhandler(500)
+def internal_server_error(event):
+    """
+    500 error
+    :param event: event
+    :return: error page
+    """
+
+    return render_template("error.html", header="500", message=str(event))
+
+
+# Index page
 @app.route("/")
 def index():
     """
-    Render page
-    :return:
+    Render index page
+    :return: index page
     """
 
-    tmng.reload_files()  # Reload HTML files
+    slides = tmng.index_content()
 
+    # If whitelist is on
     if bool(fmng.config()["whitelist"]) is True:
         if auth.auth(ip=request.environ.get("HTTP_X_REAL_IP", request.remote_addr), browser=request.user_agent.browser,
                      system=request.user_agent.platform, header=request.user_agent):
 
-            return tmng.index()
+            return render_template("index.html", content=render_template("slide.html", slides=slides),
+                                   background_image=tmng.random_background())
 
         else:
             abort(403)
 
     else:
-        return tmng.index()
+        return render_template("index.html", content=render_template("slide.html", slides=slides),
+                               background_image=tmng.random_background())
 
 
-@app.route("/test")
-def test():
-    return render_template("test.html")
+# Tile
+@app.route("/tile", methods=["POST"])
+def tile():
+    """
+    Tile click event
+    :return:
+    """
+
+    json_data = request.form.to_dict(flat=True)
+
+    element_id = request.form[tmng.ID]
+    state = request.form[tmng.VALUE]
+
+    socket_io.emit("tile", {tmng.ID: element_id, tmng.VALUE: state}, namespace="/acom")
+
+    tmng_rwr.tile_status(state=state, element_id=element_id)
+
+    arduino.write(html_json.to_html(json_data=json_data))
+
+    return OK
+
+
+@app.route("/get_tile", methods=["POST"])
+def get_tile():
+    """
+    Get HTML of tile by ID
+    :return: HTML of tile
+    """
+
+    tile_id = request.form["tile_id"]
+    return json.dumps({tmng.TILE: tmng.get_tile(tile_id=tile_id), tmng.ID: tile_id})
+
+
+@app.route("/tile_id_rwr", methods=["POST"])
+def tile_id_rwr():
+    """
+    Rewrite tile ID
+    :return:
+    """
+
+    element_id = request.form["tile_id"]
+    new_id = request.form["new_id"]
+
+    tmng_rwr.tile_id(element_id=element_id, new_id=new_id)
+
+    return OK
+
+@app.route("/tile_index_rwr", methods=["POST"])
+def tile_index_rwr():
+    """
+    Rewrite tile ID
+    :return:
+    """
+
+    old_index = int(request.form["old_index"])
+    new_index = int(request.form["new_index"])
+    slide = int(request.form["slide"])
+
+    tmng_rwr.tile_index(old_index=old_index, new_index=new_index, slide=slide)
+
+    return OK
+
+
+@app.route("/tile_name_rwr", methods=["POST"])
+def tile_name_rwr():
+    """
+    Rewrite tile name
+    :return:
+    """
+
+    element_id = request.form["tile_id"]
+    new_name = request.form["new_name"]
+
+    tmng_rwr.tile_name(element_id=element_id, new_name=new_name)
+
+    return OK
+
+
+@app.route("/tile_type_rwr", methods=["POST"])
+def tile_type_rwr():
+    """
+    Rewrite tile type
+    :return:
+    """
+
+    element_id = request.form[tmng.ID]
+    new_type = request.form[tmng.NEW_TYPE]
+
+    tmng_rwr.tile_type(new_type=new_type, element_id=element_id)
+
+    return json.dumps({"tile_values": tmng.get_tile_values(element_id=element_id)})
+
+@app.route("/tile_icon_rwr", methods=["POST"])
+def tile_icon_rwr():
+    """
+    Rewrite tile type
+    :return:
+    """
+
+    element_id = request.form[tmng.ID]
+    new_icon = request.form["new_icon"]
+
+    tmng_rwr.tile_icon(new_icon=new_icon, element_id=element_id)
+
+    return OK
+
+
+@app.route("/tile_delete", methods=["POST"])
+def tile_delete():
+    """
+    Rewrite tile type
+    :return:
+    """
+
+    element_id = request.form[tmng.ID]
+
+    tmng_rwr.tile_delete(element_id=element_id)
+
+    return OK
 
 
 # Modal
 @app.route("/get_modal", methods=["POST"])
 def get_modal():
     """
-    Get modal
-    :return: modal, slider and toggle values
+    Get modal by ID - if not "add edit" mode
+    :return: modal, slider, toggle and graph values, if "edit add" mode, then only modal
     """
 
-    console.print("Loading modal...")
+    edit = bool(int(request.form[tmng.EDIT]))
+    add = bool(int(request.form[tmng.ADD]))
 
-    id_tile = request.form[ID]
-    edit = bool(int(request.form[EDIT]))
+    # If it's "edit add" mode
+    if add is not True and edit is not True:
+        tile_id = request.form[tmng.ID]
 
-    # TODO merge names to constants
-    if edit is not True:
-        return json.dumps({"modal": tmng.modal(element_id=id_tile, edit=edit),
-                           "sliders": tmng.get_modal_sliders(id_tile=id_tile),
-                           "toggles": tmng.get_modal_toggles(id_tile=id_tile),
-                           "graphs": tmng.get_modal_graphs(id_tile=id_tile)})
+        return json.dumps({"modal": render_template("modal.html", content=tmng.modal_content(element_id=tile_id, edit=edit)),
+                           "sliders": tmng.get_modal_sliders(id_tile=tile_id),  # TODO refactor element_id
+                           "toggles": tmng.get_modal_toggles(id_tile=tile_id),
+                           "graphs": tmng.get_modal_graphs(id_tile=tile_id)})
+
+    elif add is True:
+        page_index = int(request.form[tmng.PAGE_INDEX])
+
+        values = tmng.modal_content(page_index=page_index, edit=edit, add=add)
+
+        return json.dumps({"modal": render_template("modal_edit.html",
+                                                    content=values["content"],
+                                                    modal_items=values["modal_items"],
+                                                    tile_types=values["tile_types"],
+                                                    tile_values=values["tile_values"],
+                                                    id_value=values["id_value"],
+                                                    tile_name=values["tile_name"])})
+    elif edit is True and add is not True:
+        page_index = int(request.form[tmng.PAGE_INDEX])
+        tile_id = request.form[tmng.ID]
+
+        values = tmng.modal_content(page_index=page_index, edit=edit, add=add, element_id=tile_id)
+
+        return json.dumps({"modal": render_template("modal_edit.html",
+                                                    content=values["content"],
+                                                    modal_items=values["modal_items"],
+                                                    tile_types=values["tile_types"],
+                                                    tile_values=values["tile_values"],
+                                                    id_value=values["id_value"],
+                                                    tile_name=values["tile_name"])})
 
     else:
-        return json.dumps({"modal": tmng.modal(element_id=id_tile, edit=edit),
-                           "sliders": tmng.get_modal_sliders(id_tile=id_tile),
-                           "toggles": tmng.get_modal_toggles(id_tile=id_tile),
-                           "graphs": tmng.get_modal_graphs(id_tile=id_tile)})
+        print("ERRRORRIHHFALIDSHIRHDSRFHEJKFHADJF")
 
+@app.route("/add_modal_edit_item", methods=["POST"])
+def add_modal_edit_item():
+    """
+    Add new item (like slider or toggle) into modal in edit mode
+    :return: HTML of item
+    """
 
-@app.route("/get_modal_edit_item", methods=["POST"])
-def get_modal_edit_item():
-    type_of_item = request.form[TYPE]
-    return json.dumps({"item": tmng.get_modal_edit_item(type_of_item=type_of_item)})
+    type_of_item = request.form[tmng.TYPE]
+    tile_id = request.form[tmng.TILE_ID]
+
+    return json.dumps({"item": tmng.add_modal_edit_item(type_of_item=type_of_item, tile_id=tile_id)})
 
 
 # Modal events
 @app.route("/slider", methods=["POST"])
 def slider():
     """
-    Slider event
+    Slider item event
     :return:
     """
 
     json_data = request.form.to_dict(flat=True)
-    element_id = request.form[ID]
-    state = request.form[VALUE]
-    id_tile = request.form["id_tile"]
-    tmng.slider_rwr(id_tile=id_tile, state=state, element_id=element_id)
+    element_id = request.form[tmng.ID]
+    state = request.form[tmng.VALUE]
+    tile_id = request.form[tmng.TILE_ID]
+
+    tmng_rwr.modal_slider(tile_id=tile_id, state=state, element_id=element_id)
     socket_io.emit("slider", json_data, namespace="/acom")
-    # socket_io.emit("notify", {"title": element_id, "message": state, "type": "info"}, namespace="/acom")
     arduino.write(html_json.to_html(json_data=json_data))
 
-    return "ok"
+    return OK
 
 
 @app.route("/toggle", methods=["POST"])
 def toggle():
     """
-    Toggle event
+    Toggle item event
     :return:
     """
 
     json_data = request.form.to_dict(flat=True)
 
-    element_id = request.form[ID]
-    state = request.form[VALUE]
-    id_tile = request.form[ID_TILE]
+    element_id = request.form[tmng.ID]
+    state = request.form[tmng.VALUE]
+    tile_id = request.form[tmng.TILE_ID]
 
     socket_io.emit("toggle", json_data, namespace="/acom")
     arduino.write(html_json.to_html(json_data=json_data))
 
-    client = mqtt.Client()
-    client.username_pw_set(USER, password=PASSWORD)
-    client.connect(BROKER, port=PORT)
-    client.publish("{0}/{1}/{2}".format(HOME, str(id_tile), str(element_id)), state)
+    try:
+        client = mqtt.Client()
+        client.username_pw_set(USER, password=PASSWORD)
+        client.connect(BROKER, port=PORT)
+        client.publish("{0}/{1}/{2}".format(HOME, str(id_tile), str(element_id)), state)
 
-    if id_tile == "raspberry-1":
+    except Exception as e:
+        pass  # TODO
+
+    # TODO If current tile is Raspberry tile - Make for Raspberry static tile
+    if tile_id == "raspberry-1":
         if element_id == "raspberry-cpu-fan":
             raspberry.set_fan(state=int(state))
 
@@ -413,130 +427,102 @@ def toggle():
                                       "type": "danger"}, namespace="/acom")
             subprocess.check_output(["sudo", "halt"]).decode("utf-8")
 
-        return "ok"
+        return OK
 
-    tmng.toggle_rwr(id_tile=id_tile, state=state, element_id=element_id)
+    tmng_rwr.modal_toggle(tile_id=tile_id, state=state, element_id=element_id)
 
-    return "ok"
-
-
-@app.route("/tile", methods=["POST"])
-def tile():
-    """
-    Tile event
-    :return:
-    """
-
-    json_data = request.form.to_dict(flat=True)
-
-    element_id = request.form[ID]
-    state = request.form[VALUE]
-
-    socket_io.emit("tile", {ID: element_id, VALUE: state}, namespace="/acom")
-
-    tmng_rwr.tile_status(state=state, element_id=element_id)
-
-    arduino.write(html_json.to_html(json_data=json_data))
-    return "ok"
-
-
-# Items rewrite
-@app.route("/tile_id_rwr", methods=["POST"])
-def tile_id_rwr():
-    json_data = request.form.to_dict(flat=True)
-
-    element_id = request.form["tile_id"]
-    new_id = request.form["new_id"]
-
-    tmng_rwr.tile_id(element_id=element_id, new_id=new_id)
-
-    return "ok"
-
-
-@app.route("/tile_name_rwr", methods=["POST"])
-def tile_name_rwr():
-    json_data = request.form.to_dict(flat=True)
-
-    element_id = request.form["tile_id"]
-    new_name = request.form["new_name"]
-
-    tmng_rwr.tile_name(element_id=element_id, new_name=new_name)
-
-    return "ok"
-
-
-@app.route("/tile_type_rwr", methods=["POST"])
-def tile_type_rwr():
-    """
-    Tile event
-    :return:
-    """
-    json_data = request.form.to_dict(flat=True)
-
-    element_id = request.form["id"]  # TODO názvy do konstant
-    new_type = request.form["new_type"]
-
-    tmng_rwr.tile_type(new_type=new_type, element_id=element_id)
-
-    arduino.write(html_json.to_html(json_data=json_data))
-    return "ok"
+    return OK
 
 
 # Modal rewrite
 @app.route("/modal_item_index_rwr", methods=["POST"])
 def modal_item_index_rwr():
-    json_data = request.form.to_dict(flat=True)
+    """
+    Change order of items in modal (from old_index to new_index)
+    :return:
+    """
 
-    tile_id = request.form["id"]  # TODO názvy do konstant
-    old_index = int(request.form["old_index"])
-    new_index = int(request.form["new_index"])
+    tile_id = request.form[tmng.ID]
+    old_index = int(request.form[tmng.OLD_INDEX])
+    new_index = int(request.form[tmng.NEW_INDEX])
 
     tmng_rwr.modal_item_index(new_index=new_index, old_index=old_index, tile_id=tile_id)
 
-    arduino.write(html_json.to_html(json_data=json_data))
-    return "ok"
+    return OK
+
+
+@app.route("/modal_item_value_rwr", methods=["POST"])
+def modal_item_value_rwr():
+    """
+    Rewrite any value of item
+    :return:
+    """
+
+    tile_id = request.form[tmng.TILE_ID]
+    old_value = request.form[tmng.OLD_VALUE]
+    new_value = request.form[tmng.NEW_VALUE]
+    item_index = int(request.form[tmng.INDEX])
+
+    tmng_rwr.modal_item_value(new_value=new_value, old_value=old_value, tile_id=tile_id, index=item_index)
+
+    return OK
+
+
+@app.route("/modal_item_delete", methods=["POST"])
+def modal_item_delete():
+    """
+    Delete modal item
+    :return:
+    """
+
+    tile_id = request.form[tmng.TILE_ID]
+    item_index = int(request.form[tmng.INDEX])
+
+    tmng_rwr.modal_item_delete(index=item_index, tile_id=tile_id)
+
+    return OK
 
 
 # Swiper
 @app.route("/swiper_title", methods=["POST"])
 def swiper_title():
-    index = int(request.form[INDEX])
-    value = request.form[VALUE]
+    """
+    Change page name
+    :return:
+    """
 
-    tmng.title_rwr(index=index, value=value)
+    page_index = int(request.form[tmng.INDEX])
+    value = request.form[tmng.VALUE]
 
-    return "ok"
+    tmng.title_rwr(index=page_index, value=value)
+
+    return OK
 
 
 @app.route("/append_slide", methods=["POST"])
 def append_slide():
-    index = int(request.form[INDEX])
-    value = request.form[VALUE]
-    tmng.append_slide(index=index, value=value)
+    """
+    Append new slide
+    :return:
+    """
 
-    return "ok"
+    tmng_rwr.append_slide()
+
+    return json.dumps({"slide": render_template("slide.html", slides=[{"content": "", "name": "Bez názvu"}])})
 
 
 @app.route("/remove_slide", methods=["POST"])
 def remove_slide():
-    index = int(request.form[INDEX])
-    tmng.remove_slide(index=index)
-
-    return "ok"
-
-
-@app.route("/tile_title", methods=["POST"])
-def tile_title():
     """
-    Toggle event
+    Remove current slide (by index)
     :return:
     """
 
-    element_id = request.form[ID]
-    name = request.form[NAME]
-    tmng.tile_title_rwr(element_id=element_id, name=name)
+    page_index = int(request.form[tmng.INDEX])
 
-    return "ok"
+    tmng_rwr.remove_slide(index=page_index)
+
+    return OK
 
 
 # Client connect/disconnect
@@ -546,9 +532,7 @@ def client_connect():
     Event on user connect
     :return:
     """
-    # print(request.environ['SERVER_NAME'])
-    # print("Base url without port", request.remote_addr)
-    # print("Base url with port", request.host_url)
+
     console.print("Client connected")
     console.print("\t- Client IP: " + str(request.environ.get("HTTP_X_REAL_IP", request.remote_addr)))
 
@@ -562,8 +546,6 @@ def client_connect():
     console.print("\t\t- Browser: " + str(request.user_agent.browser))
     console.print("\t\t- Version: " + str(request.user_agent.version))
 
-    # TODO Něco po připojení uživatele (asynchronní thread)
-
 
 @socket_io.on("disconnect", namespace="/acom")
 def client_disconnect():
@@ -575,18 +557,54 @@ def client_disconnect():
     console.print("Client disconnected")
 
 
-# Multi threading
-if not mqtt_thread.is_alive():
-    mqtt_thread = MQTT_BROKER()
-    mqtt_thread.start()
+# Server operations
+@app.route("/shutdown", methods=["POST", "GET"])
+def shutdown():
+    """
+    Shutdown server
+    :return: confirmation of server shutdown
+    """
 
-if not raspberry_thread.is_alive():
-    raspberry_thread = Raspberry()
-    raspberry_thread.start()
+    werkzeug_shutdown = request.environ.get("werkzeug.server.shutdown")
 
-if not arduino_thread.is_alive():
-    arduino_thread = Arduino()
-    arduino_thread.start()
+    if werkzeug_shutdown is None:
+        console.print("Not running with the Werkzeug Server", 2)
+
+    werkzeug_shutdown()  # Shutdown server
+
+    return render_template("error.html", header="Vypnuto", message="Server byl úspěšně vypnut")
+
+
+@app.route("/restart", methods=["POST", "GET"])
+def restart():
+    """
+    Restart server
+    :return: confirmation of server restart - display only if it is GET request
+    """
+
+    Popen([sys.executable, "app.py"])  # Open new app.py
+
+    werkzeug_shutdown = request.environ.get("werkzeug.server.shutdown")
+
+    if werkzeug_shutdown is None:
+        console.print("Not running with the Werkzeug Server", 2)
+
+    werkzeug_shutdown()  # Shutdown current server
+
+    return render_template("error.html", header="Restart", message="Server byl úspěšně restartován")
+
+
+@app.route("/reload", methods=["POST", "GET"])
+def reload():
+    """
+    Reload page in all opened browsers
+    :return: confirmation of browsers reload - display only if it is GET request
+    """
+
+    socket_io.emit("reload", {}, namespace="/acom")  # Send acom request to reload page on all browsers
+
+    return render_template("error.html", header="Reload", message="Všechny webové prohlížeče práve obnovili svoje stránky s Chytrou domácností")
+
 
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0  # TODO Turn off cashing - not working
 os.environ["WERKZEUG_RUN_MAIN"] = "true"  # Turn off first Werkzeug log to console
@@ -606,4 +624,4 @@ if __name__ == "__main__" and bool(fmng.config()["run"]) is True:
     app.run(host=str(fmng.config()["host"]), debug=bool(fmng.config()["debug"]))
 
 else:
-    console.print("Stopped - see config", priority=2)
+    console.print("Stopped - see config", 2)

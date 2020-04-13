@@ -2,28 +2,6 @@
 	"items": [{
 		"name": "Kuchyn\u011b",
 		"data": [{
-			"type": "gauge",
-			"data": {
-				"id": "gauge_01",
-				"label": "\u00darov\u011b\u0148 osv\u011btlen\u00ed",
-				"min_val": "0",
-				"max_val": "120",
-				"suffix": "%",
-				"color": "green",
-				"value": "90"
-			}
-		}, {
-			"type": "gauge",
-			"data": {
-				"id": "gauge_02",
-				"label": "Rychlost v\u011btru",
-				"min_val": "0",
-				"max_val": "100",
-				"suffix": "Km\/h",
-				"color": "purple",
-				"value": "11"
-			}
-		}, {
 			"type": "toggle",
 			"data": {
 				"id": "toggle-1",
@@ -153,7 +131,7 @@
 				}
 			}]
 		}, {
-			"type": "toggle",
+			"type": "blank",
 			"data": {
 				"id": "toggle-3",
 				"label": "Stoln\u00ed lampi\u010dka",
@@ -647,8 +625,6 @@
 			}, {
 				"type": "separator"
 			}, {
-				"type": "apex_graph"
-			}, {
 				"type": "separator"
 			}, {
 				"type": "time-picker",
@@ -1047,12 +1023,10 @@
 				"type": "separator"
 			}, {
 				"type": "graph",
-				"data_x": ["1", "2", "3"],
-				"data_y": [1, 2, 3],
-				"data": {
-					"id": "modal-graph-1",
-					"label": "CPU teplota"
-				}
+                "data_x": ["2005", "2006", "2007", "2008"],
+				"data_y": [23, 28, 43, 23],
+                "label": "Graf",
+                "data": {"id": "test-graph"}
 			}]
 		}]
 	},{

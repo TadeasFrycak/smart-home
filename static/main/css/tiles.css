@@ -3,8 +3,7 @@
     height: 100px;
     width: 100px;
     border-radius: 10px;
-    margin: 6px;
-    float: left;
+    /* float: left; */
     position: relative;
     overflow: hidden;
     box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
@@ -21,6 +20,10 @@
     border-radius: 50%;
     display: inline-block;
  }
+
+.tile-sortable-move > *{
+    background-color: rgb(116, 113, 113);
+}
 
 
 
