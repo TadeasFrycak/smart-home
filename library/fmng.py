@@ -1,4 +1,6 @@
 import json
+import glob
+import sys
 import os
 
 
@@ -7,13 +9,17 @@ class FileManager:
     File Manager class
     """
 
-    CONFIG_DIR = "config"
-    CONFIG_JSON = "main.json"
-    CONFIG_DEVICES = "devices.json"
-    CONFIG_ITEMS = "items.json"
-    CONFIG_WHITELIST = "whitelist.json"
-
+    DATA_DIR = "data"
+    SERVER_CONFIG_DIR = "server_config"
+    APP_CONFIG_DIR = "app_config"
     TEMPLATES_DIR = "templates"
+
+    CONFIG_FILE = "main.json"
+    DEVICES_FILE = "devices.json"
+    WHITELIST_FILE = "whitelist.json"
+    BLACKLIST_FILE = "blacklist.json"
+    SETTINGS_FILE = "settings.json"
+    MAC_LIST_FILE = "mac_list.json"
 
     CHARSET = "utf-8"
     
@@ -22,132 +28,173 @@ class FileManager:
         Init of class FileManager class
         """
 
-        self.__config_data = None
-        self.__devices_data = None
-        self.__items_data = None
-        self.__whitelist_data = None
+        self.__devices = None
+        self.__settings = None
+        self.__img_data = None
 
-        # self.root_dir = os.path.dirname(sys.modules["__main__"].__file__)
-
-    def reload_files(self):
+    def load_file(self, path=None):
         """
-        Set all files data to None
+        Load value
+        :param path: path to value
         :return:
         """
 
-        self.__config_data = None
-        self.__devices_data = None
-        self.__items_data = None
-        self.__whitelist_data = None
-
-    @staticmethod
-    def load_file(path, is_json):
-        """
-        Load file
-        :param path: path to file
-        :param is_json: is json?
-        :return:
-        """
-
-        if is_json is True:
-            with open(path, encoding="utf-8") as f:
+        with open(path, mode="r", encoding=self.CHARSET) as f:
+            if "json" in path:
                 data = json.load(f)
                 
-        else:
-            f = open(path, "r")
-            data = f.read()
-            f.close()
+            else:
+                data = f.read()
 
         return data
 
+    def write_file(self, path, data, is_json):
+        """
+        Write to value
+        :param path: path to value
+        :param data: data
+        :param is_json: is file JSON?
+        :return:
+        """
+
+        with open(path, mode="w", encoding=self.CHARSET) as f:
+            if is_json is True:
+                json.dump(data, f)
+
+            else:
+                f.write(data)
+
     @staticmethod
-    def write_file(path, data, is_json):
+    def get_filename_from_path(path):
+        return os.path.basename(path)
+
+    def list_file_names(self, path=None, name="*.*", extension=True, full_path=False):
         """
-        Write to file
-        :param path: path to file
-        :param data: data
-        :param is_json: is JSON?
+        List all file names in folder
+        :param path: folder to list files
+        :param name: filter of file name
+        :param extension: get files with extension
+        :param full_path: get files with full path
         :return:
         """
 
-        f = open(path, "w")
+        data = []
 
-        if is_json is True:
-            json.dump(data, f)
+        for i in glob.glob(pathname=self.path_join(path, name)):
+            if full_path is False:
+                data.append(self.get_filename_from_path(i))
 
-        else:
-            f.write(data)
+            else:
+                data.append(i)
 
-        f.close()
+        for num, i in enumerate(data):
+            if extension is False:
+                data[num] = os.path.splitext(i)[0]
 
-    def write_devices(self, path, data, is_json):
-        """
-        Write to RAM
-        :param path: old
-        :param data: data
-        :return:
-        """
-        # TODO Property
-        self.__devices_data = data
+            else:
+                break
 
-    def config(self, overwrite=False):
-        """
-        Get config
-        :param overwrite: overwrite?
-        :return:
-        """
-
-        if self.__config_data is None or overwrite is True:
-            self.__config_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_JSON), is_json=True)
-
-        return self.__config_data
-
-    def devices(self, overwrite=False):
-        """
-        Get devices
-        :param overwrite: overwrite?
-        :return:
-        """
-
-        if self.__devices_data is None or overwrite is True:
-            self.__devices_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_DEVICES),
-                                                 is_json=True)
-            
-        return self.__devices_data
+        return data
 
     @property
-    def items(self, overwrite=False):
+    def config(self):
         """
-        Get items
-        :param overwrite: overwrite?
+        Get classify config JSON
         :return:
         """
 
-        if self.__items_data is None or overwrite is True:
-            self.__items_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_ITEMS), is_json=True)
-            
-        return self.__items_data
+        return self.load_file(path=self.path_join(self.DATA_DIR, self.SERVER_CONFIG_DIR, self.CONFIG_FILE))
 
-    def whitelist(self, overwrite=False):
+    @property
+    def settings(self):
         """
-        Get whitelist
-        :param overwrite: overwrite?
+        Get settings
         :return:
         """
 
-        if self.__whitelist_data is None or overwrite is True:
-            self.__whitelist_data = self.load_file(path=self.path_join(self.CONFIG_DIR, self.CONFIG_WHITELIST),
-                                                   is_json=True)
+        if self.__settings is None:
+            self.__settings = self.load_file(path=self.path_join(self.DATA_DIR, self.APP_CONFIG_DIR,
+                                                                 self.SETTINGS_FILE))
 
-        return self.__whitelist_data
+        return self.__settings
+
+    @property
+    def devices(self):
+        """
+        Get devices
+        :return:
+        """
+
+        if self.__devices is None:
+            self.__devices = self.load_file(path=self.path_join(self.DATA_DIR, self.APP_CONFIG_DIR, self.DEVICES_FILE))
+
+        return self.__devices
+
+    @devices.setter
+    def devices(self, devices):
+        """
+        Set devices
+        :param devices: devices to write
+        :return:
+        """
+
+        self.__devices = devices
+        # self.write_file("server_config/devices.json", devices, True)
+
+    @property
+    def img_data(self):
+        if self.__img_data is None:
+            self.__img_data = self.load_file(path=self.path_join(self.DATA_DIR, "img_data.json"))
+
+        return self.__img_data
+
+    @img_data.setter
+    def img_data(self, data):
+        self.__img_data = data
+        self.write_file(path=self.path_join(self.DATA_DIR, "img_data.json"), data=data, is_json=True)
+
+    @property
+    def whitelist(self):
+        """
+        Get whitelist JSON
+        :return:
+        """
+
+        return self.load_file(path=self.path_join(self.DATA_DIR, self.APP_CONFIG_DIR, self.WHITELIST_FILE))
+
+    @property
+    def blacklist(self):
+        """
+        Get blacklist JSON
+        :return:
+        """
+
+        return self.load_file(path=self.path_join(self.DATA_DIR, self.APP_CONFIG_DIR, self.BLACKLIST_FILE))
+
+    @property
+    def mac_list(self):
+        """
+        Get MAC list JSON
+        :return:
+        """
+
+        return self.load_file(path=self.path_join(self.DATA_DIR, self.MAC_LIST_FILE))
+
+    @mac_list.setter
+    def mac_list(self, mac_list):
+        """
+        Get MAC list JSON
+        :return:
+        """
+
+        self.write_file(path=self.path_join(self.DATA_DIR, self.MAC_LIST_FILE), data=mac_list, is_json=True)
 
     @staticmethod
-    def path_join(path1, path2):
+    def path_join(*argv):
         """
-        Join two paths
-        :param path1: path one
-        :param path2: path two
+        Join paths to one
+        :param argv: paths
         :return:
         """
 
-        return os.path.join(path1, path2)
+        return "/".join(argv)  # os.path.join(*argv)

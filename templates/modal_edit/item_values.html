@@ -1,0 +1,50 @@
+<div id="" class="modal_items_edit_sortable_item list-group-item">
+    <img src="/img/static/menu.png" class="handle" style="height: 13px;margin-right: 10px;width:15px; cursor:pointer;">
+    <span style="font-weight:bold;font-size:15px;">{{ refactor(item.type) }}</span>
+    {% if "data" in item %}
+        <span style="margin-left:10px;margin-right:10px;">-</span>
+        <span style="font-style:italic;">
+            {% if "label" in item.data %}
+                {{ item.data.label }}
+            {% else %}
+                Bez názvu
+            {% endif %}
+        </span>
+    {% else %}
+    {% endif %}
+
+    <div class="modal_items_edit_sortable_item_dropdown">
+        <form>
+            {% for value in item.data %}
+                {% if value != "value" %}
+                    {% include "modal_edit/item_value.html" %}
+                {% endif %}
+                {% if value == "id" %}
+                <div class="form-group-sm row">
+                    <label for='{{ item["data"][value] }}-mqtt-path' class="col-sm-2 col-form-label">MQTT cesta</label>
+                    <div class="col-sm-10">
+                        <input id='{{ item["data"][value] }}-mqtt-path' class="modal-item-mqtt-path form-control form-control-sm" type="text" value='home/{{ tile_id }}/{{ item["data"][value] }}' placeholder="MQTT cesta" readonly>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </form>
+        <!-- <div class="modal_edit_preview_wrapper">
+            <span style="font-size:15px; font-weight:bold;">Náhled</span>
+            <div class="modal_edit_preview">::preview::</div>
+        </div>-->
+        <div class="modal_edit_dropwown_delete">
+            <button type="button" class="trash modal-edit-item-delete btn-sm btn btn-outline-danger">
+                <!-- <img style="width:20px" class="trash-closed" src="/img/static/trash.png"> -->
+                <span>Smazat</span>
+                    <script>
+                      $(".trash").on("mouseover", function() {
+                        $(".trash-closed").attr("src", "/img/static/trash_opened.png");
+                      }).on("mouseout", function() {
+                        $(".trash-closed").attr("src", "/img/static/trash.png");
+                      });
+                    </script>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,4 @@
 import serial
-import time
-
 
 class Arduino:
     """

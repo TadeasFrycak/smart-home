@@ -6,15 +6,15 @@ class Validator:
     Validator class
     """
 
-    def __init__(self, fmng, tmng):
+    def __init__(self, fmng, tmng_r):
         """
         Init of Validator
         :param fmng: file_manager
-        :param tmng: template_manager
+        :param tmng_r: template_manager
         """
 
         self.__fmng = fmng
-        self.__tmng = tmng
+        self.__tmng_r = tmng_r
 
     def validate_jsons(self):
         """
@@ -23,16 +23,23 @@ class Validator:
         """
 
         try:
-            with open(self.__fmng.path_join(self.__fmng.CONFIG_DIR, self.__fmng.CONFIG_DEVICES), "r") as f:
+            with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
+                                            self.__fmng.DEVICES_FILE), "r") as f:
                 json.load(f)
 
-            with open(self.__fmng.path_join(self.__fmng.CONFIG_DIR, self.__fmng.CONFIG_ITEMS), "r") as f:
+            with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.SERVER_CONFIG_DIR,
+                                            self.__fmng.CONFIG_FILE), "r") as f:
                 json.load(f)
 
-            with open(self.__fmng.path_join(self.__fmng.CONFIG_DIR, self.__fmng.CONFIG_JSON), "r") as f:
+            with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
+                                            self.__fmng.WHITELIST_FILE), "r") as f:
                 json.load(f)
 
-            with open(self.__fmng.path_join(self.__fmng.CONFIG_DIR, self.__fmng.CONFIG_WHITELIST), "r") as f:
+            with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
+                                            self.__fmng.BLACKLIST_FILE), "r") as f:
+                json.load(f)
+
+            with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.MAC_LIST_FILE), "r") as f:
                 json.load(f)
 
         except Exception as e:
@@ -48,25 +55,25 @@ class Validator:
         """
 
         # Check duplicity for tiles
-        for page, page_content in enumerate(self.__fmng.devices()[self.__tmng.ITEMS]):
+        for page, page_content in enumerate(self.__fmng.devices):
             IDs = []
 
-            for device in self.__fmng.devices()[self.__tmng.ITEMS][page][self.__tmng.DATA]:
+            for device in page_content[self.__tmng_r.DATA]:
                 # Check duplicity for current device
-                if device[self.__tmng.DATA][self.__tmng.ID] not in IDs:
-                    IDs.append(device[self.__tmng.DATA][self.__tmng.ID])
+                if device[self.__tmng_r.DATA][self.__tmng_r.ID] not in IDs:
+                    IDs.append(device[self.__tmng_r.DATA][self.__tmng_r.ID])
 
                 else:
                     return device
 
         # Check duplicity for items in modals
-        for page, page_content in enumerate(self.__fmng.devices()[self.__tmng.ITEMS]):
-            for device in self.__fmng.devices()[self.__tmng.ITEMS][page][self.__tmng.DATA]:
+        for page, page_content in enumerate(self.__fmng.devices):
+            for device in page_content[self.__tmng_r.DATA]:
                 try:
                     IDs = []
-                    for modal_item in device[self.__tmng.MODAL]:
-                        if modal_item[self.__tmng.DATA][self.__tmng.ID] not in IDs:
-                            IDs.append(modal_item[self.__tmng.DATA][self.__tmng.ID])
+                    for modal_item in device[self.__tmng_r.MODAL]:
+                        if modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] not in IDs:
+                            IDs.append(modal_item[self.__tmng_r.DATA][self.__tmng_r.ID])
 
                         else:
                             return device

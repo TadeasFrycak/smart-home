@@ -1,79 +1,50 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link type="text/css" rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-        <link type="text/css" rel="stylesheet" href="/static/hexagon/hexagon.css">
-        <link type="text/css" rel="stylesheet" href="/static/swiper/css/swiper.min.css">
-        <link type="text/css" rel="stylesheet" href="/static/animate/animate.min.css">
-        <link type="text/css" rel="stylesheet" href="/static/apexcharts/apexcharts.css">
-        <link type="text/css" rel="stylesheet" href="/static/time_picker/css/timepicki.css">
+{% extends "base.html" %}
 
-        <link type="text/css" rel="stylesheet" href="/static/main/css/main.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/tiles.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/toggles.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/time_pickers.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/progress_bars.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/sliders.css">
-        <link type="text/css" rel="stylesheet" href="/static/main/css/swiper.css">
+{% block title %}Domů{% endblock %}
 
-        <script type="text/javascript" src="/static/jquery/lib/jquery.js"></script>
-        <script type="text/javascript" src="/static/popper/popper.min.js"></script>
-        <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/bootstrap/js/bootstrap-notify.min.js"></script>
-        <script type="text/javascript" src="/static/hammer/hammer.js"></script>
-        <script type="text/javascript" src="/static/swiper/js/swiper.min.js"></script>
-        <script type="text/javascript" src="/static/hexagon/hexagon.js"></script>
-        <script type="text/javascript" src="/static/socket-io/socket.io.js"></script>
-        <script type="text/javascript" src="/static/time_picker/js/timepicki.js"></script>
-        <script type="text/javascript" src="/static/apexcharts/apexcharts.js"></script>
-        <script type="text/javascript" src="/static/sortable/Sortable.min.js"></script>
+{% block content %}
 
-        <script type="text/javascript" src="/static/main/js/init.js"></script>
-        <script type="text/javascript" src="/static/main/js/acom.js"></script>
-        <script type="text/javascript" src="/static/main/js/events.js"></script>
-        <script type="text/javascript" src="/static/main/js/edit_events.js"></script>
-        <script type="text/javascript" src="/static/main/js/modal_events.js"></script>
-        <script type="text/javascript" src="/static/main/js/modal_edit_events.js"></script>
-        <script type="text/javascript" src="/static/main/js/swiper.js"></script>
-        <script type="text/javascript" src="/static/main/js/modal_init.js"></script>
-        <script type="text/javascript" src="/static/main/js/player.js"></script>
+    <div class="swipe-body">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% if slides %}
+                    {% for slide in slides %}
+                        {% include "slide.html" %}
+                    {% endfor %}
+                {% else %}
 
-        <style>
-            body {
-                background-image: url("{% if background_image %} {{ background_image | safe }} {% else %} {% endif %}");
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-position: center center;
-            }
-            .zoomable {
-                width: 100%;
-            }
-        </style>
-
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <meta http-equiv="refresh" content="2400">
-
-        <title>Chytrý Fryčák</title>
-    </head>
-
-    <body>
-        <div class="bcg-image"></div>
-
-        <div class="swipe-body">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    {% if content %}
-                        {{ content | safe }}
-                    {% else %}
-                        <p>Žádný obsah</p>
-                    {% endif %}
+                <style>
+                .bcg-real {
+                  filter: blur(18px);
+                }
+                .container {position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 50%;left:50%}
+                .content {margin:4px;background-color:white;border-radius:12px;padding:35px;box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
+                </style>
+                <div class="container">
+                    <div class="content text-center">
+                        <p class="h4 mb-4">Začněme</p>
+                        <p>Vytvořte si svou vlastní první stránku! Poté zvolte 'Upravovací mód' a upravte si svou stránku dle libosti!"</p>
+                        <button class="btn btn-info" id="append-slide">Přidat novou stránku</button>
+                        <script>
+                            $("body").on("click", "#append-slide", function() {
+                              $(".container").show().fadeOut(1000, function() {$(".container").remove()});
+                              $(".bcg-real").css({"filter": "blur(0)", "transform": "scale(1)", "transition": "all 1s"});
+                            });
+                        </script>
+                    </div>
                 </div>
-
-                <div class="swiper-pagination center"></div>
+                {% endif %}
             </div>
+            <div id="swiper-pagination" class="swiper-pagination"></div>
         </div>
-        <div class="modal-here"></div>
+    </div>
 
-    </body>
-</html>
+    <!--<div id="content">
+      <input type="value" id="value-picker" value="static/music/Bon Jovi - Its My Life.mp3" >
+      <canvas id="canvas"></canvas>
+      <audio id="audio" controls></audio>
+    </div>
+
+    <img style="position:absolute;left:40px;bottom:30px;width:20px;border-radius: 25px;background-color:white;padding:4px" src="{{ url_for('static', filename='img/static/arrow-left.png') }}">
+    <img style="position:absolute;right:40px;bottom:30px;width:20px;border-radius: 25px;background-color:white;padding:4px" src="{{ url_for('static', filename='img/static/arrow-right.png') }}">-->
+{% endblock %}

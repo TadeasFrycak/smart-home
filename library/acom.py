@@ -1,203 +1,79 @@
 from threading import Thread, Event
 import paho.mqtt.client as mqtt
-import time
-
-
-class ArduinoAcom(Thread):
-    """
-    Arduino asynchronous communication class
-    """
-
-    DELAY = 0.1
-
-    def __init__(self, socket_io, arduino, arduino_stop):
-        """
-        Init of Arduino asynchronous communication class
-        :param socket_io: declare of socket_io
-        :param arduino: declare of arduino
-        :param arduino_stop: declare of arduino_stop
-        """
-
-        super(ArduinoAcom, self).__init__()
-        self.__socket_io = socket_io
-        self.__arduino = arduino
-        self.__arduino_stop = arduino_stop
-
-    def arduino(self):
-        """
-        Data class
-        :return:
-        """
-
-        raw_data = self.__arduino.read()
-
-        if raw_data is not None:
-            data = json.loads(html_json.to_json(raw_data))
-
-            if "alarm" in data.keys():
-                # subprocess.check_output(["omxplayer", "alarm.mp3"]).decode("utf-8")
-                socket_io.emit("notify", {"title": "Poplach", "message": "Senzor - postel", "type": "info"},
-                               namespace="/acom")
-
-    def run(self):
-        """
-        Run thread
-        :return:
-        """
-
-        while not self.__arduino_stop.isSet():
-            self.arduino()
-            time.sleep(self.DELAY)
-
-
-class RaspberryAcom(Thread):
-    """
-    Raspberry asynchronous communication class
-    """
-
-    DELAY = 300
-    NAMESPACE = "/acom"
-
-    def __init__(self, socket_io, raspberry_stop):
-        """
-        Init of Raspberry asynchronous communication class
-        :param socket_io: socket_io
-        :param raspberry_stop: raspberry_stop
-        """
-
-        super(RaspberryAcom, self).__init__()
-        self.__raspberry_stop = raspberry_stop
-        self.__socket_io = socket_io
-
-    def cpu_temp(self):
-        """
-        Measure CPU temp, append to Raspberry item (graph)
-        :return:
-        """
-
-        data_x = str(datetime.datetime.now().strftime("%H:%M"))
-        data_y = raspberry.cpu_temp()
-        element_id = "modal-graph-1"
-        id_tile = "raspberry-1"
-
-        tmng.graph_rwr(id_tile=id_tile, data_x=data_x, data_y=data_y, element_id=element_id)
-        self.__socket_io.emit("graphs", {tmng.DATA_Y: data_y, tmng.DATA_X: data_x, tmng.ID: element_id,
-                                         tmng.TILE_ID: id_tile}, namespace=self.NAMESPACE)
-
-    def test_graph(self):
-        """
-        Test graph
-        :return:
-        """
-
-        data_x = str(datetime.datetime.now().strftime("%H:%M"))
-        data_y = random.randint(0, 100)
-        element_id = "modal-graph-1"
-        id_tile = "raspberry-1"
-
-        tmng.graph_rwr(id_tile=id_tile, data_x=data_x, data_y=data_y, element_id=element_id)
-        self.__socket_io.emit("graphs", {tmng.DATA_Y: data_y, tmng.DATA_X: data_x, tmng.ID: element_id,
-                                         tmng.TILE_ID: id_tile}, namespace=self.NAMESPACE)
-
-    def run(self):
-        """
-        Run thread
-        :return:
-        """
-
-        while not self.__raspberry_stop.isSet():
-            # self.cpu_temp()
-            time.sleep(self.DELAY)
 
 
 class MQTT(Thread):
-    """
-    MQTT class
-    """
-
-    NAMESPACE = "acom"  # TODO sjednotit
-    BROKER = "192.168.0.100"
-    PORT = 1883
-    USER = "username"
-    PASSWORD = "12345678"
     HOME = "home"
 
-    def __init__(self, console, arduino, socket_io):
-        """
-        Init of MQTT class
-        :param console: Console class
-        :param arduino: Arduino class
-        :param socket_io: declare of socket_io
-        """
+    USERNAME = "home"
+    PASSWORD = "xbYRJocj08YEtazIg90QEYiccembElT1"
 
-        super(MQTT, self).__init__()
+    SEPARATOR = "/"
+
+    def __init__(self, socket_io, ip, console, tmng_rwr):
+        super().__init__()
+        self.__socket_io = socket_io
+        self.__console = console
+        self.__ip = ip
+        self.__tmng_rwr = tmng_rwr
 
         self.__client = None
-        self.__console = console
-        self.__socket_io = socket_io
-        self.__arduino = arduino
 
-    def on_connect(self, client, userdata, flags, rc):
-        """
-        On connect
-        :param client:
-        :param userdata:
-        :param flags:
-        :param rc:
-        :return:
-        """
+    def join_topics(self, *argv):
+        return self.SEPARATOR.join(list(argv))
 
-        # print("Connected with result code " + str(rc))
-        self.client.subscribe(HOME + "/#")
+    # The callback for when the client receives a CONNACK response from the server.
+    def on_connect(self, client, user_data, flags, rc):
+        self.__console.print("MQTT connected with result code {0}".format(str(rc)), 0)
 
-    def on_message(self, client, userdata, msg):
-        """
-        On message
-        :param client:
-        :param userdata:
-        :param msg:
-        :return:
-        """
+        # Subscribing on connect means that if we lose the connection and reconnect then subscriptions will be renewed
+        self.subscribe(client=client, topic=self.join_topics(self.HOME, "#"))
 
-        topic = msg.topic
-        id_tile = topic.split("/")[1]
+    def on_log(self, client, user_data, level, buf):
+        self.__console.print("MQTT log on level {0} and buffer {1}".format(str(level), str(buf)), 0)
 
-        try:
-            element_id = topic.split("/")[2]
+    # The callback for when a PUBLISH message is received from the server.
+    def on_message(self, client, user_data, msg):
+        ids = msg.topic.split(self.SEPARATOR)
+        ids.remove(self.HOME)
 
-        except Exception as e:
-            self.__socket_io.emit("tile", {tmng.ID: id_tile, tmng.VALUE: msg.payload.decode()},
-                                  namespace=self.NAMESPACE)
+        tile_id = ids[0]
+        value = int(msg.payload.decode("utf-8"))
+
+        self.__console.print("Received MQTT message {0} on topic {1} with qos {2} and retain flag {3}".format(
+            str(msg.payload.decode("utf-8")), str(msg.topic), str(msg.qos), str(msg.retain)))
+
+        if len(ids) > 1:
+            item_id = ids[1]
+            self.__tmng_rwr.modal_toggle(tile_id=tile_id, item_id=item_id, new_value=value)
+            self.__socket_io.emit("toggle", {"tile_id": tile_id, "value": value, "id": item_id}, namespace="/acom")
 
         else:
-            self.__arduino.write(
-                html_json.to_html(json_data={tmng.ID: "bed-toggle", tmng.TILE_ID: "bed-toggle",
-                                             tmng.VALUE: msg.payload.decode()}))
+            self.__tmng_rwr.tile_value(new_value=value, tile_id=tile_id)
+            self.__socket_io.emit("tile", {"id": tile_id, "value": value}, namespace="/acom")
 
-            self.__socket_io.emit("slider", {tmng.TILE_ID: id_tile, tmng.ID: element_id,
-                                             tmng.VALUE: msg.payload.decode()}, namespace=self.NAMESPACE)
+    @staticmethod
+    def subscribe(client, topic):
+        client.subscribe(topic=topic)
 
-            self.__socket_io.emit("toggle", {tmng.TILE_ID: id_tile, tmng.ID: element_id,
-                                             tmng.VALUE: msg.payload.decode()}, namespace=self.NAMESPACE)
+    def publish(self, tile_id=None, item_id=None, value=None):
+        if item_id is not None:
+            self.__client.publish(self.join_topics(self.HOME, tile_id, item_id), str(value))
 
-        # self.client.disconnect()
+        else:
+            self.__client.publish(self.join_topics(self.HOME, tile_id), str(value))
 
     def run(self):
-        """
-        Run thread
-        :return:
-        """
-
         self.__client = mqtt.Client()
-
-        try:
-            self.__client.connect(self.BROKER, self.PORT, 60)
-
-        except Exception as e:
-            self.__console.print("MQTT is not working. Some functions may not work.", priority=2)
-
         self.__client.on_connect = self.on_connect
         self.__client.on_message = self.on_message
+        self.__client.on_log = self.on_log
+
+        self.__client.username_pw_set(username=self.USERNAME, password=self.PASSWORD)
+        self.__client.connect(self.__ip, 1883, 60)
+
+        # Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.
+        # Other loop*() functions are available that give a threaded interface and a manual interface.
         self.__client.loop_forever()
 
 
@@ -206,26 +82,13 @@ class Acom:
     Asynchronous communication class
     """
 
-    def __init__(self, console, arduino, socket_io):
-        """
-        Init of asynchronous communication class
-        :param console: Console class
-        :param arduino: Arduino class
-        :param socket_io: declare of socket_io
-        """
-
-        self.__console = console
-        self.__arduino = arduino
+    def __init__(self, console, socket_io, ip, tmng_rwr):
         self.__socket_io = socket_io
-
+        self.__ip = ip
+        self.__console = console
+        self.__tmng_rwr = tmng_rwr
         self.mqtt_thread = Thread()
         self.mqtt_stop = Event()
-
-        self.raspberry_thread = Thread()
-        self.raspberry_stop = Event()
-
-        self.arduino_thread = Thread()
-        self.arduino_stop = Event()
 
         self.start()
 
@@ -235,15 +98,7 @@ class Acom:
         :return:
         """
 
-        if not self.raspberry_thread.is_alive():
-            self.raspberry_thread = RaspberryAcom(socket_io=self.__socket_io, raspberry_stop=self.raspberry_stop)
-            self.raspberry_thread.start()
-
-        if not self.arduino_thread.is_alive():
-            self.arduino_thread = ArduinoAcom(socket_io=self.__socket_io, arduino_stop=self.arduino_stop,
-                                              arduino=self.__arduino)
-            self.arduino_thread.start()
-
         if not self.mqtt_thread.is_alive():
-            self.mqtt_thread = MQTT(console=self.__console, arduino=self.__arduino, socket_io=self.__socket_io)
+            self.mqtt_thread = MQTT(socket_io=self.__socket_io, ip=self.__ip, console=self.__console,
+                                    tmng_rwr=self.__tmng_rwr)
             self.mqtt_thread.start()

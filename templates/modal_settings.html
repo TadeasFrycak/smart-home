@@ -1,0 +1,47 @@
+<div class="modal fade" id="mySettingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Nastavení</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% for item in modal %}
+                    {% include "modal/" + item["type"] + ".html" %}
+                {% endfor %}
+
+                <div class="form-group-sm row">
+                    <label for="tile-type" class="col-sm-2 col-form-label">Pozadí</label>
+                    <div class="col-sm-10">
+                        <div class="modal-img-select-wrapper">
+                            {% for background in backgrounds %}
+                                <img src="{{ 'img/backgrounds/'+background.name }}" -data-name="{{ background.name }}" class="modal-edit-select-bcg" {% if background.current == True %}checked{% endif %}>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="swiper-container settingSwiper" >
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg18.jpg" class="settings-img-bcg"></div>
+                        <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg19.jpg" class="settings-img-bcg"></div>
+                        <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg20.jpg" class="settings-img-bcg"></div>
+                        <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg21.jpg" class="settings-img-bcg"></div>
+                        <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg22.jpg" class="settings-img-bcg"></div>
+                        <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg23.jpg" class="settings-img-bcg"></div>
+                    </div>
+
+                    <div class="swiper-pagination settingsSwiperPagination"></div>
+                </div>-->
+                <!-- Add Pagination -->
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Zavřít</button>
+            </div>
+        </div>
+    </div>
+</div>

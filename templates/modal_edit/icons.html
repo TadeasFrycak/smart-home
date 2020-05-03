@@ -1,0 +1,10 @@
+<div class="form-group-sm row">
+    <label for="tile-type" class="col-sm-3 col-form-label">Ikona</label>
+    <div class="col-sm-9">
+        <div class="modal-img-select-wrapper">
+            {% for icon in tile_values[value] %}
+                {% include "modal_edit/icon_item.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

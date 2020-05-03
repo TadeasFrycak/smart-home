@@ -1,9 +1,0 @@
-{
-    "run": true,
-    "debug": false,
-    "werkzeug_priority": 1,
-    "console_priority": 1,
-    "auth_priority": 0,
-    "host": "0.0.0.0",
-    "whitelist": false
-}

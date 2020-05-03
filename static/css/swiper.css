@@ -1,0 +1,117 @@
+.swiper-container {
+    width: auto;
+    height: 100vh;
+}
+
+.swiper-pagination {
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.swiper-slide {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: block;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: transparent;
+    padding-bottom: 100px;
+}
+
+.swipe-header{
+    font-size:40px;
+    line-height: 40px;
+    width: 100%;
+    margin-bottom: 80px;
+    color: #fafafa;
+    text-shadow: horizontal-offset vertical-offset blur color;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.4);
+}
+
+.swipe-body{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.swiper-slide{
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.light .swiper-pagination-bullet-active {
+  background-color: rgb(23, 162, 184);
+}
+
+.dark .swiper-pagination-bullet {
+  background-color: rgb(150,150,150);
+}
+
+.dark .swiper-pagination-bullet-active {
+  background-color: rgb(12, 66, 146);
+}
+#button-next, #button-prev {
+  position:absolute;
+  bottom: 0px;
+  color: rgb(23, 162, 184);
+}
+
+@media (max-width: 700px) {
+    .swipe-header{
+        text-align: center;
+        padding-top: 100px;
+    }
+    .swipe-body{
+        padding: 2px;
+    }
+    .swipe-slide{
+        padding: 10px;
+        /* height: 100%; */
+    }
+    .swiper-container{
+        height: 100vh;
+    }
+    .page_settings_icon {
+        top: 20px;
+        right: 20px;
+    }
+    .btn-exit-edit-mode {
+        top:20px;
+    }
+    .btn-exit-edit-mode{
+        opacity: 0%;
+    }
+}
+
+.dark #swiper-pagination {
+  background-color: rgb(30,30,30);
+}
+.settings-swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+.settings-img-bcg{
+    width: 100%;
+}

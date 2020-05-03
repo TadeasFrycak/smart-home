@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/animate/animate.min.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/timepicki/timepicki.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/swiper/swiper.min.css') }}">
+        <!--<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/hexagon/hexagon.css') }}">-->
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/daterangepicker/daterangepicker.css') }}">
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/static/favicon.png') }}" type="image/x-icon">
+
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/progress_bars.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/time_pickers.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/toggles.css') }}">
+        <!--<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/sliders.css') }}">-->
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/swiper.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/tiles.css') }}">
+        <!--<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/audio.css') }}">-->
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/popper/popper.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap-notify.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/sortable/sortable.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/socket_io/socket.io.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/timepicki/timepicki.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/swiper/swiper.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/chartjs/Chart.js') }}" defer></script>
+        <!--<script type="text/javascript" src="{{ url_for('static', filename='js/hexagon/hexagon.js') }}" defer></script>-->
+        <script type="text/javascript" src="{{ url_for('static', filename='js/hammer/hammer.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/moment/moment.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/daterangepicker/daterangepicker.min.js') }}" defer></script>
+
+        <script type="text/javascript" src="{{ url_for('static', filename='js/modal_edit_events.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/modal_events.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/edit_events.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/modal_init.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/events.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/swiper.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/player.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/init.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/acom.js') }}" defer></script>
+
+        <style>
+            .bcg-real {
+                background-image: url("{{ 'img/backgrounds/'+background_image }}");
+            }
+        </style>
+        {% block head %} {% endblock %}
+
+        <meta charset="UTF-8">
+        <meta name="description" content="Chytrá domácnost">
+        <meta name="subject" content="Chytrá domácnost">
+        <meta name="keywords" content="kontrolovat, procházet, užívat">
+        <meta name="author" content="Fryčák Tadeáš; Szkandera Filip">
+        <meta name="language" content="cs-cz">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <meta http-equiv="refresh" content="4800">
+
+        <title>{% block title %} {% endblock %} - ChD</title>
+    </head>
+
+    <body lang="cs" class="{% if mode == 'dark' %}dark{% else %}light{% endif %}" {% if edit == True %}is_edit_active="true"{% else %}is_edit_active="false"{% endif %}>
+        <div class="bcg-real"></div>
+        <div class="bcg-image"></div>
+        <div class="preloader">
+            {% include "preloader.html" %}
+        </div>
+        {% block content %} {% endblock %}
+        <div class="modal-here"></div>
+        <div class="modal-settings"></div>
+
+    </body>
+</html>

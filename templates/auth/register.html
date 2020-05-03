@@ -1,0 +1,125 @@
+{% extends "auth/base.html" %}
+{% block title %}Registrace{% endblock %}
+<!-- TODO FILIPE - udělej ikonky -->
+{% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/register.js') }}" defer></script>
+<div class="container" id="register-form">
+    <form class="text-center" autocomplete="off">
+        <p class="h4 mb-4">Registrace do ChD</p>
+        <p>Dobrý den, máte štěstí! Registrace je právě povolena! Využijte této možnosti a zaregistrujte se pro přístup k ovládání Vaší Chytré domácnosti.</p>
+
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend" style="width:40px">
+                    <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
+                </div>
+                <input type="text" id="first-name" class="form-control" maxlength="40" placeholder="Jméno">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend" style="width:40px">
+                    <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
+                </div>
+                <input type="text" id="last-name" class="form-control" maxlength="40" placeholder="Příjmení">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend" style="width:40px">
+                    <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
+                </div>
+                <input type="text" id="user-name" class="form-control" maxlength="81" placeholder="Uživatelské jméno" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend" style="width:40px">
+                    <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
+                </div>
+                <input type="password" id="password" class="form-control" maxlength="100" placeholder="Heslo">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend" style="width:40px">
+                    <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
+                </div>
+                <input type="password" id="password-repeat" class="form-control" maxlength="150" placeholder="Heslo znovu">
+            </div>
+        </div>
+        <!-- TODO FILIPE přidej sem nějaký date picker na výběr data (datum) narození ... -->
+        <div class="form-group dropdown" id="dropdown-permission">
+            <button class="btn btn-secondary dropdown-toggle" style="width:100%" type="button" id="permission" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Vyber pozici v ChD
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width:100%">
+                <h6 class="dropdown-header">Správci ChD</h6> <!-- TODO FILIPE - nějak tyhle věci zobraz -->
+                <a class="dropdown-item">Majitel</a> <!-- může navíc přidělit role a práva -->
+                <a class="dropdown-item">Admin</a> <!-- může navíc spustit nastavení; whitelist; vypnout server apod. -->
+                <a class="dropdown-item">Správce</a> <!-- může navíc spustit edit mód -->
+                <h6 class="dropdown-header">Návštěvníci ChD</h6>
+                <a class="dropdown-item">Návštěva</a> <!-- může navíc ovládat -->
+                <a class="dropdown-item">Vyšší kontrolér</a> <!-- může navíc dívat na modaly -->
+                <a class="dropdown-item">Nižší kontrolér</a> <!-- může se jen dívat na tile -->
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input mode" type="radio" name="mode" id="light" value="light">
+                <label class="form-check-label" for="light">Světlý</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input mode" type="radio" name="mode" id="dark" value="dark">
+                <label class="form-check-label" for="dark">Tmavý</label>  <!-- TODO FILIPE tohle nevypadá  moc hezky, nějak to nadizajnuj, možná tam dej místo toho dropdown, ... -->
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input mode" type="radio" name="mode" id="smart" value="smart">
+                <label class="form-check-label" for="smart">Inteligentní</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input sex" type="radio" name="sex" id="female" value="female">
+                <label class="form-check-label" for="female">Žena</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input sex" type="radio" name="sex" id="male" value="male">
+                <label class="form-check-label" for="male">Muž</label>
+            </div>
+        </div>
+        <button id="register" class="btn btn-info btn-block" type="button">Registrovat se</button>
+        <br>
+        Jste již zaregistrovaný/á? <a href="{{ url_for('login') }}">Přihlaste se</a>
+    </form>
+</div>
+
+{% if introduction == True %}
+<div id="introduction" class="container text-center" style="font-size:55px;color:white;text-shadow: 0px 0px 8px #333;"></div>
+<script>
+    $(".container").hide();
+    setTimeout(() => {
+      $("#introduction").text("Dobrý den");
+      $("#introduction").hide().fadeIn(1800);
+      setTimeout(() => {
+        $("#introduction").show().fadeOut(1800, function () {
+          $("#introduction").text("Představuji Vám Chytrou domácnost");
+          $("#introduction").hide().fadeIn(1800);
+          setTimeout(() => {
+            $("#introduction").show().fadeOut(1800, function () {
+              $("#introduction").text("Nyní se prosím zaregistrujte");
+              $("#introduction").hide().fadeIn(1800);
+              setTimeout(() => {
+                $("#introduction").show().fadeOut(1800, function(){$("#register-form").hide().fadeIn(1800)});
+              }, 3800);
+            });
+          }, 3800);
+        });
+      }, 3000);
+    }, 500);
+
+</script>
+{% endif %}
+{% endblock %}

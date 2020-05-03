@@ -1,0 +1,12 @@
+{
+    "run": true,
+    "werkzeug_priority": 1,
+    "console_priority": 1,
+    "auth_priority": 0,
+    "host": "0.0.0.0",
+    "whitelist": false,
+    "position": {
+        "latitude": 49.638994,
+        "longitude": 17.148784
+    }
+}

@@ -1,0 +1,9 @@
+<div class="tile-type-wrapper">
+    {% for value in tile_values %}
+        {% if value == "icon" %}
+            {% include "modal_edit/icons.html" %}
+        {% else %}
+            {% include "modal_edit/tile_value.html" %}
+        {% endif %}
+    {% endfor %}
+</div>

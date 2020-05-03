@@ -6,14 +6,11 @@ class Console:
     Console class
     """
 
-    NEWLINE = ""
-    SEPARATOR = "------------------------------------------------------------"
-    SEPARATOR_START = "/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ "
-    WARNING = "-->>------------------->> WARNING <<-------------------<<--"
-    ERROR = "-->>-------------------->> ERROR <<--------------------<<--"
+    SEPARATOR = "-------------------------------------------------------------"
+    WARNING = "-->>------------------->>- WARNING -<<-------------------<<--"
+    ERROR = "-->>-------------------->>- ERROR -<<--------------------<<--"
 
     FG_COLORS = {
-        "light_red": "\033[91m",
         "red": "\033[31m",
         "fail": "\033[91m",
         "orange": "\033[33m",
@@ -42,12 +39,11 @@ class Console:
     }
 
     SPECIAL = {
-        "reset": "\033[0m",
         "bold": "\033[1m",
         "disable": "\033[02m",
         "underline": "\033[04m",
         "reverse": "\033[07m",
-        "strikethrsough": "\033[09m",
+        "strikethrough": "\033[09m",
         "invisible": "\033[08m"
     }
 
@@ -65,11 +61,15 @@ class Console:
         self.__priority = priority
         self.__socket_io = socket_io
 
+        self.print(data="\n\n\n" + self.FG_COLORS["green"] + self.SPECIAL["bold"] + self.SEPARATOR, priority=-1)
+        self.print(data="                        Server started                       ", priority=-1)
+        self.print(data=self.FG_COLORS["green"] + self.SPECIAL["bold"] + self.SEPARATOR, priority=-1)
+
     def print(self, data=None, priority=0):
         """
         Print to console
-        :param data:
-        :param priority:
+        :param data: data to print
+        :param priority: priority of print
         :return:
         """
 
@@ -79,9 +79,9 @@ class Console:
         source = cal_frame[1][1].split("/")
         source = source[len(source) - 1]
 
-        if priority is None:
+        if priority == -1 and self.__priority == 0:
             self.__logger.debug(str(data))
-            print(data)
+            print(str(data) + self.END)
 
         elif priority == 0 and self.__priority == 0:
             self.__logger.debug(str(data))

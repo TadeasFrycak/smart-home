@@ -9,7 +9,7 @@ class Auth:
     def __init__(self, fmng, logger):
         """
         Init of class
-        :param fmng: file manager
+        :param fmng: value manager
         :param logger: logger
         """
 
