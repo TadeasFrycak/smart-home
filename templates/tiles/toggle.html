@@ -1,10 +1,10 @@
 <div class="grid-square">
-    <div class='tile {% if tile.data.value == 1 %}tileActive{% endif %}' data-id="{{ tile.data.id }}" data-type="toggle">
-        <span class="toggle-dot" {% if tile.data.value == 1 %}style="background-color: rgba(0, 196, 42, 0.28);"{% endif %}></span>
+    <div class="tile enableHammer {% if tile.value == 1 %}tileActive{% endif %}" data-id="{{ tile.data.id }}" data-type="toggle">
+        <span class="toggle-dot" {% if tile.value == 1 %}style="background-color: rgba(0, 196, 42, 0.28);"{% endif %}></span>
         <div class="tileTextLayer">
             <img src="{{ '/img/icons/'+tile.data.icon }}" class="tileImage">
-            <span class="tileDescription">{{ tile.data.label }}</span>
-            <span class="tileStatus">{% if tile.data.value == 1 %}On{% else %}Off{% endif %}</span>
+            <span class="tileDescription">{{ tile.label }}</span>
+            <span class="tileStatus">{% if tile.value == 1 %}On{% else %}Off{% endif %}</span> <!-- TODO translate On/Off -->
         </div>
         <div class="tileTouchLayer tileToggle tileModal"></div>
     </div>

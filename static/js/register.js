@@ -30,7 +30,10 @@ $(document).ready(function(){
   }
 
   function notSame() {
-  if ($("#last-name").val() == $("#first-name").val()) {
+    var firstName = $("#first-name").val();
+    var lastName = $("#last-name").val();
+
+    if ((firstName == lastName) || firstName.includes(lastName) || lastName.includes(firstName)) {
       $("#last-name").addClass("is-invalid");
     }
     else {
@@ -117,38 +120,36 @@ $(document).ready(function(){
     var sex = $(".sex:checked").val();
     var mode = $(".mode:checked").val();
     if(firstName && lastName && password && passwordRepeat && sex) {
-      if(sex && mode) {
+      if(sex) {
         $(".sex").removeClass("is-invalid");
-        $.post("/register", {
-          "first_name": $("#first-name").val(),
-          "last_name": $("#last-name").val(),
-          "user_name": $("#user-name").val(),
-          "permission": $("#permission").text(),
-          "password": $("#password").val(),
-          "password_repeat": $("#password-repeat").val(),
-          "register_date": new Date(),  // TODO Filipe trochu zformátuj na normální, jako to máme v daterangepicker
-          "sex": sex,
-          "mode": mode
-        },
-        function(result){
-          window.location.href = result;
-        });
+        if(mode) {
+          $(".mode").removeClass("is-invalid");
+          $.post("/register", {
+            "first_name": $("#first-name").val(),
+            "last_name": $("#last-name").val(),
+            "user_name": $("#user-name").val(),
+            "permission": $("#permission").text(),
+            "password": $("#password").val(),
+            "password_repeat": $("#password-repeat").val(),
+            "register_date": new Date(),  // TODO Filipe trochu zformátuj na normální, jako to máme v daterangepicker
+            "sex": sex,
+            "mode": mode
+          },
+          function(result){
+            window.location.href = result;
+          });
+        }
+        else {
+          $(".mode").addClass("is-invalid");
+        }
+      }
+      else {
+        $(".sex").addClass("is-invalid");
       }
     }
-    if (!sex) {
-      $(".sex").addClass("is-invalid");
-    }
-    else {
-      $(".sex").removeClass("is-invalid");
-    }
-    if (!mode) {
-      $(".mode").addClass("is-invalid");
-    }
-    else {
-      $(".mode").removeClass("is-invalid");
-    }
+
     if(!dropdownChoosed) {
-      $("#dropdown-permission").addClass("is-invalid");  // TODO Filipe tohle není nic moc extra, udělj
+      $("#dropdown-permission").addClass("is-invalid");  // TODO Filipe tohle není nic moc extra, udělj a přesuň to nahoru a uprav všechno na dropdawn nebo něco podobnýho
     }
     else {
       $("#dropdown-permission").removeClass("is-invalid");

@@ -1,3 +1,5 @@
+from flask_babel import Babel, _, gettext, ngettext, lazy_gettext
+from jinja2 import Environment, PackageLoader, meta, FileSystemLoader
 import jinja2schema
 import datetime
 
@@ -31,7 +33,9 @@ class TemplateManagerRead:
     DATA_X = "data_x"
     DATA_Y = "data_y"
 
-    UNNAMED = "Bez názvu"
+    UNNAMED = gettext("Unnamed")
+
+    CHILDREN = "children"
 
     X = "x"
     Y = "y"
@@ -56,7 +60,7 @@ class TemplateManagerRead:
         # Get pages (number and content)
         for page_content in self.__fmng.devices:
             # Get item for current device
-            for tile in page_content[self.DATA]:
+            for tile in page_content[self.CHILDREN]:
                 # If device have current id
                 if tile["data"]["id"] == tile_id:
                     return tile
@@ -93,6 +97,12 @@ class TemplateManagerRead:
         :return:
         """
         # TODO Refactor všeho (if icon in data, ...)
+        # env = Environment(loader=FileSystemLoader('templates'))
+        # template_source = env.loader.get_source(env, "tiles/" + tile_type + ".html")[0]
+        # parsed_content = env.parse(template_source)
+        # print(parsed_content)
+        # print(meta.find_undeclared_variables(parsed_content))
+
         template = str(self.__fmng.load_file("templates/tiles/" + tile_type + ".html"))
         variables = jinja2schema.infer(template)
 
@@ -176,7 +186,7 @@ class TemplateManagerRead:
         """
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get item for current device
-            for tile in page_content[self.DATA]:
+            for tile in page_content[self.CHILDREN]:
                 # If device have current id
                 if tile["data"]["id"] == tile_id:
                     return page_num
@@ -208,7 +218,7 @@ class TemplateManagerRead:
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
-            for tile_num, tile_content in enumerate(page_content[self.DATA]):
+            for tile_num, tile_content in enumerate(page_content[self.CHILDREN]):
                 # If that tile is current opened tile
                 if tile_content[self.DATA][self.ID] == tile_id:
                     graphs = {}
@@ -243,38 +253,4 @@ class TemplateManagerRead:
                             graphs[modal_item[self.DATA][self.ID]] = {self.DATA_X: minimized_x,
                                                                       self.DATA_Y: minimized_y}
 
-                    return graphs
-
-    def get_modal_graphs_apex(self, tile_id):  # TODO in next version delete this
-        """
-        Return all toggles in modal by id_tile
-        :param tile_id: id of tile
-        :return: toggles in modal
-        """
-
-        # Get pages (number and content)
-        for page_num, page_content in enumerate(self.__fmng.devices):
-            # Get tiles (number and content)
-            for tile_num, tile_content in enumerate(page_content[self.DATA]):
-                # If that tile is current opened tile
-                if tile_content[self.DATA][self.ID] == tile_id:
-                    graphs = {}
-
-                    # Get modal items
-                    for modal_item in tile_content[self.MODAL]:
-                        # If that item is toggle, append
-                        if modal_item[self.TYPE] == self.GRAPH:
-                            data_x = modal_item[self.DATA][self.DATA_X]
-                            data_y = modal_item[self.DATA][self.DATA_Y]
-
-                            data = []
-                            for i in range(len(data_x)):
-                                data.append({self.X: data_x[i], self.Y: data_y[i]})
-
-                            graphs[modal_item[self.DATA][self.ID]] = {"values": data,
-                                                                      "label": modal_item[self.DATA][self.LABEL],
-                                                                      "max_min": {self.X: {"max": max(data_x),
-                                                                                           "min": min(data_x)},
-                                                                                  self.Y: {"max": max(data_y),
-                                                                                           "min": min(data_y)}}}
                     return graphs

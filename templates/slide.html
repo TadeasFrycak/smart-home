@@ -14,7 +14,7 @@
     padding-left: 8px;
     padding-right: 8px;
     cursor: pointer;
-">Exit edit mode</span>
+">{{ _("Exit edit mode") }}</span>
 
     <div class="dropdown">
         <div class="page-menu-status-wrapper" style="
@@ -31,7 +31,7 @@
             padding-left: 8px;
             padding-right: 50px;
         " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="server-status">Online</span>
+            <span class="server-status">{{ _("Online") }}</span>
             <div class="page-menu-status-wrapper-line" style="
             width: 20px;
             height: 30px;
@@ -46,30 +46,29 @@
         </div>
         <!-- <img src="{{ url_for('static', filename='img/static/settings-icon.png') }}" class="page_settings_icon" data-toggle="dropdown"> -->
         <div class="dropdown-menu dropdown-menu-right" >
-            <a class="dropdown-item" id="edit-page">Upravit tuto stránku</a>
+            <a class="dropdown-item" id="edit-page">{{ _("Edit this slide") }}</a>
             <div class="dropdown-wrapper" dissapear-on-edit>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" id="append-slide">Přidat novou stránku</a>
-                <a class="dropdown-item" id="remove-slide">Odebrat tuto stránku</a>
+                <a class="dropdown-item" id="append-slide">{{ _("Add new slide") }}</a>
+                <a class="dropdown-item" id="remove-slide">{{ _("Remove this slide") }}</a>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item">Pozadí</a>
-            <a class="dropdown-item" id="settings" >Nastavení</a>
-            <!--<a class="dropdown-item">Uložit devices.json</a>-->
+            <a class="dropdown-item">{{ _("Backgrounds") }}</a>
+            <a class="dropdown-item" id="settings" >{{ _("Settings") }}</a>
+            <div class="dropdown-wrapper" dissapear-on-edit>
+                <a class="dropdown-item" id="save">{{ _("Save changes") }}</a>
+            </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" id="shutdown">Vypnout server</a>
-            <a class="dropdown-item" id="restart">Restartovat server</a>
+            <a class="dropdown-item" id="shutdown">{{ _("Shutdown server") }}</a>
+            <a class="dropdown-item" id="restart">{{ _("Restart server") }}</a>
         </div>
     </div>
-    
-
-    <!-- <button type="button" class="btn btn-outline-info btn-exit-edit-mode">Ukončit upravovací mód</button> -->
 
     <input type="text" class="swipe-header-textbox swipe-header" value="{{ slide.name }}" readonly>
 
     <div class="swipe-content">
         <div class="zoomable c_sortable_page_grid" id="sortable_page_grid" style="display:table;">
-            {% for tile in slide.data %}
+            {% for tile in slide.children %}
                 {% include "tiles/" + tile.type + ".html" %}
             {% endfor %}
         <div class='add_new_tile_element tile' data-id='id-add' style='display: inline-block; box-shadow: none; background-color:transparent; -moz-transition: none; -webkit-transition: none; transition: all none;'>
@@ -78,7 +77,7 @@
         <script>
             $(".add_new_tile_element").hide();
         </script>
-
+        Jmenuješ se {{ user.first_name }} {{ user.last_name }} - přihlášen jako {{ user.user_name }}. Jsi {{ user.sex }}
         </div>
         <!--<div class="end-block"></div>-->
     </div>

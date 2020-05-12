@@ -1,5 +1,5 @@
 .tile {
-  background-color: rgb(173, 173, 173);
+  background-color: rgba(173, 173, 173, 0.95);
   cursor: pointer;
   height: 100px;
   width: 100px;
@@ -80,17 +80,21 @@
 
 .dark .tile {
   color: #ddd;
-  background-color: rgb(55,55,55);
+  background-color: rgb(40,40,40);
 }
 
-.dark .tileImage {
+.dark .tileImage, .dark .modal-here img {
   filter: invert(0.95);
+}
+
+.modal-here input {
+  color: white;
 }
 .dark .tileDisplay {
   color: #dcdcdc;
 }
 .dark .tileActive {
-  background-color: rgb(12, 66, 146);
+  background-color: rgb(65,65,65) /*rgb(12, 66, 146);*/
 }
 
 .light .tileActive{

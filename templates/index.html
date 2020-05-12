@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-
-{% block title %}Domů{% endblock %}
-
+{% block title %}{{ _("Home") }}{% endblock %}
 {% block content %}
-
     <div class="swipe-body">
         <div class="swiper-container">
             <div class="swiper-wrapper">
@@ -12,39 +9,31 @@
                         {% include "slide.html" %}
                     {% endfor %}
                 {% else %}
-
-                <style>
-                .bcg-real {
-                  filter: blur(18px);
-                }
-                .container {position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 50%;left:50%}
-                .content {margin:4px;background-color:white;border-radius:12px;padding:35px;box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
-                </style>
-                <div class="container">
-                    <div class="content text-center">
-                        <p class="h4 mb-4">Začněme</p>
-                        <p>Vytvořte si svou vlastní první stránku! Poté zvolte 'Upravovací mód' a upravte si svou stránku dle libosti!"</p>
-                        <button class="btn btn-info" id="append-slide">Přidat novou stránku</button>
-                        <script>
-                            $("body").on("click", "#append-slide", function() {
-                              $(".container").show().fadeOut(1000, function() {$(".container").remove()});
-                              $(".bcg-real").css({"filter": "blur(0)", "transform": "scale(1)", "transition": "all 1s"});
-                            });
-                        </script>
+                    <style>
+                        .bcg-real {
+                          filter: blur(18px);
+                        }
+                        .container {position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 50%;left:50%}
+                        .content {margin:4px;background-color:white;border-radius:12px;padding:35px;box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
+                    </style>
+                    <div class="container">
+                        <div class="content text-center">
+                            <p class="h4 mb-4">{{ _("Let's start") }}</p>
+                            <p>{{ _("You can now create your first slide in Smart home, then you can edit it to your own ideas.") }}</p>
+                            <button class="btn btn-info" id="append-slide-start">{{ _("Add new slide") }}</button>
+                            <script>
+                                $("body").on("click", "#append-slide-start", function() {
+                                  $(".container").show().fadeOut(1000, function() {$(".container").remove()});
+                                  $(".bcg-real").css({"filter": "blur(0)", "transform": "scale(1)", "transition": "all 1s"});
+                                  appendNewSlide();
+                                  changePageToEdit();
+                                });
+                            </script>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             </div>
             <div id="swiper-pagination" class="swiper-pagination"></div>
         </div>
     </div>
-
-    <!--<div id="content">
-      <input type="value" id="value-picker" value="static/music/Bon Jovi - Its My Life.mp3" >
-      <canvas id="canvas"></canvas>
-      <audio id="audio" controls></audio>
-    </div>
-
-    <img style="position:absolute;left:40px;bottom:30px;width:20px;border-radius: 25px;background-color:white;padding:4px" src="{{ url_for('static', filename='img/static/arrow-left.png') }}">
-    <img style="position:absolute;right:40px;bottom:30px;width:20px;border-radius: 25px;background-color:white;padding:4px" src="{{ url_for('static', filename='img/static/arrow-right.png') }}">-->
 {% endblock %}

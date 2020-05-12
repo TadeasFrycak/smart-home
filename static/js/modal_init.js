@@ -19,7 +19,12 @@ function initTilePress(hammer, $this, add_new_item)
 {
   hammer.on("press", function() {
     // ( > modal_init.js )
-    RequestModal($this, add_new_item);
+    // RequestModal($this, add_new_item);
+    var isEditActive = $("body").attr("is_edit_active");
+    if (isEditActive == "false")
+    {
+      RequestModal($this, add_new_item);
+    }
   });
 }
 
@@ -27,7 +32,17 @@ function initTileTap(hammer, $this, add_new_item)
 {
   hammer.on("tap", function() {
     // ( > modal_init.js )
-    RequestModal($this, add_new_item);
+    // console.log("Tapped!");
+    var isEditActive = $("body").attr("is_edit_active");
+    if (isEditActive == "true")
+    {
+      RequestModal($this, add_new_item);
+      console.log("Requested modal!");
+    }
+    else if ($($this).attr("data-type") == "toggle"){
+      tappedOnToggle($this)
+    }
+
   });
 }
 
@@ -44,39 +59,66 @@ function initImages(){
   });
 }
 
-function RequestModal($this, add_new_item)
+
+// /get_modal 
+//    > tileId
+
+// /get_add_tile_modal
+//    > slideIndex
+
+// /get_edit_modal
+//    > tileId
+
+function addNewTile($this)
 {
-    var object_id = $this.parent().attr("data-id");
-
-    var isEditActive = $("body").attr("is_edit_active");
-
-    var normalOrEditRequest = 0;
-    if (isEditActive === "true") normalOrEditRequest = 1;
-
-    DEBUG.logLabeled("Is edit activated",normalOrEditRequest);
-    DEBUG.logLabeled("Add",add_new_item);
-    DEBUG.logLabeled("Page index",swiper.realIndex);
-    DEBUG.logLabeled("ID of current Tile",object_id);
-
-    // Request modal - Normal / Edit
-    $.post("/get_modal", {
-      "id": object_id,
-      "edit": normalOrEditRequest,
-      "add": add_new_item,
-      "slide_index": swiper.realIndex
-    }, 
-    function(result){
-        // ( > modal_init.js )
-        initializeModal(result, $this);
-        $(".bcg-real").css({"transform": "scale(1.2)", "transition": "all 0.75s"});
-        $('#myModal').on('hide.bs.modal', function () {
-          $(".bcg-real").css({"transform": "scale(1)", "transition": "all 0.75s"});
-        })
-
-        // $(".swipe-body").css({"filter": "blur(1.8px) grayscale(75%)", "transition": "filter 1s"});
-        // $(".bcg-real").css({"filter": "blur(1.8px) grayscale(75%)", "transition": "filter 1s"});
-        // $(".bcg-image").css({"filter": "blur(1.8px) grayscale(75%)", "transition": "filter 1s"});
+  $.post("/get_add_tile_modal", {
+    "slide_index": swiper.realIndex
+  }, 
+  function(result){
+    // ( > modal_init.js )
+    initializeModal(result, $this);
+    $(".bcg-real").css({"transform": "scale(1.25)", "transition": "all 0.75s"});
+    $('#myModal').on('hide.bs.modal', function () {
+      $(".bcg-real").css({"transform": "scale(1.15)", "transition": "all 0.75s"});
     });
+  });
+}
+
+function requestNormalModal($this)
+{
+  var object_id = $this.parent().attr("data-id");
+  console.log(object_id);
+
+  $.post("/get_modal ", {
+    "id": object_id
+  }, 
+  function(result){
+    // ( > modal_init.js )
+    handleModalResponse(result, $this)
+  });
+}
+
+function requestEditModal($this)
+{
+  var object_id = $this.parent().attr("data-id");
+  
+  $.post("/get_edit_modal ", {
+    "id": object_id
+  }, 
+  function(result){
+    // ( > modal_init.js )
+    handleModalResponse(result, $this)
+  });
+}
+
+function handleModalResponse(result, $this)
+{
+  // ( > modal_init.js )
+  initializeModal(result, $this);
+  $(".bcg-real").css({"transform": "scale(1.25)", "transition": "all 0.75s"});
+  $('#myModal').on('hide.bs.modal', function () {
+    $(".bcg-real").css({"transform": "scale(1.15)", "transition": "all 0.75s"});
+  });
 }
 
 function initializeModal(result, $this)

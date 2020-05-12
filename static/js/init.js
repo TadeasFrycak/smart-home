@@ -6,14 +6,11 @@ $(document).ready(function(){
   */
 
   console.log("+----------------------------------+");
-  console.log("|   Chytrá domácnost (Beta)11.1    |");
+  console.log("|      Chytrá domácnost 11.2       |");
   console.log("|    Autoři: Fryčák, Szkandera     |");
   console.log("|                                  |");
   console.log("|          ©  2019 - 2020          |");
   console.log("+----------------------------------+");
-
-  // Forbid mouse right click
-  // document.addEventListener("contextmenu", event => event.preventDefault());
 
   // Odejít ze stránky není tak jednoduché
   //window.onbeforeunload = function() {
@@ -68,17 +65,6 @@ $(document).ready(function(){
     $(".zoomable").css({"zoom": zoom, "-ms-zoom": zoom, "-webkit-zoom": zoom});
   }*/
 
-  $(".tileToggle").each(function(){
-    initializeTileWithTap(this);
-  });
-
-  // Přidělí každému Tilu, který má povolený Modal, Hammer stisknutí
-  $(".tileModal").each(function(){
-    var $this = $(this);
-    var hammer = new Hammer(this);
-    initTilePress(hammer, $this,0);
-  });
-
   // Name of page changed
   $(".swipe-header-textbox").on("input",function(){
     var nameOfPageChanged = $(this).val();
@@ -89,29 +75,6 @@ $(document).ready(function(){
   });
 });
 
-function initializeTileWithTap(object)
-{
-  // Při načtení upravit TOGGLE item podle jeho stavu (při jiném než Toggle itemu = undefined)
-  //if ($(object).parent().find(".tileStatus").text() === "ON"){
-    //$(object).parent().toggleClass("tileActive");
-    //$(object).parent().css("opacity", 1);
-    // TODO NASTAVENÍ
-    // $(object).parent().css({"-moz-transform": "scale(1.03)", "-webkit-transform": "scale(1.03)", "transform": "scale(1.03)"})
-    //$(object).parent().find(".toggle-dot").css("background-color","rgba(0, 196, 42, 0.28)");
-
-  //}
-  //else {
-  //  $(object).parent().css("opacity", 0.7);
-  //}
-
-  // Připnout Hammer každému itemu
-  var $this = $(object);
-  var hammer = new Hammer(object);
-  hammer.on("tap", function() {
-    // ( > events.js )
-    tappedOnToggle($this)
-  });
-}
 
 class debug_console{
 

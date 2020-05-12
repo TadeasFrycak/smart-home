@@ -2,14 +2,14 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <input type="text" class="modal-title modal_edit_title form-control form-control-lg" id="tile_name" maxlength="40" placeholder="Název tilu">
+                <input type="text" class="modal-title modal_edit_title form-control form-control-lg" id="tile_name" maxlength="40" placeholder="{{ _('Tile name') }}" autocomplete="off">
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group-sm row">
-                        <label for="tile-type" class="col-sm-3 col-form-label">Typ tilu</label>
+                        <label for="tile-type" class="col-sm-3 col-form-label">{{ _("Tile type") }}</label>
                         <div class="col-sm-9">
-                            <div style="position:relative; left:6px" id="tile-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons"> <!--modal_edit_tile_types-->
+                            <div style="position:relative; margin-bottom:6px" id="tile-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons"> <!--modal_edit_tile_types-->
                                 {% for tile_name in tile_types %}
                                     {% include "modal_edit/tile_type_btn.html" %}
                                 {% endfor %}
@@ -20,7 +20,7 @@
                     {% include "modal_edit/tile_values.html" %}
                     
                     <div class="form-group-sm row">
-                        <label for="tile-id" class="col-sm-3 col-form-label">ID tilu</label>
+                        <label for="tile-id" class="col-sm-3 col-form-label">{{ _("Tile ID") }}</label>
                         <div class="col-sm-8">
                             <script>
                                 function AvoidSpace(event) {
@@ -28,21 +28,21 @@
                                     if (k == 32) return false;
                                 }
                             </script>
-                            <input id="tile-id" class="form-control form-control-sm" type="text" maxlength="40" placeholder="Tile ID" value="{{ tile_id }}" onkeypress="return AvoidSpace(event)">
+                            <input id="tile-id" class="form-control form-control-sm" type="text" maxlength="40" placeholder="{{ _('Tile ID') }}" value="{{ tile_id }}" onkeypress="return AvoidSpace(event)">
                         </div>
                     </div>
 
                     <div class="form-group-sm row">
-                        <label for="tile-mqtt-path" class="col-sm-3 col-form-label">MQTT cesta</label>
+                        <label for="tile-mqtt-path" class="col-sm-3 col-form-label">{{ _("MQTT path") }}</label>
                         <div class="col-sm-8">
-                            <input id="tile-mqtt-path" class="form-control form-control-sm" type="text" placeholder="MQTT cesta" readonly>
+                            <input id="tile-mqtt-path" class="form-control form-control-sm" type="text" placeholder="{{ _('MQTT path') }}" readonly>
                         </div>
                     </div>
 
                 </form>
                     <hr>
 
-                    <h6>Přidat modal itemy</h6>
+                    <h6>{{ _("Add modal items") }}</h6>
 
                     {% for item_name in modal_items %}
                         {% include "modal_edit/modal_type_btn.html" %}
@@ -51,11 +51,11 @@
                     <hr>
 
                     <div class='col-6' style='display:inline-block;'>
-                        <h6>Modal itemy</h6>
+                        <h6>Modal items</h6>
                     </div>
                     <div style="display: inline-block;" class="btn-group float-right">
-                        <button type="button" id="unpack-items" class="btn btn-light btn-sm">Rozbalit vše</button>
-                        <button type="button" id="collapse-items" class="btn btn-light btn-sm">Sbalit vše</button>
+                        <button type="button" id="unpack-items" class="btn btn-light btn-sm">{{ _("Unpack all") }}</button>
+                        <button type="button" id="collapse-items" class="btn btn-light btn-sm">{{ _("Pack all") }}</button>
                     </div>
                     <div class="modal_items_edit">
                         <div id="example1" class="modal_items_edit_sortable list-group col">
@@ -91,17 +91,18 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="scroll-up" class="mr-auto btn btn-light"><img src="/img/static/up.png" height="24"></button>
-                <button type="button" class="col-5 mr-auto btn btn-sm btn-outline-info" data-dismiss="modal">Zavřít modal</button>
+                <button type="button" class="col-5 mr-auto btn btn-sm btn-outline-info" data-dismiss="modal">{{ _("Close") }}</button>
                 <button type="button" id="delete-tile" class="trash-modal btn btn-outline-danger">
-                    <img style="width:18px" class="trash-closed" src="/img/static/trash.png">
+                    <!-- <img style="width:18px" class="trash-closed" src="/img/static/trash.png"> -->
+                    {{ _("Delete") }}
                 </button>
-                <script>
+                <!-- <script>
                   $(".trash-modal").on("mouseover", function() {
                     $(this).attr("src", "/img/static/trash_opened.png");
                   }).on("mouseout", function() {
                     $(this).attr("src", "/img/static/trash.png");
                   });
-                </script>
+                </script> -->
             </div>
         </div>
     </div>

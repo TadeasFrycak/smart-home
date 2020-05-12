@@ -1,15 +1,15 @@
 <html lang="cs">
     <header>
         <meta charset="UTF-8">
-        <meta name="description" content="Chytrá domácnost">
-        <meta name="subject" content="Chytrá domácnost">
-        <meta name="keywords" content="kontrolovat, procházet, užívat">
+        <meta name="description" content="{{ _('Smart home') }}">
+        <meta name="subject" content="{{ _('Smart home') }}">
+        <meta name="keywords" content="{{ _('control, use, have fun') }}">
         <meta name="author" content="Fryčák Tadeáš; Szkandera Filip">
-        <meta name="language" content="cs-cz">
+        <meta name="language" content="{{ _('en-GB') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <meta http-equiv="refresh" content="2400">
 
-        <title>Error - {% if header %} {{ header }} {% else %} Smart Home {% endif %}</title>
+        <title>{{ _("Error") }} - {% if header %} {{ header }} {% else %} {{ _("Smart home") }} {% endif %}</title>
 
         <style>
             @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
@@ -217,7 +217,7 @@
                     <p class="subheading">{% if message %} {{ message }} {% else %} Žádná zpráva {% endif %}</p>
                     {% if header != "Vypnuto" %}
                         <script type="text/javascript">
-                            setTimeout(() => {window.location.href = "http://" + window.location.hostname + ":" + window.location.port;}, 6000);
+                            setTimeout(() => {window.location.href = "http://" + window.location.hostname + ":" + window.location.port;}, 1500);
                         </script>
                     {% endif %}
 

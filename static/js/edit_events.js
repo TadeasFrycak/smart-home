@@ -5,35 +5,13 @@
 */
 
 $(document).ready(function(){
+  $("body").on("click", "#save", function(e) {
+  $.post("/save", {}, function(result){});
+  });
 
   // Kliknutí na "přidat stránku" v Menu
   $("body").on("click", "#append-slide", function(e) {
-    
-    $.post("/append_slide", {
-    },
-    function(result){
-      var json = JSON.parse(result);
-      swiper.appendSlide(json.slide);
-      swiper.slideTo(swiper.slides.length, 1000);
-
-      var isEditActive = $("body").attr("is_edit_active");
-      
-      if (isEditActive == "true")
-      {
-        $(".tile_ghost_prefab_class").hide().fadeIn(2000);
-        $(".btn-exit-edit-mode").hide().fadeIn(2000);
-
-        // Připnutí Hammer pro každé "+" tlačítko
-        $(".swiper-slide-active .tile_ghost_prefab_class").each(function() {
-          var $this = $(this);
-          var hammer = new Hammer(this);
-          initTilePress(hammer, $this,1);
-        });
-    
-        var lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
-        bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
-      }
-    });
+    appendNewSlide();
   });
 
   // Kliknutí na "Odebrat stránku" v Menu
@@ -52,3 +30,33 @@ $(document).ready(function(){
     function(result){});
   });
 });
+
+
+function appendNewSlide()
+{
+  $.post("/append_slide", {
+  },
+  function(result){
+    var json = JSON.parse(result);
+    swiper.appendSlide(json.slide);
+    swiper.slideTo(swiper.slides.length, 1000);
+
+    var isEditActive = $("body").attr("is_edit_active");
+    
+    if (isEditActive == "true")
+    {
+      $(".add_new_tile_element").hide().fadeIn(2000);
+      $(".btn-exit-edit-mode").hide().fadeIn(2000);
+
+      // Připnutí Hammer pro každé "+" tlačítko
+      $(".swiper-slide-active .add_new_tile_element").each(function() {
+        var $this = $(this);
+        var hammer = new Hammer(this);
+        initTileTap(hammer, $this,1);
+      });
+  
+      var lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
+      bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
+    }
+  });
+}

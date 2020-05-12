@@ -1,11 +1,11 @@
 <div class="grid-square">
-    <div class="tile" data-id="{{ tile.data.id }}" data-type="percentage">
+    <div class="tile enableHammer" data-id="{{ tile.data.id }}" data-type="percentage">
         <div class="tileTextLayer">
             <div class="tileDisplay">
-                <div class="tileInputVal">{{ tile.data.value }}</div>
+                <div class="tileInputVal">{{ tile.value }}</div>
                 <span style="font-size: 15px">{{ tile.data.suffix }}</span>
             </div>
-            <span class="tileDescription">{{ tile.data.label }}</span>
+            <span class="tileDescription">{{ tile.label }}</span>
             <span class="tileStatus">TODO ago</span>
         </div>
         <div class="tileTouchLayer tileModal"></div>

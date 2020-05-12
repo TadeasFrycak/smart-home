@@ -14,10 +14,10 @@ class TemplateManagerWrite:
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.DATA]):
+            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
                 if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
-                    self.__fmng.devices[page_num][self.__tmng_r.DATA].pop(item_num)
+                    self.__fmng.devices[page_num][self.__tmng_r.CHILDREN].pop(item_num)
                     return True
 
     # Modal
@@ -31,14 +31,14 @@ class TemplateManagerWrite:
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.DATA]):
+            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
                 if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
                     # Get modal items
-                    self.__fmng.devices[page_num][self.__tmng_r.DATA][item_num][self.__tmng_r.MODAL].pop(index)
+                    self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL].pop(index)
                     return True
 
-    def append_modal_item(self, item_type, tile_id):
+    def append_modal_item(self, item_type, tile_id):  # TODO přejmenovat i tenhle request @app.rout(/append...
         """
         Get new SortableJS item in edit modal, send it to JS to show it and save (append) it
         :param item_type: type of item in modal - for example slider, toggle
@@ -58,7 +58,7 @@ class TemplateManagerWrite:
         Append new slide
         :return:
         """
-        self.__fmng.devices.append({self.__tmng_r.NAME: self.__tmng_r.UNNAMED, self.__tmng_r.DATA: []})
+        self.__fmng.devices.append({self.__tmng_r.NAME: self.__tmng_r.UNNAMED, self.__tmng_r.CHILDREN: []})
 
     def delete_slide(self, index):
         """

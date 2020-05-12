@@ -6,10 +6,12 @@
   transform: scale(1.1);
 }
 .container {position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 50%;left:50%}
-form {margin:4px;background-color:white;border-radius:12px;padding:35px;box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
+form {margin:4px;border-radius:12px;padding:35px}
+.light form {background-color: white; box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
+.dark form {background-color: #222831; color: white; box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
+.dark .container {color:white}
 </style>
-<script type="text/javascript">
-    document.addEventListener("contextmenu", event => event.preventDefault());
+<script type="text/javascript" src="js/prevent_hack.js">  // TODO dát tohle potom do hlavního JavaScriptu, aby to nešlo v aplikaci
 </script>
 {% endblock%}
 {% block title %}{% endblock %}

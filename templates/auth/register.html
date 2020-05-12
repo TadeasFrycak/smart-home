@@ -1,19 +1,19 @@
 {% extends "auth/base.html" %}
-{% block title %}Registrace{% endblock %}
+{% block title %}{{ _("Registration") }}{% endblock %}
 <!-- TODO FILIPE - udělej ikonky -->
 {% block content %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/register.js') }}" defer></script>
 <div class="container" id="register-form">
     <form class="text-center" autocomplete="off">
-        <p class="h4 mb-4">Registrace do ChD</p>
-        <p>Dobrý den, máte štěstí! Registrace je právě povolena! Využijte této možnosti a zaregistrujte se pro přístup k ovládání Vaší Chytré domácnosti.</p>
+        <p class="h4 mb-4">{{ _("Registration") }}</p>
+        <p>{{ _("Good day, registration is allowed now! You can register to our Smart home by form!") }}</p>
 
         <div class="form-group">
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend" style="width:40px">
                     <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
                 </div>
-                <input type="text" id="first-name" class="form-control" maxlength="40" placeholder="Jméno">
+                <input type="text" id="first-name" class="form-control" maxlength="40" placeholder="{{ _('First name') }}">
             </div>
         </div>
         <div class="form-group">
@@ -21,7 +21,7 @@
                 <div class="input-group-prepend" style="width:40px">
                     <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
                 </div>
-                <input type="text" id="last-name" class="form-control" maxlength="40" placeholder="Příjmení">
+                <input type="text" id="last-name" class="form-control" maxlength="40" placeholder="{{ _('Last name') }}">
             </div>
         </div>
         <div class="form-group">
@@ -29,16 +29,7 @@
                 <div class="input-group-prepend" style="width:40px">
                     <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
                 </div>
-                <input type="text" id="user-name" class="form-control" maxlength="81" placeholder="Uživatelské jméno" readonly>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend" style="width:40px">
-                    <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
-                </div>
-                <input type="password" id="password" class="form-control" maxlength="100" placeholder="Heslo">
+                <input type="text" id="user-name" class="form-control" maxlength="81" placeholder="{{ _('Username') }}" readonly>
             </div>
         </div>
 
@@ -47,52 +38,61 @@
                 <div class="input-group-prepend" style="width:40px">
                     <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
                 </div>
-                <input type="password" id="password-repeat" class="form-control" maxlength="150" placeholder="Heslo znovu">
+                <input type="password" id="password" class="form-control" maxlength="100" placeholder="{{ _('Password') }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend" style="width:40px">
+                    <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
+                </div>
+                <input type="password" id="password-repeat" class="form-control" maxlength="150" placeholder="{{ _('Repeat password') }}">
             </div>
         </div>
         <!-- TODO FILIPE přidej sem nějaký date picker na výběr data (datum) narození ... -->
         <div class="form-group dropdown" id="dropdown-permission">
             <button class="btn btn-secondary dropdown-toggle" style="width:100%" type="button" id="permission" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Vyber pozici v ChD
+                {{ _("Choose position in SH") }}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width:100%">
-                <h6 class="dropdown-header">Správci ChD</h6> <!-- TODO FILIPE - nějak tyhle věci zobraz -->
-                <a class="dropdown-item">Majitel</a> <!-- může navíc přidělit role a práva -->
-                <a class="dropdown-item">Admin</a> <!-- může navíc spustit nastavení; whitelist; vypnout server apod. -->
-                <a class="dropdown-item">Správce</a> <!-- může navíc spustit edit mód -->
-                <h6 class="dropdown-header">Návštěvníci ChD</h6>
-                <a class="dropdown-item">Návštěva</a> <!-- může navíc ovládat -->
-                <a class="dropdown-item">Vyšší kontrolér</a> <!-- může navíc dívat na modaly -->
-                <a class="dropdown-item">Nižší kontrolér</a> <!-- může se jen dívat na tile -->
+                <h6 class="dropdown-header">{{ _("Managers of SH") }}</h6> <!-- TODO FILIPE - nějak tyhle věci zobraz -->
+                <a class="dropdown-item">{{ _("Owner") }}</a> <!-- může navíc přidělit role a práva -->
+                <a class="dropdown-item">{{ _("Administrator") }}</a> <!-- může navíc spustit nastavení; whitelist; vypnout server apod. -->
+                <a class="dropdown-item">{{ _("Manager") }}</a> <!-- může navíc spustit edit mód -->
+                <h6 class="dropdown-header">{{ _("Visitors of SH") }}</h6>
+                <a class="dropdown-item">{{ _("Visitor") }}</a> <!-- může navíc ovládat -->
+                <a class="dropdown-item">{{ _("Higher controller") }}</a> <!-- může navíc dívat na modaly -->
+                <a class="dropdown-item">{{ _("Lower controller") }}</a> <!-- může se jen dívat na tile -->
             </div>
         </div>
         <div class="form-group">
             <div class="form-check form-check-inline">
                 <input class="form-check-input mode" type="radio" name="mode" id="light" value="light">
-                <label class="form-check-label" for="light">Světlý</label>
+                <label class="form-check-label" for="light">{{ _("Light") }}</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input mode" type="radio" name="mode" id="dark" value="dark">
-                <label class="form-check-label" for="dark">Tmavý</label>  <!-- TODO FILIPE tohle nevypadá  moc hezky, nějak to nadizajnuj, možná tam dej místo toho dropdown, ... -->
+                <label class="form-check-label" for="dark">{{ _("Dark") }}</label>  <!-- TODO FILIPE tohle nevypadá  moc hezky, nějak to nadizajnuj, možná tam dej místo toho dropdown, ... -->
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input mode" type="radio" name="mode" id="smart" value="smart">
-                <label class="form-check-label" for="smart">Inteligentní</label>
+                <label class="form-check-label" for="smart">{{ _("Smart") }}</label>
             </div>
         </div>
         <div class="form-group">
             <div class="form-check form-check-inline">
                 <input class="form-check-input sex" type="radio" name="sex" id="female" value="female">
-                <label class="form-check-label" for="female">Žena</label>
+                <label class="form-check-label" for="female">{{ _("Female") }}</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input sex" type="radio" name="sex" id="male" value="male">
-                <label class="form-check-label" for="male">Muž</label>
+                <label class="form-check-label" for="male">{{ _("Male") }}</label>
             </div>
         </div>
-        <button id="register" class="btn btn-info btn-block" type="button">Registrovat se</button>
+        <button id="register" class="btn btn-info btn-block" type="button">{{ _("Register") }}</button>
         <br>
-        Jste již zaregistrovaný/á? <a href="{{ url_for('login') }}">Přihlaste se</a>
+        {{ _("Have you an account yet?") }} <a href="{{ url_for('login') }}">{{ _("Login") }}</a>
     </form>
 </div>
 

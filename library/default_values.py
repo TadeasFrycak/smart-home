@@ -2,6 +2,8 @@ import random
 
 
 class DefaultValues:
+    TILE_TYPE = "blank"
+
     def __init__(self):
         pass
 
@@ -55,12 +57,23 @@ class DefaultValues:
         elif value_name == "value" and tile_type == "percentage":
             return "Null"
 
+        elif value_name == "value" and tile_type == "value_double":
+            return {"left": {"value": "Null", "suffix": ""}, "right": {"value": "Null", "suffix": ""}}
+
         elif value_name == "icon":
             return "none.png"
+
+        elif value_name == "value" and tile_type == "blank":
+            return None
 
         else:
             return False
 
-    @staticmethod
-    def tile_type():
-        return "blank"
+    def tile(self):
+        tile_value = self.tile_value(value_name="value", tile_type=self.TILE_TYPE)
+
+        if tile_value:
+            return {"type": self.TILE_TYPE, "value": tile_value, "modal": [], "data": {"id": self.random_id()}}
+
+        else:
+            return {"type": self.TILE_TYPE, "modal": [], "data": {"id": self.random_id()}}

@@ -1,17 +1,17 @@
 {% extends "auth/base.html" %}
-{% block title %}Přihlášení{% endblock %}
+{% block title %}{{ _("Login") }}{% endblock %}
 {% block content %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}" defer></script>
 <div class="container">
     <form class="text-center" autocomplete="off">
-        <p class="h4 mb-4">Přihlášení</p>
-        <p>Vítejte zpět můj pane/má paní! Váš čas pro připojení již skončil. Potřebuji, abyste se pro kontrolu znovu přihlásil/a.</p>
+        <p class="h4 mb-4">{{ _("Login") }}</p>
+        <p>{{ _("Welcome back! Before you can control your Smart home, please, login into your account.") }}</p>
         <div class="form-group">
             <div class="input-group mb-2 mr-sm-2">
                 <div class="input-group-prepend" style="width:40px">
                     <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
                 </div>
-                <input type="text" id="user-name" class="form-control" placeholder="Uživatelské jméno"> <!-- autofocus="">-->
+                <input type="text" id="user-name" class="form-control" placeholder="{{ _('Username') }}"> <!-- autofocus="">-->
             </div>
         </div>
         <div class="form-group">
@@ -19,7 +19,7 @@
                 <div class="input-group-prepend" style="width:40px">
                     <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
                 </div>
-                <input type="password" id="password" class="form-control" placeholder="Heslo">
+                <input type="password" id="password" class="form-control" placeholder="{{ _('Password') }}">
             </div>
         </div>
         <!--<div class="form-group form-check">
@@ -28,9 +28,9 @@
             Zapamatovat si mě
           </label>
         </div>-->
-        <button class="btn btn-info btn-block" type="button" id="login">Přihlásit se</button>
+        <button class="btn btn-info btn-block" type="button" id="login">{{ _("Login") }}</button>
         <br>
-        Jste tu nový/á? <a href="{{ url_for('register') }}">Zaregistrujte se</a>
+        {{ _("Don't have an account?") }} <a href="{{ url_for('register') }}">{{ _("Register here") }}</a>
         <button class="btn btn-sm btn-light" type="button" style="position:absolute;right:54px;bottom:27px" id="incognito-login"><img style="width:23px" src="img/static/incognito.png"></button>
     </form>
 </div>

@@ -95,42 +95,7 @@ function displaySettingsModal(result){
 
 }
 
-// Po doteku na Toggle tlačítko ( < init.js )
-function tappedOnToggle($this)
-{
-  var isEditActive = $("body").attr("is_edit_active");
 
-  if (isEditActive == "false")
-    {
-      $this.parent().toggleClass("tileActive");
-      var tileID = $this.parent().attr("data-id");
-      var tileState = $this.parent().find(".tileStatus").text().toLowerCase() == "on" ? 1 : 0;
-
-      if (tileState === 1) {
-        tileState = 0;
-        $this.parent().find(".tileStatus").text("Off");
-        //$this.parent().css("opacity", 0.7);
-        // TODO NASTAVENÍ
-        //$this.parent().css({"-moz-transform": "scale(1)", "-webkit-transform": "scale(1)", "transform": "scale(1)"})
-        $this.parent().find(".toggle-dot").css("background-color", "rgba(255, 0, 0, 0.28)");
-      }
-
-      else if (tileState === 0) {
-        tileState = 1;
-        $this.parent().find(".tileStatus").text("On");
-        //$this.parent().css("opacity", 1);
-        // TODO NASTAVENÍ
-        //$this.parent().css({"-moz-transform": "scale(1.03)", "-webkit-transform": "scale(1.03)", "transform": "scale(1.03)"})
-        $this.parent().find(".toggle-dot").css("background-color", "rgba(0, 196, 42, 0.28)");
-      }
-
-      $.post("/tile", {
-        "id": tileID,
-        "value": tileState
-      }
-    );
-  }
-}
 
 // add_new_tile_element
 
@@ -142,7 +107,7 @@ function changePageToNormal()
   $(".exit-edit-mode-button").show().fadeOut(2000);
   $(".bcg-image").fadeOut(2000);
   setTimeout(() => {
-    $("#edit-page").replaceWith("<a class='dropdown-item' id='edit-page'>Upravit tuto stránku</a>");
+    $("#edit-page").replaceWith("<a class='dropdown-item' id='edit-page'>" + _("Edit this slide") + "</a>");
     $(".dropdown-wrapper[dissapear-on-edit]").each(function() {
       $( this ).css("display","none");
     });
@@ -177,13 +142,15 @@ function changePageToEdit()
 
   // Přidělí každému "+" tlačítko Hammer
   $(".add_new_tile_element").each(function() {
-    var $this = $(this);
     var hammer = new Hammer(this);
-    initTileTap(hammer, $this,1);
+    var $this = $(this);
+    hammer.on("tap", function(el) {
+      addNewTile($this)
+    });
   });
 
   setTimeout(() => {
-    $("#edit-page").replaceWith("<a class='dropdown-item' id='edit-page'>Ukončit upravovací mód</a>");
+    $("#edit-page").replaceWith("<a class='dropdown-item' id='edit-page'>" + _("Exit edit mode") + "</a>");
     $(".dropdown-wrapper[dissapear-on-edit]").each(function() {
       $( this ).css("display","block");
     });

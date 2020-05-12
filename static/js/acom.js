@@ -4,8 +4,11 @@ $(document).ready(function(){
   // ----------------------------------------------
 
   // Initialise asynchronous communication
-  var socket = io.connect("http://" + document.domain + ":" + location.port + "/acom");
-
+  // var socket = io.connect("http://" + document.domain + ":" + location.port + "/acom");
+  var socket = io("/acom");
+  socket.on('connect', function() {
+                socket.emit('my_event', {data: 'I\'m connected!'});
+            });
   // Asynchronous communication for tile
   socket.on("tile", function(msg) {
     console.log(msg);
@@ -169,14 +172,8 @@ $(document).ready(function(){
       }
     }
 
-    var hammerTime = $(".tile[data-id='"+newID+"']").find(".tileModal")[0];
-    var $hammerTime = $(hammerTime);
-    var newHammer = new Hammer(hammerTime);
-
-    // Přidělí Hammer "tap"
-    initializeTileWithTap(hammerTime);
-    // Přidělí Hammer "press"
-    initTilePress(newHammer,$hammerTime,0);
+    var newTile = $(".tile[data-id='"+newID+"']").find(".tileModal")[0];
+    initializeHammerTile(newTile);
   });
 
   // Reload page
@@ -185,10 +182,10 @@ $(document).ready(function(){
   });
 
   socket.on("connect", function() {
-    $(".server-status").text("Online");
+    $(".server-status").text(_("Online"));
   });
   socket.on("disconnect", function() {
-    $(".server-status").text("Offline");
+    $(".server-status").text(_("Offline"));
     //$(".bcg-real").css({"filter": "grayscale(0.75)", "transition": "filter 2s"});
   });
   socket.on("reconnect", function() {

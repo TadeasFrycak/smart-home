@@ -139,7 +139,7 @@ class FileManager:
         """
 
         self.__devices = devices
-        # self.write_file("server_config/devices.json", devices, True)
+        self.write_file("data/app_config/devices.json", devices, True)
 
     @property
     def img_data(self):

@@ -58,7 +58,7 @@ class Validator:
         for page, page_content in enumerate(self.__fmng.devices):
             IDs = []
 
-            for device in page_content[self.__tmng_r.DATA]:
+            for device in page_content[self.__tmng_r.CHILDREN]:
                 # Check duplicity for current device
                 if device[self.__tmng_r.DATA][self.__tmng_r.ID] not in IDs:
                     IDs.append(device[self.__tmng_r.DATA][self.__tmng_r.ID])
@@ -68,7 +68,7 @@ class Validator:
 
         # Check duplicity for items in modals
         for page, page_content in enumerate(self.__fmng.devices):
-            for device in page_content[self.__tmng_r.DATA]:
+            for device in page_content[self.__tmng_r.CHILDREN]:
                 try:
                     IDs = []
                     for modal_item in device[self.__tmng_r.MODAL]:

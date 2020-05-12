@@ -9,6 +9,12 @@
   background-image: url("/img/static/edit_bg.jpg");
 }
 
+@media print {
+    html, body {
+       display: none;  /* hide whole page */
+    }
+}
+
 .bcg-real {
   background-size: cover;
   background-repeat: no-repeat;
@@ -34,20 +40,42 @@
 
 }*/
 .dark .modal-content {
-  background-color: rgb(60,60,60);
+  background-color: #222831;
   color: #fff;
 }
 .dark .modal-title {
   color: #fff;
   }
 .dark .dropdown-menu {
-  background-color: rgb(50,50,50);
+  background-color: #222831;
   color: #ddd;
 }
 .dark .dropdown-item:hover {
-  background-color: rgb(60,60,60);
+  background-color: #222831;
   color: #ddd;
 }
+
+.dark .modal-content input[type="text"]{
+    background-color: #222831;
+    /* background-color: #30475e; */
+}
+
+.dark .btn-outline-info {
+    color: #bbe1fa;
+    border-color: #bbe1fa;
+}
+
+.dark div.modal_items_edit_sortable_item{
+    background-color: #1b262c;
+    border-color: #bbe1fa;
+}
+
+
+.btn-secondary:not(:disabled):not(.disabled).active {
+    /* background-color: #333333; */
+    background-color: #333333;
+}
+
 /*font-family: "Arial";*/
 html,
 body {

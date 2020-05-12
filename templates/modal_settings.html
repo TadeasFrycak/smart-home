@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Nastavení</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Settings</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                 {% endfor %}
 
                 <div class="form-group-sm row">
-                    <label for="tile-type" class="col-sm-2 col-form-label">Pozadí</label>
+                    <label for="tile-type" class="col-sm-2 col-form-label">Background</label>
                     <div class="col-sm-10">
                         <div class="modal-img-select-wrapper">
                             {% for background in backgrounds %}
@@ -22,7 +22,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--<div class="swiper-container settingSwiper" >
                     <div class="swiper-wrapper">
                         <div class="swiper-slide settings-swiper-slide"><img src="/static/img/backgrounds/bcg18.jpg" class="settings-img-bcg"></div>
@@ -36,11 +35,9 @@
                     <div class="swiper-pagination settingsSwiperPagination"></div>
                 </div>-->
                 <!-- Add Pagination -->
-
-
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Zavřít</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ _("Close") }}</button>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
-from subprocess import Popen
+import subprocess
 import sys
 
-Popen([sys.executable, "app.py"])
+subprocess.run(["pkill", "-f", "app.py"])
+subprocess.Popen([sys.executable, "app.py"])
