@@ -1,4 +1,15 @@
-<div class="sliderModule" data-id="{{ item.data.id }}">
-    <span class="sliderModuleLabel">{{ item.data.label }}</span>
-    <div class="slider" class="hx-slider"></div>
+<div class="slider" data-id="{{ item.data.id }}" style="padding-bottom: 5px" data-prew-val=0>
+    <label style="margin-bottom: 15px;">{{ item.data.label }}</label>
+    <input type="range" value="{{ item.value }}" min="{{ item.data.min }}" max="{{ item.data.max }}" buffer="{{ item.data.buffer }}" step="{{ item.data.step }}" data-rangeSlider title="{{ item.data.label }}">
+    
 </div>
+
+<style>
+    .rangeSlider__handle{
+        width: 30px;
+        height: 30px;
+    }
+    .rangeSlider__horizontal {
+        height: 10px;
+}
+</style>

@@ -1,4 +1,21 @@
 $(document).ready(function() {
+  socketio = io("/com");
+
+  socketio.on("login_result", function(data){
+    if (data.status === true)
+    {
+      $.post("/login", {}, function () {
+        window.location.href = $("#login-form").attr("action");
+      });
+    }  
+    else
+    {
+      console.log("Wrong password");
+      $(this).removeAttr("disabled");
+      $("#password").val("");
+    }
+  });
+
   $("#password").on("input", function(e){
     if($("#password").val() == "") {
       $("#password").addClass("is-invalid");
@@ -7,14 +24,32 @@ $(document).ready(function() {
       $("#password").removeClass("is-invalid");
     }
   });
-  $("#user-name").on("input", function(e){
-    if($("#user-name").val() == "") { //|| !($("#user-name").val().includes("."))) {
-      $("#user-name").addClass("is-invalid");
+
+  $("#username").on("input", function(e){
+    if($("#username").val() == "") { //|| !($("#user-name").val().includes("."))) {
+      $("#username").addClass("is-invalid");
     }
     else {
-      $("#user-name").removeClass("is-invalid");
+      $("#username").removeClass("is-invalid");
     }
   });
+
+  $("#password").on("keypress", function (e) {
+    if(e.which === 13){
+      // Disable textbox to prevent multiple submit
+      $(this).attr("disabled", "disabled");
+      $("#login").click();
+    }
+  });
+
+  $("#username").on("keypress", function (e) {
+    if(e.which === 13){
+      // Disable textbox to prevent multiple submit
+      $(this).attr("disabled", "disabled");
+      $("#login").click();
+    }
+  });
+
   function finalValidCheck(object) {
     if (!$(object).hasClass("is-invalid")) {
       if($(object).val() !== "") {
@@ -27,22 +62,20 @@ $(document).ready(function() {
     return false;
   }
   $("body").on("click", "#incognito-login", function() {
-    var userName = finalValidCheck($("#user-name"));
-    var password = finalValidCheck($("#password"));
+    let userName = finalValidCheck($("#username"));
+    let password = finalValidCheck($("#password"));
     if(userName && password) {
-      $.post("/login", {
-          "user_name": $("#user-name").val(),
-          "password": $("#password").val(),
-          "remember": 0,
-        },
-        function(result){
-          window.location.href = result;
-        });
+      socketio.emit("login", {
+        "username": $("#username").val(),
+        "password": $("#password").val(),
+        "remember": 0,
+      });
+      $.post("/login", {}, function(){});
     }
   });
-  var parseQueryString = function() {
-    var str = window.location.search;
-    var objURL = {};
+  let parseQueryString = function() {
+    let str = window.location.search;
+    let objURL = {};
     str.replace(
       new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
       function( $0, $1, $2, $3 ){
@@ -52,19 +85,16 @@ $(document).ready(function() {
     return objURL;
   };
   $("body").on("click", "#login", function() {
-    var next = parseQueryString()["next"];
-    var userName = finalValidCheck($("#user-name"));
-    var password = finalValidCheck($("#password"));
+    let next = parseQueryString()["next"];
+    let userName = finalValidCheck($("#username"));
+    let password = finalValidCheck($("#password"));
     if(userName && password) {
-      $.post("/login", {
-          "user_name": $("#user-name").val(),
-          "password": $("#password").val(),
-          "remember": 1,
-          "next": next
-        },
-        function(result){
-          window.location.href = result;
-        });
+      socketio.emit("login", {
+        "username": $("#username").val(),
+        "password": $("#password").val(),
+        "remember": 1,
+        "next": next
+      });
     }
   });
 });

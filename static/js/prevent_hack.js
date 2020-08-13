@@ -4,56 +4,57 @@ document.addEventListener("contextmenu", function (e) {
 document.addEventListener("keydown", function (e) {
    //document.onkeydown = function(e) {
    // "C" key
-   if (e.ctrlKey && e.shiftKey && e.keyCode == 67) {
+   if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
        disabledEvent(e);
    }
    // "I" key
-   if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+   if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
        disabledEvent(e);
    }
    // "J" key
-   if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+   if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
        disabledEvent(e);
    }
    // "S" key + macOS
-   if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+   if (e.keyCode === 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
        disabledEvent(e);
    }
    // "U" key
-   if (e.ctrlKey && e.keyCode == 85) {
+   if (e.ctrlKey && e.keyCode === 85) {
        disabledEvent(e);
    }
 
    // "S" key
-   if (e.ctrlKey && e.keyCode == 83) {
+   if (e.ctrlKey && e.keyCode === 83) {
        disabledEvent(e);
    }
 
    // "O" key
-   if (e.ctrlKey && e.keyCode == 79) {
+   if (e.ctrlKey && e.keyCode === 79) {
        disabledEvent(e);
    }
 
    // "P" key
-   if (e.ctrlKey && e.keyCode == 80) {
+   if (e.ctrlKey && e.keyCode === 80) {
        disabledEvent(e);
    }
 
    // "W" key
-   if (e.ctrlKey && e.keyCode == 87) {
+   if (e.ctrlKey && e.keyCode === 87) {
        disabledEvent(e);
    }
 
    // "W" key
-   if (e.ctrlKey && e.shiftKey && e.keyCode == 87) {
+   if (e.ctrlKey && e.shiftKey && e.keyCode === 87) {
        disabledEvent(e);
    }
 
    // "F12" key
-   if (event.keyCode == 123) {
+   if (event.keyCode === 123) {
        disabledEvent(e);
    }
 }, false);
+
 function disabledEvent(e) {
    if (e.stopPropagation) {
        e.stopPropagation();

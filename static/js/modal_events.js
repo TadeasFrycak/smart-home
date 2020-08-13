@@ -6,13 +6,14 @@
 */
 
 $(document).ready(function() {
-
   // Modal toggle button event on change
-  $("body").on("change", ".modal_toggle", function(e){
-    var toggleID = $(this).parent().parent().parent().attr("data-id");
-    var toggleState = "";
-    var tileID = $(".modal-here").attr("id_of_caller");
+  $("body").on("change", ".modal-toggle-input", function(e){
+    let toggleID = $(this).parent().parent().attr("data-id");
+    let toggleState = "";
+    let tileID = $(".modal-here").attr("id_of_caller");
 
+    console.log(toggleID);
+    console.log(tileID);
     e.stopPropagation();
     e.stopImmediatePropagation();
 
@@ -25,17 +26,7 @@ $(document).ready(function() {
     else if ($(this).prop("checked") === false){
       toggleState = "0";
     }
-    if (toggleID == "dark-mode") {
-      $("body").toggleClass("dark");
-      $("body").toggleClass("light");
-      }
-
-    $.post("/toggle", {
-        "id": toggleID,
-        "value": toggleState,
-        "tile_id": tileID
-      }, function(result){});
+    console.log(toggleState);
+    socketio.emit("modal_toggle", {"id": toggleID, "value": toggleState, "tile_id": tileID});
   });
-
-  
 });

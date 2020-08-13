@@ -41,3 +41,10 @@ class Sun:
         else:
             print("SUN FATAL ERROR")
             return None
+
+    def get_mode(self, user_mode):
+        if user_mode == "smart":
+            return self.day_or_night_now()
+
+        else:
+            return user_mode

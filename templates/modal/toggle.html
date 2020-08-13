@@ -1,9 +1,7 @@
-<div class="buttonModule" data-id="{{ item.data.id }}">
-    <div class="toggle-slider-div">
-        {{ item.data.label }}
-        <label class="switch">
-            <input type="checkbox" class="modal_toggle" {% if item.data.value == 1%}checked{% endif %}>
-            <span class="toggle-slider round"></span>
-        </label>
-    </div>
+<div class="modal-toggle" data-id="{{ item.data.id }}">
+    {{ item.data.label }}
+    <label class="modal-toggle-label">
+        <input class="modal-toggle-input" type="checkbox" {% if item.value == 1%}checked{% endif %}>
+        <span class="modal-toggle-round"></span>
+    </label>
 </div>

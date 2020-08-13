@@ -47,10 +47,15 @@ function initTileTap(hammer, $this, add_new_item)
 }
 
 function initImages(){
-  $(".modal-edit-select-img").each(function() {
-    var attr = $(this).attr('checked');
+  $(".modal-edit-icon").each(function() {
+    let attr = $(this).attr('checked');
     if (typeof attr !== typeof undefined && attr !== false) {
-      $(this).css({"border": "2px solid rgb(23, 162, 184)"});
+      if ($("body").hasClass("dark")) {
+        $(this).css({"border": "2px solid rgb(232, 93, 71)"});
+      }
+      else {
+        $(this).css({"border": "2px solid rgb(23, 162, 184)"});
+      }
     }
     Hammer(this).on("tap", function(elem) {
       // ( > modal_edit_events.js )
@@ -69,111 +74,116 @@ function initImages(){
 // /get_edit_modal
 //    > tileId
 
-function addNewTile($this)
+function addNewTile()
 {
-  $.post("/get_add_tile_modal", {
-    "slide_index": swiper.realIndex
-  }, 
-  function(result){
-    // ( > modal_init.js )
-    initializeModal(result, $this);
-    $(".bcg-real").css({"transform": "scale(1.25)", "transition": "all 0.75s"});
-    $('#myModal').on('hide.bs.modal', function () {
-      $(".bcg-real").css({"transform": "scale(1.15)", "transition": "all 0.75s"});
-    });
-  });
+  socketio.emit("get_add_modal", {"slide_index": swiper.realIndex});
 }
 
 function requestNormalModal($this)
 {
-  var object_id = $this.parent().attr("data-id");
-  console.log(object_id);
-
-  $.post("/get_modal ", {
-    "id": object_id
-  }, 
-  function(result){
-    // ( > modal_init.js )
-    handleModalResponse(result, $this)
-  });
+  let object_id = $this.parent().attr("data-id");
+  socketio.emit("get_modal", {"tile_id": object_id});
 }
 
 function requestEditModal($this)
 {
-  var object_id = $this.parent().attr("data-id");
-  
-  $.post("/get_edit_modal ", {
-    "id": object_id
-  }, 
-  function(result){
-    // ( > modal_init.js )
-    handleModalResponse(result, $this)
-  });
+  let object_id = $this.parent().attr("data-id");
+  socketio.emit("get_edit_modal", {"tile_id": object_id});
 }
 
-function handleModalResponse(result, $this)
+function handleModalResponse(data)
 {
   // ( > modal_init.js )
-  initializeModal(result, $this);
-  $(".bcg-real").css({"transform": "scale(1.25)", "transition": "all 0.75s"});
-  $('#myModal').on('hide.bs.modal', function () {
-    $(".bcg-real").css({"transform": "scale(1.15)", "transition": "all 0.75s"});
-  });
+  initializeModal(data);
 }
 
-function initializeModal(result, $this)
+function initializeModal(data)
 {
-    var object_id = $this.parent().attr("data-id");
-    var json = JSON.parse(result);
-    $(".modal-here").empty();
-    $(".modal-here").append(json.modal);
+    let object_id = data.tile_id;
+    $(".modal-here").empty().append(data.modal);
 
     $("#myModal").modal({ keyboard: true })
 
-    // Event při zavření modalu
-    $("#myModal").on("hidden.bs.modal", function () {
-      // $(".swipe-body").css({"filter": "none", "transition": "filter 0.5s"});
-      // $(".bcg-real").css({"filter": "none", "transition": "filter 0.5s"});
-      // $(".bcg-image").css({"filter": "none", "transition": "filter 0.5s"});
-    })
-
-    var header = tileGetAtributeByName($this.parent(),"tileDescription");
-    $(".modal-title").text(header);
+    // var header = tileGetAtributeByName($this.parent(),"tile-label");
+    // $(".modal-title").text(header);
     $(".modal-here").attr("id_of_caller", object_id);
 
     if (object_id === undefined) {
       tile_id = $("#tile-id").val();
-      console.log(tile_id);
       $(".modal-here").attr("id_of_caller", tile_id);
     }
 
-    $(".modal_items_edit_sortable_item_dropdown").slideUp();
+    $(".modal-edit-item-dropdown").slideUp();
     // ( > modal_init.js )
-    initializeAllItemsWithinModal(json,object_id);
+    initializeAllItemsWithinModal(data);
 }
 
-function initializeAllItemsWithinModal(json,value)
+// function updateMySlider(id, value)
+// {
+//     // update position
+//     const triggerEvents = true; // or false
+//     var yy = document.querySelector(".slider[data-id="+id+"] input[type='range']")
+
+//     yy.rangeSlider.update({
+//         min : 0,
+//         max : 20, 
+//         step : 0.5,
+//         value : value
+//     }, triggerEvents);
+// }
+
+function initializeAllItemsWithinModal(data)
 {
   /*
   *   V normálním režimu   
   */
 
-  console.log(json);
-  console.log(value);
+  // console.log(data);
+  // console.log(value);
+
+  
+  $(".slider").each(function(){
+
+    var slider = $(this).find('input[type="range"]');
+    rangeSlider.create(slider, {
+      onSlide: function (position, value) {
+
+      slider_div = $(this.range).parent();  
+      slider_prew_value = slider_div.attr("data-prew-val");
+
+      // Send only if slider changed value
+      if (position != slider_prew_value)
+      {
+        slider_div.attr("data-prew-val", position);
+        slider_id = slider_div.attr("data-id");
+        // console.log(slider_id);
+        // console.log('onSlide', 'position: ' + position, 'value: ' + value);
+  
+        let id_of_caller = $(".modal-here").attr("id_of_caller");
+  
+        socketio.emit("modal_slider", {
+          "value": position,
+          "id": slider_id,
+          "tile_id": id_of_caller
+        });
+      }
+    }
+    });
+  });
  
   $(".date-range-picker-input").each(function(){
 
-    var rangePickerId = $(this).attr("id");
+    let rangePickerId = $(this).attr("id");
 
-    var start = moment().subtract(29, 'days');
-    var end = moment();
+    let start = moment().subtract(29, 'days');
+    let end = moment();
 
     function cb(start, end) {
       $(".date-range-picker-input[id="+rangePickerId+"]").find("span").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-      var id_of_caller = $(".modal-here").attr("id_of_caller");
-      var pair_id = $(".date-range-picker-input[id="+rangePickerId+"]").parent().attr("data-pair");
+      let id_of_caller = $(".modal-here").attr("id_of_caller");
+      let pair_id = $(".date-range-picker-input[id="+rangePickerId+"]").parent().attr("data-pair");
 
-      $.post("/datarangepicker", {
+      socketio.emit("modal_daterangepicker", {
         "pair_id" : pair_id,
         "tile_id" : id_of_caller,
         "id": rangePickerId,
@@ -201,10 +211,10 @@ function initializeAllItemsWithinModal(json,value)
 
     // cb(start, end);
 
-    for (var k in json.daterangepickers){
+    for (var k in data.daterangepickers){
       if (k == rangePickerId){ 
-        var dateStart = moment(json.daterangepickers[k].start).format('MMMM D, YYYY');
-        var dateEnd = moment(json.daterangepickers[k].end).format('MMMM D, YYYY');
+        let dateStart = moment(data.daterangepickers[k].start).format('MMMM D, YYYY');
+        let dateEnd = moment(data.daterangepickers[k].end).format('MMMM D, YYYY');
         $(".date-range-picker-input[id="+rangePickerId+"]").find("span").html(dateStart + ' - ' + dateEnd);
       }
     }
@@ -213,18 +223,18 @@ function initializeAllItemsWithinModal(json,value)
 
   });
 
-  $(".graphModul").each(function(){
-    for (k in json.graphs){
+  $(".modal-graph").each(function(){
+    for (k in data.graphs){
       if (k == $(this).attr("data-id")){ // Nasel graf sse setejným ID
-        var ctx = $(this).children();
-        var new_chart = new Chart(ctx, {
+        let ctx = $(this).children();
+        let new_chart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: json.graphs[k].data_x,
+            labels: data.graphs[k].data_x,
             datasets: [{
                 label: $(this).attr("data-header"),
                 borderColor: 'rgb(255, 99, 132)',
-                data: json.graphs[k].data_y
+                data: data.graphs[k].data_y
             }]
           },
           options: {
@@ -246,14 +256,14 @@ function initializeAllItemsWithinModal(json,value)
 
   // Generuje graf
   $(".apex-graph").each(function(){
-    for (k in json.graphs){
+    for (k in data.graphs){
         if (k == $(this).attr("data-id")) {  // Nasel graf sse setejným ID
-        var myData = json.graphs[k].values;
-        var graph_name = json.graphs[k].label;
-        var x_min = json.graphs[k].max_min.x.min;
-        var x_max = json.graphs[k].max_min.x.max;
-        var y_min = json.graphs[k].max_min.y.min;
-        var y_max = json.graphs[k].max_min.y.max;
+        var myData = data.graphs[k].values;
+        var graph_name = data.graphs[k].label;
+        var x_min = data.graphs[k].max_min.x.min;
+        var x_max = data.graphs[k].max_min.x.max;
+        var y_min = data.graphs[k].max_min.y.min;
+        var y_max = data.graphs[k].max_min.y.max;
 
         var options = {
             series: [{
@@ -308,10 +318,10 @@ function initializeAllItemsWithinModal(json,value)
             }
         };
                             
-        var chart = new ApexCharts(document.querySelector("#"+k), options);
+        let chart = new ApexCharts(document.querySelector("#"+k), options);
         chart.render();
                             
-        var optionsLine = {
+        let optionsLine = {
             series: [{
             data: myData
             }],
@@ -352,45 +362,11 @@ function initializeAllItemsWithinModal(json,value)
             }
         };
 
-        var chartLine = new ApexCharts(document.querySelector("#"+k+"_brush"), optionsLine);
+        let chartLine = new ApexCharts(document.querySelector("#"+k+"_brush"), optionsLine);
         chartLine.render();
         }
     }
   });
-  
-  // Inicializace sliderů
-  sliders = [];
-  $(".slider").each(function(test) {
-    var slider = new hx.Slider(this, {max:100});
-    sliders[test] = slider;
-
-    // Event při změně slideru
-    slider.on("change", function(data){
-      var string = data.html;
-      var slider_id = $($.parseHTML(string)).attr("data-id");
-      var slider_value = Math.round(data.value);
-
-      $.post( "/slider", {
-        "id": slider_id,
-        "value": slider_value,
-        "tile_id": value,
-        "device_number": deviceNumber
-      }, function(result){});
-
-    });
-  });
-  
-  for (var i = 0; i < sliders.length; i++) {
-    // var test = sliders[i].selector;
-    var slider_html = sliders[i].selector.parentElement.outerHTML;
-    var slider_detect_id = $($.parseHTML(slider_html)).attr("data-id");
-
-    for (j in json.sliders) {
-      if (slider_detect_id === j) {
-        sliders[i].value(json.sliders[j]);
-      }
-    }
-  }
 
   // Inicializování TimePickie
   $(".time-picker-pickie").each(function() {
@@ -407,7 +383,7 @@ function initializeAllItemsWithinModal(json,value)
 
   var tile_id = $("#tile-id").val();
   DEBUG.logDebug("Parent Tile ID: " + tile_id);
-  var tile_name = $(".tile[data-id="+tile_id+"]").find(".tileDescription").text();
+  var tile_name = $(".tile[data-id="+tile_id+"]").find(".tile-label").text();
   DEBUG.logDebug("Parent Tile Name :" + tile_name);  
   $("#tile_name").val(tile_name);
 
@@ -418,12 +394,12 @@ function initializeAllItemsWithinModal(json,value)
     modalEditItemDelete(this);
   });
 
-  $(".modal_edit_item_textbox").on("input",function(e){
+  $(".modal-edit-item-dynamic-value").on("input",function(e){
     // ( > modal_edit_events.js )
     modalEditItemTextChanged(this);
   });
 
-  $(".modal_edit_tile_textbox").on("input",function(e){
+  $(".modal-edit-tile-dynamic-value").on("input",function(e){
     // ( > modal_edit_events.js )
     modalEditTileTextChanged(this);
   });
@@ -433,15 +409,12 @@ function initializeAllItemsWithinModal(json,value)
     modalEditTileIDchanged(this);
   });
 
-  
-  $(".modal_edit_type_text").each(function() {
-    var type_name = $(this).text();
-    var id_of_caller = $(".modal-here").attr("id_of_caller");
-    
-    Hammer(this).on("tap", function() {
-      // ( > modal_edit_events.js )
-      tileTypeChanged(id_of_caller,type_name);
-    });
+  $(".modal-edit-tile-type").on("click",  function() {
+    // ( > modal_edit_events.js )
+    let type_name = $(this).text();
+    let id_of_caller = $(".modal-here").attr("id_of_caller");
+
+    tileTypeChanged(id_of_caller,type_name);
   });
   
   $("#tile_name").on("input",function(){
@@ -449,5 +422,4 @@ function initializeAllItemsWithinModal(json,value)
     modalEditTileTitleChanged();
   });
   initImages();
-
 }

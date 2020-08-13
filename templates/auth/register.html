@@ -1,125 +1,78 @@
 {% extends "auth/base.html" %}
 {% block title %}{{ _("Registration") }}{% endblock %}
-<!-- TODO FILIPE - udělej ikonky -->
+
 {% block content %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/register.js') }}" defer></script>
-<div class="container" id="register-form">
-    <form class="text-center" autocomplete="off">
-        <p class="h4 mb-4">{{ _("Registration") }}</p>
-        <p>{{ _("Good day, registration is allowed now! You can register to our Smart home by form!") }}</p>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/register.js') }}" defer></script>
+    <div class="container">
+        <form class="text-center" id="register-form" autocomplete="off" action="{{ redirect }}">
+            <p class="h4 mb-4">{{ _("Registration") }}</p>
 
-        <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend" style="width:40px">
-                    <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
+            <div class="myField">
+                
+                <div class="field">
+                    <input id="first_name" type="text" name="first-name" class="input" placeholder=" ">
+                    <label for="first-name" class="label">{{ _("First name") }}</label>
                 </div>
-                <input type="text" id="first-name" class="form-control" maxlength="40" placeholder="{{ _('First name') }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend" style="width:40px">
-                    <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
-                </div>
-                <input type="text" id="last-name" class="form-control" maxlength="40" placeholder="{{ _('Last name') }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend" style="width:40px">
-                    <div class="input-group-text"><img style="height:18px" src="img/static/user.png"></div>
-                </div>
-                <input type="text" id="user-name" class="form-control" maxlength="81" placeholder="{{ _('Username') }}" readonly>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend" style="width:40px">
-                    <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
+                <div class="field">
+                    <input id="last_name" type="text" name="last-name" class="input" placeholder=" ">
+                    <label for="last-name" class="label">{{ _("Last name") }}</label>
                 </div>
-                <input type="password" id="password" class="form-control" maxlength="100" placeholder="{{ _('Password') }}">
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend" style="width:40px">
-                    <div class="input-group-text"><img style="height:18px" src="img/static/password.png"></div>
+                <div class="field">
+                    <input id="username" type="text" name="user-name" class="input" placeholder=" ">
+                    <label for="user-name" class="label">{{ _("Username") }}</label>
                 </div>
-                <input type="password" id="password-repeat" class="form-control" maxlength="150" placeholder="{{ _('Repeat password') }}">
-            </div>
-        </div>
-        <!-- TODO FILIPE přidej sem nějaký date picker na výběr data (datum) narození ... -->
-        <div class="form-group dropdown" id="dropdown-permission">
-            <button class="btn btn-secondary dropdown-toggle" style="width:100%" type="button" id="permission" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ _("Choose position in SH") }}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width:100%">
-                <h6 class="dropdown-header">{{ _("Managers of SH") }}</h6> <!-- TODO FILIPE - nějak tyhle věci zobraz -->
-                <a class="dropdown-item">{{ _("Owner") }}</a> <!-- může navíc přidělit role a práva -->
-                <a class="dropdown-item">{{ _("Administrator") }}</a> <!-- může navíc spustit nastavení; whitelist; vypnout server apod. -->
-                <a class="dropdown-item">{{ _("Manager") }}</a> <!-- může navíc spustit edit mód -->
-                <h6 class="dropdown-header">{{ _("Visitors of SH") }}</h6>
-                <a class="dropdown-item">{{ _("Visitor") }}</a> <!-- může navíc ovládat -->
-                <a class="dropdown-item">{{ _("Higher controller") }}</a> <!-- může navíc dívat na modaly -->
-                <a class="dropdown-item">{{ _("Lower controller") }}</a> <!-- může se jen dívat na tile -->
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input mode" type="radio" name="mode" id="light" value="light">
-                <label class="form-check-label" for="light">{{ _("Light") }}</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input mode" type="radio" name="mode" id="dark" value="dark">
-                <label class="form-check-label" for="dark">{{ _("Dark") }}</label>  <!-- TODO FILIPE tohle nevypadá  moc hezky, nějak to nadizajnuj, možná tam dej místo toho dropdown, ... -->
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input mode" type="radio" name="mode" id="smart" value="smart">
-                <label class="form-check-label" for="smart">{{ _("Smart") }}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input sex" type="radio" name="sex" id="female" value="female">
-                <label class="form-check-label" for="female">{{ _("Female") }}</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input sex" type="radio" name="sex" id="male" value="male">
-                <label class="form-check-label" for="male">{{ _("Male") }}</label>
-            </div>
-        </div>
-        <button id="register" class="btn btn-info btn-block" type="button">{{ _("Register") }}</button>
-        <br>
-        {{ _("Have you an account yet?") }} <a href="{{ url_for('login') }}">{{ _("Login") }}</a>
-    </form>
-</div>
 
-{% if introduction == True %}
-<div id="introduction" class="container text-center" style="font-size:55px;color:white;text-shadow: 0px 0px 8px #333;"></div>
-<script>
-    $(".container").hide();
-    setTimeout(() => {
-      $("#introduction").text("Dobrý den");
-      $("#introduction").hide().fadeIn(1800);
-      setTimeout(() => {
-        $("#introduction").show().fadeOut(1800, function () {
-          $("#introduction").text("Představuji Vám Chytrou domácnost");
-          $("#introduction").hide().fadeIn(1800);
+                <div class="field">
+                    <input id="password" type="password" name="password" class="input" placeholder=" ">
+                    <label for="password" class="label">{{ _("Password") }}</label>
+                </div>
+
+                <div class="field">
+                    <input id="repeat_password" type="password" name="repeat_password" class="input" placeholder=" ">
+                    <label for="repeat_password" class="label">{{ _("Repeat password") }}</label>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input sex" type="radio" name="sex" id="female" value="female">
+                        <label class="form-check-label" for="female">{{ _("Female") }}</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input sex" type="radio" name="sex" id="male" value="male">
+                        <label class="form-check-label" for="male">{{ _("Male") }}</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <button id="register" class="btn btn-info btn-block" type="button">{{ _("Register") }}</button>
+            <br>
+            {{ _("Already have an account?") }} <a href="{{ url_for('index') }}">{{ _("Login") }}</a>
+        </form>
+    </div>
+
+    {% if introduction == True %}
+        <div id="introduction" class="container text-center" style="font-size:55px;color:white;text-shadow: 0 0 8px #333;"></div>
+        <script>
+          $(".container").hide();
           setTimeout(() => {
-            $("#introduction").show().fadeOut(1800, function () {
-              $("#introduction").text("Nyní se prosím zaregistrujte");
-              $("#introduction").hide().fadeIn(1800);
+              $("#introduction").text("{{ _("Good day!") }}").hide().fadeIn(1800);
               setTimeout(() => {
-                $("#introduction").show().fadeOut(1800, function(){$("#register-form").hide().fadeIn(1800)});
-              }, 3800);
-            });
-          }, 3800);
-        });
-      }, 3000);
-    }, 500);
-
-</script>
-{% endif %}
+              $("#introduction").show().fadeOut(1800, function () {
+                  $("#introduction").text("{{ _("This is Smart home") }}").hide().fadeIn(1800);
+                  setTimeout(() => {
+                  $("#introduction").show().fadeOut(1800, function () {
+                      $("#introduction").text("{{ _("Please register to SH now!") }}").hide().fadeIn(1800);
+                      setTimeout(() => {
+                      $("#introduction").show().fadeOut(1800, function(){$("#register-form").hide().fadeIn(1800)});
+                      }, 3800);
+                  });
+                  }, 3800);
+              });
+              }, 3000);
+          }, 500);
+        </script>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,21 @@
+<resources>
+    <string-array name="server_port">
+        <item>HTTP (80)</item>
+        <item>HTTPS (443)</item>
+        <item>Flask (5000)</item>
+    </string-array>
+
+    <string-array name="server_port_values">
+        <item>80</item>
+        <item>443</item>
+        <item>5000</item>
+    </string-array>
+
+    <string-array name="mqtt_port">
+        <item>MQTT (1883)</item>
+    </string-array>
+
+    <string-array name="mqtt_port_values">
+        <item>1883</item>
+    </string-array>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <!-- Main -->
+    <string name="app_name">Smart Home</string>
+    <!-- *.html -->
+    <string name="wifi_html">wifi.html</string>
+    <string name="server_html">server.html</string>
+    <!-- Server is not connected -->
+    <string name="refresh">Refresh</string>
+    <string name="settings">Settings</string>
+    <!-- Preferences -->
+    <string name="refreshing">Refreshing...</string>
+    <string name="server_ip">IP</string>
+    <string name="server">Server</string>
+    <string name="server_port">Port</string>
+    <string name="client">Client</string>
+    <string name="caching">Caching</string>
+    <string name="caching_on">Temporary files will be saved and the last session will be preserved</string>
+    <string name="caching_off">Temporary files will not be saved and the last session will not be preserved</string>
+    <string name="mqtt_port">MQTT port</string>
+</resources>

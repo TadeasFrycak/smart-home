@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-05-04 19:37+0200\n"
-"PO-Revision-Date: 2020-05-04 18:14+0200\n"
+"POT-Creation-Date: 2020-05-23 19:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
 "Language-Team: cs <LL@li.org>\n"
@@ -18,53 +19,141 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: library/tmng_read.py:35 templates/modal.html:5
-#: templates/modal_edit/item_values.html:10
+#: library/refactoring.py:7
+msgid "blank"
+msgstr "prázdný"
+
+#: library/refactoring.py:8
+msgid "alarm_clock"
+msgstr "budík"
+
+#: library/refactoring.py:9
+msgid "value_double"
+msgstr "dvojitá_hodnota"
+
+#: library/refactoring.py:10
+msgid "player"
+msgstr "přehrávač"
+
+#: library/refactoring.py:11
+msgid "toggle"
+msgstr "přepínač"
+
+#: library/refactoring.py:13
+msgid "daterangepicker"
+msgstr "výběr_časového_období"
+
+#: library/refactoring.py:14
+msgid "button"
+msgstr "tlačítko"
+
+#: library/refactoring.py:15
+msgid "dropdown_menu"
+msgstr "rozbalovací_menu"
+
+#: library/refactoring.py:16
+msgid "graph"
+msgstr "graf"
+
+#: library/refactoring.py:17
+msgid "separator"
+msgstr "oddělovač"
+
+#: library/refactoring.py:18
+msgid "slider"
+msgstr "posuvník"
+
+#: library/refactoring.py:19
+msgid "time_picker"
+msgstr "volba_času"
+
+#: library/refactoring.py:20
+msgid "progress_bar"
+msgstr "ukazatel_průběhu"
+
+#: library/refactoring.py:22
+msgid "label"
+msgstr "název"
+
+#: library/refactoring.py:23
+msgid "value"
+msgstr "hodnota"
+
+#: library/refactoring.py:24
+msgid "value_min"
+msgstr "minimální_hodnota"
+
+#: library/refactoring.py:25
+msgid "value_max"
+msgstr "maximální_hodnota"
+
+#: library/refactoring.py:26
+msgid "color"
+msgstr "barva"
+
+#: library/refactoring.py:27
+msgid "colour"
+msgstr "barva"
+
+#: library/refactoring.py:28
+msgid "pair"
+msgstr "vázaný_na"
+
+#: library/tmng_read.py:36 templates/modal_edit/item_values.html:10
 msgid "Unnamed"
 msgstr "Bez názvu"
 
-#: static/js/acom.js:188 templates/slide.html:34
+#: static/js/acom.js:405 templates/slide.html:6
 msgid "Online"
 msgstr "Online"
 
-#: static/js/acom.js:191
+#: static/js/acom.js:409
 msgid "Offline"
 msgstr "Offline"
 
-#: static/js/events.js:145 templates/slide.html:49
+#: static/js/events.js:90 templates/slide.html:13
 msgid "Edit this slide"
 msgstr "Upravit tuto stránku"
 
-#: static/js/events.js:186 templates/slide.html:17
+#: static/js/events.js:134 templates/slide.html:2
 msgid "Exit edit mode"
 msgstr "Ukončit upravovací mód"
 
-#: templates/base.html:52 templates/base.html:53 templates/error.html:4
-#: templates/error.html:5 templates/error.html:12
+#: static/js/init.js:9 templates/base.html:30 templates/base.html:31
+#: templates/error.html:4 templates/error.html:5 templates/error.html:12
 msgid "Smart home"
 msgstr "Chytrá domácnost"
 
-#: templates/base.html:54 templates/error.html:6
+#: static/js/init.js:10
+msgid "authors:"
+msgstr "Autoři:"
+
+#: templates/base.html:2 templates/base.html:34 templates/base.html:41
+#: templates/error.html:1 templates/error.html:8
+msgid "en-GB"
+msgstr "cs-CZ"
+
+#: templates/base.html:32 templates/error.html:6
 msgid "control, use, have fun"
 msgstr "kontrolovat, používat, užívat"
 
-#: templates/base.html:56 templates/error.html:8
-msgid "en-GB"
-msgstr "cs-CZ"
+#: templates/base.html:38
+msgid "SH"
+msgstr "ChD"
 
 #: templates/error.html:12
 msgid "Error"
 msgstr "Chyba"
 
-#: templates/index.html:2
+#: templates/index.html:41
 msgid "Home"
 msgstr "Domů"
 
-#: templates/index.html:21
+#: templates/index.html:55
 msgid "Let's start"
 msgstr "Začněme"
 
-#: templates/index.html:22
+#: templates/index.html:56
 msgid ""
 "You can now create your first slide in Smart home, then you can edit it "
 "to your own ideas."
@@ -72,12 +161,12 @@ msgstr ""
 "Vytvořte si svou vlastní první stránku! Poté zvolte 'Upravovací mód' a "
 "upravte si svou stránku dle libosti!"
 
-#: templates/index.html:23 templates/slide.html:52
+#: templates/index.html:57 templates/slide.html:16
 msgid "Add new slide"
-msgstr "Přidat novou stránku"
+msgstr "Přidat novou stránku na konec"
 
-#: templates/modal.html:16 templates/modal_edit.html:94
-#: templates/modal_settings.html:40
+#: templates/modal.html:16 templates/modal_edit.html:88
+#: templates/modal_settings.html:74
 msgid "Close"
 msgstr "Zavřít"
 
@@ -111,154 +200,195 @@ msgstr "Rozbalit vše"
 msgid "Pack all"
 msgstr "Sbalit vše"
 
+#: templates/modal_edit.html:87
+msgid "Up"
+msgstr "Nahoru"
+
+#: templates/modal_edit.html:90 templates/modal_edit/item_values.html:34
+msgid "Delete"
+msgstr "Smazat"
+
 #: templates/preloader.html:20
 msgid "Wait a moment please..."
 msgstr "Počkejte ještě chvíli prosím..."
 
-#: templates/slide.html:53
-msgid "Remove this slide"
-msgstr "Smazat tuto stránku"
-
-#: templates/slide.html:56
-msgid "Backgrounds"
-msgstr "Pozadí"
-
-#: templates/slide.html:57
+#: templates/slide.html:8 templates/slide.html:25
 msgid "Settings"
 msgstr "Nastavení"
 
-#: templates/slide.html:59
+#: templates/slide.html:17
+msgid "Prepend new slide"
+msgstr "Přidat novou stránku na začátek"
+
+#: templates/slide.html:18
+msgid "Remove this slide"
+msgstr "Smazat tuto stránku"
+
+#: templates/slide.html:20
+msgid "Move this slide to the left"
+msgstr "Posunout tuto stránku doleva"
+
+#: templates/slide.html:21
+msgid "Move this slide to the right"
+msgstr "Posunout tuto stránku doprava"
+
+#: templates/slide.html:24
+msgid "Backgrounds"
+msgstr "Pozadí"
+
+#: templates/slide.html:27
 msgid "Save changes"
 msgstr "Uložit změny"
 
-#: templates/slide.html:62
+#: templates/slide.html:30
 msgid "Shutdown server"
-msgstr "Vypnout serever"
+msgstr "Vypnout server"
 
-#: templates/slide.html:63
+#: templates/slide.html:31
 msgid "Restart server"
 msgstr "Restartovat server"
 
-#: templates/auth/login.html:2 templates/auth/login.html:7
-#: templates/auth/login.html:31 templates/auth/register.html:95
+#: templates/slide.html:33
+msgid "Reload clients"
+msgstr "Obnovit ChD všude"
+
+#: templates/slide.html:47
+msgid "Add"
+msgstr "Přidat"
+
+#: templates/auth/login.html:3 templates/auth/login.html:10
+#: templates/auth/login.html:40 templates/auth/logout.html:7
+#: templates/auth/register.html:52
 msgid "Login"
 msgstr "Přihlásit"
 
-#: templates/auth/login.html:8
-msgid ""
-"Welcome back! Before you can control your Smart home, please, login into "
-"your account."
-msgstr ""
-"Vítejte zpět! Vzhledem k tomu, že jsme se již dlouho neviděli, zadejte prosím znovu Vaše přihlašovací údaje."
-
-#: templates/auth/login.html:14 templates/auth/register.html:32
+#: templates/auth/login.html:14 templates/auth/login.html:27
+#: templates/auth/register.html:24
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: templates/auth/login.html:22 templates/auth/register.html:41
+#: templates/auth/login.html:19 templates/auth/login.html:36
+#: templates/auth/register.html:29
 msgid "Password"
 msgstr "Heslo"
 
-#: templates/auth/login.html:33
+#: templates/auth/login.html:42
 msgid "Don't have an account?"
 msgstr "Ještě nemáte účet?"
 
-#: templates/auth/login.html:33
+#: templates/auth/login.html:42
 msgid "Register here"
 msgstr "Zaregistrovat"
+
+#: templates/auth/logout.html:2 templates/auth/logout.html:6
+msgid "Logged out"
+msgstr "Odhlášen"
+
+#: templates/auth/logout.html:7
+msgid "See you later"
+msgstr "Nashledanou"
 
 #: templates/auth/register.html:2 templates/auth/register.html:8
 msgid "Registration"
 msgstr "Registrace"
 
-#: templates/auth/register.html:9
-msgid ""
-"Good day, registration is allowed now! You can register to our Smart home"
-" by form!"
-msgstr ""
-"Dobrý den, máte štěstí! Registrace je právě povolena! Využijte této "
-"možnosti a zaregistrujte se pro přístup k ovládání Vaší Chytré "
-"domácnosti."
-
-#: templates/auth/register.html:16
+#: templates/auth/register.html:14
 msgid "First name"
 msgstr "Jméno"
 
-#: templates/auth/register.html:24
+#: templates/auth/register.html:19
 msgid "Last name"
 msgstr "Příjmení"
 
-#: templates/auth/register.html:50
+#: templates/auth/register.html:34
 msgid "Repeat password"
 msgstr "Heslo znovu"
 
-#: templates/auth/register.html:56
-msgid "Choose position in SH"
-msgstr "Vyberte pozici v ChD"
-
-#: templates/auth/register.html:59
-msgid "Managers of SH"
-msgstr "Správci ChD"
-
-#: templates/auth/register.html:60
-msgid "Owner"
-msgstr "Majitel"
-
-#: templates/auth/register.html:61
-msgid "Administrator"
-msgstr "Admin"
-
-#: templates/auth/register.html:62
-msgid "Manager"
-msgstr "Správce"
-
-#: templates/auth/register.html:63
-msgid "Visitors of SH"
-msgstr "Návštěva ChD"
-
-#: templates/auth/register.html:64
-msgid "Visitor"
-msgstr "Návštěvník"
-
-#: templates/auth/register.html:65
-msgid "Higher controller"
-msgstr "Vyšší kontrolér"
-
-#: templates/auth/register.html:66
-msgid "Lower controller"
-msgstr "Nižší kontrolér"
-
-#: templates/auth/register.html:72
-msgid "Light"
-msgstr "Světlý"
-
-#: templates/auth/register.html:76
-msgid "Dark"
-msgstr "Tmavý"
-
-#: templates/auth/register.html:80
-msgid "Smart"
-msgstr "Inteligentní"
-
-#: templates/auth/register.html:86
+#: templates/auth/register.html:40
 msgid "Female"
 msgstr "Žena"
 
-#: templates/auth/register.html:90
+#: templates/auth/register.html:44
 msgid "Male"
 msgstr "Muž"
 
-#: templates/auth/register.html:93
+#: templates/auth/register.html:50
 msgid "Register"
 msgstr "Registrovat"
 
-#: templates/auth/register.html:95
-msgid "Have you an account yet?"
+#: templates/auth/register.html:52
+msgid "Already have an account?"
 msgstr "Již máte účet?"
 
-#: templates/modal_edit/icons.html:2
+#: templates/auth/register.html:61
+msgid "Good day!"
+msgstr "Dobrý den!"
+
+#: templates/auth/register.html:64
+msgid "This is Smart home"
+msgstr "Vítejte v Chytré domácnosti"
+
+#: templates/auth/register.html:67
+msgid "Please register to SH now!"
+msgstr "Nejdříve se prosím zaregistrujte"
+
+#: templates/modal_edit/icon_item.html:1 templates/modal_edit/icons.html:2
+#: templates/tiles/alarm_clock.html:4 templates/tiles/toggle.html:5
+#: templates/tiles/value_double.html:4
 msgid "Icon"
 msgstr "Ikona"
+
+#: templates/modal_edit/item_values.html:2
+msgid "Menu"
+msgstr "Menu"
+
+#: templates/tiles/alarm_clock.html:13
+msgid "Monday"
+msgstr "Pondělí"
+
+#: templates/tiles/alarm_clock.html:16
+msgid "Tuesday"
+msgstr "Úterý"
+
+#: templates/tiles/alarm_clock.html:19
+msgid "Wednesday"
+msgstr "Středa"
+
+#: templates/tiles/alarm_clock.html:22
+msgid "Thursday"
+msgstr "Čtvrtek"
+
+#: templates/tiles/alarm_clock.html:25
+msgid "Friday"
+msgstr "Pátek"
+
+#: templates/tiles/alarm_clock.html:28
+msgid "Saturday"
+msgstr "Sobota"
+
+#: templates/tiles/alarm_clock.html:31
+msgid "Sunday"
+msgstr "Neděle"
+
+#: templates/tiles/player.html:8
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: templates/tiles/player.html:9
+msgid "Previous"
+msgstr "Předchozí"
+
+#: templates/tiles/player.html:10
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: templates/tiles/player.html:11
+msgid "Play"
+msgstr "Přehrát"
+
+#: templates/tiles/player.html:12
+msgid "Next"
+msgstr "Další"
 
 #: templates/tiles/toggle.html:7
 msgid "On"
@@ -267,4 +397,80 @@ msgstr "On"
 #: templates/tiles/toggle.html:7
 msgid "Off"
 msgstr "Off"
+
+#~ msgid "3d_printer"
+#~ msgstr "3d_tiskárna"
+
+#~ msgid "percentage"
+#~ msgstr "procento"
+
+#~ msgid ""
+#~ "Good day, registration is allowed now!"
+#~ " You can register to our Smart "
+#~ "home by form!"
+#~ msgstr ""
+#~ "Dobrý den, máte štěstí! Registrace je"
+#~ " právě povolena! Využijte této možnosti "
+#~ "a zaregistrujte se pro přístup k "
+#~ "ovládání Vaší Chytré domácnosti."
+
+#~ msgid "Light"
+#~ msgstr "Světlý"
+
+#~ msgid "Dark"
+#~ msgstr "Tmavý"
+
+#~ msgid "Smart"
+#~ msgstr "Inteligentní"
+
+#~ msgid "graph_picker"
+#~ msgstr "volba_grafu"
+
+#~ msgid "Logout"
+#~ msgstr "Odhlásit"
+
+#~ msgid "Successfully logged out. You can login back"
+#~ msgstr "Úspěšně jste byl odhlášen. Můžete se zpátky přihlásit"
+
+#~ msgid "here"
+#~ msgstr "zde"
+
+#~ msgid "Choose position in SH"
+#~ msgstr "Vyberte pozici v ChD"
+
+#~ msgid "Managers of SH"
+#~ msgstr "Správci ChD"
+
+#~ msgid "Owner"
+#~ msgstr "Majitel"
+
+#~ msgid "Administrator"
+#~ msgstr "Admin"
+
+#~ msgid "Manager"
+#~ msgstr "Správce"
+
+#~ msgid "Visitors of SH"
+#~ msgstr "Návštěva ChD"
+
+#~ msgid "Visitor"
+#~ msgstr "Návštěvník"
+
+#~ msgid "Higher controller"
+#~ msgstr "Vyšší kontrolér"
+
+#~ msgid "Lower controller"
+#~ msgstr "Nižší kontrolér"
+
+#~ msgid "Have you an account yet?"
+#~ msgstr "Již máte účet?"
+
+#~ msgid ""
+#~ "Welcome back! Before you can control "
+#~ "your Smart home, please, login into "
+#~ "your account."
+#~ msgstr ""
+#~ "Vítejte zpět! Vzhledem k tomu, že "
+#~ "jsme se již dlouho neviděli, zadejte "
+#~ "prosím znovu Vaše přihlašovací údaje."
 

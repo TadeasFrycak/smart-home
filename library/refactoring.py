@@ -1,27 +1,32 @@
+from flask_babel import gettext, lazy_gettext
+
+
 class Refactoring:
     dictionary = {
-                  # Tile type
-                  "3d_printer": "3d_tiskárna",
-                  "blank": "prázdný",
-                  "percentage": "procento",
-                  "player": "přehrávač",
-                  "toggle": "přepínač",
-                  # Modal type
-                  "button": "tlačítko",
-                  "dropdown_menu": "rozbalovací_nabídka",
-                  "graph": "graf",
-                  "graph_picker": "volba_výběru_grafu",
-                  "separator": "oddělovač",
-                  "slider": "posuvník",
-                  "time_picker": "volba_času",
-                  "progress_bar": "ukazatel_průběhu",
-                  # Modal item values
-                  "label": "název",
-                  "value": "hodnota",
-                  "color": "barva",
-                  "colour": "barva",
-                  "pair": "vázaný_na"
-                  }
+        # Tile type
+        "blank": lazy_gettext("blank"),
+        "alarm_clock": lazy_gettext("alarm_clock"),
+        "value_double": lazy_gettext("value_double"),
+        "player": lazy_gettext("player"),
+        "toggle": lazy_gettext("toggle"),
+        # Modal type
+        "daterangepicker": lazy_gettext("daterangepicker"),
+        "button": lazy_gettext("button"),
+        "dropdown_menu": lazy_gettext("dropdown_menu"),
+        "graph": lazy_gettext("graph"),
+        "separator": lazy_gettext("separator"),
+        "slider": lazy_gettext("slider"),
+        "time_picker": lazy_gettext("time_picker"),
+        "progress_bar": lazy_gettext("progress_bar"),
+        # Modal item values
+        "label": lazy_gettext("label"),
+        "value": lazy_gettext("value"),
+        "value_min": lazy_gettext("value_min"),
+        "value_max": lazy_gettext("value_max"),
+        "color": lazy_gettext("color"),
+        "colour": lazy_gettext("colour"),
+        "pair": lazy_gettext("pair")
+    }
 
     def __init__(self):
         pass
@@ -49,6 +54,7 @@ class Refactoring:
 
         else:
             translated = self.translate(data.strip().lower())
+
             if len(str(translated)) <= 2:
                 return str(translated).upper()
 
@@ -67,7 +73,6 @@ class Refactoring:
                     return " ".join(refactored)
 
     def translate(self, data):
-        return data
         try:
             return self.dictionary[data]
 
@@ -75,7 +80,6 @@ class Refactoring:
             return data
 
     def translate_reverse(self, data):
-        return data
         for num, value in enumerate(self.dictionary.values()):
             if value == data:
                 return list(self.dictionary.keys())[num]
@@ -88,5 +92,4 @@ class Refactoring:
         :param data: refactored data
         :return: reversed refactored data
         """
-
         return self.translate_reverse(str(data).strip().lower().replace(" ", "_"))

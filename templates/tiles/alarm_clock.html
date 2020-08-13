@@ -1,0 +1,49 @@
+<div class="grid-square">
+    <div class="tile enable-hammer tile-active" data-id="{{ tile.data.id }}" style="width:212px;" data-type="{{ tile.type }}">
+        <div class="tile-text">
+            <img alt="{{ _('Icon') }}" src="{{ '/img/icons/'+tile.data.icon }}" class="tile-icon icon-invert" style="left: 27px;top: 16px">
+            <span style="width: 118px;height: auto;position: absolute;left: 80px;top: 13px;text-align:center;font-size: 22px;">12:44</span>
+
+            <div style="width: 118px;height: 15px;position: absolute;left: 80px;top: 44px;overflow: hidden;">
+                <span class="tile-label" style="font-size: 15px;top: 0;vertical-align: initial;height: auto;width: 118px;max-width: 118px;text-align: center;">{{ tile.label }}</span>
+            </div>
+
+            <div style="position:absolute;top:68px;left:10px">
+                <div class="alarm-clock-glyph" data-type="Mon">
+                    <span class="alarm-clock-glyph-text" >{{ _("Monday")[0] }}</span>
+                </div>
+                <div class="alarm-clock-glyph" data-type="Tue">
+                    <span class="alarm-clock-glyph-text" >{{ _("Tuesday")[0] }}</span>
+                </div>
+                <div class="alarm-clock-glyph alarm-clock-glyph-active" data-type="Wed" >
+                    <span class="alarm-clock-glyph-text" >{{ _("Wednesday")[0] }}</span>
+                </div>
+                <div class="alarm-clock-glyph alarm-clock-glyph-active" data-type="Thu" >
+                    <span class="alarm-clock-glyph-text" >{{ _("Thursday")[0] }}</span>
+                </div>
+                <div class="alarm-clock-glyph alarm-clock-glyph-active" data-type="Fri">
+                    <span class="alarm-clock-glyph-text" >{{ _("Friday")[0] }}</span>
+                </div>
+                <div class="alarm-clock-glyph" data-type="Sat" >
+                    <span class="alarm-clock-glyph-text" >{{ _("Saturday")[0] }}</span>
+                </div>
+                <div class="alarm-clock-glyph alarm-clock-glyph-active" data-type="Sun" >
+                    <span class="alarm-clock-glyph-text" >{{ _("Sunday")[0] }}</span>
+                </div>
+            </div>
+
+            <!-- <span style="position: absolute;top: 62px;left: 30px;font-size: 20px;">AA</span>
+            <span style="position: absolute;top: 62px;left: 104px;font-size: 20px;">AA</span> -->
+        </div>
+        <div class="tile-touch-layer"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 10px;" data-inner-id="button-Mon"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 38px;" data-inner-id="button-Tue"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 66px;" data-inner-id="button-Wed"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 94px;" data-inner-id="button-Thu"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 123px;" data-inner-id="button-Fri"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 151px;" data-inner-id="button-Sat"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 22px;height: 22px;top: 68px;left: 179px;" data-inner-id="button-Sun"></div>
+        
+    </div>
+</div>
+<!-- top: 18px;left: 104px;position: absolute;font-size: 18px; -->

@@ -1,0 +1,132 @@
+html,
+body {
+  overflow: hidden;
+}
+
+form {
+    margin:4px;
+    border-radius:12px;
+    padding:35px
+}
+
+.light form {
+    background-color: white;
+    box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)
+}
+
+.dark form {
+    background-color: #222831;
+    color: white;
+    box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)
+}
+
+.bcg-normal {
+    filter: blur(18px);
+    transform: scale(1.1);
+}
+
+.container {
+    position:absolute;
+    max-width:510px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left:50%;
+}
+
+.dark .container {
+    color:white
+}
+
+
+
+
+
+.myField{
+    margin-bottom: 60px;
+}
+
+.field{
+    text-align: left;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    border-bottom: 2px dashed rgb(223, 223, 223);
+    margin: 3rem auto 1rem;
+    transition: 500ms;
+}
+
+.input{
+    z-index: 10;
+    width: 100%;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    padding: 0.25rem 0;
+    background: none;
+    color: black;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: border 500ms;
+}
+
+.dark .input{
+    color: white;
+}
+
+.label {
+    color:var(--text-color);
+    font-size: 1.2rem;
+    
+}
+
+
+.input .valid {
+    color: yellowgreen;
+}
+
+.invalid{
+    color: orangered;
+}
+
+
+/* Border animation */
+.field::after {
+    content: "";
+    position: relative;
+    display: block;
+    height: 4px;
+    width: 100%;
+    /* background: #d16dff; */
+    background: #17a2b8;
+    transform: scaleX(0);
+    transform-origin: 0%;
+    opacity: 0;
+    transition: all 500ms ease;
+    top: 2px;
+}
+
+.field:focus-within {
+    border-color: transparent;
+}
+.field:focus-within::after {
+    transform: scaleX(1);
+    opacity: 1;
+}
+
+.label {
+    z-index: 0;
+    top: 38px;
+    left: 0px;
+    position: absolute;
+    transform: translateY(-2rem);
+    transform-origin: 0%;
+    transition: transform 400ms;
+  }
+
+  .field:focus-within .label,
+  .input:not(:placeholder-shown) + .label {
+    transform: scale(0.8) translateY(-5rem);
+    opacity: 1;
+  }

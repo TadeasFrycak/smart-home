@@ -1,0 +1,46 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/server">
+
+        <EditTextPreference
+            app:key="server_ip"
+            app:title="@string/server_ip"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="80"
+            app:entries="@array/server_port"
+            app:entryValues="@array/server_port_values"
+            app:key="server_port"
+            app:title="@string/server_port"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="1883"
+            app:entries="@array/mqtt_port"
+            app:entryValues="@array/mqtt_port_values"
+            app:key="mqtt_port"
+            app:title="@string/mqtt_port"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/client">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="caching"
+            app:title="@string/caching"
+            app:summaryOff="@string/caching_off"
+            app:summaryOn="@string/caching_on"/>
+
+        <!--<SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:summaryOff="sdf343"
+            app:summaryOn="sdfasg dfgh dfgh dfgh f gh "
+            app:title="afhdh dfgdf" />-->
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

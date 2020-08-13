@@ -40,7 +40,7 @@ class DefaultValues:
             return None
 
     @staticmethod
-    def tile_value(value_name, tile_type):
+    def tile_value(value_name=None, tile_type=None):
         """
         Get default tile value - it's not dynamic
         :param value_name: value name
@@ -51,11 +51,8 @@ class DefaultValues:
         if value_name == "value" and tile_type == "toggle":
             return 0
 
-        elif value_name == "suffix":
-            return "%"
-
-        elif value_name == "value" and tile_type == "percentage":
-            return "Null"
+        elif value_name == "value" and tile_type == "value":
+            return {"value": "Null", "suffix": ""}
 
         elif value_name == "value" and tile_type == "value_double":
             return {"left": {"value": "Null", "suffix": ""}, "right": {"value": "Null", "suffix": ""}}

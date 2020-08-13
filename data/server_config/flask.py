@@ -12,12 +12,17 @@ class DevelopmentConfig:
     TESTING = True
     DEBUG = False
 
-    LANGUAGES = ["cs", "en", "ru", "de", "sk"]
+    STATIC_FOLDER = "static"
+    TEMPLATES_FOLDER = "templates"
+
+    TEMPLATES_AUTO_RELOAD = True
+    SEND_FILE_MAX_AGE_DEFAULT = 0
+
+    SECRET_KEY = "R`xk^U+234>a3P&ef5{kagBFk\g,DE`;/g<NwS#,`'K}gfk5p5\&XD.ce;*8_56x"
+
+    LANGUAGES = ["cs", "ru", "de", "sk", "en"]
     BABEL_DEFAULT_LOCALE = "en"
 
-    SEND_FILE_MAX_AGE_DEFAULT = 0
-    TEMPLATES_AUTO_RELOAD = True
-    SECRET_KEY = "R`xk^U+234>a3P&ef5{kagBFk\g,DE`;/g<NwS#,`'K}gfk5p5\&XD.ce;*8_56x"
     SQLALCHEMY_DATABASE_URI = "sqlite:///data/database.sqlite"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -30,6 +35,7 @@ class DevelopmentConfig:
     REMEMBER_COOKIE_HTTPONLY = True
 
     SOCKETIO_COOKIE_NAME = "home-socketio"
+    SOCKETIO_NAMESPACE = "/com"
 
 
 class ProductionConfig:

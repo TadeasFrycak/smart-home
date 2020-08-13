@@ -6,8 +6,8 @@ $(document).ready(function(){
   */
 
   console.log("+----------------------------------+");
-  console.log("|      Chytrá domácnost 11.2       |");
-  console.log("|    Autoři: Fryčák, Szkandera     |");
+  console.log("|      " + _("Smart home") + " 11.3       |");
+  console.log("|    " + _("authors:") + " Fryčák, Szkandera     |");
   console.log("|                                  |");
   console.log("|          ©  2019 - 2020          |");
   console.log("+----------------------------------+");
@@ -20,11 +20,7 @@ $(document).ready(function(){
   // Vytvoření DEBUG objektu
   DEBUG = new debug_console();
 
-  deviceNumber = Math.round(Math.random() * 1000);
   editMode = false;
-
-  // TODO: globální proměnná pro slidery
-  sliders = [];
 
   /*
   *
@@ -32,16 +28,13 @@ $(document).ready(function(){
   *
   */
 
- 
-
   // Zavádění atributu pro detekci módu (normal - false / edit - true)
   //$("body").attr("is_edit_active",false);
 
   // Hide elements visible only in 
-  var isEditActive = $("body").attr("is_edit_active");
-  if (isEditActive == "false")
-  {
-    $(".dropdown-wrapper[dissapear-on-edit]").each(function() {
+  let isEditActive = $("body").attr("is_edit_active");
+  if (isEditActive === "false") {
+    $(".dropdown-wrapper").filter(".disappear-on-edit").each(function() {
       $( this ).css("display","none");
     });
   }
@@ -50,34 +43,29 @@ $(document).ready(function(){
   }
 
   // Scale page
-  var window_width = window.innerWidth;
+  /*var window_width = window.innerWidth;
   var window_height = window.innerHeight;
 
-  // If device is mobile
-  /*if (window_height >= window_width) {
-    var width = $(".zoomable").width();
+  if (window_height >= window_width) {
+    var width = $(".c_sortable_page_grid").width();
     var howMany = width/116;
     howMany = Math.round(howMany-0.1);
     var tilesWidth = howMany*116;
     console.log(tilesWidth);
     var zoom = width/tilesWidth;
-    //$(".zoomable").css({"zoom": zoom, "-ms-zoom": zoom, "-webkit-zoom": zoom, "-moz-transform": "scale(" + zoom + "," + zoom + ")", "-moz-transform-origin": "left center"});
-    $(".zoomable").css({"zoom": zoom, "-ms-zoom": zoom, "-webkit-zoom": zoom});
+    //$(".c_sortable_page_grid").css({"zoom": zoom, "-ms-zoom": zoom, "-webkit-zoom": zoom, "-moz-transform": "scale(" + zoom + "," + zoom + ")", "-moz-transform-origin": "left center"});
+    $(".c_sortable_page_grid").css({"zoom": zoom, "-ms-zoom": zoom, "-webkit-zoom": zoom});
   }*/
 
   // Name of page changed
   $(".swipe-header-textbox").on("input",function(){
-    var nameOfPageChanged = $(this).val();
-    $.post("/slide_name", {
-      "index": swiper.realIndex,
-      "new_name": nameOfPageChanged,
-    }, function(){});
+    let nameOfPageChanged = $(this).val();
+    socketio.emit("slide_name", {"index": swiper.realIndex, "new_name": nameOfPageChanged});
   });
 });
 
 
-class debug_console{
-
+class debug_console {
   log(data) {
     console.log(data);
   }

@@ -3,197 +3,418 @@ $(document).ready(function(){
   // Receive asynchronous communication
   // ----------------------------------------------
 
-  // Initialise asynchronous communication
-  // var socket = io.connect("http://" + document.domain + ":" + location.port + "/acom");
-  var socket = io("/acom");
-  socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
-            });
-  // Asynchronous communication for tile
-  socket.on("tile", function(msg) {
-    console.log(msg);
+  // Initialise communication
+  socketio = io("/com");
+
+  socketio.on("user_change_mode_result", function(data) {
+    if (data.mode === "light") {
+      $("body").removeClass("dark").addClass("light");
+      $(".add-img").attr("src","img/static/add.png");
+      $(".page_settings_icon").attr("src","img/static/settings.png");
+    }
+    else if (data.mode === "dark") {
+      $("body").removeClass("light").addClass("dark");
+      $(".add-img").attr("src","img/static/add-dark.png");
+      $(".page_settings_icon").attr("src","img/static/settings-dark.png");
+    }
+  });
+
+  socketio.on("modal_item_index_result", function(data){
+    let old_index = data.old_index;
+    let new_index = data.new_index;
+
+    let tileID = $(".modal-here").attr("id_of_caller");
+    if (tileID === data.tile_id) {
+      let all_tiles_within_slide = $(".modal_items_edit_sortable").find(".modal-edit-item");
+      let selected_item_old = all_tiles_within_slide[old_index];
+      let selected_item_new;
+
+      let temporary_item_old = $(selected_item_old).clone();
+
+      $(selected_item_old).remove();
+
+      if (new_index === all_tiles_within_slide.length) {
+        selected_item_new = all_tiles_within_slide[new_index - 1];
+        $(temporary_item_old).insertAfter($(selected_item_new));
+      } else {
+        selected_item_new = all_tiles_within_slide[new_index];
+        if (new_index > old_index) $(temporary_item_old).insertAfter($(selected_item_new));
+        if (new_index < old_index) $(temporary_item_old).insertBefore($(selected_item_new));
+      }
+    }
+  });
+
+  socketio.on("modal_slider_result", function(data) {
+    // update position
+    let tileID = $(".modal-here").attr("id_of_caller");
+    if (tileID === data.tile_id) {
+      let triggerEvents = true; // or false
+      let element = document.querySelector(".slider[data-id=" + data.id + "] input[type='range']");
+      let slider_div = $(element).parent();
+      slider_div.attr("data-prew-val", data.value);
+      element.rangeSlider.update({
+        value: data.value
+      }, triggerEvents);
+    }
+  });
+
+  socketio.on("modal_item_delete_result", function(data) {
+    console.log(data.tile_id);
+    console.log(data.index);
+
+    let tileID = $(".modal-here").attr("id_of_caller");
+    if (tileID === data.tile_id)
+    {
+      $($(".modal_items_edit_sortable .modal-edit-item")[data.index]).slideUp(function() {
+        $(this).remove();
+      });
+    }
+
+    // $(object).parent().parent().parent().slideUp(function() {
+    //   $(object).parent().parent().parent().remove();
+    // });
+  });
+
+  socketio.on("tile_delete_result", function(data){
+    $(".tile[data-id="+data.tile_id+"]").parent().fadeOut(function() {$(this).remove()});
+  });
+
+  socketio.on("tile_icon_result", function(data){
+    $(".tile[data-id="+data.tile_id+"] .tile-icon").attr("src",data.new_icon);
+  });
+  
+  socketio.on("tile_type_result", function(data){
+    if (data.tile_values) {
+      $(".tile-values-wrapper").empty().append(data.tile_values);
+    }
+
+    $(".tile[data-id="+data.tile_id+"]").parent().replaceWith(data.tile_html);
+    $(".tile[data-id="+data.tile_id+"]").each(function(){
+      initializeHammerTile(this);
+    });
+
+    initImages();
     
-    // If I am not sender
-    if (msg.device_number != deviceNumber) {
-      // Test each tile on the page
-      $(".tile").each(function() {
-        var tileID = $(this).attr("data-id");
+    });
 
-        // If tile ID is same
-        if (tileID === msg.id) {
-          var tileType = $(this).attr("data-type");
-        
-          // Tile type is toggle
-          if (tileType === "toggle") {
-            var tileStateLast = $(this).find(".tileStatus").text();
-            var tileStateCurrent = msg.value;
+  socketio.on("tile_label_result", function(data){
+    $(".tile[data-id="+data.tile_id+"] .tile-label").text(data.new_label);
+  });
 
-            // Turn tile off
-            if (tileStateLast.toLowerCase() == "on" && tileStateCurrent == 0) {
-              $(this).find(".tileStatus").text("OFF"); $(this).toggleClass("tileActive");
-              $(this).find(".toggle-dot").css("background-color","rgba(255, 0, 0, 0.28)");
-            }
-          
-            // Turn tile on
-            else if (tileStateLast.toLowerCase() == "off" && tileStateCurrent == 1) {
-              $(this).find(".tileStatus").text("ON"); $(this).toggleClass("tileActive");
-              $(this).find(".toggle-dot").css("background-color","rgba(0, 196, 42, 0.28)");
-            }
-          }
-        
-          // Tile type is percentage
-          else if (tileType === "percentage") {
-            $(this).find(".tileInputVal").text(msg.v);
-          }
-        }
+  socketio.on("tile_index_result", function(data){
+    let old_index = data.old_index;
+    let new_index = data.new_index;
+    let slide_index = data.slide_index;
+
+    // console.log({old_index,new_index,slide_index});
+
+    let selected_slide = $(".swiper-slide")[slide_index];
+    let all_tiles_within_slide = $(selected_slide).find(".grid-square");
+    let selected_tile_old = all_tiles_within_slide[old_index];
+    let selected_tile_new;
+
+    let temporary_tile_old = $(selected_tile_old).clone();
+    // let temporary_tile_new = $(selected_tile_new).clone();
+
+    $(selected_tile_old).remove();
+
+    if (new_index === all_tiles_within_slide.length) {
+      selected_tile_new = all_tiles_within_slide[new_index-1];
+      $(temporary_tile_old).insertAfter($(selected_tile_new));
+    }
+    else {
+      selected_tile_new = all_tiles_within_slide[new_index];
+      if (new_index>old_index) $(temporary_tile_old).insertAfter($(selected_tile_new));
+      if (new_index<old_index) $(temporary_tile_old).insertBefore($(selected_tile_new));
+    }
+    // if (old_index == 0)
+    // {
+    // }
+    // else
+    // {
+    //   $(selected_tile_new).replaceWith($(temporary_tile_old));
+    //   $(selected_tile_old).replaceWith($(temporary_tile_new));   
+    // }
+  });
+
+  socketio.on("tile_id_result", function(data) {
+    $(".tile[data-id='"+data.tile_id+"']").attr("data-id",data.new_id);
+    $("#tile-mqtt-path").val("home/" + data.new_id);
+    $(".modal-here").attr("id_of_caller", data.new_id);
+  });
+
+  socketio.on("add_modal_item_result", function(data) {
+    let id_of_caller = $(".modal-here").attr("id_of_caller");
+    if (data.tile_id === id_of_caller) {
+      $(".modal_items_edit_sortable").prepend($(data.item));
+      let item = $(".modal_items_edit_sortable").find(".modal-edit-item")[0];
+
+      $(item).attr("id","modal_items_edit_sortable_last");
+      $("#modal_items_edit_sortable_last").hide().slideDown().removeAttr("id");
+
+      $(item).find(".modal-edit-item-dynamic-value").on("input",function(e){
+        // ( > modal_edit_events.js )
+        modalEditItemTextChanged(this);
+      });
+      $(item).find(".modal-edit-item-delete").on("click",function(e){
+        modalEditItemDelete(this);
       });
     }
   });
 
-  // Asynchronous communication for modal slider
-  socket.on("slider", function(msg) {
-    // If I am not sender
-    if (msg.device_number != deviceNumber) {
-      var tileID = $(".modal-here").attr("id_of_caller");
-      // If tile ID is same
-      if (tileID === msg.tile_id) {
-        // For each sliders
-        for (var i = 0; i < sliders.length; i++) {
-          var sliderHTML = sliders[i].selector.offsetParent.outerHTML;
-          var sliderID = $($.parseHTML(sliderHTML)).attr("data-id");
-          // If slider ID is same
-          if (sliderID === msg.id) {
-            sliders[i].value(msg.value);
-          }
+  socketio.on("get_add_modal_result", function(data) {
+    // ( > modal_init.js )
+    initializeModal(data);
+  });
+
+  socketio.on("get_add_tile_result", function(data) {
+    let selected_slide = $($(".swiper-slide")[data.slide_index]).find(".add_new_tile_element");
+    $(data.tile_html).insertBefore(selected_slide);
+    $(data.tile_html).each(function(){
+      console.log(this);
+      initializeHammerTile(this);
+    });
+  });
+
+  
+
+  socketio.on("get_modal_result", function(data) {
+    handleModalResponse(data);
+  });
+
+  socketio.on("get_edit_modal_result", function(data) {
+    handleModalResponse(data);
+  });
+
+  socketio.on("get_settings_modal_result", function(data) {
+      
+    // ( > events.js )
+    displaySettingsModal(data);
+    $(".modal-edit-select-bcg").each(function() {
+      let attr = $(this).attr('checked');
+      if (typeof attr !== typeof undefined && attr !== false) {
+        if ($("body").hasClass("dark")) {
+          $(this).css({"border": "2px solid rgb(232, 93, 71)"});
+        }
+        else {
+          $(this).css({"border": "2px solid rgb(23, 162, 184)"});
         }
       }
+      Hammer(this).on("tap", function(elem) {
+        // ( > modal_edit_events.js )
+        modalEditPreviewImageTap(elem);
+      });
+    });
+  });
+
+  socketio.on("slide_delete_result", function(data) {
+    let index = data.index;
+
+    if (index === swiper.realIndex) {
+      if (index === 0) swiper.slideTo(index+1, 1000);
+      else swiper.slideTo(index-1, 1000);
+      setTimeout(() => {swiper.removeSlide(index);}, 1000);
+    } 
+    else {
+      swiper.removeSlide(index);
     }
+  });
+
+  socketio.on("slide_append_result", function(data) {
+    swiper.appendSlide(data.slide);
+
+    let isEditActive = $("body").attr("is_edit_active");
+
+    if (isEditActive === "true") {
+      $(".add_new_tile_element").hide().fadeIn(2000);
+      $(".exit-edit-mode-button").hide().fadeIn(2000);
+
+      // Připnutí Hammer pro každé "+" tlačítko
+      $(".swiper-slide-active .add_new_tile_element").each(function() {
+        let hammer = new Hammer(this);
+        hammer.on("tap", function(el) {
+          addNewTile();
+        });
+      });
+
+      let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
+      bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
+    }
+  });
+
+  socketio.on("slide_append_animation_result", function() {
+    swiper.slideTo(swiper.slides.length, 1000);
+  });
+
+  socketio.on("slide_prepend_result", function(data) {
+    swiper.prependSlide(data.slide);
+
+    let isEditActive = $("body").attr("is_edit_active");
+
+    if (isEditActive === "true") {
+      $(".add_new_tile_element").hide().fadeIn(2000);
+      $(".exit-edit-mode-button").hide().fadeIn(2000);
+
+      // Připnutí Hammer pro každé "+" tlačítko
+      $(".swiper-slide-active .add_new_tile_element").each(function() {
+        let hammer = new Hammer(this);
+        hammer.on("tap", function(el) {
+          addNewTile();
+        });
+      });
+
+      let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
+      bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
+    }
+  });
+
+  socketio.on("slide_prepend_animation_result", function() {
+    swiper.slideTo(0, 1000);
+  });
+
+  socketio.on("slide_index_result", function(data) {
+    if (data.new_index > data.old_index) {
+      // TODO když je uživatel na new_index tak ho přesuň na index na ktereje se tato page přesune
+      // TODO FILIPE tuhle funkci (měnění indexů věcí) bys mohl zdynamičnit, používá se často, dej ji do jedné funkce
+      let all_slides_within_slide = $("body").find(".swiper-slide");
+      let selected_slide_old = all_slides_within_slide[data.old_index];
+      let selected_slide_new;
+
+      let temporary_slide_old = $(selected_slide_old).clone();
+
+      $(selected_slide_old).remove();
+
+      if (data.new_index === all_slides_within_slide.length) {
+        selected_slide_new = all_slides_within_slide[data.new_index-1];
+        $(temporary_slide_old).insertAfter($(selected_slide_new));
+      }
+      else {
+        selected_slide_new = all_slides_within_slide[data.new_index];
+        if (data.new_index > data.old_index) $(temporary_slide_old).insertAfter($(selected_slide_new));
+        if (data.new_index < data.old_index) $(temporary_slide_old).insertBefore($(selected_slide_new));
+      }
+    }
+
+    else if (data.new_index < data.old_index) {
+      // TODO když je uživatel na new_index tak ho přesuň na index na ktereje se tato page přesune
+      let all_slides_within_slide = $("body").find(".swiper-slide");
+      let selected_slide_old = all_slides_within_slide[data.old_index];
+      let selected_slide_new;
+
+      let temporary_slide_old = $(selected_slide_old).clone();
+
+      $(selected_slide_old).remove();
+      // TODO FILIPE tuhle funkci (měnění indexů věcí) bys mohl zdynamičnit, používá se často, dej ji do jedné funkce
+      if (data.new_index === all_slides_within_slide.length) {
+        selected_slide_new = all_slides_within_slide[data.new_index-1];
+        $(temporary_slide_old).insertAfter($(selected_slide_new));
+      }
+      else {
+        selected_slide_new = all_slides_within_slide[data.new_index];
+        if (data.new_index > data.old_index) $(temporary_slide_old).insertAfter($(selected_slide_new));
+        if (data.new_index < data.old_index) $(temporary_slide_old).insertBefore($(selected_slide_new));
+      }
+    }
+    if (swiper.realIndex === data.old_index) {
+      swiper.slideTo(data.new_index, 1000);
+    }
+
+  });
+
+  // Asynchronous communication for tile
+  socketio.on("tile_value_result", function(data) {
+    // Test each tile on the page
+    $(".tile").each(function() {
+      let tileID = $(this).attr("data-id");
+
+      // If tile ID is same
+      if (tileID === data.id) {
+        let tileType = $(this).attr("data-type");
+
+        // Tile type is toggle
+        if (tileType === "toggle") {
+          let tileStateLast = $(this).find(".tile-status").text();
+          let tileStateCurrent = data.value;
+
+          // Turn tile off
+          if (tileStateLast.toLowerCase() === "on" && tileStateCurrent === 0) {
+            $(this).find(".tile-status").text("OFF"); $(this).toggleClass("tile-active");
+            $(this).find(".toggle-dot").css("background-color","rgba(255, 0, 0, 0.28)");
+          }
+
+          // Turn tile on
+          else if (tileStateLast.toLowerCase() === "off" && tileStateCurrent === 1) {
+            $(this).find(".tile-status").text("ON"); $(this).toggleClass("tile-active");
+            $(this).find(".toggle-dot").css("background-color","rgba(0, 196, 42, 0.28)");
+          }
+        }
+
+        // Tile type is percentage
+        else if (tileType === "percentage") {
+          $(this).find(".tile-input-value").text(data.value);
+        }
+      }
+    });
   });
 
   // Asynchronous communication for modal toggle
-  socket.on("toggle", function(msg) {
-    var tileID = $(".modal-here").attr("id_of_caller");
+  socketio.on("modal_toggle_result", function(data) {
+    let tileID = $(".modal-here").attr("id_of_caller");
 
     // If tile ID is same
-    if (tileID === msg.tile_id) {
-      $(".modal_toggle").each(function(){
-        var toggleID = $(this).parent().parent().parent().attr("data-id");
+    if (tileID === data.tile_id) {
+      $(".modal-toggle").each(function(){
+        let toggleID = $(this).attr("data-id");
 
         // If toggle ID is same
-        if (toggleID === msg.id) {
-          $(this).prop('checked', parseInt(msg.value));
+        if (toggleID === data.id) {
+          $(this).children().children().prop('checked', parseInt(data.value));
         }
       });
-    }
-  });
-
-  // Append
-  socket.on("graph_append", function(msg) {
-    console.log(msg);
-    var modal_caller_id = $("#myModal").data("id-of-caller");
-    if (modal_caller_id === msg.id_tile) {
-      try {
-        for (var i = 0; i < graphs_id.length; i++) {
-          if (graphs_id[i] == msg.i) {  // Shodné ID
-            addGraphData(graphs[i],msg.data_x,msg.data_y);
-          }
-        }
-      }
-      catch {
-        console.log("acom.js > something failed I guess");
-      }
     }
   });
 
   // Renew
-  socket.on("graph_rwr", function(msg) {
-    console.log(msg);
-    var modal_caller_id = $("#myModal").data("id-of-caller");
+  socketio.on("graph_rwr", function(data) {
     // if (modal_caller_id === msg.id_tile) {
-    if (true){
-      try {
-        for (var i = 0; i < graphs_id.length; i++) {
+    try {
+      for (let i = 0; i < graphs_id.length; i++) {
 
-          if (graphs_id[i] == msg.graph_id) {  // Shodné ID
-            console.log("Found my graph");
-            // addGraphData(graphs[i],msg.data_x,msg.data_y);
-            // addGraphData(graphs[i],msg.data_x,msg.data_y);
-            graphs[i].data.datasets[0].data = msg.value.y;
-            graphs[i].data.labels = msg.value.x;
-            graphs[i].update();
-            // websiteChart.update();
-          }
+        if (graphs_id[i] === data.graph_id) {  // Shodné ID
+          console.log("Found my graph");
+          // addGraphData(graphs[i],msg.data_x,msg.data_y);
+          // addGraphData(graphs[i],msg.data_x,msg.data_y);
+          graphs[i].data.datasets[0].data = data.value.y;
+          graphs[i].data.labels = data.value.x;
+          graphs[i].update();
+          // websiteChart.update();
         }
       }
-      catch {
-        console.log("acom.js > something failed I guess");
-      }
     }
-  });
-
-  // Asynchronous communication for tile_refresh
-  socket.on("tile_refresh", function(json) {
-
-    var newID = json.id;
-    var tile_id = json.tile_id;
-    var pageIndex = json.slide_index;
-    console.log("AA");
-    console.log(pageIndex);
-    var tileS = $(".tile[data-id='"+tile_id+"']");
-
-    var found = 0;
-    // Vyhledá stávající Tile
-    $(".tile").each(function() {
-      var search_id = $(this).attr("data-id");
-      if (search_id == newID) found = 1;
-    });
-
-    // Pokud našel více shodných Tilů
-    if (found > 1) DEBUG.logWarning("! Warning ! more than one ID found! (modal_init.js; ln: 183)");
-    // Pokud nenašel stávajíci Tile, vytvoří nový
-    // if (found == 0) $(json.tile).insertBefore(".swiper-slide-active .tile_ghost_prefab_class").hide().fadeIn();
-    // find page to append refreshed tile
-    var pages = []
-    $(".swiper-slide").each(function() {
-      pages.push(this);
-    });
-
-    //$("#wrapper .content:last").before('<div class="content"><div class="subcontent">Third</div></div>');
-    if (found == 0) {
-      $(pages[pageIndex]).find(".zoomable").find(".add_new_tile_element").before(json.tile).prev().hide().fadeIn();
+    catch {
+      console.log("acom.js > something failed I guess");
     }
-    // Pokud našel stávající Tile
-    else {
-      if (json.tile !== "") $(tileS).parent().replaceWith(json.tile);
-      else {
-        $(tileS).parent().show().fadeOut(function(){
-          $(tileS).parent().remove()
-        });
-      }
-    }
-
-    var newTile = $(".tile[data-id='"+newID+"']").find(".tileModal")[0];
-    initializeHammerTile(newTile);
   });
 
   // Reload page
-  socket.on("reload", function(msg) {
+  socketio.on("reload", function() {
     location.reload();
   });
 
-  socket.on("connect", function() {
+  socketio.on("connect", function() {
     $(".server-status").text(_("Online"));
   });
-  socket.on("disconnect", function() {
+
+  socketio.on("disconnect", function() {
     $(".server-status").text(_("Offline"));
-    //$(".bcg-real").css({"filter": "grayscale(0.75)", "transition": "filter 2s"});
   });
-  socket.on("reconnect", function() {
+
+  socketio.on("reconnect", function() {
     location.reload();
   });
 
   // Asynchronous communication for global notifications
-  socket.on("notify", function(msg) {
+  socketio.on("notify", function(msg) {
     $.notify({
       title: "<strong>" + msg.title +  "</strong>",
       message: msg.message
@@ -213,8 +434,4 @@ $(document).ready(function(){
       z_index: 2000
     });
   });
-
 });
-
-
-

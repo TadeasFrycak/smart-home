@@ -1,6 +1,6 @@
 from flask_babel import Babel, _, gettext, ngettext, lazy_gettext
 from jinja2 import Environment, PackageLoader, meta, FileSystemLoader
-import jinja2schema
+import library.jinja2schema as jinja2schema
 import datetime
 
 
@@ -33,7 +33,7 @@ class TemplateManagerRead:
     DATA_X = "data_x"
     DATA_Y = "data_y"
 
-    UNNAMED = gettext("Unnamed")
+    UNNAMED = lazy_gettext("Unnamed")
 
     CHILDREN = "children"
 
@@ -126,7 +126,7 @@ class TemplateManagerRead:
                     current_icon = data["icon"]
 
                 else:
-                    current_icon = self.__default_values.tile_value("icon")
+                    current_icon = self.__default_values.tile_value(value_name="icon")
 
                 data["icon"] = []
 

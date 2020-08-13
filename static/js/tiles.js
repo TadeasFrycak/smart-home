@@ -1,14 +1,64 @@
 $(document).ready(function(){
-
-    $(".enableHammer").each(function(){
+    $(".enable-hammer").each(function(){
         initializeHammerTile(this);
     });
 
+    $(".tile-inner-touch-layer").each(function(){
+        initializeInnerHammer(this);
+    });
 });
 
-function initializeHammerTile(object)
-{
-    var hammer = new Hammer(object);
+function initializeInnerHammer(object) {
+    let hammer = new Hammer(object);
+
+    hammer.on("tap", function(el) {
+        innerTap(el.target);
+    });
+
+    // hammer.on("press", function(el) {
+    //     pressed(el.target);
+    // });
+}
+
+function innerTap(object) {
+    let isEditActive = $("body").attr("is_edit_active");
+
+    if (isEditActive === "false") {
+        let id = $(object).parent().attr("data-id");
+        let innerId = $(object).attr("data-inner-id");
+    
+        console.log("\r\n--> Inner Tap\r\nID: ");
+        console.log(id);
+        console.log("inner ID: ");
+        console.log(innerId);
+        console.log("object");
+        console.log($(object));
+
+        // for alarm_clock
+        let parent_type = $(object).parent().attr("data-type");
+        
+        if (parent_type === "alarm_clock") {
+            let button_name = $(object).attr("data-inner-id"); 
+            let query = button_name.replace("button-","");
+
+            let parent_element = $(object).parent().find(".alarm-clock-glyph[data-type="+ query +"]");
+
+            if (parent_element.hasClass("alarm-clock-glyph-active"))
+            {
+                console.log("Deactivate " + query);
+                parent_element.toggleClass("alarm-clock-glyph-active",false);
+            }
+            else
+            {
+                console.log("Activate " + query);
+                parent_element.toggleClass("alarm-clock-glyph-active",true);
+            }
+        }
+    }
+}
+
+function initializeHammerTile(object) {
+    let hammer = new Hammer(object);
 
     hammer.on("tap", function(el) {
         tapped(el.target);
@@ -19,49 +69,42 @@ function initializeHammerTile(object)
     });
 }
 
-function tapped(object)
-{
+function tapped(object) {
     // type of item; [toggle/...]
-    var tileType = $(object).parent().attr("data-type");
+    let tileType = $(object).parent().attr("data-type");
     // "true" = yes; "false" = no
-    var isEditActive = $("body").attr("is_edit_active");
-    var id = $(object).parent().attr("data-id");
+    let isEditActive = $("body").attr("is_edit_active");
+    // let id = $(object).parent().attr("data-id");
 
-    var $this = $(object);
+    let $this = $(object);
 
     // if edit mode is enabled; edit mode
-    if (isEditActive == "true")
-    {
+    if (isEditActive === "true") {
         requestEditModal($this);
     }
     
     // if edit mode is disabled; normal mode
-    if (isEditActive == "false")
-    {
-        if (tileType == "toggle") tappedOnToggle($this);   
+    if (isEditActive === "false") {
+        if (tileType === "toggle") tappedOnToggle($this);
     }
-
 }
 
-function pressed(object)
-{
+function pressed(object) {
     // type of item; [toggle/...]
-    var tileType = $(object).parent().attr("data-type");
+    // let tileType = $(object).parent().attr("data-type");
     // "true" = yes; "false" = no
-    var isEditActive = $("body").attr("is_edit_active");
-    var id = $(object).parent().attr("data-id");
+    let isEditActive = $("body").attr("is_edit_active");
+    // let id = $(object).parent().attr("data-id");
 
-    var $this = $(object);
+    let $this = $(object);
 
     // if edit mode is enabled; edit mode
-    if (isEditActive == "true")
-    {
+    if (isEditActive === "true") {
         // do nothing
     }
     
     // if edit mode is disabled; normal mode
-    if (isEditActive == "false")
-    {
+    if (isEditActive === "false") {
         requestNormalModal($this);
     }
 
@@ -69,35 +112,10 @@ function pressed(object)
 
 
 // CUSTOM EVENTS:
-
 // Po doteku na Toggle tlačítko ( < init.js )
-function tappedOnToggle($this)
-{
-    $this.parent().toggleClass("tileActive");
-    var tileID = $this.parent().attr("data-id");
-    var tileState = $this.parent().find(".tileStatus").text().toLowerCase() == "on" ? 1 : 0;
+function tappedOnToggle($this) {
+    let tileID = $this.parent().attr("data-id");
+    let tileState = $this.parent().find(".tile-status").text().toLowerCase() === "on" ? 0 : 1;
 
-    if (tileState === 1) {
-        tileState = 0;
-        $this.parent().find(".tileStatus").text("Off");
-        //$this.parent().css("opacity", 0.7);
-        // TODO NASTAVENÍ
-        //$this.parent().css({"-moz-transform": "scale(1)", "-webkit-transform": "scale(1)", "transform": "scale(1)"})
-        $this.parent().find(".toggle-dot").css("background-color", "rgba(255, 0, 0, 0.28)");
-    }
-    else if (tileState === 0) {
-        tileState = 1;
-        $this.parent().find(".tileStatus").text("On");
-        //$this.parent().css("opacity", 1);
-        // TODO NASTAVENÍ
-        //$this.parent().css({"-moz-transform": "scale(1.03)", "-webkit-transform": "scale(1.03)", "transform": "scale(1.03)"})
-        $this.parent().find(".toggle-dot").css("background-color", "rgba(0, 196, 42, 0.28)");
-    }
-
-    $.post("/tile", {
-        "id": tileID,
-        "value": tileState
-    }
-    );
-  
+    socketio.emit("tile_value", {"id": tileID, "value": tileState});
 }

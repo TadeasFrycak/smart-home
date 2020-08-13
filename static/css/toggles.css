@@ -1,4 +1,9 @@
-.switch {
+.modal-toggle {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-toggle-label {
     position: relative;
     display: inline-block;
     width: 45px;
@@ -6,13 +11,13 @@
     float: right;
 }
   
-.switch input { 
+.modal-toggle-label input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.toggle-slider {
+.modal-toggle-round {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -24,7 +29,11 @@
     transition: .4s;
 }
 
-.toggle-slider:before {
+.dark .modal-toggle-round {
+    background-color: #555;
+}
+
+.modal-toggle-round:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -36,25 +45,29 @@
     transition: .4s;
 }
 
-input:checked + .toggle-slider {
-    background-color: rgb(48, 209, 88);
+.dark .modal-toggle-round:before {
+    background-color: #ccc;
 }
 
-input:focus + .toggle-slider {
-    box-shadow: 0 0 1px rgb(48, 209, 88);
+input:checked + .modal-toggle-round {
+    background-color: #17a2b8; /*rgb(48, 209, 88);*/
 }
 
-input:checked + .toggle-slider:before {
+input:focus + .modal-toggle-round {
+    box-shadow: 0 0 1px #17a2b8; /*rgb(48, 209, 88)*/;
+}
+
+input:checked + .modal-toggle-round:before {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
 }
 
 /* Rounded sliders */
-.toggle-slider.round {
+.modal-toggle-round {
     border-radius: 34px;
 }
 
-.toggle-slider.round:before {
+.modal-toggle-round:before {
     border-radius: 50%;
 }

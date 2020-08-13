@@ -1,16 +1,16 @@
 $(document).ready(function(){
-  var marq = [];
+  let marq = [];
 
   $(".play").show();
   $(".stop").hide();
-  var music = new Audio("music/Bon Jovi - Its My Life.mp3");
+  let music = new Audio("music/Bon Jovi - Its My Life.mp3");
   //var prank = new Audio("static/music/Hymna Ruské federace - Гимн России.mp3");
   //prank.play();
   $("body").on("click", ".stop", function(e) {
     $(".stop").show().fadeOut("slow");
     $(".play").hide().fadeIn("slow");
 
-    var thumbnail = document.querySelector('#thumbnail');
+    let thumbnail = document.querySelector('#thumbnail');
     thumbnail.style.transform = "scale(1)";
     music.animate({volume: 0}, 1000);
 
@@ -22,46 +22,43 @@ $(document).ready(function(){
     $(".play").show().fadeOut("slow");
     $(".stop").hide().fadeIn("slow");
     music.play();
-    var thumbnail = document.querySelector('#thumbnail');
+    let thumbnail = document.querySelector('#thumbnail');
 
     thumbnail.style.transform = "scale(1.1)";
     thumbnail.style.top = "10px"
 
     music.animate({volume: 1}, 1000);
 
-    marquee = new Marquee('music_name', {
-    // once or continuous
-    continuous: true,
-    // 'rtl' or 'ltr'
-    direction: 'rtl',
-    // pause between loops
-    delayAfter: 0,
-    // when to start
-    delayBefore: 0,
-    // scroll speed
-    speed: 0.1,
-    // loops
-    loops: -1
-  });
+    let marquee = new Marquee('music_name', {
+      // once or continuous
+      continuous: true,
+      // 'rtl' or 'ltr'
+      direction: 'rtl',
+      // pause between loops
+      delayAfter: 0,
+      // when to start
+      delayBefore: 0,
+      // scroll speed
+      speed: 0.1,
+      // loops
+      loops: -1
+    });
 
   marq.push(marquee);
-
   });
 
-
   function updateProgressValue() {
-      var progress = document.querySelector('.music-track-02el');
+      let progress = document.querySelector('.music-track-02el');
       progress.style.width = music.currentTime / music.duration * 100+ "px";
-
-  };
+  }
 
   //setInterval(updateProgressValue, 500);
 });
 
-var Marquee = function(element, defaults) {
+let Marquee = function(element, defaults) {
   "use strict";
 
-  var elem = document.getElementById(element),
+  let elem = document.getElementById(element),
     options = (defaults === undefined) ? {} : defaults,
     continuous = options.continuous || true, // once or continuous
     delayAfter = options.delayAfter || 1000, // pause between loops
@@ -81,7 +78,7 @@ var Marquee = function(element, defaults) {
     constructor = function(elem) {
 
       // Build html
-      var elemHTML = elem.innerHTML,
+      let elemHTML = elem.innerHTML,
         elemNode = elem.childNodes[1] || elem;
 
       elemWidth = elemNode.offsetWidth;

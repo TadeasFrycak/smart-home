@@ -67,7 +67,7 @@ class AuthLogger:
         :return:
         """
 
-        self.__log.debug(message)
+        self.__log.debug(message.strip())
 
     def warning(self, message):
         """
@@ -76,7 +76,7 @@ class AuthLogger:
         :return:
         """
 
-        self.__log.warning(message)
+        self.__log.warning(message.strip())
 
     def error(self, message):
         """
@@ -85,7 +85,7 @@ class AuthLogger:
         :return:
         """
 
-        self.__log.error(message)
+        self.__log.error(message.strip())
 
 
 class ConsoleLogger:
@@ -119,7 +119,7 @@ class ConsoleLogger:
         :return:
         """
 
-        self.__log.debug(message)
+        self.__log.debug(message.strip())
 
     def warning(self, message):
         """
@@ -128,7 +128,7 @@ class ConsoleLogger:
         :return:
         """
 
-        self.__log.warning(message)
+        self.__log.warning(message.strip())
 
     def error(self, message):
         """
@@ -137,4 +137,4 @@ class ConsoleLogger:
         :return:
         """
 
-        self.__log.error(message)
+        self.__log.error(message.strip())

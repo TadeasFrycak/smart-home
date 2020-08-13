@@ -1,5 +1,45 @@
 {% extends "base.html" %}
+{% block head %}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/timepicki/timepicki.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/swiper/swiper.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/daterangepicker/daterangepicker.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/range-slider/range-slider.min.css') }}">
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/progress_bars.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/time_pickers.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/toggles.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/swiper.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/tiles.css') }}">
+
+    {% if not slides %}
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    {% endif %}
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/sortable/sortable.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/timepicki/timepicki.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/swiper/swiper.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/chartjs/Chart.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/hammer/hammer.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/moment/moment.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/daterangepicker/daterangepicker.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/range-slider/range-slider.min.js') }}" defer></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/acom.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/modal_edit_events.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/modal_events.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/edit_events.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/modal_init.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/events.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/swiper.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/player.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/init.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles.js') }}" defer></script>
+{% endblock %}
+
 {% block title %}{{ _("Home") }}{% endblock %}
+
 {% block content %}
     <div class="swipe-body">
         <div class="swiper-container">
@@ -8,14 +48,8 @@
                     {% for slide in slides %}
                         {% include "slide.html" %}
                     {% endfor %}
+
                 {% else %}
-                    <style>
-                        .bcg-real {
-                          filter: blur(18px);
-                        }
-                        .container {position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 50%;left:50%}
-                        .content {margin:4px;background-color:white;border-radius:12px;padding:35px;box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)}
-                    </style>
                     <div class="container">
                         <div class="content text-center">
                             <p class="h4 mb-4">{{ _("Let's start") }}</p>

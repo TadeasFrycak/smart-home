@@ -60,6 +60,13 @@ class TemplateManagerWrite:
         """
         self.__fmng.devices.append({self.__tmng_r.NAME: self.__tmng_r.UNNAMED, self.__tmng_r.CHILDREN: []})
 
+    def prepend_slide(self):
+        """
+        Append new slide
+        :return:
+        """
+        self.__fmng.devices.insert(0, {self.__tmng_r.NAME: self.__tmng_r.UNNAMED, self.__tmng_r.CHILDREN: []})
+
     def delete_slide(self, index):
         """
         Delete slide

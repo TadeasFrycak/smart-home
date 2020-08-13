@@ -1,5 +1,5 @@
 .tile {
-  background-color: rgba(173, 173, 173, 0.95);
+  background-color: rgba(173, 173, 173, 0.90);
   cursor: pointer;
   height: 100px;
   width: 100px;
@@ -11,106 +11,29 @@
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-/*
-.tile:hover {
-  -moz-transform: scale(1.05);
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
-*/
-
-.toggle-dot {
-  position: absolute;
-  right: 7px;
-  top: 7px;
-  height: 7px;
-  width: 7px;
-  background-color: rgba(255, 0, 0, 0.28);
-  border-radius: 50%;
-  display: inline-block;
-  -moz-transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
- }
-
-.tile-sortable-move > *{
-  background-color: rgb(116, 113, 113);
-}
-
-
-.tile_gauge{
-  background-color: rgb(173, 173, 173);
-  height: 212px;
-  width: 212px;
-  border-radius: 10px;
-  margin: 6px;
-  float: left;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
-}
-
-.tile_chart{
-  background-color: rgb(173, 173, 173);
-  height: 212px;
-  width: 212px;
-  border-radius: 10px;
-  margin: 6px;
-  float: left;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 4px 4px 3px 0 rgba(0,0,0,0.4);
-}
-
-.tile_gauge_header{
-  max-width: 200px;
-  height: 65px;
-  top: 10px;
-  left: 10px;
-  font-size: 20px;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  margin: 0 auto;
-  line-height: 1em;
-  display: table-cell;
-  vertical-align: middle;
-  position: relative;
-}
 
 .dark .tile {
   color: #ddd;
   background-color: rgb(40,40,40);
 }
 
-.dark .tileImage, .dark .modal-here img {
-  filter: invert(0.95);
-}
-
-.modal-here input {
-  color: white;
-}
-.dark .tileDisplay {
+.dark .tile-display {
   color: #dcdcdc;
 }
-.dark .tileActive {
+.dark .tile-active {
   background-color: rgb(65,65,65) /*rgb(12, 66, 146);*/
 }
 
-.light .tileActive{
-  background-color: #ffffff;
+.light .tile-active{
+  background-color: #fff;
 }
 
-.titeAtributes{
-  display: none;
-}
-
-.tileImage{
+.tile-icon{
   height: 38%;
   position: absolute;
 }
 
-.tileDescription{
+.tile-label{
   top: 23px;
   max-width: 80px;
   height: 65px;
@@ -126,14 +49,14 @@
   position: relative;
 }
 
-.tileStatus{
+.tile-status{
   font-size: 11px;
   position: absolute;
   margin-top: 5px;
-  color: #888
+  color: #666;
 }
 
-.tileDisplay{
+.tile-display{
   font-size: 30px;
   margin: 0;
   color: #3b3b3b;
@@ -144,17 +67,71 @@
 }
 
 
-.tileTouchLayer{
+.tile-touch-layer{
   background-color: transparent;
   position: absolute;
   height: 100%;
   width: 100%;
 }
 
-.tileTextLayer{
+.tile-text{
   background-color: transparent;
   position: absolute;
   height: 100%;
   width: 100%;
   padding: 10px
+}
+
+.toggle-dot {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  height: 7px;
+  width: 7px;
+  background-color: rgba(255, 0, 0, 0.28);
+  border-radius: 50%;
+  display: inline-block;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+ }
+
+.tile-sortable-move > * {
+  background-color: rgb(116, 113, 113);
+}
+
+.alarm-clock-glyph{
+  position:relative;
+  display: inline-block;
+  border-radius: 50%;
+  border-width: 1px;
+  border-style: solid;
+  width: 23px;
+  height: 23px;
+  padding: 0px;
+  /* border-color: white; */
+  border-color: transparent;
+  margin-right: 1px;
+  transition: all 0.3s;
+}
+ 
+/* .light .alarm-clock-glyph{
+  border-color: rgb(160, 159, 159);
+} */
+
+.alarm-clock-glyph-text{
+  transform: translate(-50%,-50%);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 85%;
+  font-size: 11px;
+}
+
+.dark .alarm-clock-glyph-active{
+  background-color: #ffffff61;
+}
+
+.light .alarm-clock-glyph-active{
+  background-color: #88888861;
 }

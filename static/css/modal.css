@@ -1,0 +1,73 @@
+.modal-edit-icon {
+    height: 35px;
+    transition: 0.5s;
+    padding: 3px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.modal-edit-item-delete {
+    float: right;
+    margin-top: 20px;
+}
+
+.modal-edit-item-dropdown {
+    margin-left: 20px;
+    margin-top: 15px;
+}
+.modal-edit-select-bcg {
+    width: 180px;
+    transition: 0.5s;
+    padding: 3px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.modal-edit-icons {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.modal-content {
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.dark .modal-content {
+  background-color: #222831;
+  color: #fff;
+}
+
+.dark .modal-title {
+  color: #fff;
+}
+
+.dark .modal-content input[type="text"]{
+    background-color: #222831;
+}
+
+.dark div.modal-edit-item{
+    background-color: #1b262c;
+    border-color: #bbe1fa;
+}
+
+.modal-edit-tile-type {
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+.modal_edit_title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modal_items_edit {
+    margin-top: 20px;
+}
+
+.dark .modal-here input {
+  color: white;
+  background-color: #222831;
+}
+.dark .close {
+    color: #fff;
+}

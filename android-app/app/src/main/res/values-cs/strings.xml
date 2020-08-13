@@ -1,0 +1,20 @@
+<resources>
+    <!-- Hlavní -->
+    <string name="app_name">Chytrá domácnost</string>
+    <!-- *.html -->
+    <string name="wifi_html">wifi_cs.html</string>
+    <string name="server_html">server_cs.html</string>
+    <!-- Server is not connected -->
+    <string name="refresh">Obnovit</string>
+    <string name="settings">Nastavení</string>
+    <!-- Nastavení -->
+    <string name="refreshing">Obnovuji…</string>
+    <string name="server_ip">IP</string>
+    <string name="server">Server</string>
+    <string name="server_port">Port</string>
+    <string name="client">Klient</string>
+    <string name="caching">Průběžné ukládání (caching)</string>
+    <string name="caching_on">Dočasné soubory se budou ukládat a poslední relace zůstane zachována</string>
+    <string name="caching_off">Dočasné soubory se nebudou ukládat a poslední relace nezůstane zachována</string>
+    <string name="mqtt_port">MQTT port</string>
+</resources>

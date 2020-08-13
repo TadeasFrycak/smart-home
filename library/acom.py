@@ -46,11 +46,11 @@ class MQTT(Thread):
         if len(ids) > 1:
             item_id = ids[1]
             self.__tmng_rwr.modal_toggle(tile_id=tile_id, item_id=item_id, new_value=value)
-            self.__socket_io.emit("toggle", {"tile_id": tile_id, "value": value, "id": item_id}, namespace="/com")
+            self.__socket_io.emit("tile_value_result", {"tile_id": tile_id, "value": value, "id": item_id}, namespace="/com", broadcast=True)
 
         else:
             self.__tmng_rwr.tile_value(new_value=value, tile_id=tile_id)
-            self.__socket_io.emit("tile", {"id": tile_id, "value": value}, namespace="/com")
+            self.__socket_io.emit("tile_value_result", {"id": tile_id, "value": value}, namespace="/com", broadcast=True)
 
     @staticmethod
     def subscribe(client, topic):

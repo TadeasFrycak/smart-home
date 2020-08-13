@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-05-04 19:37+0200\n"
-"PO-Revision-Date: 2020-05-04 20:14+0200\n"
+"POT-Creation-Date: 2020-05-23 19:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
@@ -18,64 +19,152 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: library/tmng_read.py:35 templates/modal.html:5
-#: templates/modal_edit/item_values.html:10
+#: library/refactoring.py:7
+msgid "blank"
+msgstr ""
+
+#: library/refactoring.py:8
+msgid "alarm_clock"
+msgstr ""
+
+#: library/refactoring.py:9
+msgid "value_double"
+msgstr ""
+
+#: library/refactoring.py:10
+msgid "player"
+msgstr ""
+
+#: library/refactoring.py:11
+msgid "toggle"
+msgstr ""
+
+#: library/refactoring.py:13
+msgid "daterangepicker"
+msgstr ""
+
+#: library/refactoring.py:14
+msgid "button"
+msgstr ""
+
+#: library/refactoring.py:15
+msgid "dropdown_menu"
+msgstr ""
+
+#: library/refactoring.py:16
+msgid "graph"
+msgstr ""
+
+#: library/refactoring.py:17
+msgid "separator"
+msgstr ""
+
+#: library/refactoring.py:18
+msgid "slider"
+msgstr ""
+
+#: library/refactoring.py:19
+msgid "time_picker"
+msgstr ""
+
+#: library/refactoring.py:20
+msgid "progress_bar"
+msgstr ""
+
+#: library/refactoring.py:22
+msgid "label"
+msgstr ""
+
+#: library/refactoring.py:23
+msgid "value"
+msgstr ""
+
+#: library/refactoring.py:24
+msgid "value_min"
+msgstr ""
+
+#: library/refactoring.py:25
+msgid "value_max"
+msgstr ""
+
+#: library/refactoring.py:26
+msgid "color"
+msgstr ""
+
+#: library/refactoring.py:27
+msgid "colour"
+msgstr ""
+
+#: library/refactoring.py:28
+msgid "pair"
+msgstr ""
+
+#: library/tmng_read.py:36 templates/modal_edit/item_values.html:10
 msgid "Unnamed"
 msgstr ""
 
-#: static/js/acom.js:188 templates/slide.html:34
+#: static/js/acom.js:405 templates/slide.html:6
 msgid "Online"
 msgstr ""
 
-#: static/js/acom.js:191
+#: static/js/acom.js:409
 msgid "Offline"
 msgstr ""
 
-#: static/js/events.js:145 templates/slide.html:49
+#: static/js/events.js:90 templates/slide.html:13
 msgid "Edit this slide"
 msgstr ""
 
-#: static/js/events.js:186 templates/slide.html:17
+#: static/js/events.js:134 templates/slide.html:2
 msgid "Exit edit mode"
 msgstr ""
 
-#: templates/base.html:52 templates/base.html:53 templates/error.html:4
-#: templates/error.html:5 templates/error.html:12
+#: static/js/init.js:9 templates/base.html:30 templates/base.html:31
+#: templates/error.html:4 templates/error.html:5 templates/error.html:12
 msgid "Smart home"
 msgstr ""
 
-#: templates/base.html:54 templates/error.html:6
+#: static/js/init.js:10
+msgid "authors:"
+msgstr ""
+
+#: templates/base.html:2 templates/base.html:34 templates/base.html:41
+#: templates/error.html:1 templates/error.html:8
+msgid "en-GB"
+msgstr ""
+
+#: templates/base.html:32 templates/error.html:6
 msgid "control, use, have fun"
 msgstr ""
 
-#: templates/base.html:56 templates/error.html:8
-msgid "en-GB"
+#: templates/base.html:38
+msgid "SH"
 msgstr ""
 
 #: templates/error.html:12
 msgid "Error"
 msgstr ""
 
-#: templates/index.html:2
+#: templates/index.html:41
 msgid "Home"
 msgstr ""
 
-#: templates/index.html:21
+#: templates/index.html:55
 msgid "Let's start"
 msgstr ""
 
-#: templates/index.html:22
+#: templates/index.html:56
 msgid ""
 "You can now create your first slide in Smart home, then you can edit it "
 "to your own ideas."
 msgstr ""
 
-#: templates/index.html:23 templates/slide.html:52
+#: templates/index.html:57 templates/slide.html:16
 msgid "Add new slide"
 msgstr ""
 
-#: templates/modal.html:16 templates/modal_edit.html:94
-#: templates/modal_settings.html:40
+#: templates/modal.html:16 templates/modal_edit.html:88
+#: templates/modal_settings.html:74
 msgid "Close"
 msgstr ""
 
@@ -109,149 +198,194 @@ msgstr ""
 msgid "Pack all"
 msgstr ""
 
+#: templates/modal_edit.html:87
+msgid "Up"
+msgstr ""
+
+#: templates/modal_edit.html:90 templates/modal_edit/item_values.html:34
+msgid "Delete"
+msgstr ""
+
 #: templates/preloader.html:20
 msgid "Wait a moment please..."
 msgstr ""
 
-#: templates/slide.html:53
-msgid "Remove this slide"
-msgstr ""
-
-#: templates/slide.html:56
-msgid "Backgrounds"
-msgstr ""
-
-#: templates/slide.html:57
+#: templates/slide.html:8 templates/slide.html:25
 msgid "Settings"
 msgstr ""
 
-#: templates/slide.html:59
+#: templates/slide.html:17
+msgid "Prepend new slide"
+msgstr ""
+
+#: templates/slide.html:18
+msgid "Remove this slide"
+msgstr ""
+
+#: templates/slide.html:20
+msgid "Move this slide to the left"
+msgstr ""
+
+#: templates/slide.html:21
+msgid "Move this slide to the right"
+msgstr ""
+
+#: templates/slide.html:24
+msgid "Backgrounds"
+msgstr ""
+
+#: templates/slide.html:27
 msgid "Save changes"
 msgstr ""
 
-#: templates/slide.html:62
+#: templates/slide.html:30
 msgid "Shutdown server"
 msgstr ""
 
-#: templates/slide.html:63
+#: templates/slide.html:31
 msgid "Restart server"
 msgstr ""
 
-#: templates/auth/login.html:2 templates/auth/login.html:7
-#: templates/auth/login.html:31 templates/auth/register.html:95
+#: templates/slide.html:33
+msgid "Reload clients"
+msgstr ""
+
+#: templates/slide.html:47
+msgid "Add"
+msgstr ""
+
+#: templates/auth/login.html:3 templates/auth/login.html:10
+#: templates/auth/login.html:40 templates/auth/logout.html:7
+#: templates/auth/register.html:52
 msgid "Login"
 msgstr ""
 
-#: templates/auth/login.html:8
-msgid ""
-"Welcome back! Before you can control your Smart home, please, login into "
-"your account."
-msgstr ""
-
-#: templates/auth/login.html:14 templates/auth/register.html:32
+#: templates/auth/login.html:14 templates/auth/login.html:27
+#: templates/auth/register.html:24
 msgid "Username"
 msgstr ""
 
-#: templates/auth/login.html:22 templates/auth/register.html:41
+#: templates/auth/login.html:19 templates/auth/login.html:36
+#: templates/auth/register.html:29
 msgid "Password"
 msgstr ""
 
-#: templates/auth/login.html:33
+#: templates/auth/login.html:42
 msgid "Don't have an account?"
 msgstr ""
 
-#: templates/auth/login.html:33
+#: templates/auth/login.html:42
 msgid "Register here"
+msgstr ""
+
+#: templates/auth/logout.html:2 templates/auth/logout.html:6
+msgid "Logged out"
+msgstr ""
+
+#: templates/auth/logout.html:7
+msgid "See you later"
 msgstr ""
 
 #: templates/auth/register.html:2 templates/auth/register.html:8
 msgid "Registration"
 msgstr ""
 
-#: templates/auth/register.html:9
-msgid ""
-"Good day, registration is allowed now! You can register to our Smart home"
-" by form!"
-msgstr ""
-
-#: templates/auth/register.html:16
+#: templates/auth/register.html:14
 msgid "First name"
 msgstr ""
 
-#: templates/auth/register.html:24
+#: templates/auth/register.html:19
 msgid "Last name"
 msgstr ""
 
-#: templates/auth/register.html:50
+#: templates/auth/register.html:34
 msgid "Repeat password"
 msgstr ""
 
-#: templates/auth/register.html:56
-msgid "Choose position in SH"
-msgstr ""
-
-#: templates/auth/register.html:59
-msgid "Managers of SH"
-msgstr ""
-
-#: templates/auth/register.html:60
-msgid "Owner"
-msgstr ""
-
-#: templates/auth/register.html:61
-msgid "Administrator"
-msgstr ""
-
-#: templates/auth/register.html:62
-msgid "Manager"
-msgstr ""
-
-#: templates/auth/register.html:63
-msgid "Visitors of SH"
-msgstr ""
-
-#: templates/auth/register.html:64
-msgid "Visitor"
-msgstr ""
-
-#: templates/auth/register.html:65
-msgid "Higher controller"
-msgstr ""
-
-#: templates/auth/register.html:66
-msgid "Lower controller"
-msgstr ""
-
-#: templates/auth/register.html:72
-msgid "Light"
-msgstr ""
-
-#: templates/auth/register.html:76
-msgid "Dark"
-msgstr ""
-
-#: templates/auth/register.html:80
-msgid "Smart"
-msgstr ""
-
-#: templates/auth/register.html:86
+#: templates/auth/register.html:40
 msgid "Female"
 msgstr ""
 
-#: templates/auth/register.html:90
+#: templates/auth/register.html:44
 msgid "Male"
 msgstr ""
 
-#: templates/auth/register.html:93
+#: templates/auth/register.html:50
 msgid "Register"
 msgstr ""
 
-#: templates/auth/register.html:95
-msgid "Have you an account yet?"
+#: templates/auth/register.html:52
+msgid "Already have an account?"
 msgstr ""
 
-#: templates/modal_edit/icons.html:2
+#: templates/auth/register.html:61
+msgid "Good day!"
+msgstr ""
+
+#: templates/auth/register.html:64
+msgid "This is Smart home"
+msgstr ""
+
+#: templates/auth/register.html:67
+msgid "Please register to SH now!"
+msgstr ""
+
+#: templates/modal_edit/icon_item.html:1 templates/modal_edit/icons.html:2
+#: templates/tiles/alarm_clock.html:4 templates/tiles/toggle.html:5
+#: templates/tiles/value_double.html:4
 msgid "Icon"
+msgstr ""
+
+#: templates/modal_edit/item_values.html:2
+msgid "Menu"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:13
+msgid "Monday"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:16
+msgid "Tuesday"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:19
+msgid "Wednesday"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:22
+msgid "Thursday"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:25
+msgid "Friday"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:28
+msgid "Saturday"
+msgstr ""
+
+#: templates/tiles/alarm_clock.html:31
+msgid "Sunday"
+msgstr ""
+
+#: templates/tiles/player.html:8
+msgid "Thumbnail"
+msgstr ""
+
+#: templates/tiles/player.html:9
+msgid "Previous"
+msgstr ""
+
+#: templates/tiles/player.html:10
+msgid "Pause"
+msgstr ""
+
+#: templates/tiles/player.html:11
+msgid "Play"
+msgstr ""
+
+#: templates/tiles/player.html:12
+msgid "Next"
 msgstr ""
 
 #: templates/tiles/toggle.html:7
@@ -261,4 +395,79 @@ msgstr ""
 #: templates/tiles/toggle.html:7
 msgid "Off"
 msgstr ""
+
+#~ msgid "On"
+#~ msgstr ""
+
+#~ msgid "Off"
+#~ msgstr ""
+
+#~ msgid "3d_printer"
+#~ msgstr ""
+
+#~ msgid "percentage"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Good day, registration is allowed now!"
+#~ " You can register to our Smart "
+#~ "home by form!"
+#~ msgstr ""
+
+#~ msgid "Light"
+#~ msgstr ""
+
+#~ msgid "Dark"
+#~ msgstr ""
+
+#~ msgid "Smart"
+#~ msgstr ""
+
+#~ msgid "graph_picker"
+#~ msgstr ""
+
+#~ msgid "Logout"
+#~ msgstr ""
+
+#~ msgid "Successfully logged out. You can login back"
+#~ msgstr ""
+
+#~ msgid "here"
+#~ msgstr ""
+
+#~ msgid "Choose position in SH"
+#~ msgstr ""
+
+#~ msgid "Managers of SH"
+#~ msgstr ""
+
+#~ msgid "Owner"
+#~ msgstr ""
+
+#~ msgid "Administrator"
+#~ msgstr ""
+
+#~ msgid "Manager"
+#~ msgstr ""
+
+#~ msgid "Visitors of SH"
+#~ msgstr ""
+
+#~ msgid "Visitor"
+#~ msgstr ""
+
+#~ msgid "Higher controller"
+#~ msgstr ""
+
+#~ msgid "Lower controller"
+#~ msgstr ""
+
+#~ msgid "Have you an account yet?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Welcome back! Before you can control "
+#~ "your Smart home, please, login into "
+#~ "your account."
+#~ msgstr ""
 
