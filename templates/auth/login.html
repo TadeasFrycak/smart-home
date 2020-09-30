@@ -5,42 +5,34 @@
 {% block content %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}" defer></script>
 
-    <div class="container">
-        <form class="text-center" id="login-form" autocomplete="off" action="{{ redirect }}">
+    <div class="container auth-container">
+        <form class="text-center" id="login-form" autocomplete="off">
             <p class="h4 mb-4">{{ _("Login") }}</p>
-            <div class="myField">
+            <div class="form-field">
                 <div class="field">
-                    <input id="username" type="text" name="username" class="input" placeholder=" ">
+                    <input id="username" type="text" name="username-entry" class="input" placeholder=" ">
                     <label for="username" class="label">{{ _("Username") }}</label>
                 </div>
 
                 <div class="field">
-                    <input id="password" type="password" name="password" class="input" placeholder=" ">
+                    {% if browser == "firefox" or browser == "safari" %}
+                        <input id="password" type="password" name="password" class="input" placeholder=" " readonly onfocus="this.removeAttribute('readonly');">
+                    {% else %}
+                        <!-- TODO nesmí jít kopírovat -->
+                        <input id="password" type="text" name="password" style="text-security:disc;-webkit-text-security:disc;-mox-text-security:disc;-moz-text-security:disc;" class="input" placeholder=" " readonly onfocus="this.removeAttribute('readonly');">
+                    {% endif %}
                     <label for="password" class="label">{{ _("Password") }}</label>
                 </div>
+                <!--
+                -->
             </div>
-            <!-- <div class="form-group">
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><img style="height:15px" src="{{ url_for('static', filename='img/static/user.png') }}" alt="User"></div>
-                    </div>
-                    <input type="text" id="username" class="form-control" placeholder="{{ _('Username') }}"> 
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><img style="height:18px" src="{{ url_for('static', filename='img/static/password.png') }}" alt="Password"></div>
-                    </div>
-                    <input type="password" id="password" class="form-control" placeholder="{{ _('Password') }}">
-                </div>
-            </div> -->
-
             <button class="btn btn-info btn-block" type="button" id="login">{{ _("Login") }}</button>
             <br>
-            {{ _("Don't have an account?") }} <a href="{{ url_for('register') }}">{{ _("Register here") }}</a>
-            <button class="btn btn-sm btn-light" type="button" style="position:absolute;right:54px;bottom:27px" id="incognito-login"><img style="width:23px" src="{{ url_for('static', filename='img/static/incognito.png') }}" alt="Anonymous"></button>
+            {% if registration == True %}
+                <!-- TODO FILIPE, tohle udělej jinak (to tlačítko anonymní režim) - například jako remember me apod -->
+                {{ _("Don't have an account?") }} <a href="{{ url_for('register') }}">{{ _("Register here") }}</a>
+                <button class="btn btn-sm btn-light" type="button" style="position:absolute;right:54px;bottom:27px" id="incognito-login"><img style="width:23px" src="{{ url_for('static', filename='img/static/incognito.png') }}" alt="Anonymous"></button>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

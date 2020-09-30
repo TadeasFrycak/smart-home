@@ -15,13 +15,18 @@
         <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap-notify.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/socket_io/socket.io.js') }}" defer></script>
 
-        <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/prevent_hack.js') }}" defer></script> -->
+        <!--<script type="text/javascript" src="{{ url_for('static', filename='js/prevent_hack.js') }}" defer></script>-->
 
         <script src="{{ url_for('babel_catalog') }}"></script>
 
         <style>
-            .bcg-normal {
-                background-image: url("{{ 'img/backgrounds/' + background_image }}");
+            {% if background_image %}
+                .bcg-normal {
+                    background-image: url("{{ url_for('static', filename='img/backgrounds/' + background_image ) }}");
+                }
+            {% endif %}
+            .bcg-edit {
+                background-image: url({{ url_for('static', filename='img/static/edit_bg.jpg') }});
             }
         </style>
         {% block head %} {% endblock %}
@@ -35,10 +40,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <meta http-equiv="refresh" content="4800">
 
-        <title>{% block title %} {% endblock %} - {{ _("SH") }}</title>
+        <title>{% block title %} {% endblock %} | {{ _("SH") }}</title>
     </head>
 
-    <body lang="{{ _("en-GB") }}" class="{% if mode == 'dark' %}dark{% else %}light{% endif %}" {% if edit == True %}is_edit_active="true"{% else %}is_edit_active="false"{% endif %}>
+    <body lang="{{ _("en-GB") }}" class="{{ mode }}" data-is-edit-active="false">
         <div class="bcg-normal"></div>
         <div class="bcg-edit"></div>
         <div class="preloader">
@@ -49,5 +54,8 @@
 
         <div class="modal-here"></div>
         <div class="modal-settings"></div>
+        {% if android_browser %}
+            <div class="modal-android"></div>
+        {% endif %}
     </body>
 </html>

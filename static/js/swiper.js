@@ -1,12 +1,49 @@
+function beforeRefresh(slide=swiper.realIndex) {
+  // TODO in new version remove this
+  // let tileID = ""
+  // if ($("body").hasClass("modal-open")) {
+  //   tileID += "?" + $(".modal-here").attr("id_of_caller");
+  // }
+  // if ($("body").attr("data-is-edit-active") === "true") {
+  //   if (swiper.realIndex === 0) {
+  //     window.history.pushState("", "", "/edit" + tileID);
+  //   }
+  //   else {
+  //     window.history.pushState("", "", "/edit/" + swiper.realIndex + tileID);
+  //   }
+  // }
+  // else {
+  //   if (swiper.realIndex === 0) {
+  //     window.history.pushState("", "", "/" + tileID);
+  //   }
+  //   else {
+  //     window.history.pushState("", "", "/" + swiper.realIndex + tileID);
+  //   }
+  // }
+
+  let tileID;
+  if ($("body").hasClass("modal-open")) {
+    tileID = $(".modal-here").attr("id_of_caller");
+  }
+  else {
+    tileID = null;
+  }
+  if ($(".swipe-body").data("index-change") === true) {
+    socketio.emit("before_refresh", {"data": {"slide_index": slide, "edit": $("body").attr("data-is-edit-active"),
+        "tile_id": tileID}, "tab_id": sessionStorage.tabID, "slide_index_change": true})
+  }
+  else {
+    socketio.emit("before_refresh", {"data": {"slide_index": slide, "edit": $("body").attr("data-is-edit-active"),
+        "tile_id": tileID}, "tab_id": sessionStorage.tabID, "slide_index_change": false})
+  }
+
+}
+
 $(document).ready(function(){
   // ----------------------------------------------
   // All about Swiper
   // ----------------------------------------------
 
-  let touchStart;
-  let sliderMove = 0;
-  let tap = 0;
-  try {
   // Initialise Swiper
   swiper = new Swiper(".swiper-container", {
     pagination: {
@@ -14,20 +51,14 @@ $(document).ready(function(){
       clickable: true,
     },
     threshold: "10"
-   });
+  });
+
+  swiper.slideTo($(".swipe-body").data("start-index"), 0);
 
   // Events
-  swiper.on("tap", function() {
-    tap = 1;
-  });
-
-  swiper.on("sliderMove", function() {
-    sliderMove = 1;
-  });
-
-  swiper.on("touchStart", function(event) {
-    touchStart = event.layerX
-  });
+  swiper.on("slideChange", function () {
+    // updateSearchBar();
+  })
 
   document.getElementById("swiper-pagination").addEventListener("wheel", event => {
     const delta = Math.sign(event.deltaY);
@@ -38,53 +69,4 @@ $(document).ready(function(){
       swiper.slidePrev();
     }
   });
-
-  document.onkeydown = function(e) {
-    switch(e.which) {
-        case 37: // left
-            swiper.slidePrev();
-            break;
-
-        case 38: // up
-            if ($("body").hasClass("modal-open")) $("#myModal").animate({scrollTop: 0}, "slow");
-            else $("html, body").animate({scrollTop: 0}, "slow");
-            break;
-
-        case 39: // right
-            swiper.slideNext();
-            break;
-
-        case 40: // down
-            if ($("body").hasClass("modal-open")) $("#myModal").animate({scrollTop: $(".modal-dialog").height()}, "slow");
-            else $("html, body").animate({scrollTop: $(document).height()}, "slow");
-            break;
-
-        default: return; // exit this handler for other keys
-    }
-    e.preventDefault(); // prevent the default action (scroll / move caret)
-};
-  swiper.on("touchEnd", function(event) {
-    // If user swiped
-    if (tap === 0 && sliderMove === 0 && editMode === true && Math.abs(touchStart-event.layerX) > 300) {
-      // Send local notification
-      //$.notify({
-      //  title: "<strong>Swipování není povoleno!</strong>",
-      //  message: "Nelze swipovat, dokud je aktivní editační mód!"
-      //}, {
-      //  type: "warning",
-      //  delay: 5000,
-      //  mouse_over: "pause",
-      //  allow_dismiss: true,
-      //  animate: {
-      //    enter: "animated fadeInRight",
-      //    exit: "animated fadeOutRight"
-      //  },
-      //  z_index: 2000
-      //});
-    }
-
-    tap = 0;
-    sliderMove = 0;
-  });
-} catch {};  // Kvůli register a login
 });

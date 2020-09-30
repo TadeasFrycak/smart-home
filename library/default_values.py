@@ -1,20 +1,34 @@
 import random
+import string
 
 
 class DefaultValues:
     TILE_TYPE = "blank"
 
-    def __init__(self):
-        pass
+    def __init__(self, fmng):
+        self.__fmng = fmng
 
     @staticmethod
-    def random_id():
+    def create_random_id():
+        return "".join(random.choices(string.ascii_lowercase, k=2)) + "".join(random.choices(string.digits.lower(), k=4))
+
+    def random_id(self):
         """
         Make random ID
         :return: random ID
         """
+        IDs = []
+        for page, page_content in enumerate(self.__fmng.devices):
+            for device in page_content["children"]:
+                # Check duplicity for current device
+                if device["data"]["id"] not in IDs:
+                    IDs.append(device["data"]["id"])
 
-        return "id-" + str(random.randrange(1000, 9999))
+        random_id = self.create_random_id()
+        while random_id in IDs:
+            random_id = self.create_random_id()
+
+        return random_id
 
     @staticmethod
     def modal_item_value(type_of_item):
@@ -48,25 +62,34 @@ class DefaultValues:
         :return: value
         """
 
-        if value_name == "value" and tile_type == "toggle":
-            return 0
+        if value_name == "value":
+            if tile_type == "toggle":
+                return 0
 
-        elif value_name == "value" and tile_type == "value":
-            return {"value": "Null", "suffix": ""}
+            elif tile_type == "value":
+                return {"value": "Null", "suffix": ""}
 
-        elif value_name == "value" and tile_type == "value_double":
-            return {"left": {"value": "Null", "suffix": ""}, "right": {"value": "Null", "suffix": ""}}
+            elif tile_type == "value_double":
+                return {"left": {"value": "Null", "suffix": ""}, "right": {"value": "Null", "suffix": ""}}
+
+            elif tile_type == "blank":
+                return None
+
+            elif tile_type == "alarm_clock":
+                return {"main": False, "monday": False, "tuesday": False, "wednesday": False, "thursday": False,
+                        "friday": False, "saturday": False, "sunday": False}
 
         elif value_name == "icon":
             return "none.png"
 
-        elif value_name == "value" and tile_type == "blank":
-            return None
-
-        else:
-            return False
+        return False
 
     def tile(self):
+        """
+        Get default tile
+        :return: default tile
+        """
+
         tile_value = self.tile_value(value_name="value", tile_type=self.TILE_TYPE)
 
         if tile_value:

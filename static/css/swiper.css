@@ -43,14 +43,15 @@
     font-size:40px;
     line-height: 40px;
     width: 100%;
+    margin-top: 40px;
     margin-bottom: 80px;
     color: #fafafa;
     text-shadow: horizontal-offset vertical-offset blur color;
     text-shadow: 2px 4px 3px rgba(0,0,0,0.4);
+    transition: 0.5s all;
 }
 
 .swipe-body{
-    padding-top: 40px;
     height: 100%;
 }
 
@@ -74,11 +75,13 @@
     .swipe-body{
         padding: 2px;
     }
-    .page_settings_icon {
-        position: absolute;
-        width: 24px;
-        right: -33px;
-        top: -4px;
+    .page-menu-status-wrapper {
+        right: -20px;
+        top: 23px;
+    }
+    .exit-edit-mode-button {
+        display: none;
+        opacity: 0;
     }
 }
 

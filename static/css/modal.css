@@ -1,3 +1,10 @@
+:root {
+    --main-dark-first: #1b262c;
+    --main-dark-second: #0f4c75;
+    --main-dark-third: #3282b8;
+    --main-dark-fourth: #bbe1fa;
+}
+
 .modal-edit-icon {
     height: 35px;
     transition: 0.5s;
@@ -33,7 +40,8 @@
     transition: all 0.3s;
 }
 .dark .modal-content {
-  background-color: #222831;
+  /* background-color: #222831; */
+  background-color: var(--main-dark-first);
   color: #fff;
 }
 
@@ -43,6 +51,7 @@
 
 .dark .modal-content input[type="text"]{
     background-color: #222831;
+    background-color: #333c4a;
 }
 
 .dark div.modal-edit-item{
@@ -67,7 +76,22 @@
 .dark .modal-here input {
   color: white;
   background-color: #222831;
+  background-color: #333c4a;
 }
+
+
+
+.dark .modal-here input:read-only{
+    color: white;
+    background-color: red;
+    background-color: var(--main-dark-first);
+  }
+
 .dark .close {
     color: #fff;
+}
+
+
+textarea{
+    background-color: #333c4a !important;
 }

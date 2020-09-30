@@ -8,14 +8,17 @@
   width: 100%;
   height: 100%;
   z-index: 0;
+  transition: all 0.5s;
 }
 
 .bcg-edit {
   display: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/img/static/edit_bg.jpg");
 }

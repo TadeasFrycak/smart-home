@@ -2,6 +2,10 @@ from flask_babel import gettext, lazy_gettext
 
 
 class Refactoring:
+    """
+    Refactoring class
+    """
+
     dictionary = {
         # Tile type
         "blank": lazy_gettext("blank"),
@@ -25,10 +29,15 @@ class Refactoring:
         "value_max": lazy_gettext("value_max"),
         "color": lazy_gettext("color"),
         "colour": lazy_gettext("colour"),
-        "pair": lazy_gettext("pair")
+        "pair": lazy_gettext("pair"),
+        "step": lazy_gettext("step"),
     }
 
     def __init__(self):
+        """
+        Init of Refactoring class
+        """
+
         pass
 
     def refactor(self, data):
@@ -73,6 +82,12 @@ class Refactoring:
                     return " ".join(refactored)
 
     def translate(self, data):
+        """
+        Translate phrase
+        :param data: phrase to translate
+        :return: translated data
+        """
+
         try:
             return self.dictionary[data]
 
@@ -80,6 +95,12 @@ class Refactoring:
             return data
 
     def translate_reverse(self, data):
+        """
+        Translate reverse phrase
+        :param data: phrase to translate back
+        :return: translated data
+        """
+
         for num, value in enumerate(self.dictionary.values()):
             if value == data:
                 return list(self.dictionary.keys())[num]
@@ -92,4 +113,5 @@ class Refactoring:
         :param data: refactored data
         :return: reversed refactored data
         """
+
         return self.translate_reverse(str(data).strip().lower().replace(" ", "_"))

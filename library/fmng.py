@@ -1,6 +1,6 @@
+import configparser
 import json
 import glob
-import sys
 import os
 
 
@@ -14,7 +14,6 @@ class FileManager:
     APP_CONFIG_DIR = "app_config"
     TEMPLATES_DIR = "templates"
 
-    CONFIG_FILE = "main.json"
     DEVICES_FILE = "devices.json"
     WHITELIST_FILE = "whitelist.json"
     BLACKLIST_FILE = "blacklist.json"
@@ -102,8 +101,9 @@ class FileManager:
         Get classify config JSON
         :return:
         """
-
-        return self.load_file(path=self.path_join(self.DATA_DIR, self.SERVER_CONFIG_DIR, self.CONFIG_FILE))
+        config = configparser.ConfigParser()
+        config.read("config/main.ini")
+        return config
 
     @property
     def settings(self):
@@ -188,6 +188,11 @@ class FileManager:
         """
 
         self.write_file(path=self.path_join(self.DATA_DIR, self.MAC_LIST_FILE), data=mac_list, is_json=True)
+
+    def get_latest_apk(self):
+        apks = self.list_file_names(path="static/android", name="*.apk")
+        apks.sort()
+        return apks[-1]
 
     @staticmethod
     def path_join(*argv):

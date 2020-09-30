@@ -1,78 +1,62 @@
-<div class="modal fade" id="mySettingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Settings</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+{% extends "modal.html" %}
+
+{% block title %}
+    {{ _("Settings") }}
+{% endblock %}
+
+{% block content %}
+    <div class="modal-settings-page-item">
+        <span style="margin-right: 100%;" >{{ _("Appearance") }}</span>
+
+        <div class="modal-settings-page-appearance-wrapper" data-selected="false">
+            <div class="modal-settings-page-appearance" data-type="light">
+                <img alt="{{ _("LIGHT") }}" src="{{ url_for('static', filename='/img/static/mode-light.png') }}" class="modal-settings-page-appearance-img">
+                <div class="modal-settings-page-appearance-label">{{ _("LIGHT") }}</div>
             </div>
-            <div class="modal-body">
 
-                <div class="modal-settings-page-item">
-                    <span style="margin-right: 100%;" >Appearance</span>
-
-                    <div class="modal-settings-page-appearance-wrapper">
-                        <div class="modal-settings-page-appearance" data-type="light">
-                            <img src="{{ url_for('static', filename='/img/static/mode-light.png') }}" class="modal-settings-page-appearance-img">
-                            <div class="modal-settings-page-appearance-label">LIGHT</div>
-                        </div>
-    
-                        <div class="modal-settings-page-appearance" data-type="dark">
-                            <img src="{{ url_for('static', filename='/img/static/mode-dark.png') }}" class="modal-settings-page-appearance-img">
-                            <div class="modal-settings-page-appearance-label">DARK</div>
-                        </div>
-    
-                        <div class="modal-settings-page-appearance" data-type="smart">
-                            <img src="{{ url_for('static', filename='/img/static/mode-auto.png') }}" class="modal-settings-page-appearance-img">
-                            <div class="modal-settings-page-appearance-label">SMART</div>
-                        </div>
-                    </div>
-
-                
-                    <style>
-                        .modal-settings-page-appearance-img{
-                            width: 100%;
-                            height: 100%;  
-                        }
-                        .modal-settings-page-appearance
-                        {
-                            width: 100px;
-                            height: 100px;  
-                            display: inline-block;
-                            margin-right: 30px;
-                        }
-                        .modal-settings-page-appearance-wrapper{
-                            margin-top: 20px;
-                        }
-                        .modal-settings-page-appearance-label{
-                            text-align: center;
-                            margin-top: 5px;
-                        }
-
-                    </style>
-
-                </div>
-
-                <!-- {% for item in modal %}
-                    {% include "modal/" + item["type"] + ".html" %}
-                {% endfor %} -->
-
-                <div class="form-group-sm row">
-                    <label for="tile-type" class="col-sm-2 col-form-label">Background</label>
-                    <div class="col-sm-10">
-                        <div class="modal-edit-icons">
-                            <!-- TODO-->
-                                <img src="{{ 'img/backgrounds/' }}" data-name="background-name" class="modal-edit-select-bcg" checked>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Add Pagination -->
+            <div class="modal-settings-page-appearance" data-type="dark" data-selected="false">
+                <img alt="{{ _("DARK") }}" src="{{ url_for('static', filename='/img/static/mode-dark.png') }}" class="modal-settings-page-appearance-img">
+                <div class="modal-settings-page-appearance-label">{{ _("DARK") }}</div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">{{ _("Close") }}</button>
+
+            <div class="modal-settings-page-appearance" data-type="smart" data-selected="false">
+                <img alt="{{ _("SMART") }}" src="{{ url_for('static', filename='/img/static/mode-auto.png') }}" class="modal-settings-page-appearance-img">
+                <div class="modal-settings-page-appearance-label">{{ _("SMART") }}</div>
+            </div>
+        </div>
+
+        <style>
+            .modal-settings-page-appearance-img {
+                width: 100%;
+                height: 100%;
+            }
+            .modal-settings-page-appearance {
+                width: 100px;
+                height: 100px;
+                display: inline-block;
+                margin-right: 30px;
+            }
+            .modal-settings-page-appearance-wrapper {
+                margin-top: 20px;
+            }
+            .modal-settings-page-appearance-label {
+                text-align: center;
+                margin-top: 5px;
+            }
+        </style>
+    </div>
+
+    <!-- {% for item in modal %}
+        {% include "modal/" + item["type"] + ".html" %}
+    {% endfor %} -->
+
+    <div class="form-group-sm row">
+        <label for="tile-type" class="col-sm-2 col-form-label">{{ _("Background") }}</label>
+        <div class="col-sm-10">
+            <div class="modal-edit-icons">
+                <!-- TODO-->
+                <img alt="background" src="{{ 'img/backgrounds/' }}" data-name="background-name" class="modal-edit-select-bcg" checked>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}

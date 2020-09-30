@@ -13,6 +13,8 @@ class WerkzeugLogger:
         Init of WerkzeugLogger class
         """
 
+        assert isinstance(priority, int), "Werkzeug priority should be int"
+
         self.__priority = self.PRIORITY[priority]
 
         self.__log = logging.getLogger("werkzeug")
@@ -42,6 +44,8 @@ class AuthLogger:
         """
         Init of AuthLogger class
         """
+
+        assert isinstance(priority, int), "auth priority should be int"
 
         self.__priority = self.PRIORITY[priority]
 
@@ -100,6 +104,7 @@ class ConsoleLogger:
         Init of ConsoleLogger class
         """
 
+        assert isinstance(priority, int), "console priority should be int"
         self.__priority = self.PRIORITY[priority]
 
         self.__log = logging.getLogger("console")

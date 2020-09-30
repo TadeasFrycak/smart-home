@@ -1,20 +1,22 @@
 <div class="grid-square">
     <div style="width: 212px" class="tile enable-hammer" data-id="{{ tile.data.id }}" data-type="toggle">
         <span class="toggle-dot"></span> 
-        <label id="music_name" for="" style="max-height: 20px;position: absolute;top: 20px;left: 105px;max-width: 100px;overflow:hidden">Bon Jovi - It"s my life</label>
-        <div class="music-track-01el" style="position: absolute; left:105px; width:100px; height:3px; top:45px; background-color:#989898;"></div>
-        <div class="music-track-02el" style="position: absolute; left:105px; width:0px; height:3px; top:45px; background-color:grey;"></div>
+        <label id="music_artist"style="max-height: 20px;position: absolute;top: 20px;left: 105px;max-width: 90px;overflow:hidden">Bon Jovi</label>
+        <label id="music_song"style="height: 32px;position: absolute; top: 43px;left: 105px; width: 90px; overflow:hidden; font-size: 13px;">It's my life</label>
+        <div class="music-track-01el" style="position: absolute; left:100px; width:65px; height:3px; top:85px; background-color:#868686;"></div>
+        <div class="music-track-02el" style="position: absolute; left:100px; width:20px; height:3px; top:85px; background-color:#424242;"></div>
+        <div class="music-track-03el" style="position: absolute; right:6px; top:76px; font-size:13px; opacity: 80%;">-3:59</div>
         <div class="tile-text" style="margin: 0px;">
             <img alt="{{ _('Thumbnail') }}" id="thumbnail" src="{{ url_for('static', filename='/img/static/BJ_Greatest.jpg') }}" style="width: 80px; position: absolute;;transition: 1s;left: 10px;top: 10px;border-radius:10px;">
-            <img alt="{{ _('Previous') }}" class="icon-invert" id="music-return" src="{{ url_for('static', filename='/img/static/previous.png') }}" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 115px;top: 75px;">
-            <img alt="{{ _('Pause') }}" class="stop icon-invert" src="{{ url_for('static', filename='/img/static/pause.png') }}" style="display:none;width: 20px; position: absolute;transform: translate(-50%, -50%);left: 158px;top: 75px;">
+            <!-- <img alt="{{ _('Previous') }}" class="icon-invert" id="music-return" src="{{ url_for('static', filename='/img/static/previous.png') }}" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 115px;top: 75px;"> -->
+            <!-- <img alt="{{ _('Pause') }}" class="stop icon-invert" src="{{ url_for('static', filename='/img/static/pause.png') }}" style="display:none;width: 20px; position: absolute;transform: translate(-50%, -50%);left: 158px;top: 75px;">
             <img alt="{{ _('Play') }}" class="play icon-invert" src="{{ url_for('static', filename='/img/static/play.png') }}" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 158px;top: 75px;">
-            <img alt="{{ _('Next') }}" class="icon-invert" id="music-skip" src="{{ url_for('static', filename='/img/static/next.png') }}" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 195px;top: 75px;">
+            <img alt="{{ _('Next') }}" class="icon-invert" id="music-skip" src="{{ url_for('static', filename='/img/static/next.png') }}" style="width: 20px; position: absolute;transform: translate(-50%, -50%);left: 195px;top: 75px;"> -->
         </div>
-        <div class="tile-touch-layer"></div>
+        <!-- <div class="tile-touch-layer"></div>
         <div class="tile-inner-touch-layer" style="position: absolute;width: 30px;height: 30px;top: 60px;left: 100px;" data-inner-id="button-previous"></div>
         <div class="tile-inner-touch-layer" style="position: absolute;width: 30px;height: 30px;top: 60px;left: 142px;" data-inner-id="button-play"></div>
-        <div class="tile-inner-touch-layer" style="position: absolute;width: 30px;height: 30px;top: 60px;left: 179px;" data-inner-id="button-next"></div>
+        <div class="tile-inner-touch-layer" style="position: absolute;width: 30px;height: 30px;top: 60px;left: 179px;" data-inner-id="button-next"></div> -->
     </div>
 </div>
 

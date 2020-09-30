@@ -1,8 +1,12 @@
 $(document).ready(function(){
-  // TODO signalizace co je špatně (FILIPE) - když začnu upravovat input tak aby zmizla červená barva textu
   // TODO přidat podmínku, aby heslo nemohlo obsahovat jméno, příjmení ani username (předtím dát jmeno.lower() a prijmeni.lower() a password.lower() nebo toLowerCase nebo jak je to v JS)
 
   socketio = io("/com");
+
+  socketio.on("reconnect", function() {
+    console.log("Server reconnected! Reloading...");
+    location.reload();
+  });
 
   socketio.on("register_result", function(data){
     if (data.status === true)
@@ -12,107 +16,223 @@ $(document).ready(function(){
     else
     {
       console.log("Username is used");  // TODO signalizace tohohle stavu
-      $("#username").val("");
+      $("#register-username").val("");
     }
   });
 
-  $("#first_name").focusout(function(){
+  $("#register-first-name").focusout(function(){
     validateName($(this));
   });
 
-  $("#last_name").focusout(function(){
+  $("#register-last-name").focusout(function(){
     validateName($(this));
   });
 
-  function validateName(object){
-    let is_invalid_first_name = /([^\p{L}])/ug.test($(object).val());
-
-    if (is_invalid_first_name) {
-      $(object).toggleClass("invalid",true);
-      console.log("Invalid characters!");
-      return false
-    }
-    else {
-      $(object).toggleClass("invalid",false); 
-      return true
-    } 
-  }
-
-  $("#username").focusout(function(){
+  $("#register-username").focusout(function(){
     validateUserName();
   });
 
+  // $("#register-password").focusout(function(){
+  //   validatePassword();
+  // });
+
+  $("#register-password").focusin(function(){
+    // $(".password-requirements").css("display","block");
+    $(".password-requirements").slideDown( "fast", function() {});
+  });
+  
+  $("#register-password").focusout(function(){
+    // $(".password-requirements").css("display","none");
+    $(".password-requirements").slideUp( "fast", function() {});
+  });
+  
+  $("#register-password").on("input",function(){
+    validatePassword_();
+  });
+  
+  // $("#register-repeat-password").focusout(function(){
+  //   validateRepeatPassword();
+  // });
+
+  function validateName(object){
+    let is_invalid_name = /([^\p{L}])/ug.test($(object).val());
+    let result = true;
+
+    if (is_invalid_name) {
+      $(object).toggleClass("invalid",true);
+      console.log("Invalid characters!");
+      result = false
+    }
+    else {
+      $(object).toggleClass("invalid",false); 
+    } 
+
+    if ($(object).val()=="") result = false;
+
+    return result
+
+  }
+
   function validateUserName(){
-    let is_invalid_username = /([^a-zA-Z|\d|.|-|_|-]+)/ug.test($("#username").val());
+    let is_invalid_username = /([^a-zA-Z|\d|.|-|_|-]+)/ug.test($("#register-username").val());
+
+    let result = true;
 
     if (is_invalid_username)
     {
-       $("#username").toggleClass("invalid",true);
-       return false
+       $("#register-username").toggleClass("invalid",true);
+       result = false;
     }
     else 
     {
-      $("#username").toggleClass("invalid",false);
-      return true
+      $("#register-username").toggleClass("invalid",false);
     }
+
+    if ($("#register-username").val()=="") result = false;
+
+    return result
   }
 
-  $("#password").focusout(function(){
-    validatePassword();
-  });
+  function validatePassword_() {
 
-  function validatePassword() {
-    let is_valid_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}/.test($("#password").val());
+    let element = $("#register-password");
+    let second_element = $("#register-repeat-password");
+    let chars_label = $("#reg-label-chars");
+    let digit_label = $("#reg-label-digit");
+    let letter_label = $("#reg-label-letter");
 
-    if (!is_valid_password) {
-       $("#password").toggleClass("invalid",true);
-       return false
+    let passed = true;
+
+    // must contain:
+    // 8 chars
+    // 1 upper and lower
+    // one number
+
+    // one digit:
+    let digit_test = /[1-9]/g.test(element.val());
+    if (digit_test == true){
+      digit_label.toggleClass("register-password-valid", true);
+      digit_label.toggleClass("register-password-invalid", false);
     }
     else {
-      $("#password").toggleClass("invalid",false); 
-      return true
+      passed = false;
+      digit_label.toggleClass("register-password-valid", false);
+      digit_label.toggleClass("register-password-invalid", true);
     }
-  }
 
-  $("#repeat_password").focusout(function(){
-    validateRepeatPassword();
-  });
-
-  function validateRepeatPassword() {
-    let is_valid_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}/.test($("#repeat_password").val());
-
-    if (!is_valid_password || $("#repeat_password").val() !== $("#password").val()) {
-      $("#repeat_password").toggleClass("invalid",true);
-      return false
+    // 8 chars:
+    let chars_test = /.{8,}/g.test(element.val());
+    if (chars_test == true){
+      chars_label.toggleClass("register-password-valid", true);
+      chars_label.toggleClass("register-password-invalid", false);
     }
     else {
-      $("#repeat_password").toggleClass("invalid",false);
-      return true
+      passed = false;
+      chars_label.toggleClass("register-password-valid", false);
+      chars_label.toggleClass("register-password-invalid", true);
     }
+
+    // lower and upper:
+    let letter_test = /(?=.*[a-z])(?=.*[A-Z])/g.test(element.val());
+    if (letter_test == true){
+      letter_label.toggleClass("register-password-valid", true);
+      letter_label.toggleClass("register-password-invalid", false);
+    }
+    else {
+      passed = false;
+      letter_label.toggleClass("register-password-valid", false);
+      letter_label.toggleClass("register-password-invalid", true);
+    }
+
+    if (element.val() != second_element.val()) passed = false;
+
+    return passed
   }
+
+  // function validatePassword() {
+  //   let is_valid_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}/.test($("#register-password").val());
+
+  //   if (!is_valid_password) {
+  //     if($("#register-password").val().length > 0)
+  //     {
+  //       $("#register-password").toggleClass("invalid",true);
+  //     }
+  //     else $("#register-password").toggleClass("invalid",false);
+  //     return false
+  //   }
+  //   else {
+  //     $("#register-password").toggleClass("invalid",false); 
+  //     return true
+  //   }
+  // }
+
+
+  // function validateRepeatPassword() {
+  //   let is_valid_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}/.test($("#register-repeat-password").val());
+
+  //   if (!is_valid_password || $("#register-repeat-password").val() !== $("#register-password").val()) {
+  //     if($("#register-repeat-password").val().length > 0)
+  //     {
+  //       $("#register-repeat-password").toggleClass("invalid",true);
+  //     }
+  //     else $("#register-repeat-password").toggleClass("invalid",false);
+  //     return false
+  //   }
+  //   else {
+  //     $("#register-repeat-password").toggleClass("invalid",false);
+  //     return true
+  //   }
+  // }
   
 
   $("body").on("click", "#register", function() {
-    if ($("#first_name").val() !== "" || $("#last_name").val() !== "" || $("#username").val() !== "" || $("#password").val() !== "" || $("#repeat_password").val() !== "") {
-      if (validateName($("#first_name")) && validateName($("#last_name")) && validateUserName() && validatePassword() && validateRepeatPassword()) {
-        let sex = $(".sex:checked").val()
-        if(sex) {
-          $(".sex").removeClass("is-invalid");
-          socketio.emit("register", {
-            "first_name": $("#first_name").val(),
-            "last_name": $("#last_name").val(),
-            "username": $("#username").val(),
-            "password": $("#password").val(),
-            "password_repeat": $("#repeat_password").val(),
-            "sex": sex
-          });
-        }
-        else {
-          $(".sex").addClass("is-invalid");  // TODO FILIPE tohle nějak přepracuj (i ten design)
-        }
-      }
+    let validate_fname = validateName($("#register-first-name"));
+    let validate_lname = validateName($("#register-last-name"));
+    let validate_uname = validateUserName();
+    let validate_password = validatePassword_();
+
+    console.log("Validate report:");
+    console.log("First name: " + validate_fname);
+    console.log("Last name: " + validate_lname);
+    console.log("Username: " + validate_uname);
+    console.log("Password: " + validate_password);
+
+    if (validate_fname && validate_lname && validate_uname && validate_password)
+    {
+      console.log("Validation successfull");
+
+      socketio.emit("register", {
+        "first_name": $("#register-first-name").val(),
+        "last_name": $("#register-last-name").val(),
+        "username": $("#register-username").val(),
+        "password": $("#register-password").val()
+        // "password_repeat": $("#register-repeat-password").val(),
+        // "sex": sex
+      });
     }
+
+
+    // if ($("#register-first-name").val() !== "" || $("#register-last-name").val() !== "" || $("#register-username").val() !== "" || $("#register-password").val() !== "" || $("#register-repeat-password").val() !== "") {
+    //   if (validateName($("#register-first-name")) && validateName($("#register-last-name")) && validateUserName() && validatePassword() && validateRepeatPassword()) {
+    //     let sex = $(".sex:checked").val()
+    //     if(sex) {
+    //       $(".sex").removeClass("is-invalid");
+    //     }
+    //     else {
+    //       $(".sex").addClass("is-invalid");  // TODO FILIPE tohle nějak přepracuj (i ten design)
+    //     }
+    //   }
+    // }
   });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -135,11 +255,11 @@ $(document).ready(function(){
   //   else {$("#user-name").val(firstName + "." + lastName);}
   // }
   // function passwordMatch() {
-  // if ($("#password").val() == $("#password-repeat").val()) {
-  //     $("#password-repeat").removeClass("is-invalid");
+  // if ($("#register-password").val() == $("#register-password-repeat").val()) {
+  //     $("#register-password-repeat").removeClass("is-invalid");
   //   }
   //   else {
-  //     $("#password-repeat").addClass("is-invalid");
+  //     $("#register-password-repeat").addClass("is-invalid");
   //   }
   // }
 
@@ -168,35 +288,35 @@ $(document).ready(function(){
   //   notSame();
   // });
 
-  // $("#password").on("input", function(e){
+  // $("#register-password").on("input", function(e){
   //   passwordMatch();
   //     // Validate lowercase letters
   //   let lowerCaseLetters = /[a-z]/g;
   //   let upperCaseLetters = /[A-Z]/g;
   //   let numbers = /[0-9]/g;
-  //   if(!$("#password").val().match(lowerCaseLetters)) {
-  //     $("#password").addClass("is-invalid");
+  //   if(!$("#register-password").val().match(lowerCaseLetters)) {
+  //     $("#register-password").addClass("is-invalid");
   //   }
   //   // Validate capital letters
-  //   else if(!$("#password").val().match(upperCaseLetters)) {
-  //     $("#password").addClass("is-invalid");
+  //   else if(!$("#register-password").val().match(upperCaseLetters)) {
+  //     $("#register-password").addClass("is-invalid");
   //   }
 
   //   // Validate numbers
-  //   else if(!$("#password").val().match(numbers)) {
-  //     $("#password").addClass("is-invalid");
+  //   else if(!$("#register-password").val().match(numbers)) {
+  //     $("#register-password").addClass("is-invalid");
   //   }
 
   //   // Validate length
-  //   else if($("#password").val().length <= 8) {
-  //     $("#password").addClass("is-invalid");
+  //   else if($("#register-password").val().length <= 8) {
+  //     $("#register-password").addClass("is-invalid");
   //   }
   //   else {
-  //     $("#password").removeClass("is-invalid");
+  //     $("#register-password").removeClass("is-invalid");
   //   }
   // });
 
-  // $("#password-repeat").on("input", function(e){
+  // $("#register-password-repeat").on("input", function(e){
   //   passwordMatch();
   // });
 
@@ -223,24 +343,24 @@ $(document).ready(function(){
 
   // $("body").on("click", "#register", function() {
 
-  //   let first_name =
+  //   let firstname =
 
 
   //   // let firstName = finalValidCheck($("#first-name"));
   //   // let lastName = finalValidCheck($("#last-name"));
-  //   // let password = finalValidCheck($("#password"));
-  //   // let passwordRepeat = finalValidCheck($("#password-repeat"));
+  //   // let password = finalValidCheck($("#register-password"));
+  //   // let passwordRepeat = finalValidCheck($("#register-password-repeat"));
   //   // let sex = $(".sex:checked").val();
   //   // if(firstName && lastName && password && passwordRepeat && sex) {
   //   //   if(sex) {
   //   //     $(".sex").removeClass("is-invalid");
   //   //     socketio.emit("register", {
-  //   //       "first_name": $("#first-name").val(),
-  //   //       "last_name": $("#last-name").val(),
+  //   //       "firstname": $("#first-name").val(),
+  //   //       "lastname": $("#last-name").val(),
   //   //       "user_name": $("#user-name").val(),
   //   //       "permission": $("#permission").text(),
-  //   //       "password": $("#password").val(),
-  //   //       "password_repeat": $("#password-repeat").val(),
+  //   //       "password": $("#register-password").val(),
+  //   //       "password_repeat": $("#register-password-repeat").val(),
   //   //       "register_date": new Date(),  // TODO Filipe trochu zformátuj na normální, jako to máme v daterangepicker
   //   //       "sex": sex
   //   //     });

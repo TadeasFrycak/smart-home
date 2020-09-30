@@ -1,6 +1,15 @@
-html,
-body {
-  overflow: hidden;
+/*html,*/
+/*body {*/
+/*  overflow: hidden;*/
+/*}*/
+
+
+
+:root {
+    --main-dark-first: #1b262c;
+    --main-dark-second: #0f4c75;
+    --main-dark-third: #3282b8;
+    --main-dark-fourth: #bbe1fa;
 }
 
 form {
@@ -15,17 +24,26 @@ form {
 }
 
 .dark form {
-    background-color: #222831;
+    /* background-color: #222831; */
+    background-color: var(--main-dark-first);
     color: white;
     box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)
 }
 
-.bcg-normal {
-    filter: blur(18px);
-    transform: scale(1.1);
+ .bcg-normal::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(18px); /* apply the blur */
+  backdrop-filter: blur(18px);         /* apply the blur */
+  pointer-events: none; /* make the pseudo class click-through */
 }
 
-.container {
+
+
+.auth-container {
     position:absolute;
     max-width:510px;
     transform: translate(-50%, -50%);
@@ -37,11 +55,7 @@ form {
     color:white
 }
 
-
-
-
-
-.myField{
+.form-field{
     margin-bottom: 60px;
 }
 
@@ -54,6 +68,11 @@ form {
     margin: 3rem auto 1rem;
     transition: 500ms;
 }
+
+.dark .field{
+    border-bottom: 2px dashed rgba(223, 223, 223, 0.08);
+}
+
 
 .input{
     z-index: 10;
@@ -78,6 +97,7 @@ form {
 .label {
     color:var(--text-color);
     font-size: 1.2rem;
+    cursor: text;
     
 }
 
@@ -130,3 +150,23 @@ form {
     transform: scale(0.8) translateY(-5rem);
     opacity: 1;
   }
+
+.register-pass-label {
+    left: 20px;
+    position: relative;
+}
+
+.register-password-valid:before {
+    position: relative;
+    left: -4px;
+    top: 1px;
+    content: "✔";
+}
+
+  
+.register-password-invalid:before {
+    position: relative;
+    left: -4px;
+    top: 1px;
+    content: "✖";
+}

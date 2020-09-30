@@ -1,0 +1,149 @@
+{% extends "modal.html" %}
+
+{% block title %}
+    {{ _("Client list") }}
+{% endblock %}
+
+{% block content %}
+    {% for client in clients %}
+    <div class="list-group-item modal-edit-item">
+    {#    <img alt="{{ _('Menu') }}" src="{{ url_for('static', filename='/img/static/menu.png') }}" class="menu-handle icon-invert" style="height: 13px;margin-right: 10px;width:15px; cursor:pointer;">#}
+        <span style="font-weight:bold;font-size:15px;">{{ client.ip }}</span>
+            <span style="margin-left:10px;margin-right:10px;">-</span>
+            <span style="font-style:italic;">{{ client.platform | title }}</span>
+
+        <div class="modal-edit-item-dropdown">
+            <form>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("IP") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.ip }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("MAC") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.mac | upper }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("Connected") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.time.connected }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("User") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.user }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("Platform") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.platform | title }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("Browser") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.browser.name | title }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("Browser version") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.browser.version }}
+                    </div>
+                </div>
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("Browser language") }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ client.browser.language }}
+                    </div>
+                </div>
+                {% if client.browser.package %}
+                    <div class="form-group-sm row">
+                        <div class="col-sm-4">
+                            {{ _("Browser package") }}
+                        </div>
+                        <div class="col-sm-8">
+                            {{ client.browser.package }}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="form-group-sm row">
+                    <div class="col-sm-4">
+                        {{ _("Browser URL") }}
+                    </div>
+                    <div class="col-sm-8">
+                        <a>{{ client.browser.url }}</a>
+                    </div>
+                </div>
+            </form>
+
+            <button type="button" class="btn btn-sm btn-outline-danger modal-edit-item-delete">
+                <span>{{ _("Delete") }}</span>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+{#                <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">IP</th>
+                <th scope="col">MAC</th>
+                <th scope="col">Type</th>
+                <th scope="col">Browser</th>
+                <th scope="col">Platform</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>192.168.0.101</td>
+                <td>c8:07:1a:83:33:52</td>
+                <td>SockIO</td>
+                <td><img alt="chrome" src="/img/browsers/chrome.png" style="width:20px;"> Chrome</td>
+                <td><img alt="chrome" src="/img/platforms/linux.png" style="width:20px;"> Linux</td>
+                <td><button type="button" class="btn btn-sm btn-info">X</button></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>192.168.0.102</td>
+                <td>43:24:f6:0e:71:2c</td>
+                <td>SockIO</td>
+                <td><img alt="chrome" src="/img/browsers/safari.png" style="width:20px;"> Safari</td>
+                <td><img alt="chrome" src="/img/platforms/apple.png" style="width:20px;"> iOS</td>
+                <td><button type="button" class="btn btn-sm btn-info">X</button></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>192.168.0.104</td>
+                <td>bd:47:4b:9c:d0:46</td>
+                <td>MQTT</td>
+                <td>-</td>
+                <td><img alt="chrome" src="/img/platforms/arduino.png" style="width:20px;"> ESP8266</td>
+                <td><button type="button" class="btn btn-sm btn-info">X</button></td>
+            </tr>
+        </tbody>
+    </table>#}
+{% endblock %}

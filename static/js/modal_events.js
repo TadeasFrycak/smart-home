@@ -19,12 +19,12 @@ $(document).ready(function() {
 
     // Is checked
     if ($(this).prop("checked") === true){
-      toggleState = "1";
+      toggleState = 1;
     }
 
     // Is unchecked
     else if ($(this).prop("checked") === false){
-      toggleState = "0";
+      toggleState = 0;
     }
     console.log(toggleState);
     socketio.emit("modal_toggle", {"id": toggleID, "value": toggleState, "tile_id": tileID});

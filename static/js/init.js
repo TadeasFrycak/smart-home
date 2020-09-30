@@ -5,22 +5,36 @@ $(document).ready(function(){
   *
   */
 
-  console.log("+----------------------------------+");
-  console.log("|      " + _("Smart home") + " 11.3       |");
-  console.log("|    " + _("authors:") + " Fryčák, Szkandera     |");
-  console.log("|                                  |");
-  console.log("|          ©  2019 - 2020          |");
-  console.log("+----------------------------------+");
+  // console.log("+----------------------------------+");
+  // console.log("|                                  |");
+  // console.log("|          Smart home 11.4         |");
+  // console.log("|     Author: Szkandera, Fryčák    |");
+  // console.log("|                                  |");
+  // console.log("|          ©  2019 - 2020          |");
+  // console.log("|                                  |");
+  // console.log("+----------------------------------+");
 
+  console.log("   _____                      _     _                          \n" +
+      "  / ____|                    | |   | |                         \n" +
+      " | (___  _ __ ___   __ _ _ __| |_  | |__   ___  _ __ ___   ___ \n" +
+      "  \\___ \\| '_ ` _ \\ / _` | '__| __| | '_ \\ / _ \\| '_ ` _ \\ / _ \\\n" +
+      "  ____) | | | | | | (_| | |  | |_  | | | | (_) | | | | | |  __/\n" +
+      " |_____/|_| |_| |_|\\__,_|_|   \\__| |_| |_|\\___/|_| |_| |_|\\___|\n" +
+      "                                                               \n")
+  // console.log("\n" +
+  //     "  ___                _     _                  \n" +
+  //     " / __|_ __  __ _ _ _| |_  | |_  ___ _ __  ___ \n" +
+  //     " \\__ \\ '  \\/ _` | '_|  _| | ' \\/ _ \\ '  \\/ -_)\n" +
+  //     " |___/_|_|_\\__,_|_|  \\__| |_||_\\___/_|_|_\\___|\n" +
+  //     "                                              \n")
   // Odejít ze stránky není tak jednoduché
   //window.onbeforeunload = function() {
   //  return true;
   //};
 
+
   // Vytvoření DEBUG objektu
   DEBUG = new debug_console();
-
-  editMode = false;
 
   /*
   *
@@ -29,22 +43,44 @@ $(document).ready(function(){
   */
 
   // Zavádění atributu pro detekci módu (normal - false / edit - true)
-  //$("body").attr("is_edit_active",false);
+  //$("body").attr("data-is-edit-active",false);
+
+  window.onbeforeunload = function(event) {
+    window.setTimeout(function () {
+      beforeRefresh();
+      window.location = window.location.href;
+    }, 0);
+    window.onbeforeunload = null;
+  };
 
   // Hide elements visible only in 
-  let isEditActive = $("body").attr("is_edit_active");
+  let isEditActive = $("body").attr("data-is-edit-active");
   if (isEditActive === "false") {
     $(".dropdown-wrapper").filter(".disappear-on-edit").each(function() {
       $( this ).css("display","none");
     });
+    let tile = $(".swipe-body").attr("data-modal-start");
+    if (tile) {
+      socketio.emit("get_modal", {"tile_id": tile})
+    }
   }
+
   else {
-    changePageToEdit()
+    changePageToEdit(instantly=true)
+    let tile = $(".swipe-body").attr("data-modal-start");
+    if (tile) {
+      socketio.emit("get_edit_modal", {"tile_id": tile})
+    }
   }
+
+  window.history.pushState("", "", "/");
+  resize();
 
   // Scale page
   /*var window_width = window.innerWidth;
   var window_height = window.innerHeight;
+
+  c_sortable_page_grid
 
   if (window_height >= window_width) {
     var width = $(".c_sortable_page_grid").width();
@@ -64,6 +100,31 @@ $(document).ready(function(){
   });
 });
 
+$( window ).resize(function() {
+  resize();
+});
+
+
+function resize()
+{
+  // let MARGIN = 15;
+  //
+  // let window_width = window.innerWidth * 0.99;
+  //
+  // console.log(window_width);
+  //
+  // let box_width = (Math.floor(window_width / 110)-1)*110;
+  //
+  // $(".c_sortable_page_grid").css("width", box_width + MARGIN);
+  // console.log(box_width);
+
+  let width = $(".swipe-content").width()
+  let howMany = width/113;
+  howMany = Math.floor(howMany);
+  let tilesWidth = howMany*113;
+  $(".c_sortable_page_grid").css("width", tilesWidth);
+
+}
 
 class debug_console {
   log(data) {

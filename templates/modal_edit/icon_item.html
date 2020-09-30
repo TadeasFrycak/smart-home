@@ -1,1 +1,1 @@
-<img alt="{{ _('Icon') }}" src="{{ 'img/icons/'+icon.name }}" data-name="{{ icon.name }}" class="modal-edit-icon icon-invert" {% if icon.current == True %}checked{% endif %}>
+<img alt="{{ _('Icon') }}" src="{{ url_for('static', filename='img/icons/'+icon.name) }}" data-name="{{ icon.name }}" class="modal-edit-icon icon-invert" data-selected="{% if icon.current == True %}true{% else %}false{% endif %}">

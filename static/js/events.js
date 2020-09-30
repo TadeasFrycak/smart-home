@@ -20,8 +20,8 @@ $(document).ready(function(){
     });
   });
 
-  $("body").on("click", "#edit-page", function() {
-    let current_edit_status = $("body").attr("is_edit_active");
+  $("body").on("click", ".edit-page", function() {
+    let current_edit_status = $("body").attr("data-is-edit-active");
     //DEBUG.logDebug("Current edit status: " + current_edit_status);
     if (current_edit_status === "false") changePageToEdit();
     if (current_edit_status === "true") changePageToNormal();
@@ -32,21 +32,53 @@ $(document).ready(function(){
     changePageToNormal();
   });
 
-  $("body").on("click", "#settings", function() {
+  $("body").on("click", ".settings", function() {
     // Request modal - Normal / Edit
     console.log("Requested settings");
     socketio.emit("get_settings_modal");
+
   });
 
-  $("body").on("click", "#shutdown", function() {
+  $("body").on("click", ".client-list", function() {
+    // Request modal - Normal / Edit
+    console.log("Requested client list");
+    socketio.emit("get_client_list_modal");
+  });
+
+  $("body").on("click", ".user-list", function() {
+    console.log("Requested user list");
+    socketio.emit("get_user_list_modal");
+  });
+
+  $("body").on("click", ".android-apk", function() {
+    // Request Android APK download modal
+    console.log("Requested Android modal");
+    socketio.emit("get_android_modal");
+  });
+
+  $("body").on("click", ".android-settings", function() {
+    // Request Android APK download modal
+    console.log("Requested Android settings");
+    socketio.emit("show_android_settings");
+  });
+
+  $("body").on("click", ".shutdown", function() {
     $.post("/shutdown", {});
   });
 
-  $("body").on("click", "#reload", function() {
-    $.post("/reload", {});
+  $("body").on("click", ".logout", function() {
+    window.location.href = "/logout";
   });
 
-  $("body").on("click", "#restart", function() {
+  $("body").on("click", ".reload-all", function() {
+    socketio.emit("reload_all");
+  });
+
+  $("body").on("click", ".reload", function() {
+    location.reload();
+  });
+
+  $("body").on("click", ".restart", function() {
     $.post("/restart", {});
 
     //setTimeout(() => {$.post("/reload", {});}, 2000);
@@ -55,6 +87,8 @@ $(document).ready(function(){
   $('#myModal').on('hidden.bs.modal', function () {
     let element = document.querySelector(".slider input[type='range']")
     element.rangeSlider.destroy();
+    // Nepomáhá
+    // $('.modal-edit-tile-type').unbind("click").on('click', function(e) {});
   })
 });
 
@@ -62,12 +96,13 @@ function displaySettingsModal(result){
   // var json = JSON.parse(result);
 
   $(".modal-settings").empty().append(result.modal);
-  $("#mySettingsModal").modal({ keyboard: true })
+  $("#myModal").modal({ keyboard: true })
 
   $( ".modal-settings-page-appearance" ).click(function() {
     let change_to = $(this).attr("data-type");
-    socketio.emit("user_change_mode", {"mode": change_to});
+    socketio.emit("user_mode", {"mode": change_to});
     console.log( "Change appearance to " + change_to );
+    modalSettingsAppearanceImageTap(this);
   });
 
   new Swiper('.settingSwiper', {
@@ -77,23 +112,24 @@ function displaySettingsModal(result){
   });
 }
 
-
 // add_new_tile_element
 
 function changePageToNormal() {
-  $("body").attr("is_edit_active",false);
+  $("body").attr("data-is-edit-active",false);
+  // updateSearchBar();
   swiper.allowTouchMove = true;
   $(".add_new_tile_element").show().fadeOut(2000);
   $(".exit-edit-mode-button").show().fadeOut(2000);
   $(".bcg-edit").fadeOut(2000);
   setTimeout(() => {
-    $("#edit-page").replaceWith("<a class='dropdown-item' id='edit-page'>" + _("Edit this slide") + "</a>");
+    // $(".edit-page").replaceWith("<a class='edit-page dropdown-item'>" + _("Edit this slide") + "</a>");
+    $(".edit-page").text(_("Edit this slide"));
     $(".dropdown-wrapper").filter(".disappear-on-edit").each(function() {
       $( this ).css("display","none");
     });
   }, 400);
   // TODO: smazat
-  editMode = false;
+
   destroySortable();
   
   $(".swipe-header-textbox").each(function() {
@@ -102,36 +138,41 @@ function changePageToNormal() {
   });
 }
 
-function changePageToEdit()
+function changePageToEdit(instantly=false)
 {
-  $("body").attr("is_edit_active",true);
+  $("body").attr("data-is-edit-active", true);
+  // updateSearchBar();
 
   let SortablePages = document.getElementsByClassName("c_sortable_page_grid");
   
-  
-  // TODO: smazat
-  editMode = true;
-  
   swiper.allowTouchMove = false;
-  
-  $(".add_new_tile_element").hide().fadeIn(2000);
-  $(".exit-edit-mode-button").hide().fadeIn(2000);
-  $(".bcg-edit").fadeIn(2000);
+  if (instantly) {
+    $(".add_new_tile_element").show();
+    $(".exit-edit-mode-button").show();
+    $(".bcg-edit").show();
+  }
+  else {
+    $(".add_new_tile_element").hide().fadeIn(2000);
+    $(".exit-edit-mode-button").hide().fadeIn(2000);
+    $(".bcg-edit").fadeIn(2000);
+  }
+
   
   // Přidělí každému "+" tlačítko Hammer
   $(".add_new_tile_element").each(function() {
     let hammer = new Hammer(this);
 
-    hammer.on("tap", function() {
-      addNewTile();
-    });
+    // hammer.on("tap", function() {
+    //   addNewTile();
+    // });
   });
   
   // Vytvoří sortable položky 
   for (let i = 0; i < SortablePages.length; i++) bindSortable(i,SortablePages[i])
 
   setTimeout(() => {
-    $("#edit-page").replaceWith("<a class='dropdown-item' id='edit-page'>" + _("Exit edit mode") + "</a>");
+    // $(".edit-page").replaceWith("<a class='edit-page dropdown-item''>" + _("Exit edit mode") + "</a>");
+    $(".edit-page").text(_("Exit edit mode"));
     $(".dropdown-wrapper").filter(".disappear-on-edit").each(function() {
       $( this ).css("display","block");
     });
@@ -174,12 +215,12 @@ function bindSortable(index,item) {
       let new_add_modal = $(".swiper-slide-active .c_sortable_page_grid");
       new_add_modal.append(temp_element);
 
-      $(temp_element).each(function(){
-        let hammer = new Hammer(this);
-        hammer.on("tap", function() {
-          addNewTile();
-        });
-      })
+      // $(temp_element).each(function(){
+      //   let hammer = new Hammer(this);
+      //   hammer.on("tap", function() {
+      //     addNewTile();
+      //   });
+      // })
 
       // $(test_element).appendTo(".c_sortable_page_grid");
     },  

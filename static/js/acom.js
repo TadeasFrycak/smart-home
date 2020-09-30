@@ -6,7 +6,7 @@ $(document).ready(function(){
   // Initialise communication
   socketio = io("/com");
 
-  socketio.on("user_change_mode_result", function(data) {
+  socketio.on("user_mode_result", function(data) {
     if (data.mode === "light") {
       $("body").removeClass("dark").addClass("light");
       $(".add-img").attr("src","img/static/add.png");
@@ -15,8 +15,13 @@ $(document).ready(function(){
     else if (data.mode === "dark") {
       $("body").removeClass("light").addClass("dark");
       $(".add-img").attr("src","img/static/add-dark.png");
-      $(".page_settings_icon").attr("src","img/static/settings-dark.png");
+      // $(".page_settings_icon").attr("src","img/static/settings-dark.png");
     }
+  });
+
+  socketio.on("slide_name_result", function(data){
+    let chosen_slide_name_textbox = $($(".swiper-slide")[data.slide_index]).find(".swipe-header-textbox");
+    $(chosen_slide_name_textbox).val(data.name);
   });
 
   socketio.on("modal_item_index_result", function(data){
@@ -84,18 +89,19 @@ $(document).ready(function(){
   });
   
   socketio.on("tile_type_result", function(data){
-    if (data.tile_values) {
-      $(".tile-values-wrapper").empty().append(data.tile_values);
+    let id_of_caller = $(".modal-here").attr("id_of_caller");
+    if (data.tile_id === id_of_caller) {
+      if (data.tile_values) {
+        $(".tile-values-wrapper").empty().append(data.tile_values);
+        initImages();
+      }
     }
 
     $(".tile[data-id="+data.tile_id+"]").parent().replaceWith(data.tile_html);
     $(".tile[data-id="+data.tile_id+"]").each(function(){
       initializeHammerTile(this);
     });
-
-    initImages();
-    
-    });
+  });
 
   socketio.on("tile_label_result", function(data){
     $(".tile[data-id="+data.tile_id+"] .tile-label").text(data.new_label);
@@ -143,7 +149,7 @@ $(document).ready(function(){
     $(".modal-here").attr("id_of_caller", data.new_id);
   });
 
-  socketio.on("add_modal_item_result", function(data) {
+  socketio.on("modal_item_prepend_result", function(data) {
     let id_of_caller = $(".modal-here").attr("id_of_caller");
     if (data.tile_id === id_of_caller) {
       $(".modal_items_edit_sortable").prepend($(data.item));
@@ -169,9 +175,10 @@ $(document).ready(function(){
 
   socketio.on("get_add_tile_result", function(data) {
     let selected_slide = $($(".swiper-slide")[data.slide_index]).find(".add_new_tile_element");
-    $(data.tile_html).insertBefore(selected_slide);
-    $(data.tile_html).each(function(){
-      console.log(this);
+    $(data.tile_html).insertBefore(selected_slide).hide().fadeIn();
+    let tile_array = $($(".swiper-slide")[data.slide_index]).find(".grid-square");
+    let appended_tile = $(tile_array[tile_array.length-1]);
+    $(appended_tile).each(function(){
       initializeHammerTile(this);
     });
   });
@@ -183,6 +190,7 @@ $(document).ready(function(){
   });
 
   socketio.on("get_edit_modal_result", function(data) {
+    console.log("Received edit modal");
     handleModalResponse(data);
   });
 
@@ -207,6 +215,25 @@ $(document).ready(function(){
     });
   });
 
+  socketio.on("get_client_list_modal_result", function(data) {
+    // ( > events.js )
+    displaySettingsModal(data);
+  });
+
+  socketio.on("get_user_list_modal_result", function(data) {
+    // ( > events.js )
+    displaySettingsModal(data);
+  });
+
+  socketio.on("get_android_modal_result", function(data) {
+    $(".modal-android").empty().append(data.modal);
+    $("#my-android-modal").modal({ keyboard: true })
+  });
+
+  socketio.on("slide_index_result", function() {
+    $(".swipe-body").attr("data-index-change", "true");
+  });
+
   socketio.on("slide_delete_result", function(data) {
     let index = data.index;
 
@@ -223,23 +250,45 @@ $(document).ready(function(){
   socketio.on("slide_append_result", function(data) {
     swiper.appendSlide(data.slide);
 
-    let isEditActive = $("body").attr("is_edit_active");
+    let isEditActive = $("body").attr("data-is-edit-active");
 
-    if (isEditActive === "true") {
-      $(".add_new_tile_element").hide().fadeIn(2000);
-      $(".exit-edit-mode-button").hide().fadeIn(2000);
+    let lastSlide = $($(".swiper-slide")[$(".swiper-slide").length-1])
 
-      // Připnutí Hammer pro každé "+" tlačítko
-      $(".swiper-slide-active .add_new_tile_element").each(function() {
-        let hammer = new Hammer(this);
-        hammer.on("tap", function(el) {
-          addNewTile();
-        });
+    
+    lastSlide.find(".tile").each(function(){
+      initializeHammerTile(this);
+    });
+
+    // if (isEditActive === "true") {
+    //   $(".add_new_tile_element").hide().fadeIn(2000);
+    //   $(".exit-edit-mode-button").hide().fadeIn(2000);
+
+    //   // Připnutí Hammer pro každé "+" tlačítko
+    //   $(".swiper-slide-active .add_new_tile_element").each(function() {
+    //     let hammer = new Hammer(this);
+    //     hammer.on("tap", function(el) {
+    //       addNewTile();
+    //     });
+    //   });
+
+      // lastSlide.find(".add_new_tile_element").each(function() {
+      //   let hammer = new Hammer(this);
+    
+      //   hammer.on("tap", function() {
+      //     addNewTile();
+      //   });
+      // });
+
+      lastSlide.find(".swipe-header-textbox").each(function() {
+        $( this ).prop("readonly",false)
+        // $( this ).css({"border-bottom-width":"1px","border-bottom-style":"solid","width":"fit-content"});
       });
+
+      $(".exit-edit-mode-button").hide().fadeIn(2000);
 
       let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
       bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
-    }
+    // }
   });
 
   socketio.on("slide_append_animation_result", function() {
@@ -249,7 +298,7 @@ $(document).ready(function(){
   socketio.on("slide_prepend_result", function(data) {
     swiper.prependSlide(data.slide);
 
-    let isEditActive = $("body").attr("is_edit_active");
+    let isEditActive = $("body").attr("data-is-edit-active");
 
     if (isEditActive === "true") {
       $(".add_new_tile_element").hide().fadeIn(2000);
@@ -272,93 +321,115 @@ $(document).ready(function(){
     swiper.slideTo(0, 1000);
   });
 
-  socketio.on("slide_index_result", function(data) {
-    if (data.new_index > data.old_index) {
-      // TODO když je uživatel na new_index tak ho přesuň na index na ktereje se tato page přesune
-      // TODO FILIPE tuhle funkci (měnění indexů věcí) bys mohl zdynamičnit, používá se často, dej ji do jedné funkce
-      let all_slides_within_slide = $("body").find(".swiper-slide");
-      let selected_slide_old = all_slides_within_slide[data.old_index];
-      let selected_slide_new;
-
-      let temporary_slide_old = $(selected_slide_old).clone();
-
-      $(selected_slide_old).remove();
-
-      if (data.new_index === all_slides_within_slide.length) {
-        selected_slide_new = all_slides_within_slide[data.new_index-1];
-        $(temporary_slide_old).insertAfter($(selected_slide_new));
-      }
-      else {
-        selected_slide_new = all_slides_within_slide[data.new_index];
-        if (data.new_index > data.old_index) $(temporary_slide_old).insertAfter($(selected_slide_new));
-        if (data.new_index < data.old_index) $(temporary_slide_old).insertBefore($(selected_slide_new));
-      }
-    }
-
-    else if (data.new_index < data.old_index) {
-      // TODO když je uživatel na new_index tak ho přesuň na index na ktereje se tato page přesune
-      let all_slides_within_slide = $("body").find(".swiper-slide");
-      let selected_slide_old = all_slides_within_slide[data.old_index];
-      let selected_slide_new;
-
-      let temporary_slide_old = $(selected_slide_old).clone();
-
-      $(selected_slide_old).remove();
-      // TODO FILIPE tuhle funkci (měnění indexů věcí) bys mohl zdynamičnit, používá se často, dej ji do jedné funkce
-      if (data.new_index === all_slides_within_slide.length) {
-        selected_slide_new = all_slides_within_slide[data.new_index-1];
-        $(temporary_slide_old).insertAfter($(selected_slide_new));
-      }
-      else {
-        selected_slide_new = all_slides_within_slide[data.new_index];
-        if (data.new_index > data.old_index) $(temporary_slide_old).insertAfter($(selected_slide_new));
-        if (data.new_index < data.old_index) $(temporary_slide_old).insertBefore($(selected_slide_new));
-      }
-    }
-    if (swiper.realIndex === data.old_index) {
-      swiper.slideTo(data.new_index, 1000);
-    }
-
-  });
-
   // Asynchronous communication for tile
   socketio.on("tile_value_result", function(data) {
     // Test each tile on the page
-    $(".tile").each(function() {
-      let tileID = $(this).attr("data-id");
+    let tileID = data.tile_id;
+    let tileElement = $(".tile[data-id="+tileID+"]");
+    let tileType = tileElement.attr("data-type");
 
-      // If tile ID is same
-      if (tileID === data.id) {
-        let tileType = $(this).attr("data-type");
+    console.log("Tile_value_result event")
 
-        // Tile type is toggle
-        if (tileType === "toggle") {
-          let tileStateLast = $(this).find(".tile-status").text();
-          let tileStateCurrent = data.value;
+    // Tile type is toggle
+    if (tileType === "toggle") {
 
-          // Turn tile off
-          if (tileStateLast.toLowerCase() === "on" && tileStateCurrent === 0) {
-            $(this).find(".tile-status").text("OFF"); $(this).toggleClass("tile-active");
-            $(this).find(".toggle-dot").css("background-color","rgba(255, 0, 0, 0.28)");
-          }
+      // console.log("Update Toggle")
+      let tileStateLast = $(tileElement).find(".tile-status").text();
+      let tileStateCurrent = data.value;
+      // console.log("Last status: " + tileStateLast);
+      // console.log("Current status: " + tileStateCurrent);
+      // console.log($(tileElement));
 
-          // Turn tile on
-          else if (tileStateLast.toLowerCase() === "off" && tileStateCurrent === 1) {
-            $(this).find(".tile-status").text("ON"); $(this).toggleClass("tile-active");
-            $(this).find(".toggle-dot").css("background-color","rgba(0, 196, 42, 0.28)");
-          }
-        }
-
-        // Tile type is percentage
-        else if (tileType === "percentage") {
-          $(this).find(".tile-input-value").text(data.value);
-        }
+      // Turn tile off
+      if (tileStateLast.toLowerCase() === _("On").toLowerCase() && tileStateCurrent === 0) {
+        $(tileElement).find(".tile-status").text(_("Off")); $(tileElement).toggleClass("tile-active");
+        $(tileElement).find(".toggle-dot").css("background-color","rgba(255, 0, 0, 0.28)");
       }
-    });
+      // Turn tile on
+      else if (tileStateLast.toLowerCase() === _("Off").toLowerCase() && tileStateCurrent === 1) {
+        $(tileElement).find(".tile-status").text(_("On")); $(tileElement).toggleClass("tile-active");
+        $(tileElement).find(".toggle-dot").css("background-color","rgba(0, 196, 42, 0.28)");
+      }
+    }
+    // Tile type is percentage
+    else if (tileType === "value") {
+      tileElement.find(".tile-value-value").text(data.value.value);
+      tileElement.find(".tile-value-suffix").text(data.value.suffix);
+    }
+    else if (tileType === "value_double") {
+      tileElement.find(".tile-value-left").text(data.value.left.value);
+      tileElement.find(".tile-value-right").text(data.value.right.value);
+      tileElement.find(".tile-suffix-left").text(data.value.left.suffix);
+      tileElement.find(".tile-suffix-right").text(data.value.right.suffix);
+    }
+    else if (tileType === "alarm_clock") {
+      // console.log(data.value);
+      // console.log(data.value.main);
+      // console.log(data.value.tuesday);
+
+
+      let tileActive = data.value.main;
+      let tileId = data.tile_id;
+
+      let tileMon = data.value.monday;
+      let tileTue = data.value.tuesday;
+      let tileWed = data.value.wednesday;
+      let tileThu = data.value.thursday;
+      let tileFri = data.value.friday;
+      let tileSat = data.value.saturday;
+      let tileSun = data.value.sunday;
+
+      let tileElement = $(".tile[data-id="+tileId+"]");
+      console.log(tileId);
+
+      // TODO:
+      // tileActive = true;
+
+      // tileMon = false;
+      // tileTue = false;
+      // tileWed = false;
+      // tileThu = false;
+      // tileFri = false;
+      // tileSat = true;
+      // tileSun = false;
+
+      if (tileActive === true) {
+        tileElement.toggleClass("tile-active",true);
+        console.log("tile active");
+      }
+      else {
+        tileElement.toggleClass("tile-active",false);
+        console.log("tile not active");
+      }
+      
+      let tileDay = "Mon"
+      if (tileMon === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      tileDay = "Tue"
+      if (tileTue === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      tileDay = "Wed"
+      if (tileWed === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      tileDay = "Thu"
+      if (tileThu === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      tileDay = "Fri"
+      if (tileFri === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      tileDay = "Sat"
+      if (tileSat === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      tileDay = "Sun"
+      if (tileSun === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
+      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false); 
+    }
   });
 
   // Asynchronous communication for modal toggle
   socketio.on("modal_toggle_result", function(data) {
+    console.log("ahoj jsoem tu");
+    console.log(data);
     let tileID = $(".modal-here").attr("id_of_caller");
 
     // If tile ID is same
@@ -398,19 +469,71 @@ $(document).ready(function(){
 
   // Reload page
   socketio.on("reload", function() {
+    console.log("Server command: reload");
     location.reload();
   });
 
   socketio.on("connect", function() {
+    console.log("Client connected to server");
     $(".server-status").text(_("Online"));
   });
+    let ping_pong_times = [];
+    let start_time;
 
+    window.setInterval(function() {
+        start_time = (new Date).getTime();
+        socketio.emit("my-ping");
+    }, 20000);
+
+    // Handler for the "pong" message. When the pong is received, the
+    // time from the ping is stored, and the average of the last 30
+    // samples is average and displayed.
+    socketio.on("my-pong", function() {
+      let latency = (new Date).getTime() - start_time;
+      ping_pong_times.push(latency);
+      ping_pong_times = ping_pong_times.slice(-10); // keep last 30 samples
+      let sum = 0;
+      for (let i = 0; i < ping_pong_times.length; i++)
+        sum += ping_pong_times[i];
+      $(".server-status").text(Math.round(sum / ping_pong_times.length) + " ms");
+    });
   socketio.on("disconnect", function() {
+    console.log("Client disconnected from server");
     $(".server-status").text(_("Offline"));
+
+    if ($("body").attr("data-is-edit-active") === "true") {
+      $(".bcg-normal").css({"opacity": 0, "transition": "0s all"});
+      $(".bcg-edit").css({"opacity": 0.5, "transition": "0.5s all"});
+    }
+    else {
+      $(".bcg-normal").css({"opacity": 0.4});
+    }
+    // $.notify({
+    //   title: "<strong>Server</strong>",
+    //   message: _("Server is now offline")
+    // }, {
+    //   type: "danger",
+    //   delay: 0,
+    //   mouse_over: "pause",
+    //   allow_dismiss: true,
+    //   placement: {
+	// 	from: "top",
+	// 	align: "center"
+	//   },
+    //   animate: {
+    //     enter: "animated fadeInDown", //Down",
+    //     exit: "animated fadeOutUp" //Up"
+    //   },
+    //   z_index: 2000
+    // });
   });
 
   socketio.on("reconnect", function() {
-    location.reload();
+    console.log("Server reconnected! Reloading...");
+
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   });
 
   // Asynchronous communication for global notifications

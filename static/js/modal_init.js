@@ -20,8 +20,8 @@ function initTilePress(hammer, $this, add_new_item)
   hammer.on("press", function() {
     // ( > modal_init.js )
     // RequestModal($this, add_new_item);
-    var isEditActive = $("body").attr("is_edit_active");
-    if (isEditActive == "false")
+    let isEditActive = $("body").attr("data-is-edit-active");
+    if (isEditActive === "false")
     {
       RequestModal($this, add_new_item);
     }
@@ -33,7 +33,7 @@ function initTileTap(hammer, $this, add_new_item)
   hammer.on("tap", function() {
     // ( > modal_init.js )
     // console.log("Tapped!");
-    var isEditActive = $("body").attr("is_edit_active");
+    let isEditActive = $("body").attr("data-is-edit-active");
     if (isEditActive == "true")
     {
       RequestModal($this, add_new_item);
@@ -48,8 +48,11 @@ function initTileTap(hammer, $this, add_new_item)
 
 function initImages(){
   $(".modal-edit-icon").each(function() {
-    let attr = $(this).attr('checked');
-    if (typeof attr !== typeof undefined && attr !== false) {
+
+    // let attr = $(this).attr('checked'); 
+
+    // if (typeof attr !== typeof undefined && attr !== false) {
+    if ($(this).attr('data-selected') == "true"){
       if ($("body").hasClass("dark")) {
         $(this).css({"border": "2px solid rgb(232, 93, 71)"});
       }
@@ -74,10 +77,10 @@ function initImages(){
 // /get_edit_modal
 //    > tileId
 
-function addNewTile()
-{
-  socketio.emit("get_add_modal", {"slide_index": swiper.realIndex});
-}
+// function addNewTile()
+// {
+//   socketio.emit("get_add_modal", {"slide_index": swiper.realIndex});
+// }
 
 function requestNormalModal($this)
 {
@@ -88,7 +91,15 @@ function requestNormalModal($this)
 function requestEditModal($this)
 {
   let object_id = $this.parent().attr("data-id");
-  socketio.emit("get_edit_modal", {"tile_id": object_id});
+
+  if ($this.parent().attr("data-type") == "add-new-tile")
+  {
+    socketio.emit("get_add_modal", {"slide_index": swiper.realIndex});
+  }
+  else {
+    socketio.emit("get_edit_modal", {"tile_id": object_id});
+  }
+  
 }
 
 function handleModalResponse(data)
@@ -100,9 +111,10 @@ function handleModalResponse(data)
 function initializeModal(data)
 {
     let object_id = data.tile_id;
-    $(".modal-here").empty().append(data.modal);
 
-    $("#myModal").modal({ keyboard: true })
+    $(".modal-here").empty();
+    $(".modal-here").append(data.modal);
+    $("#myModal").modal({ keyboard: true });
 
     // var header = tileGetAtributeByName($this.parent(),"tile-label");
     // $(".modal-title").text(header);
@@ -197,15 +209,15 @@ function initializeAllItemsWithinModal(data)
         startDate: start,
         endDate: end,
         ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+           "Today": [moment(), moment()],
+           "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+           "Last 7 Days": [moment().subtract(6, "days"), moment()],
+           "Last 30 Days": [moment().subtract(29, "days"), moment()],
+           "This Month": [moment().startOf("month"), moment().endOf("month")],
+           "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
         },
         locale: {
-          format: 'M/DD hh:mm A'
+          format: "M/DD hh:mm A"
         }
     }, cb);
 
@@ -213,9 +225,9 @@ function initializeAllItemsWithinModal(data)
 
     for (var k in data.daterangepickers){
       if (k == rangePickerId){ 
-        let dateStart = moment(data.daterangepickers[k].start).format('MMMM D, YYYY');
-        let dateEnd = moment(data.daterangepickers[k].end).format('MMMM D, YYYY');
-        $(".date-range-picker-input[id="+rangePickerId+"]").find("span").html(dateStart + ' - ' + dateEnd);
+        let dateStart = moment(data.daterangepickers[k].start).format("MMMM D, YYYY");
+        let dateEnd = moment(data.daterangepickers[k].end).format("MMMM D, YYYY");
+        $(".date-range-picker-input[id="+rangePickerId+"]").find("span").html(dateStart + " - " + dateEnd);
       }
     }
       
@@ -228,12 +240,12 @@ function initializeAllItemsWithinModal(data)
       if (k == $(this).attr("data-id")){ // Nasel graf sse setejným ID
         let ctx = $(this).children();
         let new_chart = new Chart(ctx, {
-          type: 'line',
+          type: "line",
           data: {
             labels: data.graphs[k].data_x,
             datasets: [{
                 label: $(this).attr("data-header"),
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: "rgb(255, 99, 132)",
                 data: data.graphs[k].data_y
             }]
           },
@@ -410,6 +422,7 @@ function initializeAllItemsWithinModal(data)
   });
 
   $(".modal-edit-tile-type").on("click",  function() {
+    console.log("Tile typed changed");
     // ( > modal_edit_events.js )
     let type_name = $(this).text();
     let id_of_caller = $(".modal-here").attr("id_of_caller");
@@ -421,5 +434,11 @@ function initializeAllItemsWithinModal(data)
     // ( > modal_edit_events.js )
     modalEditTileTitleChanged();
   });
+
   initImages();
+
+  // Unfocus input 
+  $(".unfocus-on-enter").keydown(function(event){
+    event.keyCode===13 && $(this).blur();
+  });
 }

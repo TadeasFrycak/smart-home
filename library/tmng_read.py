@@ -6,7 +6,7 @@ import datetime
 
 class TemplateManagerRead:
     """
-    Template Manager Read class
+    Template manager read class
     """
 
     # Main, system
@@ -34,6 +34,7 @@ class TemplateManagerRead:
     DATA_Y = "data_y"
 
     UNNAMED = lazy_gettext("Unnamed")
+    MODAL_ITEM_UNNAMED = ""
 
     CHILDREN = "children"
 
@@ -69,8 +70,9 @@ class TemplateManagerRead:
         """
         Get tile type by tile ID
         :param tile_id: tile ID
-        :return: tily type
+        :return: tile type
         """
+
         return self.get_tile(tile_id=tile_id)[self.TYPE]
 
     def get_tile_templates(self):
@@ -96,12 +98,6 @@ class TemplateManagerRead:
         :param tile_id: tile ID
         :return:
         """
-        # TODO Refactor všeho (if icon in data, ...)
-        # env = Environment(loader=FileSystemLoader('templates'))
-        # template_source = env.loader.get_source(env, "tiles/" + tile_type + ".html")[0]
-        # parsed_content = env.parse(template_source)
-        # print(parsed_content)
-        # print(meta.find_undeclared_variables(parsed_content))
 
         template = str(self.__fmng.load_file("templates/tiles/" + tile_type + ".html"))
         variables = jinja2schema.infer(template)
@@ -119,10 +115,10 @@ class TemplateManagerRead:
                         data[value] = tile[self.DATA][value]
 
                     except Exception as e:
-                        data[value] = self.UNNAMED
+                        data[value] = self.MODAL_ITEM_UNNAMED
 
             if "icon" in data:
-                if data["icon"] != self.UNNAMED:
+                if data["icon"] != self.MODAL_ITEM_UNNAMED:
                     current_icon = data["icon"]
 
                 else:
@@ -151,6 +147,7 @@ class TemplateManagerRead:
         :param item_type: modal item type
         :return:
         """
+
         template = str(self.__fmng.load_file("templates/modal/" + item_type + ".html"))
         variables = jinja2schema.infer(template)
 
@@ -165,7 +162,7 @@ class TemplateManagerRead:
                     data[value] = self.__default_values.modal_item_value(item_type)
 
                 else:
-                    data[value] = self.UNNAMED
+                    data[value] = self.MODAL_ITEM_UNNAMED
 
             if "value" not in data:
                 value = self.__default_values.modal_item_value(item_type)
@@ -184,6 +181,7 @@ class TemplateManagerRead:
         :param tile_id:
         :return:
         """
+
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get item for current device
             for tile in page_content[self.CHILDREN]:

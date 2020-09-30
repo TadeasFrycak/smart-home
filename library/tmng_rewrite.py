@@ -13,6 +13,7 @@ class TemplateManagerRewrite:
         :param tmng_r: tmng_r class
         :param default_values: default values class
         """
+
         self.__fmng = fmng
         self.__tmng_r = tmng_r
         self.__default_values = default_values
@@ -25,6 +26,8 @@ class TemplateManagerRewrite:
         :param tile: tile JSON
         :return: True
         """
+        assert isinstance(tile_id, str), "bad type of tile_id"
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get item for current device
@@ -42,6 +45,7 @@ class TemplateManagerRewrite:
         :param slide_index: current slide
         :return:
         """
+
         self.__fmng.devices[slide_index][self.__tmng_r.CHILDREN].insert(new_index, self.__fmng.devices[slide_index][self.__tmng_r.CHILDREN].pop(old_index))
 
     def tile_id(self, tile_id, new_id):
@@ -51,6 +55,7 @@ class TemplateManagerRewrite:
         :param new_id: new ID of tile
         :return:
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -67,6 +72,7 @@ class TemplateManagerRewrite:
         :param tile_id: id of tile
         :return: True
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -76,7 +82,7 @@ class TemplateManagerRewrite:
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.VALUE] = new_value
                     return True
 
-    def tile_dynamic_value(self, tile_id, value_name, new_value):
+    def tile_dynamic_value(self, tile_id, value_name, new_value):  # TODO v nové verzi odstranit
         """
         Rewrite tile (dynamic generated) value - suffix, ...
         :param tile_id:
@@ -84,6 +90,7 @@ class TemplateManagerRewrite:
         :param new_value:
         :return:
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -97,6 +104,13 @@ class TemplateManagerRewrite:
                             return True
 
     def tile_icon(self, tile_id, new_icon):
+        """
+        Rewrite tile icon
+        :param tile_id: tile ID
+        :param new_icon: new icon
+        :return: True/False
+        """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -114,11 +128,12 @@ class TemplateManagerRewrite:
 
     def tile_label(self, tile_id, new_label):
         """
-        Rewrite tile name
+        Rewrite tile label
         :param tile_id: ID of tile
-        :param new_label:  new name
+        :param new_label: new label
         :return: True
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -135,6 +150,7 @@ class TemplateManagerRewrite:
         :param new_type: new type
         :return: True
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -166,6 +182,14 @@ class TemplateManagerRewrite:
 
     # Modal states
     def modal_toggle(self, tile_id, item_id, new_value):
+        """
+        Modal toggle value rewrite
+        :param tile_id: ID of tile
+        :param item_id: item ID
+        :param new_value: new value
+        :return: True
+        """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -176,14 +200,18 @@ class TemplateManagerRewrite:
                     for modal_num, modal_item in enumerate(item_content[self.__tmng_r.MODAL]):
                         # If that item is toggle, rewrite
                         if modal_item[self.__tmng_r.TYPE] == self.__tmng_r.TOGGLE and modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == item_id:
-                            print(self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num])
-                            print(self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num]["value"])
                             self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE] = new_value
-                            print(self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][
-                                      modal_num][self.__tmng_r.VALUE])
                             return True
 
     def modal_slider(self, tile_id, item_id, new_value):
+        """
+        Modal slider value rewrite
+        :param tile_id: ID of tile
+        :param item_id: item ID
+        :param new_value: new value
+        :return: True
+        """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -198,6 +226,15 @@ class TemplateManagerRewrite:
                             return True
 
     def modal_daterangepicker(self, tile_id, item_id, start_value, end_value):
+        """
+        Modal daterangepicker value rewrite
+        :param tile_id: ID of tile
+        :param item_id: item ID
+        :param start_value: start value
+        :param end_value: end value
+        :return:
+        """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -221,6 +258,7 @@ class TemplateManagerRewrite:
         :param new_index: new index
         :return: True
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -240,6 +278,7 @@ class TemplateManagerRewrite:
         :param index: index
         :return: True
         """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
@@ -259,12 +298,28 @@ class TemplateManagerRewrite:
         :param new_name: new name of slide
         :return:
         """
+
         self.__fmng.devices[index][self.__tmng_r.NAME] = new_name
 
     def slide_index(self, old_index, new_index):
+        """
+        Rewrite slide index
+        :param old_index: old index of slide
+        :param new_index: new index of slide
+        :return: None
+        """
+
         self.__fmng.devices.insert(new_index, self.__fmng.devices.pop(old_index))
 
     def graph(self, tile_id, data_x, data_y):
+        """
+        Graph rewrite
+        :param tile_id: tile ID
+        :param data_x: data x
+        :param data_y: data y
+        :return: True
+        """
+
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)

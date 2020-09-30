@@ -1,5 +1,6 @@
 import serial
 
+
 class Arduino:
     """
     Arduino class
@@ -47,7 +48,7 @@ class Arduino:
         """
         Write data to Arduino
         :param data: data to write
-        :return:
+        :return: False/True
         """
 
         if self.arduino:
@@ -55,7 +56,6 @@ class Arduino:
             return self.arduino.write(bytes(data, encoding="utf8"))
 
         else:
-            # self.__console.print("Error in writing to Arduino - not defined", priority=2)
             return False
 
     def read(self):
@@ -74,5 +74,4 @@ class Arduino:
                 return None
 
         else:
-            # self.__console.print("Error in writing to Arduino - not defined", priority=2)
             return None

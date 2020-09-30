@@ -1,0 +1,20 @@
+{% extends "modal.html" %}
+
+{% block title %}
+    {{ tile.label }}
+{% endblock %}
+
+{% block content %}
+    {% if tile.type == "alarm_clock" %}
+        {% for key, value in tile["value"].items() %}
+            {% set item = {"type": "toggle", "data": {"label": _(refactor(key)), "id": key}, "value": value} %}
+            {% include "modal/toggle.html" %}
+        {% endfor %}
+        {% include "modal/separator.html" %}
+        {% include "modal/separator.html" %}
+    {% endif %}
+
+    {% for item in tile.modal %}
+        {% include "modal/" + item["type"] + ".html" %}
+    {% endfor %}
+{% endblock %}

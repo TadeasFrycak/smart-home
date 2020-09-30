@@ -1,11 +1,16 @@
 $(document).ready(function() {
   socketio = io("/com");
 
+  socketio.on("reconnect", function() {
+    console.log("Server reconnected! Reloading...");
+    location.reload();
+  });
+
   socketio.on("login_result", function(data){
     if (data.status === true)
     {
       $.post("/login", {}, function () {
-        window.location.href = $("#login-form").attr("action");
+        location.reload();
       });
     }  
     else
@@ -62,16 +67,17 @@ $(document).ready(function() {
     return false;
   }
   $("body").on("click", "#incognito-login", function() {
-    let userName = finalValidCheck($("#username"));
-    let password = finalValidCheck($("#password"));
-    if(userName && password) {
-      socketio.emit("login", {
-        "username": $("#username").val(),
-        "password": $("#password").val(),
-        "remember": 0,
-      });
-      $.post("/login", {}, function(){});
-    }
+    // TODO dát dohromady
+    // let userName = finalValidCheck($("#username"));
+    // let password = finalValidCheck($("#password"));
+    // if(userName && password) {
+    //   socketio.emit("login", {
+    //     "username": $("#username").val(),
+    //     "password": $("#password").val(),
+    //     "remember": 0,
+    //   });
+    //   $.post("/login", {}, function(){});
+    // }
   });
   let parseQueryString = function() {
     let str = window.location.search;
@@ -85,7 +91,7 @@ $(document).ready(function() {
     return objURL;
   };
   $("body").on("click", "#login", function() {
-    let next = parseQueryString()["next"];
+    // let next = parseQueryString()["next"];
     let userName = finalValidCheck($("#username"));
     let password = finalValidCheck($("#password"));
     if(userName && password) {
@@ -93,7 +99,7 @@ $(document).ready(function() {
         "username": $("#username").val(),
         "password": $("#password").val(),
         "remember": 1,
-        "next": next
+        // "next": next
       });
     }
   });

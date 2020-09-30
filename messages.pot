@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Smart Home 1.13\n"
+"Project-Id-Version: Smart Home 1.14\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-05-23 19:28+0200\n"
+"POT-Creation-Date: 2020-08-01 13:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,380 +17,536 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: library/refactoring.py:7
+#: ../routes_basic.py:170
+msgid "Detected bad SocketIO request!"
+msgstr ""
+
+#: ../routes_server.py:32
+msgid "Shutdown"
+msgstr ""
+
+#: ../routes_server.py:33
+msgid "Server was successfully shutdown"
+msgstr ""
+
+#: ../routes_server.py:51
+msgid "Restart"
+msgstr ""
+
+#: ../routes_server.py:52
+msgid "Server was successfully restarted"
+msgstr ""
+
+#: ../library/refactoring.py:11
 msgid "blank"
 msgstr ""
 
-#: library/refactoring.py:8
+#: ../library/refactoring.py:12
 msgid "alarm_clock"
 msgstr ""
 
-#: library/refactoring.py:9
+#: ../library/refactoring.py:13
 msgid "value_double"
 msgstr ""
 
-#: library/refactoring.py:10
+#: ../library/refactoring.py:14
 msgid "player"
 msgstr ""
 
-#: library/refactoring.py:11
+#: ../library/refactoring.py:15
 msgid "toggle"
 msgstr ""
 
-#: library/refactoring.py:13
+#: ../library/refactoring.py:17
 msgid "daterangepicker"
 msgstr ""
 
-#: library/refactoring.py:14
+#: ../library/refactoring.py:18
 msgid "button"
 msgstr ""
 
-#: library/refactoring.py:15
+#: ../library/refactoring.py:19
 msgid "dropdown_menu"
 msgstr ""
 
-#: library/refactoring.py:16
+#: ../library/refactoring.py:20
 msgid "graph"
 msgstr ""
 
-#: library/refactoring.py:17
+#: ../library/refactoring.py:21
 msgid "separator"
 msgstr ""
 
-#: library/refactoring.py:18
+#: ../library/refactoring.py:22
 msgid "slider"
 msgstr ""
 
-#: library/refactoring.py:19
+#: ../library/refactoring.py:23
 msgid "time_picker"
 msgstr ""
 
-#: library/refactoring.py:20
+#: ../library/refactoring.py:24
 msgid "progress_bar"
 msgstr ""
 
-#: library/refactoring.py:22
+#: ../library/refactoring.py:26
 msgid "label"
 msgstr ""
 
-#: library/refactoring.py:23
+#: ../library/refactoring.py:27
 msgid "value"
 msgstr ""
 
-#: library/refactoring.py:24
+#: ../library/refactoring.py:28
 msgid "value_min"
 msgstr ""
 
-#: library/refactoring.py:25
+#: ../library/refactoring.py:29
 msgid "value_max"
 msgstr ""
 
-#: library/refactoring.py:26
+#: ../library/refactoring.py:30
 msgid "color"
 msgstr ""
 
-#: library/refactoring.py:27
+#: ../library/refactoring.py:31
 msgid "colour"
 msgstr ""
 
-#: library/refactoring.py:28
+#: ../library/refactoring.py:32
 msgid "pair"
 msgstr ""
 
-#: library/tmng_read.py:36 templates/modal_edit/item_values.html:10
+#: ../library/refactoring.py:33
+msgid "step"
+msgstr ""
+
+#: ../library/tmng_read.py:36 ../templates/modal_edit/item_values.html:10
 msgid "Unnamed"
 msgstr ""
 
-#: static/js/acom.js:405 templates/slide.html:6
+#: ../static/js/acom.js:344 ../static/js/acom.js:350
+#: ../templates/tiles/toggle.html:7
+msgid "On"
+msgstr ""
+
+#: ../static/js/acom.js:345 ../static/js/acom.js:349
+#: ../templates/tiles/toggle.html:7
+msgid "Off"
+msgstr ""
+
+#: ../static/js/acom.js:478 ../templates/slide.html:7
 msgid "Online"
 msgstr ""
 
-#: static/js/acom.js:409
+#: ../static/js/acom.js:502
 msgid "Offline"
 msgstr ""
 
-#: static/js/events.js:90 templates/slide.html:13
+#: ../static/js/events.js:126 ../templates/slide.html:14
 msgid "Edit this slide"
 msgstr ""
 
-#: static/js/events.js:134 templates/slide.html:2
+#: ../static/js/events.js:175 ../templates/slide.html:3
 msgid "Exit edit mode"
 msgstr ""
 
-#: static/js/init.js:9 templates/base.html:30 templates/base.html:31
-#: templates/error.html:4 templates/error.html:5 templates/error.html:12
-msgid "Smart home"
+#: ../static/js/modal_edit_events.js:102
+msgid "id"
 msgstr ""
 
-#: static/js/init.js:10
-msgid "authors:"
-msgstr ""
-
-#: templates/base.html:2 templates/base.html:34 templates/base.html:41
-#: templates/error.html:1 templates/error.html:8
+#: ../templates/base.html:2 ../templates/base.html:39 ../templates/base.html:46
+#: ../templates/error.html:1 ../templates/error.html:8
 msgid "en-GB"
 msgstr ""
 
-#: templates/base.html:32 templates/error.html:6
+#: ../templates/base.html:35 ../templates/base.html:36
+#: ../templates/error.html:4 ../templates/error.html:5
+#: ../templates/error.html:12
+msgid "Smart home"
+msgstr ""
+
+#: ../templates/base.html:37 ../templates/error.html:6
 msgid "control, use, have fun"
 msgstr ""
 
-#: templates/base.html:38
+#: ../templates/base.html:43
 msgid "SH"
 msgstr ""
 
-#: templates/error.html:12
+#: ../templates/error.html:12
 msgid "Error"
 msgstr ""
 
-#: templates/index.html:41
+#: ../templates/index.html:41
 msgid "Home"
 msgstr ""
 
-#: templates/index.html:55
+#: ../templates/index.html:73
 msgid "Let's start"
 msgstr ""
 
-#: templates/index.html:56
+#: ../templates/index.html:74
 msgid ""
 "You can now create your first slide in Smart home, then you can edit it "
 "to your own ideas."
 msgstr ""
 
-#: templates/index.html:57 templates/slide.html:16
+#: ../templates/index.html:75 ../templates/slide.html:18
 msgid "Add new slide"
 msgstr ""
 
-#: templates/modal.html:16 templates/modal_edit.html:88
-#: templates/modal_settings.html:74
+#: ../templates/modal.html:17 ../templates/modal_edit.html:89
 msgid "Close"
 msgstr ""
 
-#: templates/modal_edit.html:5
-msgid "Tile name"
+#: ../templates/modal_android.html:4
+msgid "Android APK download"
 msgstr ""
 
-#: templates/modal_edit.html:10
-msgid "Tile type"
+#: ../templates/modal_client_list.html:4 ../templates/slide.html:27
+msgid "Client list"
 msgstr ""
 
-#: templates/modal_edit.html:23 templates/modal_edit.html:31
-msgid "Tile ID"
+#: ../templates/modal_client_list.html:19
+msgid "IP"
 msgstr ""
 
-#: templates/modal_edit.html:36 templates/modal_edit.html:38
-#: templates/modal_edit/item_values.html:24
-#: templates/modal_edit/item_values.html:26
-msgid "MQTT path"
+#: ../templates/modal_client_list.html:27
+msgid "MAC"
 msgstr ""
 
-#: templates/modal_edit.html:45
-msgid "Add modal items"
+#: ../templates/modal_client_list.html:35
+msgid "Connected"
 msgstr ""
 
-#: templates/modal_edit.html:57
-msgid "Unpack all"
+#: ../templates/modal_client_list.html:43
+msgid "User"
 msgstr ""
 
-#: templates/modal_edit.html:58
-msgid "Pack all"
+#: ../templates/modal_client_list.html:51
+msgid "Platform"
 msgstr ""
 
-#: templates/modal_edit.html:87
-msgid "Up"
+#: ../templates/modal_client_list.html:59
+msgid "Browser"
 msgstr ""
 
-#: templates/modal_edit.html:90 templates/modal_edit/item_values.html:34
+#: ../templates/modal_client_list.html:67
+msgid "Browser version"
+msgstr ""
+
+#: ../templates/modal_client_list.html:75
+msgid "Browser language"
+msgstr ""
+
+#: ../templates/modal_client_list.html:84
+msgid "Browser package"
+msgstr ""
+
+#: ../templates/modal_client_list.html:93
+msgid "Browser URL"
+msgstr ""
+
+#: ../templates/modal_client_list.html:102 ../templates/modal_edit.html:91
+#: ../templates/modal_edit/item_values.html:34
+#: ../templates/modal_user_list.html:96
 msgid "Delete"
 msgstr ""
 
-#: templates/preloader.html:20
-msgid "Wait a moment please..."
+#: ../templates/modal_edit.html:4
+msgid "Tile name"
 msgstr ""
 
-#: templates/slide.html:8 templates/slide.html:25
+#: ../templates/modal_edit.html:10
+msgid "Tile type"
+msgstr ""
+
+#: ../templates/modal_edit.html:23 ../templates/modal_edit.html:31
+msgid "Tile ID"
+msgstr ""
+
+#: ../templates/modal_edit.html:36 ../templates/modal_edit.html:38
+#: ../templates/modal_edit/item_values.html:24
+#: ../templates/modal_edit/item_values.html:26
+msgid "MQTT path"
+msgstr ""
+
+#: ../templates/modal_edit.html:45
+msgid "Add modal items"
+msgstr ""
+
+#: ../templates/modal_edit.html:54
+msgid "Modal items"
+msgstr ""
+
+#: ../templates/modal_edit.html:57
+msgid "Unpack all"
+msgstr ""
+
+#: ../templates/modal_edit.html:58
+msgid "Pack all"
+msgstr ""
+
+#: ../templates/modal_edit.html:88
+msgid "Up"
+msgstr ""
+
+#: ../templates/modal_settings.html:4 ../templates/slide.html:9
+#: ../templates/slide.html:26
 msgid "Settings"
 msgstr ""
 
-#: templates/slide.html:17
-msgid "Prepend new slide"
+#: ../templates/modal_settings.html:9
+msgid "Appearance"
 msgstr ""
 
-#: templates/slide.html:18
-msgid "Remove this slide"
+#: ../templates/modal_settings.html:13 ../templates/modal_settings.html:14
+msgid "LIGHT"
 msgstr ""
 
-#: templates/slide.html:20
-msgid "Move this slide to the left"
+#: ../templates/modal_settings.html:18 ../templates/modal_settings.html:19
+msgid "DARK"
 msgstr ""
 
-#: templates/slide.html:21
-msgid "Move this slide to the right"
+#: ../templates/modal_settings.html:23 ../templates/modal_settings.html:24
+msgid "SMART"
 msgstr ""
 
-#: templates/slide.html:24
-msgid "Backgrounds"
+#: ../templates/modal_settings.html:54
+msgid "Background"
 msgstr ""
 
-#: templates/slide.html:27
-msgid "Save changes"
+#: ../templates/modal_user_list.html:4 ../templates/slide.html:28
+msgid "User list"
 msgstr ""
 
-#: templates/slide.html:30
-msgid "Shutdown server"
-msgstr ""
-
-#: templates/slide.html:31
-msgid "Restart server"
-msgstr ""
-
-#: templates/slide.html:33
-msgid "Reload clients"
-msgstr ""
-
-#: templates/slide.html:47
-msgid "Add"
-msgstr ""
-
-#: templates/auth/login.html:3 templates/auth/login.html:10
-#: templates/auth/login.html:40 templates/auth/logout.html:7
-#: templates/auth/register.html:52
-msgid "Login"
-msgstr ""
-
-#: templates/auth/login.html:14 templates/auth/login.html:27
-#: templates/auth/register.html:24
-msgid "Username"
-msgstr ""
-
-#: templates/auth/login.html:19 templates/auth/login.html:36
-#: templates/auth/register.html:29
-msgid "Password"
-msgstr ""
-
-#: templates/auth/login.html:42
-msgid "Don't have an account?"
-msgstr ""
-
-#: templates/auth/login.html:42
-msgid "Register here"
-msgstr ""
-
-#: templates/auth/logout.html:2 templates/auth/logout.html:6
-msgid "Logged out"
-msgstr ""
-
-#: templates/auth/logout.html:7
-msgid "See you later"
-msgstr ""
-
-#: templates/auth/register.html:2 templates/auth/register.html:8
-msgid "Registration"
-msgstr ""
-
-#: templates/auth/register.html:14
+#: ../templates/auth/register.html:13 ../templates/modal_user_list.html:19
 msgid "First name"
 msgstr ""
 
-#: templates/auth/register.html:19
+#: ../templates/auth/register.html:18 ../templates/modal_user_list.html:27
 msgid "Last name"
 msgstr ""
 
-#: templates/auth/register.html:34
+#: ../templates/auth/login.html:14 ../templates/auth/register.html:23
+#: ../templates/modal_user_list.html:35
+msgid "Username"
+msgstr ""
+
+#: ../templates/modal_user_list.html:43
+msgid "Mode"
+msgstr ""
+
+#: ../templates/modal_user_list.html:51
+msgid "Role"
+msgstr ""
+
+#: ../templates/modal_user_list.html:59
+msgid "Owner"
+msgstr ""
+
+#: ../templates/modal_user_list.html:60
+msgid "Administrator"
+msgstr ""
+
+#: ../templates/modal_user_list.html:61
+msgid "Manager"
+msgstr ""
+
+#: ../templates/modal_user_list.html:62
+msgid "Visitor"
+msgstr ""
+
+#: ../templates/modal_user_list.html:63
+msgid "Higher controller"
+msgstr ""
+
+#: ../templates/modal_user_list.html:64
+msgid "Lower controller"
+msgstr ""
+
+#: ../templates/modal_user_list.html:71
+msgid "Register date"
+msgstr ""
+
+#: ../templates/preloader.html:20
+msgid "Wait a moment please..."
+msgstr ""
+
+#: ../templates/slide.html:17
+msgid "Prepend new slide"
+msgstr ""
+
+#: ../templates/slide.html:19
+msgid "Remove this slide"
+msgstr ""
+
+#: ../templates/slide.html:21
+msgid "Move this slide to the left"
+msgstr ""
+
+#: ../templates/slide.html:22
+msgid "Move this slide to the right"
+msgstr ""
+
+#: ../templates/slide.html:25
+msgid "Backgrounds"
+msgstr ""
+
+#: ../templates/slide.html:30
+msgid "Client app settings"
+msgstr ""
+
+#: ../templates/slide.html:33
+msgid "Save changes"
+msgstr ""
+
+#: ../templates/slide.html:37
+msgid "Android APK"
+msgstr ""
+
+#: ../templates/slide.html:40
+msgid "Shutdown server"
+msgstr ""
+
+#: ../templates/slide.html:41
+msgid "Restart server"
+msgstr ""
+
+#: ../templates/slide.html:43
+msgid "Reload"
+msgstr ""
+
+#: ../templates/slide.html:44
+msgid "Reload all clients"
+msgstr ""
+
+#: ../templates/slide.html:45
+msgid "Logout"
+msgstr ""
+
+#: ../templates/slide.html:59
+msgid "Add"
+msgstr ""
+
+#: ../templates/auth/login.html:3 ../templates/auth/login.html:10
+#: ../templates/auth/login.html:28 ../templates/auth/logout.html:7
+#: ../templates/auth/register.html:58
+msgid "Login"
+msgstr ""
+
+#: ../templates/auth/login.html:23 ../templates/auth/register.html:28
+msgid "Password"
+msgstr ""
+
+#: ../templates/auth/login.html:32
+msgid "Don't have an account?"
+msgstr ""
+
+#: ../templates/auth/login.html:32
+msgid "Register here"
+msgstr ""
+
+#: ../templates/auth/logout.html:2 ../templates/auth/logout.html:6
+msgid "Logged out"
+msgstr ""
+
+#: ../templates/auth/logout.html:7
+msgid "See you later"
+msgstr ""
+
+#: ../templates/auth/register.html:2 ../templates/auth/register.html:8
+msgid "Registration"
+msgstr ""
+
+#: ../templates/auth/register.html:41
 msgid "Repeat password"
 msgstr ""
 
-#: templates/auth/register.html:40
+#: ../templates/auth/register.html:47
 msgid "Female"
 msgstr ""
 
-#: templates/auth/register.html:44
+#: ../templates/auth/register.html:51
 msgid "Male"
 msgstr ""
 
-#: templates/auth/register.html:50
+#: ../templates/auth/register.html:56
 msgid "Register"
 msgstr ""
 
-#: templates/auth/register.html:52
+#: ../templates/auth/register.html:58
 msgid "Already have an account?"
 msgstr ""
 
-#: templates/auth/register.html:61
+#: ../templates/auth/register.html:65
 msgid "Good day!"
 msgstr ""
 
-#: templates/auth/register.html:64
+#: ../templates/auth/register.html:68
 msgid "This is Smart home"
 msgstr ""
 
-#: templates/auth/register.html:67
+#: ../templates/auth/register.html:71
 msgid "Please register to SH now!"
 msgstr ""
 
-#: templates/modal_edit/icon_item.html:1 templates/modal_edit/icons.html:2
-#: templates/tiles/alarm_clock.html:4 templates/tiles/toggle.html:5
-#: templates/tiles/value_double.html:4
+#: ../templates/modal_edit/icon_item.html:1
+#: ../templates/modal_edit/icons.html:2 ../templates/tiles/alarm_clock.html:4
+#: ../templates/tiles/toggle.html:5 ../templates/tiles/value_double.html:4
 msgid "Icon"
 msgstr ""
 
-#: templates/modal_edit/item_values.html:2
+#: ../templates/modal_edit/item_values.html:2
 msgid "Menu"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:13
+#: ../templates/tiles/alarm_clock.html:13
 msgid "Monday"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:16
+#: ../templates/tiles/alarm_clock.html:16
 msgid "Tuesday"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:19
+#: ../templates/tiles/alarm_clock.html:19
 msgid "Wednesday"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:22
+#: ../templates/tiles/alarm_clock.html:22
 msgid "Thursday"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:25
+#: ../templates/tiles/alarm_clock.html:25
 msgid "Friday"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:28
+#: ../templates/tiles/alarm_clock.html:28
 msgid "Saturday"
 msgstr ""
 
-#: templates/tiles/alarm_clock.html:31
+#: ../templates/tiles/alarm_clock.html:31
 msgid "Sunday"
 msgstr ""
 
-#: templates/tiles/player.html:8
+#: ../templates/tiles/player.html:10
 msgid "Thumbnail"
 msgstr ""
 
-#: templates/tiles/player.html:9
+#: ../templates/tiles/player.html:11
 msgid "Previous"
 msgstr ""
 
-#: templates/tiles/player.html:10
+#: ../templates/tiles/player.html:12
 msgid "Pause"
 msgstr ""
 
-#: templates/tiles/player.html:11
+#: ../templates/tiles/player.html:13
 msgid "Play"
 msgstr ""
 
-#: templates/tiles/player.html:12
+#: ../templates/tiles/player.html:14
 msgid "Next"
-msgstr ""
-
-#: templates/tiles/toggle.html:7
-msgid "On"
-msgstr ""
-
-#: templates/tiles/toggle.html:7
-msgid "Off"
 msgstr ""
 

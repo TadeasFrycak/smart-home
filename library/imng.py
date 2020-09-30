@@ -17,10 +17,8 @@ class ImageManager:
         :return:
         """
 
-        tries = 0
-        while True:
+        for tries in range(5):
             # Browse directory and load backgrounds
-            tries += 1
             backgrounds = []
             for file in self.__fmng.list_file_names(path=self.IMG_PATH):
                 try:
@@ -32,20 +30,32 @@ class ImageManager:
                     self.reclassify()
                     break
             else:
-                return random.choice(backgrounds)
+                if backgrounds:
+                    return random.choice(backgrounds)
 
-            if tries >= 5:
-                self.__console.print(data="Fatal error in background chooser!", priority=2)
-                break
+                else:
+                    return None
+
+        self.__console.print(data="Fatal error in background chooser!", priority=2)
 
     def reclassify(self):
-        print(self.__console.FG_COLORS["green"] + self.__console.SPECIAL["bold"] + "Reinitialising..." + self.__console.END)
+        """
+        Reclassify images
+        :return: None
+        """
+
+        # print(self.__console.FG_COLORS["green"] + self.__console.SPECIAL["bold"] + "Reinitialising..." + self.__console.END)
         self.__fmng.img_data = {}
 
         images = self.__fmng.list_file_names(path=self.IMG_PATH, full_path=True)
         self.__fmng.img_data = self.classify(images=images)
 
     def classify(self, images):
+        """
+        Classify images
+        :return: None
+        """
+
         img_data = {}
 
         for num, path in enumerate(images):
@@ -58,17 +68,30 @@ class ImageManager:
             img_data[filename]["format"] = image.format
             img_data[filename]["mode"] = image.mode
             img_data[filename]["size"] = image.size
+            # TODO dark and ultra dark 255 - 60; 60-30; 30-0
+            if 0 <= average <= int(self.__fmng.config["imng"]["limit-ultra-dark"]):
+                img_data[filename]["type"] = "ultra-dark"
 
-            if average <= 35:
+            elif int(self.__fmng.config["imng"]["limit-ultra-dark"]) < average <= int(self.__fmng.config["imng"]["limit-dark"]):
                 img_data[filename]["type"] = "dark"
 
-            else:
+            elif int(self.__fmng.config["imng"]["limit-dark"]) < average:
                 img_data[filename]["type"] = "light"
 
-            print(self.__console.FG_COLORS["green"] + self.__console.SPECIAL["bold"] + "Initialise: " + self.__console.END + str(round((num+1)/len(images)*100, 1))+"%")
+            else:
+                self.__console.print("Fatal error in background classifier!", 2)
+            print("{0}{1}Reinit{2}\tImg {3}/{4}\t{5}%".format(self.__console.FG_COLORS["green"],
+                                                              self.__console.SPECIAL["bold"],
+                                                              self.__console.END, num+1, len(images),
+                                                              round((num+1)/len(images)*100, 1)))
             # im.save(i)
         return img_data
 
     def main(self):
-        if list(self.__fmng.img_data.keys()).sort() != self.__fmng.list_file_names(path=self.IMG_PATH).sort() or self.__fmng.img_data == {}:
+        """
+        Main of image classify
+        :return: None
+        """
+
+        if list(self.__fmng.img_data.keys()).sort() != self.__fmng.list_file_names(path=self.IMG_PATH).sort() or self.__fmng.img_data == {} or self.__fmng.config["imng"].getboolean("reclassify"):
             self.reclassify()

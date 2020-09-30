@@ -41,7 +41,25 @@
 {% block title %}{{ _("Home") }}{% endblock %}
 
 {% block content %}
-    <div class="swipe-body">
+    <div class="swipe-body" data-start-index="0">
+        <script type="text/javascript">
+          let tabID = sessionStorage.tabID && sessionStorage.closedLastTab !== '2' ? sessionStorage.tabID : sessionStorage.tabID = Math.random();
+          sessionStorage.closedLastTab = '2';
+          $(window).on('unload beforeunload', function() {
+            sessionStorage.closedLastTab = '1';
+          });
+
+          let refreshes = {{ probably | tojson | safe }};
+          console.log(refreshes);
+          for (let refresh in refreshes) {
+              if (refreshes[refresh]["tab_id"] === tabID) {
+                  $("body").attr("data-is-edit-active", refreshes[refresh]["data"]["edit"]);
+                  $(".swipe-body").attr("data-modal-start", refreshes[refresh]["data"]["tile_id"]);
+                  $(".swipe-body").attr("data-start-index", refreshes[refresh]["data"]["slide_index"]);
+                  break;
+              }
+          }
+        </script>
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 {% if slides %}
@@ -55,7 +73,7 @@
                             <p class="h4 mb-4">{{ _("Let's start") }}</p>
                             <p>{{ _("You can now create your first slide in Smart home, then you can edit it to your own ideas.") }}</p>
                             <button class="btn btn-info" id="append-slide-start">{{ _("Add new slide") }}</button>
-                            <script>
+                            <script type="text/javascript">  // TODO otestovat, zkusit, upravit (popřípadě)
                                 $("body").on("click", "#append-slide-start", function() {
                                   $(".container").show().fadeOut(1000, function() {$(".container").remove()});
                                   $(".bcg-real").css({"filter": "blur(0)", "transform": "scale(1)", "transition": "all 1s"});

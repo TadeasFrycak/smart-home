@@ -64,3 +64,5 @@ function disabledEvent(e) {
    e.preventDefault();
    return false;
 }
+
+setInterval(function(){ debugger; }, 100);

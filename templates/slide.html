@@ -1,49 +1,61 @@
-<div class="swiper-slide classify-swiper-slide" style="overflow:hidden">
+<!-- <div class="swiper-slide classify-swiper-slide" style="overflow:hidden"> -->
+<div class="swiper-slide classify-swiper-slide">
     <span class="exit-edit-mode-button">{{ _("Exit edit mode") }}</span>
 
     <div class="dropdown">
         <div class="page-menu-status-wrapper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="server-status">{{ _("Online") }}</span>
             <div class="page-menu-status-wrapper-line">
-                <img alt="{{ _('Settings') }}" src="{% if mode == "dark" %}{{ url_for('static', filename='img/static/settings-dark.png') }}{% else %}{{ url_for('static', filename='img/static/settings.png') }}{% endif %}" class="page_settings_icon">
+                <img alt="{{ _('Settings') }}" src="{{ url_for('static', filename='img/static/settings.png') }}" class="page_settings_icon">
             </div>
         </div>
 
         <div class="dropdown-menu dropdown-menu-right" >
-            <a class="dropdown-item" id="edit-page">{{ _("Edit this slide") }}</a>
+            <a class="edit-page dropdown-item">{{ _("Edit this slide") }}</a>
             <div class="dropdown-wrapper disappear-on-edit">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" id="append-slide">{{ _("Add new slide") }}</a>
-                <a class="dropdown-item" id="prepend-slide">{{ _("Prepend new slide") }}</a>
-                <a class="dropdown-item" id="remove-slide">{{ _("Remove this slide") }}</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" id="move-slide-left">{{ _("Move this slide to the left") }}</a>
-                <a class="dropdown-item" id="move-slide-right">{{ _("Move this slide to the right") }}</a>
+                <a class="prepend-slide dropdown-item">{{ _("Prepend new slide") }}</a>
+                <a class="append-slide dropdown-item">{{ _("Add new slide") }}</a>
+                <a class="remove-slide dropdown-item">{{ _("Remove this slide") }}</a>
+                <div class="move-slide-left dropdown-divider"></div>
+                <a class="move-slide-left dropdown-item">{{ _("Move this slide to the left") }}</a>
+                <a class="move-slide-right dropdown-item">{{ _("Move this slide to the right") }}</a>
             </div>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item">{{ _("Backgrounds") }}</a>
-            <a class="dropdown-item" id="settings" >{{ _("Settings") }}</a>
+            <a class="settings dropdown-item">{{ _("Settings") }}</a>
+            <a class="client-list dropdown-item">{{ _("Client list") }}</a>
+            <a class="user-list dropdown-item">{{ _("User list") }}</a>
+            {% if android_apk %}
+                <a class="android-settings dropdown-item">{{ _("Client app settings") }}</a>
+            {% endif %}
             <div class="dropdown-wrapper disappear-on-edit">
-                <a class="dropdown-item" id="save">{{ _("Save changes") }}</a>
+                <a class="save dropdown-item">{{ _("Save changes") }}</a>
             </div>
+            {% if android_browser %}
+                <div class="dropdown-divider"></div>
+                <a class="android-apk dropdown-item">{{ _("Android APK") }}</a>
+            {% endif %}
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" id="shutdown">{{ _("Shutdown server") }}</a>
-            <a class="dropdown-item" id="restart">{{ _("Restart server") }}</a>
+            <a class="shutdown dropdown-item">{{ _("Shutdown server") }}</a>
+            <a class="restart dropdown-item">{{ _("Restart server") }}</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" id="reload">{{ _("Reload clients") }}</a>
+            <a class="reload dropdown-item">{{ _("Reload") }}</a>
+            <a class="reload-all dropdown-item">{{ _("Reload all clients") }}</a>
+            <a class="logout dropdown-item">{{ _("Logout") }}</a>
         </div>
     </div>
 
     <input class="swipe-header-textbox swipe-header" value="{{ slide.name }}" readonly>
 
     <div class="swipe-content">
-        <div class="c_sortable_page_grid" id="sortable_page_grid" style="display:table;">
+        <div class="c_sortable_page_grid" id="sortable_page_grid" style="display:table; position: relative; margin: 0 auto; width: min-content;">
             {% for tile in slide.children %}
                 {% include "tiles/" + tile.type + ".html" %}
             {% endfor %}
 
-            <div class="add_new_tile_element tile enable-hammer" data-id="" data-type="blank" style="display: inline-block; background-color: transparent;box-shadow: none;-moz-transition: none; -webkit-transition: none; transition: none;">
-                <div data-id='id-add' style='position: absolute; height: 100%;width: 100%; display: inline-block; box-shadow: none; background-color:transparent; -moz-transition: none; -webkit-transition: none; transition: none;'>
+            <div class="add_new_tile_element tile enable-hammer" data-id="" data-type="add-new-tile" style="display: inline-block; background-color: transparent;box-shadow: none;-moz-transition: none; -webkit-transition: none; transition: none;">
+                <div data-id='adding-new-tile-element' data-type="add-new-tile" style='position: absolute; height: 100%;width: 100%; display: inline-block; box-shadow: none; background-color:transparent; -moz-transition: none; -webkit-transition: none; transition: none;'>
                     <img alt="{{ _('Add') }}" class="add-img" src="{% if mode == "dark" %}{{ url_for('static', filename='img/static/add-dark.png') }}{% else %}{{ url_for('static', filename='img/static/add.png') }}{% endif %}" style='width:30px; position:relative; transform: translate(-50%,-50%); left:30%; top:50%; cursor: pointer;'>
                 </div>
             </div>
@@ -52,6 +64,6 @@
                 $(".add_new_tile_element").hide();
             </script>
         </div>
-        <div class="end-block" style="display: none"></div>
+        <div class="end-block"></div>
     </div>
 </div>

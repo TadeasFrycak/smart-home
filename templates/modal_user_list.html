@@ -1,0 +1,104 @@
+{% extends "modal.html" %}
+
+{% block title %}
+    {{ _("User list") }}
+{% endblock %}
+
+{% block content %}
+    {% for user in users %}
+    <div class="list-group-item modal-edit-item">
+    {#    <img alt="{{ _('Menu') }}" src="{{ url_for('static', filename='/img/static/menu.png') }}" class="menu-handle icon-invert" style="height: 13px;margin-right: 10px;width:15px; cursor:pointer;">#}
+        <span style="font-weight:bold;font-size:15px;">[Owner] {{ user.first_name | title }} {{ user.last_name | title }}</span>
+            <!-- <span style="margin-left:10px;margin-right:10px;">-</span> -->
+            <!-- <span style="font-style:italic;">{{ user.username }}</span> -->
+            <!-- <span style="">[Owner]</span> -->
+
+        <div class="modal-edit-item-dropdown">
+            <form>
+                <div class="form-group-sm row" style="margin-bottom: 10px;">
+                    <div class="col-sm-3" style="white-space: nowrap;">
+                        {{ _("First name") }}:
+                    </div>
+                    <div class="col-sm-9">
+                        {{ user.first_name | title }}
+                    </div>
+                </div>
+                <div class="form-group-sm row" style="margin-bottom: 10px;">
+                    <div class="col-sm-3" style="white-space: nowrap;">
+                        {{ _("Last name") }}:
+                    </div>
+                    <div class="col-sm-9">
+                        {{ user.last_name | title }}
+                    </div>
+                </div>
+                <div class="form-group-sm row" style="margin-bottom: 10px;">
+                    <div class="col-sm-3" style="white-space: nowrap;">
+                        {{ _("Username") }}:
+                    </div>
+                    <div class="col-sm-9">
+                        {{ user.username }}
+                    </div>
+                </div>
+                <!-- <div class="form-group-sm row" style="margin-bottom: 10px;">
+                    <div class="col-sm-3" style="white-space: nowrap;">
+                        {{ _("Mode") }}:
+                    </div>
+                    <div class="col-sm-9">
+                        {{ user.mode | title }}
+                    </div>
+                </div> -->
+                <div class="form-group-sm row" style="margin-bottom: 10px;">
+                    <div class="col-sm-3" style="white-space: nowrap;">
+                        {{ _("Role") }}
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.role | title }}:
+                            </button>
+                            <div class="dropdown-menu">
+                                <!-- <a class="dropdown-item" href="#">{{ _("Owner") }}</a> -->
+                                <a class="dropdown-item" href="#">{{ _("Administrator") }}</a>
+                                <a class="dropdown-item" href="#">{{ _("Manager") }}</a>
+                                <a class="dropdown-item" href="#">{{ _("Visitor") }}</a>
+                                <!-- <a class="dropdown-item" href="#">{{ _("Higher controller") }}</a>
+                                <a class="dropdown-item" href="#">{{ _("Lower controller") }}</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-sm row" style="margin-bottom: 10px;">
+                    <div class="col-sm-3" style="white-space: nowrap;">
+                        {{ _("Register date") }}:
+                    </div>
+                    <div class="col-sm-9">
+                        {{ user.register_date }}
+                    </div>
+                </div>
+
+                <div class="form-group-sm row">
+                    <div class="col-sm-12">
+                        Logs:
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" readonly>2020-06-21 18:24:44,201 - WARNING: This device is not a Raspberry!
+2020-06-21 18:24:44,207 - DEBUG: Log (16): Sending CONNECT (u1, p1, wr0, wq0, wf0, c1, k60) client_id=b''
+2020-06-21 18:24:44,208 - DEBUG: Log (16): Received CONNACK (0, 0)
+2020-06-21 18:24:44,208 - DEBUG: Connected with result code 0
+2020-06-21 18:24:44,208 - DEBUG: Log (16): Sending SUBSCRIBE (d0, m1) [(b'home_receive/#', 0)]
+2020-06-21 18:24:44,209 - DEBUG: Log (16): Received SUBACK
+2020-06-21 18:24:44,881 - DEBUG: Connected 192.168.0.101 (chrome; 83.0.4103.97; cs)
+2020-06-21 18:24:45,141 - DEBUG: Connected 192.168.0.101 (chrome; 69.0.3497.100; en-US)
+2020-06-21 18:24:45,180 - DEBUG: Disconnected 192.168.0.101 (chrome; 69.0.3497.100; en-US)
+2020-06-21 18:24:45,513 - DEBUG: Connected 192.168.0.104 (chrome; 83.0.4103.106; cs-CZ,cs;q=0.9,en-US;q=0.8,en;q=0.7)
+2020-06-21 18:24:45,687 - DEBUG: Connected 192.168.0.101 (chrome; 69.0.3497.100; en-US)
+2020-06-21 18:24:45,907 - DEBUG: Connected 192.168.0.101 (chrome; 83.0.4103.97; cs)</textarea>
+                    </div>
+                </div>
+            </form>
+
+            <button type="button" class="btn btn-sm btn-outline-danger modal-edit-item-delete">
+                <span>{{ _("Delete") }}</span>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "auth/base.html" %}
 {% block title %}{{ _("Logged out") }}{% endblock %}
 {% block content %}
-    <div class="container">
+    <div class="container auth-container">
         <form class="text-center" autocomplete="off">
             <p class="h4 mb-4">{{ _("Logged out") }}</p>
             <p>{{ _("See you later") }} <b>{{ user.first_name }}</b>!<br><br><a href="{{ url_for('index') }}">{{ _("Login") }}</a></p>

@@ -15,7 +15,7 @@ $(document).ready(function(){
 
     DEBUG.logDebug("Add new item, Tile ID: " + tile_id + ", Item name: " + item_name)
 
-    socketio.emit("add_modal_item", {
+    socketio.emit("modal_item_prepend", {
       "type": item_name,
       "tile_id": tile_id
     });
@@ -99,7 +99,7 @@ function modalEditItemTextChanged(object) {
   // let textbox_old_val = $(object).attr("placeholder");
   let textbox_new_val = $(object).val();
   
-  if (nameOfThisItem.toLowerCase() === "id") {
+  if (nameOfThisItem.toLowerCase() === _("id")) {
     // ( > modal_edit_events.js )
     if (validateTextBoxWithMinLetters(object,5) === false || validateTextBoxWithRegex(object) === false) feedback = false;
     if (feedback) $(object).parent().parent().parent().find(".modal-item-mqtt-path").val("home/" + id_of_caller + "/" + textbox_new_val);
@@ -117,7 +117,7 @@ function modalEditItemTextChanged(object) {
   });
 
   if (feedback === true) {
-    $(object).attr("placeholder",textbox_new_val);
+    // $(object).attr("placeholder",textbox_new_val);
 
     socketio.emit("modal_item_dynamic_value", {
       "value_name": nameOfThisItem,
@@ -151,11 +151,13 @@ function tileTypeChanged(id_of_caller,type_name) {
 function modalEditPreviewImageTap(elem) {
   $(".modal-edit-icon").each(function() {
     $(this).css({"border": "2px solid transparent"});
+    $(this).attr('data-selected','false');
   });
   if ($("body").hasClass("dark")) {
     $(elem.target).css({"border": "2px solid rgb(232, 93, 71)"});
   }
   else {
+    $(elem.target).attr('data-selected','true');
     $(elem.target).css({"border": "2px solid rgb(23, 162, 184)"});
   }
 
@@ -168,10 +170,10 @@ function modalEditPreviewImageTap(elem) {
 // ( < modal_init.js )
 function modalEditTileTitleChanged() {
   let tile_name = $("#tile_name").val();
-  let tile_id = $("#tile-id").val();
+  // let tile_id = $("#tile-id").val();
   let id_of_caller = $(".modal-here").attr("id_of_caller");
 
-  $("#tile-mqtt-path").val("home/" + tile_id);
+  // $("#tile-mqtt-path").val("home/" + tile_id);
 
   socketio.emit("tile_label", {"tile_id": id_of_caller, "new_label": tile_name});
 }
@@ -179,14 +181,17 @@ function modalEditTileTitleChanged() {
 // ( < modal_init.js )
 function modalEditTileIDchanged(object) {
   // ( > modal_edit_events.js )
-  let feedback = validateTextBoxWithMinLetters(object, 5)
-  let id_of_caller = $(".modal-here").attr("id_of_caller");
-  let tile_id = $("#tile-id").val();
 
-  if (feedback === true)
+  let feedback = validateTextBoxWithMinLetters(object, 5)
+  let feedback2 = validateTextBoxWithRegex(object)
+  
+  if (feedback === true && feedback2 === true)
   {
     // DEBUG.logDebug("Find item with: " + id_of_caller);
     // DEBUG.logDebug("New ID: " + tile_id);
+    let id_of_caller = $(".modal-here").attr("id_of_caller");
+    let tile_id = $("#tile-id").val();
+
     socketio.emit("tile_id", {"tile_id": id_of_caller, "new_id": tile_id});
   }
 

@@ -6,14 +6,14 @@ class DevelopmentConfig:
     """
     Flask configuration class - set Flask configuration vars
     """
+    HOST = "0.0.0.0"
+    PORT = 80
+    LOGGING = False
 
     ENV = "development"
     DEVELOPMENT = True
     TESTING = True
     DEBUG = False
-
-    STATIC_FOLDER = "static"
-    TEMPLATES_FOLDER = "templates"
 
     TEMPLATES_AUTO_RELOAD = True
     SEND_FILE_MAX_AGE_DEFAULT = 0

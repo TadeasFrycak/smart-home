@@ -1,6 +1,8 @@
 <div class="form-group-sm row">
     <label class="col-sm-2 col-form-label">{{ refactor(value) }}</label>
     <div class="col-sm-10">
-        <input class="modal-edit-item-dynamic-value form-control form-control-sm" maxlength="40" placeholder='{{ refactor(value) }}' value='{{ item["data"][value] }}'>
+        <input class="unfocus-on-enter modal-edit-item-dynamic-value form-control form-control-sm" maxlength="40"
+               placeholder='{% if item["data"][value] == "" %}N/A{% else %}{{ item["data"][value] }}{% endif %}'
+               value='{{ item["data"][value] }}'>
     </div>
 </div>
