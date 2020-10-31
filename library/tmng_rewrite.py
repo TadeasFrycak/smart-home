@@ -79,29 +79,12 @@ class TemplateManagerRewrite:
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
                 if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
-                    self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.VALUE] = new_value
+                    if isinstance(new_value, dict) and isinstance(item_content[self.__tmng_r.VALUE], dict):
+                        for key in new_value.keys():  # TODO není moc dobré
+                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.VALUE][key] = new_value[key]
+                    else:
+                        self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.VALUE] = new_value
                     return True
-
-    def tile_dynamic_value(self, tile_id, value_name, new_value):  # TODO v nové verzi odstranit
-        """
-        Rewrite tile (dynamic generated) value - suffix, ...
-        :param tile_id:
-        :param value_name:
-        :param new_value:
-        :return:
-        """
-
-        # Get pages (number and content)
-        for page_num, page_content in enumerate(self.__fmng.devices):
-            # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
-                # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
-                    # Get modal items
-                    for value in item_content[self.__tmng_r.DATA]:
-                        if value == value_name:
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA][value] = new_value
-                            return True
 
     def tile_icon(self, tile_id, new_icon):
         """
@@ -181,11 +164,12 @@ class TemplateManagerRewrite:
                     return True
 
     # Modal states
-    def modal_toggle(self, tile_id, item_id, new_value):
+    def modal_item_value(self, tile_id, item_id, item_type, new_value):
         """
-        Modal toggle value rewrite
+        Modal item value rewrite
         :param tile_id: ID of tile
         :param item_id: item ID
+        :param item_type: type of modal item
         :param new_value: new value
         :return: True
         """
@@ -199,55 +183,8 @@ class TemplateManagerRewrite:
                     # Get modal items
                     for modal_num, modal_item in enumerate(item_content[self.__tmng_r.MODAL]):
                         # If that item is toggle, rewrite
-                        if modal_item[self.__tmng_r.TYPE] == self.__tmng_r.TOGGLE and modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == item_id:
+                        if modal_item[self.__tmng_r.TYPE] == item_type and modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == item_id:
                             self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE] = new_value
-                            return True
-
-    def modal_slider(self, tile_id, item_id, new_value):
-        """
-        Modal slider value rewrite
-        :param tile_id: ID of tile
-        :param item_id: item ID
-        :param new_value: new value
-        :return: True
-        """
-
-        # Get pages (number and content)
-        for page_num, page_content in enumerate(self.__fmng.devices):
-            # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
-                # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
-                    # Get modal items
-                    for modal_num, modal_item in enumerate(item_content[self.__tmng_r.MODAL]):
-                        # If that item is slider rewrite
-                        if modal_item[self.__tmng_r.TYPE] == self.__tmng_r.SLIDER and modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == item_id:
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE] = new_value
-                            return True
-
-    def modal_daterangepicker(self, tile_id, item_id, start_value, end_value):
-        """
-        Modal daterangepicker value rewrite
-        :param tile_id: ID of tile
-        :param item_id: item ID
-        :param start_value: start value
-        :param end_value: end value
-        :return:
-        """
-
-        # Get pages (number and content)
-        for page_num, page_content in enumerate(self.__fmng.devices):
-            # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
-                # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
-                    # Get modal items
-                    for modal_num, modal_item in enumerate(item_content[self.__tmng_r.MODAL]):
-                        # If that item is slider rewrite
-                        if modal_item[self.__tmng_r.TYPE] == "daterangepicker" and modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == item_id:
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE] = {}
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE]["start"] = start_value
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE]["end"] = end_value
                             return True
 
     def modal_item_index(self, tile_id, old_index, new_index):
@@ -269,7 +206,7 @@ class TemplateManagerRewrite:
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL].insert(new_index, self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL].pop(old_index))
                     return True
 
-    def modal_item_value(self, tile_id, new_value, value_name, index):
+    def modal_item_dynamic_value(self, tile_id, new_value, value_name, index):
         """
         Modal item dynamic value
         :param tile_id: tile ID
@@ -291,6 +228,7 @@ class TemplateManagerRewrite:
                             self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][index][self.__tmng_r.DATA][value] = new_value
                             return True
 
+    # Slide
     def slide_name(self, index, new_name):
         """
         Rewrite slide name

@@ -27,12 +27,12 @@ $(document).ready(function(){
 //         let id = $(object).parent().attr("data-id");
 //         let innerId = $(object).attr("data-inner-id");
     
-//         console.log("\r\n--> Inner Tap\r\nID: ");
-//         console.log(id);
-//         console.log("inner ID: ");
-//         console.log(innerId);
-//         console.log("object");
-//         console.log($(object));
+//         terminal.log("\r\n--> Inner Tap\r\nID: ");
+//         terminal.log(id);
+//         terminal.log("inner ID: ");
+//         terminal.log(innerId);
+//         terminal.log("object");
+//         terminal.log($(object));
 
 //         // for alarm_clock
 //         let parent_type = $(object).parent().attr("data-type");
@@ -45,12 +45,12 @@ $(document).ready(function(){
 
 //             if (parent_element.hasClass("alarm-clock-glyph-active"))
 //             {
-//                 console.log("Deactivate " + query);
+//                 terminal.log("Deactivate " + query);
 //                 parent_element.toggleClass("alarm-clock-glyph-active",false);
 //             }
 //             else
 //             {
-//                 console.log("Activate " + query);
+//                 terminal.log("Activate " + query);
 //                 parent_element.toggleClass("alarm-clock-glyph-active",true);
 //             }
 //         }
@@ -125,7 +125,7 @@ function tappedOnToggle($this) {
 
 function tappedOnAlarmClock($this) {
 
-    // console.log("lkdsjfksdf");
+    // terminal.log("lkdsjfksdf");
     let tile_element = $this.parent();
     let tileID = $this.parent().attr("data-id");
     // data-active="1"
@@ -142,8 +142,8 @@ function tappedOnAlarmClock($this) {
     let sun = tile_element.find(".alarm-clock-glyph[data-type='Sun']").hasClass("alarm-clock-glyph-active")
 
 
-    // console.log("Monday:");
-    // console.log(mon);
+    // terminal.log("Monday:");
+    // terminal.log(mon);
     // let mon = tile_element.attr("data-mon") === "1";
     // let tue = tile_element.attr("data-tue") === "1";
     // let wed = tile_element.attr("data-wed") === "1";
@@ -151,9 +151,6 @@ function tappedOnAlarmClock($this) {
     // let fri = tile_element.attr("data-fri") === "1";
     // let sat = tile_element.attr("data-sat") === "1";
     // let sun = tile_element.attr("data-sun") === "1";
-
-    console.log("AHAHA");
-    console.log(is_active)
 
     socketio.emit("tile_value", {"tile_id": tileID, "value": {"main": is_active, "monday": mon, "tuesday": tue, "wednesday": wed, "thursday": thu, "friday": fri, "saturday": sat, "sunday": sun}});
 }

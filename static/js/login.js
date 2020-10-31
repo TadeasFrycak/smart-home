@@ -1,105 +1,73 @@
 $(document).ready(function() {
-  socketio = io("/com");
-
-  socketio.on("reconnect", function() {
-    console.log("Server reconnected! Reloading...");
-    location.reload();
-  });
-
   socketio.on("login_result", function(data){
-    if (data.status === true)
-    {
+    if (data.status === true) {
       $.post("/login", {}, function () {
-        location.reload();
+        window.location.href = $("#login-form").attr("action");
       });
-    }  
-    else
-    {
-      console.log("Wrong password");
-      $(this).removeAttr("disabled");
+    }
+    else {
+      console.log("Wrong username or password");
+      $("#username").removeAttr("disabled");
+      $("#password").removeAttr("disabled");
       $("#password").val("");
     }
   });
 
-  $("#password").on("input", function(e){
-    if($("#password").val() == "") {
-      $("#password").addClass("is-invalid");
-    }
-    else {
-      $("#password").removeClass("is-invalid");
-    }
-  });
+  let inputNames = ["#username", "#password"];
+  for (let i=0; i < inputNames.length; i++) {
+    $(inputNames[i]).bind("cut copy paste", function(e) {
+      e.preventDefault();
+    });
+
+    $(inputNames[i]).on("keypress", function(e) {
+      if(e.which === 13){
+        $("#login").click();
+      }
+    });
+  }
 
   $("#username").on("input", function(e){
-    if($("#username").val() == "") { //|| !($("#user-name").val().includes("."))) {
-      $("#username").addClass("is-invalid");
-    }
-    else {
-      $("#username").removeClass("is-invalid");
-    }
+    $("#username").val($("#username").val().normalize("NFKD").replace(/[^A-Za-z0-9._-]/g, ""))
   });
 
-  $("#password").on("keypress", function (e) {
-    if(e.which === 13){
-      // Disable textbox to prevent multiple submit
-      $(this).attr("disabled", "disabled");
-      $("#login").click();
+  $("body").on("click", "#login", function() {
+    let wrong = false;
+    let emptyLabels = [];
+    if($("#username").val() === "") {
+      wrong = true;
+      emptyLabels.push(_("Username"))
     }
-  });
 
-  $("#username").on("keypress", function (e) {
-    if(e.which === 13){
-      // Disable textbox to prevent multiple submit
-      $(this).attr("disabled", "disabled");
-      $("#login").click();
+    if($("#password").val() === "") {
+      wrong = true;
+      emptyLabels.push(_("Password"))
     }
-  });
 
-  function finalValidCheck(object) {
-    if (!$(object).hasClass("is-invalid")) {
-      if($(object).val() !== "") {
-        return true;
+    let emptyString = "";
+    for (let i=0; i < emptyLabels.length; i++) {
+      if (i === 0) {
+        emptyString += emptyLabels[i];
+      }
+      else if ((i + 1) === emptyLabels.length) {
+        emptyString += " " + _("and") + " " + emptyLabels[i].toLowerCase();
       }
       else {
-        $(object).addClass("is-invalid");
+        emptyString += ", " + emptyLabels[i].toLowerCase();
       }
     }
-    return false;
-  }
-  $("body").on("click", "#incognito-login", function() {
-    // TODO dát dohromady
-    // let userName = finalValidCheck($("#username"));
-    // let password = finalValidCheck($("#password"));
-    // if(userName && password) {
-    //   socketio.emit("login", {
-    //     "username": $("#username").val(),
-    //     "password": $("#password").val(),
-    //     "remember": 0,
-    //   });
-    //   $.post("/login", {}, function(){});
-    // }
-  });
-  let parseQueryString = function() {
-    let str = window.location.search;
-    let objURL = {};
-    str.replace(
-      new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
-      function( $0, $1, $2, $3 ){
-        objURL[ $1 ] = $3;
-      }
-    );
-    return objURL;
-  };
-  $("body").on("click", "#login", function() {
-    // let next = parseQueryString()["next"];
-    let userName = finalValidCheck($("#username"));
-    let password = finalValidCheck($("#password"));
-    if(userName && password) {
+
+    if (emptyString) {
+      emptyString += " cannot be empty";
+      notify(_("Warning"), emptyString, "warning", 5000);
+    }
+    if (wrong === false) {
+      $("#username").attr("disabled", "disabled");
+      $("#password").attr("disabled", "disabled");
+
       socketio.emit("login", {
-        "username": $("#username").val(),
+        "username": $("#username").val().toLowerCase().trim(),
         "password": $("#password").val(),
         "remember": 1,
-        // "next": next
       });
     }
   });

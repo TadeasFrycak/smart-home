@@ -6,15 +6,23 @@
 
 {% block content %}
     {% if tile.type == "alarm_clock" %}
-        {% for key, value in tile["value"].items() %}
-            {% set item = {"type": "toggle", "data": {"label": _(refactor(key)), "id": key}, "value": value} %}
-            {% include "modal/toggle.html" %}
-        {% endfor %}
+        <div data-static>
+            {% for key, value in tile["value"].items() %}
+                {% set item = {"type": "toggle", "data": {"label": _(refactor(key)), "id": key}, "value": value} %}
+                {% include "modal/toggle.html" %}
+            {% endfor %}
+        </div>
         {% include "modal/separator.html" %}
         {% include "modal/separator.html" %}
     {% endif %}
 
-    {% for item in tile.modal %}
-        {% include "modal/" + item["type"] + ".html" %}
-    {% endfor %}
+    {% if tile.modal == [] %}
+        <br>
+        <div class="text-center">{{ _("There are no items :(") }}</div>
+        <br>
+    {% else %}
+        {% for item in tile.modal %}
+            {% include "modal/" + item["type"] + ".html" %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

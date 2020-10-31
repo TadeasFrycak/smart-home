@@ -16,8 +16,10 @@
     <div class="modal-edit-item-dropdown">
         <form>
             {% for value in item.data %}
-                {% if value != "value" %}
-                    {% include "modal_edit/item_value.html" %}
+                {% if value.endswith("_checkbox") %}
+                    {% include "modal_edit/item_checkbox.html" %}
+                {% elif value != "value" %}
+                    {% include "modal_edit/item_input.html" %}
                 {% endif %}
                 {% if value == "id" %}
                 <div class="form-group-sm row">

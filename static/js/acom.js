@@ -3,24 +3,33 @@ $(document).ready(function(){
   // Receive asynchronous communication
   // ----------------------------------------------
 
-  // Initialise communication
-  socketio = io("/com");
-
   socketio.on("user_mode_result", function(data) {
     if (data.mode === "light") {
       $("body").removeClass("dark").addClass("light");
-      $(".add-img").attr("src","img/static/add.png");
-      $(".page_settings_icon").attr("src","img/static/settings.png");
+      $(".add-img").attr("src","img/static/add/light.png");
     }
     else if (data.mode === "dark") {
       $("body").removeClass("light").addClass("dark");
-      $(".add-img").attr("src","img/static/add-dark.png");
-      // $(".page_settings_icon").attr("src","img/static/settings-dark.png");
+      $(".add-img").attr("src","img/static/add/dark.png");
     }
   });
 
+  socketio.on("user_background_result", function(data) {
+    console.log(data.background);
+    $("<div class='bcg-new bcg-normal'></div>").insertBefore(".bcg-old");
+    $(".bcg-new").css("background-image", "url(img/backgrounds/" + data.background + ")");
+    let tmpImg = new Image() ;
+    tmpImg.src = "img/backgrounds/" + data.background
+    tmpImg.onload = function() {
+      $(".bcg-old").fadeOut(2000, function() {
+        this.remove();
+        $(".bcg-normal").removeClass("bcg-new").addClass("bcg-old");
+      });
+    };
+  });
+
   socketio.on("slide_name_result", function(data){
-    let chosen_slide_name_textbox = $($(".swiper-slide")[data.slide_index]).find(".swipe-header-textbox");
+    let chosen_slide_name_textbox = $($(".swiper-slide")[data.slide_index]).find(".swipe-header");
     $(chosen_slide_name_textbox).val(data.name);
   });
 
@@ -112,7 +121,7 @@ $(document).ready(function(){
     let new_index = data.new_index;
     let slide_index = data.slide_index;
 
-    // console.log({old_index,new_index,slide_index});
+    // terminal.log({old_index,new_index,slide_index});
 
     let selected_slide = $(".swiper-slide")[slide_index];
     let all_tiles_within_slide = $(selected_slide).find(".grid-square");
@@ -178,8 +187,12 @@ $(document).ready(function(){
     $(data.tile_html).insertBefore(selected_slide).hide().fadeIn();
     let tile_array = $($(".swiper-slide")[data.slide_index]).find(".grid-square");
     let appended_tile = $(tile_array[tile_array.length-1]);
+    
     $(appended_tile).each(function(){
-      initializeHammerTile(this);
+       console.log("Initializing");
+
+       initializeHammerTile(this);
+       $(this).removeAttr("style");
     });
   });
 
@@ -195,24 +208,8 @@ $(document).ready(function(){
   });
 
   socketio.on("get_settings_modal_result", function(data) {
-      
     // ( > events.js )
     displaySettingsModal(data);
-    $(".modal-edit-select-bcg").each(function() {
-      let attr = $(this).attr('checked');
-      if (typeof attr !== typeof undefined && attr !== false) {
-        if ($("body").hasClass("dark")) {
-          $(this).css({"border": "2px solid rgb(232, 93, 71)"});
-        }
-        else {
-          $(this).css({"border": "2px solid rgb(23, 162, 184)"});
-        }
-      }
-      Hammer(this).on("tap", function(elem) {
-        // ( > modal_edit_events.js )
-        modalEditPreviewImageTap(elem);
-      });
-    });
   });
 
   socketio.on("get_client_list_modal_result", function(data) {
@@ -226,8 +223,7 @@ $(document).ready(function(){
   });
 
   socketio.on("get_android_modal_result", function(data) {
-    $(".modal-android").empty().append(data.modal);
-    $("#my-android-modal").modal({ keyboard: true })
+    displaySettingsModal(data);
   });
 
   socketio.on("slide_index_result", function() {
@@ -248,23 +244,39 @@ $(document).ready(function(){
   });
 
   socketio.on("slide_append_result", function(data) {
-    swiper.appendSlide(data.slide);
+    console.log(data.slide_index);
+    swiper.addSlide(data.slide_index, data.slide);
 
     let isEditActive = $("body").attr("data-is-edit-active");
 
-    let lastSlide = $($(".swiper-slide")[$(".swiper-slide").length-1])
+    let lastSlide = $($(".swiper-slide")[data.slide_index]);
 
-    
+    $(lastSlide).find(".dropdown").on("show.bs.dropdown", function(){
+      showDropdown(this);
+    });
+
+    $(lastSlide).find(".dropdown").on("hide.bs.dropdown", function(e){
+      hideDropdown(this, e);
+    });
     lastSlide.find(".tile").each(function(){
       initializeHammerTile(this);
     });
+
+    lastSlide.find(".swipe-header").on("input", function(){
+      let nameOfPageChanged = $(this).val();
+      socketio.emit("slide_name", {"index": swiper.realIndex, "new_name": nameOfPageChanged});
+    });
+    
+    if (swiper.realIndex === data.slide_index) {
+      swiper.slideTo(data.slide_index+1, 0);
+    }
 
     // if (isEditActive === "true") {
     //   $(".add_new_tile_element").hide().fadeIn(2000);
     //   $(".exit-edit-mode-button").hide().fadeIn(2000);
 
     //   // Připnutí Hammer pro každé "+" tlačítko
-    //   $(".swiper-slide-active .add_new_tile_element").each(function() {
+    //   $(".swiper-slide-active .add-new-tile-element").each(function() {
     //     let hammer = new Hammer(this);
     //     hammer.on("tap", function(el) {
     //       addNewTile();
@@ -279,7 +291,7 @@ $(document).ready(function(){
       //   });
       // });
 
-      lastSlide.find(".swipe-header-textbox").each(function() {
+      lastSlide.find(".swipe-header").each(function() {
         $( this ).prop("readonly",false)
         // $( this ).css({"border-bottom-width":"1px","border-bottom-style":"solid","width":"fit-content"});
       });
@@ -287,35 +299,36 @@ $(document).ready(function(){
       $(".exit-edit-mode-button").hide().fadeIn(2000);
 
       let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
-      bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
+      bindSortable(SortableTiles.length,lastSortablePage[data.slide_index]);
+      resize();
     // }
   });
 
-  socketio.on("slide_append_animation_result", function() {
-    swiper.slideTo(swiper.slides.length, 1000);
+  socketio.on("slide_append_animation_result", function(data) {
+    swiper.slideTo(data.slide_index, 1000);
   });
 
-  socketio.on("slide_prepend_result", function(data) {
-    swiper.prependSlide(data.slide);
+  // socketio.on("slide_prepend_result", function(data) {
+  //   swiper.prependSlide(data.slide);
 
-    let isEditActive = $("body").attr("data-is-edit-active");
+  //   let isEditActive = $("body").attr("data-is-edit-active");
 
-    if (isEditActive === "true") {
-      $(".add_new_tile_element").hide().fadeIn(2000);
-      $(".exit-edit-mode-button").hide().fadeIn(2000);
+  //   if (isEditActive === "true") {
+  //     $(".add_new_tile_element").hide().fadeIn(2000);
+  //     $(".exit-edit-mode-button").hide().fadeIn(2000);
 
-      // Připnutí Hammer pro každé "+" tlačítko
-      $(".swiper-slide-active .add_new_tile_element").each(function() {
-        let hammer = new Hammer(this);
-        hammer.on("tap", function(el) {
-          addNewTile();
-        });
-      });
+  //     // Připnutí Hammer pro každé "+" tlačítko
+  //     $(".swiper-slide-active .add_new_tile_element").each(function() {
+  //       let hammer = new Hammer(this);
+  //       hammer.on("tap", function(el) {
+  //         addNewTile();
+  //       });
+  //     });
 
-      let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
-      bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
-    }
-  });
+  //     let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
+  //     bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
+  //   }
+  // });
 
   socketio.on("slide_prepend_animation_result", function() {
     swiper.slideTo(0, 1000);
@@ -327,18 +340,17 @@ $(document).ready(function(){
     let tileID = data.tile_id;
     let tileElement = $(".tile[data-id="+tileID+"]");
     let tileType = tileElement.attr("data-type");
-
     console.log("Tile_value_result event")
 
     // Tile type is toggle
     if (tileType === "toggle") {
 
-      // console.log("Update Toggle")
+      // terminal.log("Update Toggle")
       let tileStateLast = $(tileElement).find(".tile-status").text();
       let tileStateCurrent = data.value;
-      // console.log("Last status: " + tileStateLast);
-      // console.log("Current status: " + tileStateCurrent);
-      // console.log($(tileElement));
+      // terminal.log("Last status: " + tileStateLast);
+      // terminal.log("Current status: " + tileStateCurrent);
+      // terminal.log($(tileElement));
 
       // Turn tile off
       if (tileStateLast.toLowerCase() === _("On").toLowerCase() && tileStateCurrent === 0) {
@@ -355,6 +367,7 @@ $(document).ready(function(){
     else if (tileType === "value") {
       tileElement.find(".tile-value-value").text(data.value.value);
       tileElement.find(".tile-value-suffix").text(data.value.suffix);
+      tileElement.find(".tile-status").text(data.value.ago);
     }
     else if (tileType === "value_double") {
       tileElement.find(".tile-value-left").text(data.value.left.value);
@@ -363,11 +376,6 @@ $(document).ready(function(){
       tileElement.find(".tile-suffix-right").text(data.value.right.suffix);
     }
     else if (tileType === "alarm_clock") {
-      // console.log(data.value);
-      // console.log(data.value.main);
-      // console.log(data.value.tuesday);
-
-
       let tileActive = data.value.main;
       let tileId = data.tile_id;
 
@@ -380,8 +388,8 @@ $(document).ready(function(){
       let tileSun = data.value.sunday;
 
       let tileElement = $(".tile[data-id="+tileId+"]");
-      console.log(tileId);
 
+      console.log(tileMon);
       // TODO:
       // tileActive = true;
 
@@ -395,40 +403,37 @@ $(document).ready(function(){
 
       if (tileActive === true) {
         tileElement.toggleClass("tile-active",true);
-        console.log("tile active");
       }
-      else {
+      else if (tileActive === false){
         tileElement.toggleClass("tile-active",false);
-        console.log("tile not active");
       }
       
       let tileDay = "Mon"
       if (tileMon === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      else if (tileMon === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
       tileDay = "Tue"
       if (tileTue === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      else if (tileTue === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
       tileDay = "Wed"
       if (tileWed === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      else if (tileWed === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
       tileDay = "Thu"
       if (tileThu === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      else if (tileThu === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
       tileDay = "Fri"
       if (tileFri === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      else if (tileFri === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
       tileDay = "Sat"
       if (tileSat === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
+      else if (tileSat === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
       tileDay = "Sun"
       if (tileSun === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-      else tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false); 
+      else if (tileSun === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false); 
     }
   });
 
   // Asynchronous communication for modal toggle
   socketio.on("modal_toggle_result", function(data) {
-    console.log("ahoj jsoem tu");
     console.log(data);
     let tileID = $(".modal-here").attr("id_of_caller");
 
@@ -467,12 +472,6 @@ $(document).ready(function(){
     }
   });
 
-  // Reload page
-  socketio.on("reload", function() {
-    console.log("Server command: reload");
-    location.reload();
-  });
-
   socketio.on("connect", function() {
     console.log("Client connected to server");
     $(".server-status").text(_("Online"));
@@ -480,10 +479,18 @@ $(document).ready(function(){
     let ping_pong_times = [];
     let start_time;
 
+    function sendPing() {
+      start_time = (new Date).getTime();
+      socketio.emit("my-ping");
+    }
+
+    window.setTimeout(function() {
+      sendPing();
+    }, 5000);
+
     window.setInterval(function() {
-        start_time = (new Date).getTime();
-        socketio.emit("my-ping");
-    }, 20000);
+      sendPing();
+    }, 10000);
 
     // Handler for the "pong" message. When the pong is received, the
     // time from the ping is stored, and the average of the last 30
@@ -495,10 +502,15 @@ $(document).ready(function(){
       let sum = 0;
       for (let i = 0; i < ping_pong_times.length; i++)
         sum += ping_pong_times[i];
-      $(".server-status").text(Math.round(sum / ping_pong_times.length) + " ms");
+      let myPing = Math.round(sum / ping_pong_times.length);
+      if (myPing >= 1000) myPing = parseFloat((myPing/1000).toFixed(2)) + " s";
+      else myPing = myPing + " ms"
+      $(".server-status").text(myPing);
     });
+
   socketio.on("disconnect", function() {
     console.log("Client disconnected from server");
+
     $(".server-status").text(_("Offline"));
 
     if ($("body").attr("data-is-edit-active") === "true") {
@@ -508,53 +520,5 @@ $(document).ready(function(){
     else {
       $(".bcg-normal").css({"opacity": 0.4});
     }
-    // $.notify({
-    //   title: "<strong>Server</strong>",
-    //   message: _("Server is now offline")
-    // }, {
-    //   type: "danger",
-    //   delay: 0,
-    //   mouse_over: "pause",
-    //   allow_dismiss: true,
-    //   placement: {
-	// 	from: "top",
-	// 	align: "center"
-	//   },
-    //   animate: {
-    //     enter: "animated fadeInDown", //Down",
-    //     exit: "animated fadeOutUp" //Up"
-    //   },
-    //   z_index: 2000
-    // });
-  });
-
-  socketio.on("reconnect", function() {
-    console.log("Server reconnected! Reloading...");
-
-    setTimeout(() => {
-      location.reload();
-    }, 500);
-  });
-
-  // Asynchronous communication for global notifications
-  socketio.on("notify", function(msg) {
-    $.notify({
-      title: "<strong>" + msg.title +  "</strong>",
-      message: msg.message
-    }, {
-      type: msg.type,
-      delay: 5000,
-      mouse_over: "pause",
-      allow_dismiss: true,
-      /*placement: {
-		from: "top",
-		align: "center"
-	  },*/
-      animate: {
-        enter: "animated fadeInRight", //Down",
-        exit: "animated fadeOutRight" //Up"
-      },
-      z_index: 2000
-    });
   });
 });

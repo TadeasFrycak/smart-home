@@ -6,22 +6,22 @@
 
 {% block content %}
     <div class="modal-settings-page-item">
-        <span style="margin-right: 100%;" >{{ _("Appearance") }}</span>
+        <span style="margin-right: 100%;">{{ _("Appearance") }}</span>
 
         <div class="modal-settings-page-appearance-wrapper" data-selected="false">
             <div class="modal-settings-page-appearance" data-type="light">
-                <img alt="{{ _("LIGHT") }}" src="{{ url_for('static', filename='/img/static/mode-light.png') }}" class="modal-settings-page-appearance-img">
-                <div class="modal-settings-page-appearance-label">{{ _("LIGHT") }}</div>
+                <img alt="{{ _("Light") }}" src="{{ url_for('static', filename='/img/static/mode/light.png') }}" class="modal-settings-page-appearance-img">
+                <div class="modal-settings-page-appearance-label">{{ _("Light") }}</div>
             </div>
 
             <div class="modal-settings-page-appearance" data-type="dark" data-selected="false">
-                <img alt="{{ _("DARK") }}" src="{{ url_for('static', filename='/img/static/mode-dark.png') }}" class="modal-settings-page-appearance-img">
-                <div class="modal-settings-page-appearance-label">{{ _("DARK") }}</div>
+                <img alt="{{ _("Dark") }}" src="{{ url_for('static', filename='/img/static/mode/dark.png') }}" class="modal-settings-page-appearance-img">
+                <div class="modal-settings-page-appearance-label">{{ _("Dark") }}</div>
             </div>
 
             <div class="modal-settings-page-appearance" data-type="smart" data-selected="false">
-                <img alt="{{ _("SMART") }}" src="{{ url_for('static', filename='/img/static/mode-auto.png') }}" class="modal-settings-page-appearance-img">
-                <div class="modal-settings-page-appearance-label">{{ _("SMART") }}</div>
+                <img alt="{{ _("Smart") }}" src="{{ url_for('static', filename='/img/static/mode/smart.png') }}" class="modal-settings-page-appearance-img">
+                <div class="modal-settings-page-appearance-label">{{ _("Smart") }}</div>
             </div>
         </div>
 
@@ -46,17 +46,48 @@
         </style>
     </div>
 
-    <!-- {% for item in modal %}
-        {% include "modal/" + item["type"] + ".html" %}
-    {% endfor %} -->
+    <hr>
 
-    <div class="form-group-sm row">
-        <label for="tile-type" class="col-sm-2 col-form-label">{{ _("Background") }}</label>
-        <div class="col-sm-10">
-            <div class="modal-edit-icons">
-                <!-- TODO-->
-                <img alt="background" src="{{ 'img/backgrounds/' }}" data-name="background-name" class="modal-edit-select-bcg" checked>
-            </div>
-        </div>
+    <span style="margin-right: 100%;">{{ _("Background") }}</span>
+
+    <div style="position:relative;margin-top: 6px; margin-bottom:6px" id="tile-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons">
+        <label style="margin-bottom:6px;" class="btn btn-secondary active">
+            <input type="radio" name="options" autocomplete="off" checked>
+            <span>{{ _("Smart") }}</span>
+        </label>
+
+        <label style="margin-bottom:6px;" class="btn btn-secondary">
+            <input type="radio" name="options" autocomplete="off">
+            <span>{{ _("Random") }}</span>
+        </label>
+
+        <label style="margin-bottom:6px;" class="btn btn-secondary">
+            <input type="radio" name="options" autocomplete="off">
+            <span>{{ _("Light") }}</span>
+        </label>
+
+        <label style="margin-bottom:6px;" class="btn btn-secondary">
+            <input type="radio" name="options" autocomplete="off">
+            <span>{{ _("Dark") }}</span>
+        </label>
+
+        <label style="margin-bottom:6px;" class="btn btn-secondary">
+            <input type="radio" name="options" autocomplete="off">
+            <span>{{ _("Choose...") }}</span>
+        </label>
+    </div>
+
+    <div class="fotorama" data-auto="false" style="">
+        <a href="{{ url_for('static', filename='img/backgrounds/original/' + current_background) }}"></a> <!-- TODO - data-thumb="" - přidat thumbnail v malé velikosti, třeba HD -->
+        {% for key, value in backgrounds.items() %}
+            {% if value["type"] == "light" and key != current_background %}
+                <a href="{{ url_for('static', filename='img/backgrounds/original/' + key) }}"></a> <!-- TODO - data-thumb="" - přidat thumbnail v malé velikosti, třeba HD -->
+            {% endif %}
+        {% endfor %}
+        {% for key, value in backgrounds.items() %}
+            {% if value["type"] == "dark" and key != current_background %}
+                <a href="{{ url_for('static', filename='img/backgrounds/original/' + key) }}"></a> <!-- TODO - data-thumb="" - přidat thumbnail v malé velikosti, třeba HD -->
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

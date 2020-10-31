@@ -1,155 +1,67 @@
-body {
+/* Colors */
+:root {
+    /* Dark background */
+    --main-dark-bg-first: #1b262c;
+    --main-dark-bg-second: #333c4a;
+    --main-dark-bg-third: #0f4c75;
+    --main-dark-bg-fourth: #3282b8;
+    --main-dark-bg-fifth: #bbe1fa;
+
+    /* Dark foreground */
+    --main-dark-fg-first: white;
+    --main-dark-fg-second: #f3f3f3;
+    --main-dark-fg-third: #bbb;
+    --main-dark-fg-fourth: #555;
+
+    /* Light background */
+    --main-light-bg-first: white;
+
+    /* Light foreground */
+    --main-light-fg-first: black;
+
+    /* Tiles */
+    --tile-light-bg-first: var(--main-light-bg-first);
+    --tile-light-bg-second: #bebebe;
+    --tile-light-bg-third: #d2d2d2;
+
+    --tile-light-fg-first: var(--main-light-fg-first);
+    --tile-light-fg-second: #666;
+
+    --tile-dark-bg-first: #282828;
+    --tile-dark-bg-second: #414141;
+    --tile-dark-bg-third: #666;
+
+    --tile-dark-fg-first: #ddd;
+    --tile-dark-fg-second: #dcdcdc;
+
+    /* Shadows */
+    --main-shadow-first: rgba(0, 0, 0, 0.2);
+
+    /* Other */
+    --main-color-first: #17a2b8;
+    --main-color-second: #bbe1fa;
+}
+
+/* Main */
+html, body {
     background-color: black;
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    -webkit-transition: background 0.5s linear;
-    -moz-transition: background 0.5s linear;
-    -o-transition: background 0.5s linear;
-    transition: background 0.5s linear;
-
-}
-html,
-body {
-    height: 100%;
-    margin: auto;
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* supported by Chrome and Opera */
 }
 
-.exit-edit-mode-button {
-    position: absolute;
-    display: none;
-    top: 50px;
-    height: 30px;
-    background-color: rgba(255, 255, 255, 0.95);
-    color: #000000b3;
-    right: 155px;
-    border-radius: 10px;
-    line-height: 30px;
-    text-align: right;
-    font-size: 15px;
-    padding-left: 8px;
-    padding-right: 8px;
-    cursor: pointer;
-}
-.dark .exit-edit-mode-button {
-    background-color: rgba(34, 40, 49, 0.95);
-    color: #fff;
-}
-.page_settings_icon {
-    position: absolute;
-    width: 24px;
-    right: -33px;
-    top: -4px;
+/* Modal */
+.modal-content {
+    border-radius: 15px;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
-.dark .icon-invert {
-    filter: invert(0.90);
+.dark .modal-content {
+  background-color: var(--main-dark-bg-first);
+  color: var(--main-dark-fg-first);
 }
-
-.page-menu-status-wrapper {
-    position: absolute;
-    top: 50px;
-    min-width: 95px;
-    height: 30px;
-    background-color: rgba(255, 255, 255, 0.95);
-    color: #000000b3;
-    right: 6px;
-    border-radius: 10px;
-    line-height: 30px;
-    font-size: 15px;
-    padding-left: 8px;
-    padding-right: 50px;
-    -moz-transition: all 0.5s;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-.dark .page-menu-status-wrapper {
-    background-color: rgba(34, 40, 49, 0.95);
-    color: #fff;
-}
-
-.page-menu-status-wrapper:hover {
-    cursor: pointer;
-}
-
-.page-menu-status-wrapper-line {
-    width: 20px;
-    height: 30px;
-    position: absolute;
-    top: -3px;
-    right: 38px;
-    border-right: 2px solid #0000002b;
-    transform: rotate(20deg);
-}
-
-.dark .page-menu-status-wrapper-line {
-    border-right: 2px solid #ffffff2f;
-}
-
-.btn-secondary:not(:disabled):not(.disabled).active {
-    background-color: #333333;
-}
-
-.grid-square {
-    display: inline-block;
-    margin: 6px;
-}
-
-.text-primary {
-    color: #ffffff;
-}
-
-.modal-graph {
-    position: relative;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-
-.end-block {
-    height: 53px;
-    float: left;
-    position: relative;
-    overflow: hidden;
-}
-
-.dark hr {
-    color: white; background-color: white
-}
-
-.dropdown-menu {
-    background-color: rgba(255,255,255,0.95);
-}
-.dark .dropdown-menu {
-  background-color: #222831;
-  color: #ddd;
-}
-
-.dark .dropdown-item:hover {
-  background-color: #222831;
-  color: #ddd;
-}
-
-.dark .btn-outline-info {
-    color: #bbe1fa;
-    border-color: #bbe1fa;
-}
-
-.alert {
-    margin: 10px 0;
-}
-
-.c_sortable_page_grid {
-    transition: 0.5s all;
-}
-.swipe-content, .swiper-container, .c_sortable_page_grid {
-    overflow: hidden;
-}
-

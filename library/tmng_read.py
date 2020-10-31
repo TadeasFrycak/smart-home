@@ -41,14 +41,14 @@ class TemplateManagerRead:
     X = "x"
     Y = "y"
 
-    def __init__(self, fmng, console, default_values, refactoring):
+    def __init__(self, fmng, terminal, default_values, refactoring):
         """
         Init of class TemplateManagerRead
         :param fmng: FileManager
         """
 
         self.__fmng = fmng
-        self.__console = console
+        self.__terminal = terminal
         self.__refactoring = refactoring
         self.__default_values = default_values
 

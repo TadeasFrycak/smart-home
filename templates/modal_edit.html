@@ -1,7 +1,7 @@
 {% extends "modal.html" %}
 
 {% block head %}
-    <input type="text" class="unfocus-on-enter modal-title modal_edit_title form-control form-control-lg" id="tile_name" maxlength="40" placeholder="{{ _('Tile name') }}" autocomplete="off">
+    <input type="text" class="unfocus-on-enter modal-title modal-edit-title form-control form-control-lg" id="tile_name" maxlength="40" placeholder="{{ _('Tile name') }}" autocomplete="off">
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
 
         <div class="form-group-sm row">
             <label for="tile-id" class="col-sm-3 col-form-label">{{ _("Tile ID") }}</label>
-            <div class="col-sm-8">
+            <div class="col-sm-9">
                 <script type="text/javascript">
                     function AvoidSpace(event) {
                         let k = event ? event.which : window.event.keyCode;
@@ -34,7 +34,7 @@
 
         <div class="form-group-sm row">
             <label for="tile-mqtt-path" class="col-sm-3 col-form-label">{{ _("MQTT path") }}</label>
-            <div class="col-sm-8">
+            <div class="col-sm-9">
                 <input id="tile-mqtt-path" class="unfocus-on-enter form-control form-control-sm" type="text" placeholder="{{ _('MQTT path') }}" readonly>
             </div>
         </div>
@@ -42,45 +42,45 @@
     </form>
     <hr>
 
-    <h6>{{ _("Add modal items") }}</h6>
+    <h6 style="margin-bottom:20px;">{{ _("Add modal items") }}</h6>
 
-    {% for item_name in modal_items %}
-        {% include "modal_edit/modal_type_btn.html" %}
-    {% endfor %}
+    <div id="modal-type">
+        {% for item_name in modal_items %}
+            {% include "modal_edit/modal_type_btn.html" %}
+        {% endfor %}
+    </div>
 
     <hr>
 
-    <div class="col-6" style="display:inline-block;">
-        <h6>{{ _("Modal items") }}</h6>
-    </div>
+    <h6 style="display:inline-block;margin-bottom:0">{{ _("Modal items") }}</h6>
     <div style="display: inline-block;" class="btn-group float-right">
         <button type="button" id="unpack-items" class="btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %} btn-sm">{{ _("Unpack all") }}</button>
         <button type="button" id="collapse-items" class="btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %} btn-sm">{{ _("Pack all") }}</button>
     </div>
-    <div class="modal_items_edit">
+    <div class="modal-items-edit">
         <div id="sortable" class="modal_items_edit_sortable list-group col">
             {% for item in modal %}
                 {% include "modal_edit/item_values.html" %}
             {% endfor %}
 
-            <script type="text/javascript">
-              new Sortable(sortable, {
+        </div>
+        <script type="text/javascript">
+            new Sortable(sortable, {
                 handle: ".menu-handle", // handle"s class
                 animation: 150,
                 onEnd: function (/**Event*/evt, /**Event*/originalEvent) {
-                  let old_index = evt.oldDraggableIndex;
-                  let new_index = evt.newDraggableIndex;
-                  let id_of_caller = $(".modal-here").attr("id_of_caller");
+                    let old_index = evt.oldDraggableIndex;
+                    let new_index = evt.newDraggableIndex;
+                    let id_of_caller = $(".modal-here").attr("id_of_caller");
 
-                  socketio.emit("modal_item_index", {
-                    "tile_id": id_of_caller,
-                    "old_index": old_index,
-                    "new_index": new_index
-                  });
+                    socketio.emit("modal_item_index", {
+                        "tile_id": id_of_caller,
+                        "old_index": old_index,
+                        "new_index": new_index
+                    });
                 },
-              });
-            </script>
-        </div>
+            });
+        </script>
     </div>
 {% endblock %}
 

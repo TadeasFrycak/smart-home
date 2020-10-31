@@ -150,7 +150,7 @@
 //
 //   var file = document.getElementById("thefile");
 //   var audio = document.getElementById("audio");
-//   console.log(file.files);
+//   terminal.log(file.files);
 //   file.onchange = function() {
 //    $(".bcg-real").show().fadeOut(2000);
 //     setTimeout(() => {
@@ -174,7 +174,7 @@
 //     analyser.fftSize = 256;
 //
 //     var bufferLength = analyser.frequencyBinCount;
-//     console.log(bufferLength);
+//     terminal.log(bufferLength);
 //
 //     var dataArray = new Uint8Array(bufferLength);
 //

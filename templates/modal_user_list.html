@@ -3,6 +3,7 @@
 {% block title %}
     {{ _("User list") }}
 {% endblock %}
+    
 
 {% block content %}
     {% for user in users %}
@@ -94,8 +95,8 @@
                     </div>
                 </div>
             </form>
-
-            <button type="button" class="btn btn-sm btn-outline-danger modal-edit-item-delete">
+            
+            <button type="button" class="btn btn-sm btn-outline-danger">
                 <span>{{ _("Delete") }}</span>
             </button>
         </div>

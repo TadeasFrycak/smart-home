@@ -67,21 +67,13 @@ class TemplateManagerWrite:
         return item
 
     # Swiper
-    def append_slide(self):
+    def append_slide(self, slide_index):
         """
         Append new slide
         :return: None
         """
 
-        self.__fmng.devices.append({self.__tmng_r.NAME: self.__tmng_r.UNNAMED, self.__tmng_r.CHILDREN: []})
-
-    def prepend_slide(self):
-        """
-        Append new slide
-        :return: None
-        """
-
-        self.__fmng.devices.insert(0, {self.__tmng_r.NAME: self.__tmng_r.UNNAMED, self.__tmng_r.CHILDREN: []})
+        self.__fmng.devices.insert(slide_index, {self.__tmng_r.NAME: str(self.__tmng_r.UNNAMED), self.__tmng_r.CHILDREN: []})
 
     def delete_slide(self, index):
         """

@@ -1,26 +1,4 @@
 function beforeRefresh(slide=swiper.realIndex) {
-  // TODO in new version remove this
-  // let tileID = ""
-  // if ($("body").hasClass("modal-open")) {
-  //   tileID += "?" + $(".modal-here").attr("id_of_caller");
-  // }
-  // if ($("body").attr("data-is-edit-active") === "true") {
-  //   if (swiper.realIndex === 0) {
-  //     window.history.pushState("", "", "/edit" + tileID);
-  //   }
-  //   else {
-  //     window.history.pushState("", "", "/edit/" + swiper.realIndex + tileID);
-  //   }
-  // }
-  // else {
-  //   if (swiper.realIndex === 0) {
-  //     window.history.pushState("", "", "/" + tileID);
-  //   }
-  //   else {
-  //     window.history.pushState("", "", "/" + swiper.realIndex + tileID);
-  //   }
-  // }
-
   let tileID;
   if ($("body").hasClass("modal-open")) {
     tileID = $(".modal-here").attr("id_of_caller");
@@ -50,10 +28,15 @@ $(document).ready(function(){
       el: ".swiper-pagination",
       clickable: true,
     },
-    threshold: "10"
+    threshold: "10",
+    on: {
+      slideChange: function () {
+        socketio.emit("slide_change", {"slide_index": swiper.realIndex, "tab_id": sessionStorage.tabID});
+      },
+    }
   });
 
-  swiper.slideTo($(".swipe-body").data("start-index"), 0);
+  swiper.slideTo($(".swipe-body").data("slide"), 0);
 
   // Events
   swiper.on("slideChange", function () {
@@ -68,5 +51,9 @@ $(document).ready(function(){
     else {
       swiper.slidePrev();
     }
+  });
+
+  $(".swiper-unfocus-on-enter").keydown(function(event){
+    event.keyCode===13 && $(this).blur();
   });
 });

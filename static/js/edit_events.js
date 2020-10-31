@@ -1,6 +1,6 @@
 /*
 *
-*   Eventy v editovacím módu
+*   Events in edit mode
 *
 */
 
@@ -11,17 +11,13 @@ $(document).ready(function(){
 
   // Kliknutí na "přidat stránku" v Menu
   $("body").on("click", ".append-slide", function() {
-    socketio.emit("slide_append");
+    let index = swiper.realIndex;
+    socketio.emit("slide_append", {"slide_index": index});
   });
 
-  $("body").on("click", ".prepend-slide", function() {
-    socketio.emit("slide_prepend");
-  });
-
-  // Kliknutí na "Odebrat stránku" v Menu
+  // Click on "Remove slide" in dropdown
   $("body").on("click", ".remove-slide", function() {
     let index = swiper.realIndex;
-
     socketio.emit("slide_delete", {"index": index});
   });
 
@@ -31,6 +27,9 @@ $(document).ready(function(){
     if (swiper.slides.length !== new_index) {
       socketio.emit("slide_index", {"old_index": old_index, "new_index": new_index});
     }
+    else {
+      notify(_("Slide"), _("is already on the end!"), "warning", 2000);
+    }
   });
 
   $("body").on("click", ".move-slide-left", function() {
@@ -38,6 +37,9 @@ $(document).ready(function(){
     let new_index = swiper.realIndex-1;
     if (new_index !== -1) {
       socketio.emit("slide_index", {"old_index": old_index, "new_index": new_index});
+    }
+    else {
+      notify(_("Slide"), _("is already on the beginning!"), "warning", 2000);
     }
   });
 });

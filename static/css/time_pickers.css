@@ -1,8 +1,42 @@
-.timepicki-input{
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.popover {
+    z-index: 5000;
+}
+
+.dark .popover-content {
+    background-color: var(--main-dark-bg-first);
+}
+
+.dark .popover .arrow::after {
+    border-bottom-color: var(--main-dark-bg-third);
+    border-top-color: var(--main-dark-bg-third);
+}
+.dark .clockpicker-plate {
+    background-color: var(--main-dark-fg-second);
+}
+.dark .popover-title, .dark .clockpicker-button, .dark .popover {
+    color: var(--main-dark-fg-first);
+    background-color: var(--main-dark-bg-third);
+}
+
+.dark .popover-title {
+    color: var(--main-dark-fg-third);
+}
+
+.dark .text-primary {
+    color: var(--main-dark-fg-first) !important;
+}
+.light .text-primary {
+    color: var(--main-color-first) !important;
+}
+
+.popover-title {
+    border: none;
+}
+
+.popover {
+    padding: 0;
+}
+
+.dark .clock-picker-prepend {
+    background-color: var(--main-dark-bg-first);
 }

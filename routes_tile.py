@@ -1,6 +1,9 @@
 # Tile routes
+from flask_babel import ngettext
+
 from routes_auth import *
 import json
+import inspect
 
 
 # Tile rewrites
@@ -8,6 +11,8 @@ import json
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_value_rwr(data):
     """
     Rewrite tile value (real value)
@@ -21,13 +26,18 @@ def tile_value_rwr(data):
     emit("tile_value_result", {tmng_r.TILE_ID: tile_id, tmng_r.VALUE: value}, broadcast=True)
     acom.mqtt_thread.publish(tile_id=tile_id, value=json.dumps(value))
     tmng_rwr.tile_value(new_value=value, tile_id=tile_id)
-    console.print("Change tile (ID: {0}) value to {1}".format(tile_id, str(value)))
+
+    changes_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                          message="tile '{}'s value set to '{}'".format(tile_id, value))
+    terminal.debug("Change tile (ID: {0}) value to {1}".format(tile_id, str(value)))
 
 
 @socketio.on("tile_id", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_id_rwr(data):
     """
     Rewrite tile ID
@@ -40,13 +50,18 @@ def tile_id_rwr(data):
 
     emit("tile_id_result", {"tile_id": tile_id, "new_id": new_id}, broadcast=True)
     tmng_rwr.tile_id(tile_id=tile_id, new_id=new_id)
-    console.print("Change tile ID from {0} to {1}".format(tile_id, str(new_id)))
+
+    changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                               message="tile '{}'s ID set to '{}'".format(tile_id, new_id))
+    terminal.debug("Change tile ID from {0} to {1}".format(tile_id, str(new_id)))
 
 
 @socketio.on("tile_index", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_index_rwr(data):
     """
     Rewrite tile index (change index of two tiles)
@@ -61,7 +76,10 @@ def tile_index_rwr(data):
     emit("tile_index_result", {"old_index": old_index, "new_index": new_index, "slide_index": slide_index},
          broadcast=True, include_self=False)
     tmng_rwr.tile_index(old_index=old_index, new_index=new_index, slide_index=slide_index)
-    console.print("Change tile index from {0} to {1} on slide {2}".format(str(old_index), str(new_index),
+
+    changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                               message="tile's index on slide '{}' changed from '{}' to '{}'".format(slide_index, old_index, new_index))
+    terminal.debug("Change tile index from {0} to {1} on slide {2}".format(str(old_index), str(new_index),
                                                                           str(slide_index)))
 
 
@@ -69,6 +87,8 @@ def tile_index_rwr(data):
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_label_rwr(data):
     """
     Rewrite tile label (name)
@@ -81,33 +101,18 @@ def tile_label_rwr(data):
 
     emit("tile_label_result", {"tile_id": tile_id, "new_label": new_label}, broadcast=True)
     tmng_rwr.tile_label(tile_id=tile_id, new_label=new_label)
-    console.print("Change tile (ID: {0}) label to {1}".format(tile_id, str(new_label)))
 
-
-@socketio.on("tile_dynamic_value", namespace=app.config["SOCKETIO_NAMESPACE"])  # TODO v nové verzi odstranit
-@socketio_login_required
-@socketio_prevent_hack
-@role_required("manager")
-def tile_dynamic_value_rwr(data):
-    """
-    Rewrite dynamic value of tile (in the past for example suffix, in the future 3D printer, ...)
-    :param data: data of socketio request
-    :return: None
-    """
-
-    tile_id = data[tmng_r.TILE_ID]
-    new_value = data["new_value"]
-    value_name = refactoring.refactor_reverse(data["value_name"])
-
-    # TODO refresh celého HTML
-    # tmng_rwr.tile_dynamic_value(tile_id=tile_id, new_value=new_value, value_name=value_name)
-    console.print("Change tile (ID: {0}) dynamic value {1} to {2}".format(tile_id, value_name, new_value))
+    changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                               message="tile '{}'s label set to '{}'".format(tile_id, new_label))
+    terminal.debug("Change tile (ID: {0}) label to {1}".format(tile_id, str(new_label)))
 
 
 @socketio.on("tile_type", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_type_rwr(data):
     """
     Rewrite tile type (value, toggle, ...)
@@ -138,13 +143,18 @@ def tile_type_rwr(data):
                                   "tile_html": render_template(
                                       fmng.path_join("tiles", tmng_r.get_tile_type(tile_id) + ".html"), tile=tile)},
              broadcast=True)
-        console.print("Change tile (ID: {0}) type to {1}".format(tile_id, new_type))
+
+        changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                                   message="tile '{}' type changed from '{}' to '{}'".format(tile_id, old_type, new_type))
+        terminal.debug("Change tile (ID: {0}) type to {1}".format(tile_id, new_type))
 
 
 @socketio.on("tile_icon", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_icon_rwr(data):
     """
     Rewrite tile icon
@@ -157,7 +167,10 @@ def tile_icon_rwr(data):
 
     if tmng_rwr.tile_icon(new_icon=new_icon, tile_id=tile_id):  # Prevent icon blinking (when clicking too times)
         emit("tile_icon_result", {"tile_id": tile_id, "new_icon": "/img/icons/" + new_icon}, broadcast=True)
-        console.print("Change tile (ID: {0}) icon to {1}".format(tile_id, new_icon))
+
+        changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                                   message="tile '{}''s icon changed to '{}'".format(tile_id, new_icon))
+        terminal.debug("Change tile (ID: {0}) icon to {1}".format(tile_id, new_icon))
 
 
 # Tile deletes
@@ -165,6 +178,8 @@ def tile_icon_rwr(data):
 @socketio_login_required
 @socketio_prevent_hack
 @role_required("manager")
+@check_browser
+@log_error
 def tile_delete(data):
     """
     Delete tile
@@ -176,4 +191,7 @@ def tile_delete(data):
 
     emit("tile_delete_result", {"tile_id": tile_id}, broadcast=True)
     tmng_w.tile_delete(tile_id=tile_id)
-    console.print("Delete tile (ID: {0})".format(tile_id))
+
+    changes_edit_logger.remove(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                               message="tile '{}'".format(tile_id))
+    terminal.debug("Delete tile (ID: {0})".format(tile_id))

@@ -1,0 +1,18 @@
+.rangeSlider__handle {
+    width: 26px;
+    height: 26px;
+    box-shadow: none;
+}
+
+.rangeSlider__fill {
+    box-shadow: none;
+}
+
+.rangeSlider__handle::after {
+    background-image: none;
+}
+
+.rangeSlider__horizontal {
+    height: 8px;
+    box-shadow: none;
+}

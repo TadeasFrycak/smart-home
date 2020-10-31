@@ -1,15 +1,5 @@
 <div class="slider" data-id="{{ item.data.id }}" style="padding-bottom: 20px" data-prew-val=0>
     <label style="margin-bottom: 15px;">{{ item.data.label }}</label>
-    <input type="range" value="{{ item.value }}" min="{{ item.data.min }}" max="{{ item.data.max }}" step="{{ item.data.step }}" data-rangeSlider title="{{ item.data.label }}">
+    <input type="range" value="{{ item.value }}" min="{{ item.data.min }}" max="{{ item.data.max }}" step="{{ item.data.step }}" data-on-end="{{ item.data.smooth_checkbox }}" data-rangeSlider title="{{ item.data.label }}">
     
 </div>
-
-<style>
-    .rangeSlider__handle{
-        width: 30px;
-        height: 30px;
-    }
-    .rangeSlider__horizontal {
-        height: 10px;
-}
-</style>

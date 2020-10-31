@@ -67,7 +67,7 @@ class DefaultValues:
                 return 0
 
             elif tile_type == "value":
-                return {"value": "Null", "suffix": ""}
+                return {"value": "Null", "time": None, "suffix": ""}
 
             elif tile_type == "value_double":
                 return {"left": {"value": "Null", "suffix": ""}, "right": {"value": "Null", "suffix": ""}}

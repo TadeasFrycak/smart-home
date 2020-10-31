@@ -1,4 +1,7 @@
-from flask_babel import gettext, lazy_gettext
+import math
+
+from flask_babel import gettext, ngettext, lazy_gettext, lazy_ngettext
+import time
 
 
 class Refactoring:
@@ -33,6 +36,8 @@ class Refactoring:
         "step": lazy_gettext("step"),
     }
 
+    UPPER_CASE = ["id"]
+
     def __init__(self):
         """
         Init of Refactoring class
@@ -62,9 +67,10 @@ class Refactoring:
             return refactored_data
 
         else:
-            translated = self.translate(data.strip().lower())
+            edited = data.strip().lower()
+            translated = self.translate(edited)
 
-            if len(str(translated)) <= 2:
+            if edited in self.UPPER_CASE:
                 return str(translated).upper()
 
             else:
@@ -80,6 +86,9 @@ class Refactoring:
                         refactored.append(i)
 
                     return " ".join(refactored)
+
+    def refactor_remove(self, data, string):
+        return self.refactor(data.replace(string, ""))
 
     def translate(self, data):
         """
@@ -115,3 +124,36 @@ class Refactoring:
         """
 
         return self.translate_reverse(str(data).strip().lower().replace(" ", "_"))
+
+    @staticmethod
+    def get_time_ago(data):
+        time_ago = math.floor(time.time() - data)
+        time_ago_minute = math.floor(time_ago / 60)
+        time_ago_hour = math.floor(time_ago / 3600)
+        time_ago_day = math.floor(time_ago / 86400)
+        time_ago_week = math.floor(time_ago_day / 7)
+        time_ago_month = math.floor(time_ago_day / 30.4375)
+        time_ago_year = math.floor(time_ago_day / 365.25)
+
+        if time_ago < 60:
+            ago = gettext("now")
+
+        elif time_ago_minute < 60:
+            ago = ngettext("%(num)s minute", "%(num)s minutes", time_ago_minute)
+
+        elif time_ago_hour < 24:
+            ago = ngettext("%(num)s hour", "%(num)s hours", time_ago_hour)
+
+        elif time_ago_day <= 7:
+            ago = ngettext("%(num)s day", "%(num)s days", time_ago_day)
+
+        elif time_ago_week < 10:
+            ago = ngettext("%(num)s week", "%(num)s weeks", time_ago_week)
+
+        elif time_ago_month < 12:
+            ago = ngettext("%(num)s month", "%(num)s months", time_ago_month)
+
+        else:
+            ago = ngettext("%(num)s year", "%(num)s years", time_ago_year)
+
+        return ago.capitalize()

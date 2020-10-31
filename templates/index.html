@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block head %}
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/timepicki/timepicki.css') }}">
+{#    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/timepicki/timepicki.css') }}">#}
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/swiper/swiper.min.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/daterangepicker/daterangepicker.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/range-slider/range-slider.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/fotorama/fotorama.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/clockpicker/bootstrap-clockpicker.css') }}">
 
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/other.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/progress_bars.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/time_pickers.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/toggles.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/sliders.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/swiper.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/tiles.css') }}">
 
@@ -18,13 +21,16 @@
     {% endif %}
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/sortable/sortable.min.js') }}" defer></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/timepicki/timepicki.js') }}" defer></script>
+{#    <script type="text/javascript" src="{{ url_for('static', filename='js/timepicki/timepicki.js') }}" defer></script>#}
     <script type="text/javascript" src="{{ url_for('static', filename='js/swiper/swiper.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/chartjs/Chart.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/hammer/hammer.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/moment/moment.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/daterangepicker/daterangepicker.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/range-slider/range-slider.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/fotorama/fotorama.js') }}" defer></script>
+{#    <script type="text/javascript" src="{{ url_for('static', filename='js/clockpicker/bootstrap4-clockpicker.js') }}" defer></script>#}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/clockpicker/bootstrap-clockpicker.js') }}" defer></script>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/acom.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/modal_edit_events.js') }}" defer></script>
@@ -41,7 +47,7 @@
 {% block title %}{{ _("Home") }}{% endblock %}
 
 {% block content %}
-    <div class="swipe-body" data-start-index="0">
+    <div class="swipe-body">
         <script type="text/javascript">
           let tabID = sessionStorage.tabID && sessionStorage.closedLastTab !== '2' ? sessionStorage.tabID : sessionStorage.tabID = Math.random();
           sessionStorage.closedLastTab = '2';
@@ -50,12 +56,17 @@
           });
 
           let refreshes = {{ probably | tojson | safe }};
-          console.log(refreshes);
           for (let refresh in refreshes) {
               if (refreshes[refresh]["tab_id"] === tabID) {
-                  $("body").attr("data-is-edit-active", refreshes[refresh]["data"]["edit"]);
-                  $(".swipe-body").attr("data-modal-start", refreshes[refresh]["data"]["tile_id"]);
-                  $(".swipe-body").attr("data-start-index", refreshes[refresh]["data"]["slide_index"]);
+                  if (refreshes[refresh]["modal_type"] === "edit") {
+                      $("body").attr("data-is-edit-active", true);
+                  }
+                  else {
+                      $("body").attr("data-is-edit-active", refreshes[refresh]["edit"]);
+                  }
+                  $(".swipe-body").attr("data-modal-id", refreshes[refresh]["modal"]["id"]);
+                  $(".swipe-body").attr("data-modal-type", refreshes[refresh]["modal"]["type"]);
+                  $(".swipe-body").attr("data-slide", refreshes[refresh]["slide"]);
                   break;
               }
           }
@@ -68,19 +79,19 @@
                     {% endfor %}
 
                 {% else %}
-                    <div class="container">
-                        <div class="content text-center">
-                            <p class="h4 mb-4">{{ _("Let's start") }}</p>
-                            <p>{{ _("You can now create your first slide in Smart home, then you can edit it to your own ideas.") }}</p>
-                            <button class="btn btn-info" id="append-slide-start">{{ _("Add new slide") }}</button>
-                            <script type="text/javascript">  // TODO otestovat, zkusit, upravit (popřípadě)
-                                $("body").on("click", "#append-slide-start", function() {
-                                  $(".container").show().fadeOut(1000, function() {$(".container").remove()});
-                                  $(".bcg-real").css({"filter": "blur(0)", "transform": "scale(1)", "transition": "all 1s"});
-                                  appendNewSlide();
-                                  changePageToEdit();
-                                });
-                            </script>
+                    <div class="auth-container bcg-normal">
+                        <div class="vertical-middle text-center">
+                            <div class="form">
+                                <p class="h4 mb-4">{{ _("Let's start") }}</p>
+                                    <p>{{ _("Let's make your first slide, you can add this slide by the button bellow. After that, you can add your tiles in edit mode.") }}</p>
+                                    <button class="btn btn-info" id="append-slide-start">{{ _("Add new slide") }}</button>
+                                    <script type="text/javascript" defer>
+                                        $("body").on("click", "#append-slide-start", function() {
+                                          $(".auth-container").show().fadeOut(1000, function() {$(".auth-container").remove()});
+                                          socketio.emit("slide_append", {"slide_index": 0});
+                                        });
+                                    </script>
+                            </div>
                         </div>
                     </div>
                 {% endif %}

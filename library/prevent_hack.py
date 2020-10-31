@@ -7,6 +7,7 @@ class PreventHack:
 
     @staticmethod
     def hacker():
+        # todo
         print("POZOR POZOR HACKER")
 
     def check(self, first_name, last_name, username, password):

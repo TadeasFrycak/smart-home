@@ -19,14 +19,21 @@ $(document).ready(function() {
 
     // Is checked
     if ($(this).prop("checked") === true){
-      toggleState = 1;
+      toggleState = true;
     }
 
     // Is unchecked
     else if ($(this).prop("checked") === false){
-      toggleState = 0;
+      toggleState = false;
     }
-    console.log(toggleState);
-    socketio.emit("modal_toggle", {"id": toggleID, "value": toggleState, "tile_id": tileID});
+
+    let attr = $(this).parent().parent().parent().attr("data-static");
+    if (typeof attr !== typeof undefined && attr !== false){
+      socketio.emit("tile_value", {"value": {[toggleID]: toggleState}, "tile_id": tileID});
+    }
+    else{
+      socketio.emit("modal_toggle", {"id": toggleID, "value": toggleState, "tile_id": tileID});
+    }
+
   });
 });

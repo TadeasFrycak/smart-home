@@ -1,70 +1,58 @@
-/*html,*/
-/*body {*/
-/*  overflow: hidden;*/
-/*}*/
-
-
-
-:root {
-    --main-dark-first: #1b262c;
-    --main-dark-second: #0f4c75;
-    --main-dark-third: #3282b8;
-    --main-dark-fourth: #bbe1fa;
-}
-
-form {
-    margin:4px;
+/* Form and container */
+.form {
+    margin-left: auto;
+    margin-right: auto;
     border-radius:12px;
-    padding:35px
+
+    max-width: 510px;
+    padding:35px;
 }
 
-.light form {
-    background-color: white;
-    box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)
+.light .form {
+    background-color: var(--main-light-bg-first);
+    box-shadow: 0 0 40px 0 var(--main-shadow-first);
 }
 
-.dark form {
-    /* background-color: #222831; */
-    background-color: var(--main-dark-first);
-    color: white;
-    box-shadow: 0px 0px 40px 0 rgba(0,0,0,0.5)
+.dark .form {
+    background-color: var(--main-dark-bg-first);
+    color: var(--main-dark-fg-first);
+    box-shadow: 0 0 60px 0 var(--main-shadow-first);
 }
 
- .bcg-normal::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  -webkit-backdrop-filter: blur(18px); /* apply the blur */
-  backdrop-filter: blur(18px);         /* apply the blur */
-  pointer-events: none; /* make the pseudo class click-through */
+.vertical-middle {
+    display: table-cell;
+    vertical-align: middle;
 }
-
-
 
 .auth-container {
-    position:absolute;
-    max-width:510px;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left:50%;
+    padding: 15px;
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
-.dark .container {
-    color:white
+.dark .auth-container {
+    color: var(--main-dark-fg-first);
+}
+
+
+
+/* Fields */
+#username, #reg-username {
+    text-transform: lowercase;
 }
 
 .form-field{
     margin-bottom: 60px;
 }
 
-.field{
+.field {
     text-align: left;
     width: 100%;
-    margin: 0 auto;
     position: relative;
-    border-bottom: 2px dashed rgb(223, 223, 223);
     margin: 3rem auto 1rem;
     transition: 500ms;
 }
@@ -73,6 +61,9 @@ form {
     border-bottom: 2px dashed rgba(223, 223, 223, 0.08);
 }
 
+.light .field {
+    border-bottom: 2px dashed rgb(223, 223, 223);
+}
 
 .input{
     z-index: 10;
@@ -81,7 +72,6 @@ form {
     border: none;
     overflow: hidden;
     margin: 0;
-    width: 100%;
     padding: 0.25rem 0;
     background: none;
     color: black;
@@ -91,37 +81,33 @@ form {
 }
 
 .dark .input{
-    color: white;
+    color: var(--main-dark-fg-first);
 }
 
 .label {
-    color:var(--text-color);
     font-size: 1.2rem;
     cursor: text;
-    
+}
+.light .label {
+    color: var(--main-light-fg-first);
+}
+
+.dark .label {
+    color: var(--main-dark-fg-first);
 }
 
 
-.input .valid {
-    color: yellowgreen;
-}
 
-.invalid{
-    color: orangered;
-}
-
-
-/* Border animation */
+/* Animation animation */
 .field::after {
     content: "";
     position: relative;
     display: block;
     height: 4px;
     width: 100%;
-    /* background: #d16dff; */
-    background: #17a2b8;
+    background: var(--main-color-first);
     transform: scaleX(0);
-    transform-origin: 0%;
+    transform-origin: 0;
     opacity: 0;
     transition: all 500ms ease;
     top: 2px;
@@ -130,6 +116,7 @@ form {
 .field:focus-within {
     border-color: transparent;
 }
+
 .field:focus-within::after {
     transform: scaleX(1);
     opacity: 1;
@@ -138,15 +125,40 @@ form {
 .label {
     z-index: 0;
     top: 38px;
-    left: 0px;
+    left: 0;
     position: absolute;
     transform: translateY(-2rem);
-    transform-origin: 0%;
+    transform-origin: 0;
     transition: transform 400ms;
-  }
+}
 
-  .field:focus-within .label,
-  .input:not(:placeholder-shown) + .label {
+/* Autofill */
+
+.light input:-webkit-autofill,
+.light input:-webkit-autofill:hover,
+.light input:-webkit-autofill:focus,
+.light input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px var(--main-light-bg-first) inset !important;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px var(--main-dark-bg-first) inset !important;
+}
+
+.dark input:-webkit-autofill {
+    -webkit-text-fill-color: var(--main-dark-fg-first) !important;
+}
+
+input:-webkit-autofill + .label {
+    transform: scale(0.8) translateY(-5rem);
+    opacity: 1;
+}
+
+.field:focus-within .label,
+.input:not(:placeholder-shown) + .label {
     transform: scale(0.8) translateY(-5rem);
     opacity: 1;
   }
@@ -156,15 +168,14 @@ form {
     position: relative;
 }
 
-.register-password-valid:before {
+.reg-password-valid:before {
     position: relative;
     left: -4px;
     top: 1px;
     content: "✔";
 }
 
-  
-.register-password-invalid:before {
+.reg-password-invalid:before {
     position: relative;
     left: -4px;
     top: 1px;

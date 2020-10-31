@@ -32,7 +32,7 @@ function initTileTap(hammer, $this, add_new_item)
 {
   hammer.on("tap", function() {
     // ( > modal_init.js )
-    // console.log("Tapped!");
+    // terminal.log("Tapped!");
     let isEditActive = $("body").attr("data-is-edit-active");
     if (isEditActive == "true")
     {
@@ -85,7 +85,7 @@ function initImages(){
 function requestNormalModal($this)
 {
   let object_id = $this.parent().attr("data-id");
-  socketio.emit("get_modal", {"tile_id": object_id});
+  socketio.emit("get_modal", {"tile_id": object_id, "tab_id": sessionStorage.tabID});
 }
 
 function requestEditModal($this)
@@ -94,10 +94,10 @@ function requestEditModal($this)
 
   if ($this.parent().attr("data-type") == "add-new-tile")
   {
-    socketio.emit("get_add_modal", {"slide_index": swiper.realIndex});
+    socketio.emit("get_add_modal", {"slide_index": swiper.realIndex, "tab_id": sessionStorage.tabID});
   }
   else {
-    socketio.emit("get_edit_modal", {"tile_id": object_id});
+    socketio.emit("get_edit_modal", {"tile_id": object_id, "tab_id": sessionStorage.tabID});
   }
   
 }
@@ -115,7 +115,9 @@ function initializeModal(data)
     $(".modal-here").empty();
     $(".modal-here").append(data.modal);
     $("#myModal").modal({ keyboard: true });
-
+    $("#myModal").on("hide.bs.modal", function (e) {
+      modalClose();
+    });
     // var header = tileGetAtributeByName($this.parent(),"tile-label");
     // $(".modal-title").text(header);
     $(".modal-here").attr("id_of_caller", object_id);
@@ -150,8 +152,8 @@ function initializeAllItemsWithinModal(data)
   *   V normálním režimu   
   */
 
-  // console.log(data);
-  // console.log(value);
+  // terminal.log(data);
+  // terminal.log(value);
 
   
   $(".slider").each(function(){
@@ -168,8 +170,8 @@ function initializeAllItemsWithinModal(data)
       {
         slider_div.attr("data-prew-val", position);
         slider_id = slider_div.attr("data-id");
-        // console.log(slider_id);
-        // console.log('onSlide', 'position: ' + position, 'value: ' + value);
+        // terminal.log(slider_id);
+        // terminal.log('onSlide', 'position: ' + position, 'value: ' + value);
   
         let id_of_caller = $(".modal-here").attr("id_of_caller");
   
@@ -182,8 +184,23 @@ function initializeAllItemsWithinModal(data)
     }
     });
   });
- 
-  $(".date-range-picker-input").each(function(){
+
+  let currentDate = new Date();
+  let datetime = currentDate.getHours() + ":" + currentDate.getMinutes()
+
+  $(".clockpicker").clockpicker({
+    default: datetime,
+    placement: "auto",
+    donetext: _("Done"),
+  });
+
+  $("input.clockpicker").change(function(e) {
+      let tileID = $(".modal-here").attr("id_of_caller");
+      let itemID = $(this).attr("data-id");
+      socketio.emit("modal_clockpicker", {"tile_id": tileID, "item_id": itemID, "value": $(this).val()});
+  });
+
+  $(".modal-daterangepicker-input").each(function(){
 
     let rangePickerId = $(this).attr("id");
 
@@ -191,9 +208,9 @@ function initializeAllItemsWithinModal(data)
     let end = moment();
 
     function cb(start, end) {
-      $(".date-range-picker-input[id="+rangePickerId+"]").find("span").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      $(".modal-daterangepicker-input[id="+rangePickerId+"]").find("span").html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
       let id_of_caller = $(".modal-here").attr("id_of_caller");
-      let pair_id = $(".date-range-picker-input[id="+rangePickerId+"]").parent().attr("data-pair");
+      let pair_id = $(".modal-daterangepicker-input[id="+rangePickerId+"]").parent().attr("data-pair");
 
       socketio.emit("modal_daterangepicker", {
         "pair_id" : pair_id,
@@ -204,21 +221,27 @@ function initializeAllItemsWithinModal(data)
       });
     }
 
-    $(".date-range-picker-input[id="+rangePickerId+"]").daterangepicker({
-        timePicker: true,
-        startDate: start,
-        endDate: end,
-        ranges: {
-           "Today": [moment(), moment()],
-           "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
-           "Last 7 Days": [moment().subtract(6, "days"), moment()],
-           "Last 30 Days": [moment().subtract(29, "days"), moment()],
-           "This Month": [moment().startOf("month"), moment().endOf("month")],
-           "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-        },
-        locale: {
-          format: "M/DD hh:mm A"
-        }
+    $(".modal-daterangepicker-input[id="+rangePickerId+"]").daterangepicker({
+        // timePicker: true,
+        singleDatePicker: true,
+        showDropdowns: true,
+        minYear: 1901,
+        maxYear: parseInt(moment().format('YYYY'),10)
+        // startDate: start,
+        // singleDatePicker: true,
+        // showDropdowns: true,
+        // endDate: end,
+        // ranges: {
+        //    "Today": [moment(), moment()],
+        //    "Yesterday": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+        //    "Last 7 Days": [moment().subtract(6, "days"), moment()],
+        //    "Last 30 Days": [moment().subtract(29, "days"), moment()]
+        //   //  "This Month": [moment().startOf("month"), moment().endOf("month")],
+        //   //  "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+        // },
+        // locale: {
+        //   format: "M/DD hh:mm A"
+        // }
     }, cb);
 
     // cb(start, end);
@@ -227,7 +250,7 @@ function initializeAllItemsWithinModal(data)
       if (k == rangePickerId){ 
         let dateStart = moment(data.daterangepickers[k].start).format("MMMM D, YYYY");
         let dateEnd = moment(data.daterangepickers[k].end).format("MMMM D, YYYY");
-        $(".date-range-picker-input[id="+rangePickerId+"]").find("span").html(dateStart + " - " + dateEnd);
+        $(".modal-daterangepicker-input[id="+rangePickerId+"]").find("span").html(dateStart + " - " + dateEnd);
       }
     }
       
@@ -422,7 +445,8 @@ function initializeAllItemsWithinModal(data)
   });
 
   $(".modal-edit-tile-type").on("click",  function() {
-    console.log("Tile typed changed");
+    // terminal.log("Tile typed changed");
+    // TODO double bug
     // ( > modal_edit_events.js )
     let type_name = $(this).text();
     let id_of_caller = $(".modal-here").attr("id_of_caller");

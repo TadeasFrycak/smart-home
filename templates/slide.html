@@ -1,4 +1,3 @@
-<!-- <div class="swiper-slide classify-swiper-slide" style="overflow:hidden"> -->
 <div class="swiper-slide classify-swiper-slide">
     <span class="exit-edit-mode-button">{{ _("Exit edit mode") }}</span>
 
@@ -10,43 +9,66 @@
             </div>
         </div>
 
-        <div class="dropdown-menu dropdown-menu-right" >
-            <a class="edit-page dropdown-item">{{ _("Edit this slide") }}</a>
-            <div class="dropdown-wrapper disappear-on-edit">
+        <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-mobile">
+                <a class="edit-page dropdown-item">{{ _("Edit mode") }}</a>
                 <div class="dropdown-divider"></div>
-                <a class="prepend-slide dropdown-item">{{ _("Prepend new slide") }}</a>
-                <a class="append-slide dropdown-item">{{ _("Add new slide") }}</a>
-                <a class="remove-slide dropdown-item">{{ _("Remove this slide") }}</a>
-                <div class="move-slide-left dropdown-divider"></div>
-                <a class="move-slide-left dropdown-item">{{ _("Move this slide to the left") }}</a>
-                <a class="move-slide-right dropdown-item">{{ _("Move this slide to the right") }}</a>
             </div>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item">{{ _("Backgrounds") }}</a>
-            <a class="settings dropdown-item">{{ _("Settings") }}</a>
-            <a class="client-list dropdown-item">{{ _("Client list") }}</a>
-            <a class="user-list dropdown-item">{{ _("User list") }}</a>
+
+            <div class="dropdown-wrapper disappear-on-normal">
+                <h6 class="dropdown-header">Slide</h6>
+                <a class="append-slide dropdown-item">{{ _("Add") }}</a>
+                <a class="remove-slide dropdown-item">{{ _("Remove") }}</a>
+                <a class="move-slide-right dropdown-item">{{ _("Move right") }}</a>
+                <a class="move-slide-left dropdown-item">{{ _("Move left") }}</a>
+                <div class="dropdown-divider"></div>
+            </div>
+
+            <div class="dropdown-wrapper disappear-on-edit">
+                <h6 class="dropdown-header">Info</h6>
+                <a class="settings dropdown-item">{{ _("Settings") }}</a>
+                <a class="client-list dropdown-item">{{ _("Client list") }}</a>
+                <a class="user-list dropdown-item">{{ _("User list") }}</a>
+                <div class="dropdown-divider"></div>
+            </div>
+
             {% if android_apk %}
-                <a class="android-settings dropdown-item">{{ _("Client app settings") }}</a>
+                <div class="dropdown-wrapper disappear-on-edit">
+                    <h6 class="dropdown-header">Android</h6>
+                    <a class="android-settings dropdown-item">{{ _("App settings") }}</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+
+            {% elif android_browser %}
+                <div class="dropdown-wrapper disappear-on-edit">
+                    <h6 class="dropdown-header">Android</h6>
+                    <a class="android-apk dropdown-item">{{ _("APK application") }}</a>
+                    <div class="dropdown-divider"></div>
+                </div>
             {% endif %}
-            <div class="dropdown-wrapper disappear-on-edit">
-                <a class="save dropdown-item">{{ _("Save changes") }}</a>
-            </div>
-            {% if android_browser %}
+
+            <div class="dropdown-wrapper disappear-on-normal">
+                <h6 class="dropdown-header">Server</h6>
+                <a class="save dropdown-item">{{ _("Save") }}</a>
+                <a class="shutdown dropdown-item">{{ _("Shutdown") }}</a>
+                <a class="restart dropdown-item">{{ _("Restart") }}</a>
+
                 <div class="dropdown-divider"></div>
-                <a class="android-apk dropdown-item">{{ _("Android APK") }}</a>
-            {% endif %}
-            <div class="dropdown-divider"></div>
-            <a class="shutdown dropdown-item">{{ _("Shutdown server") }}</a>
-            <a class="restart dropdown-item">{{ _("Restart server") }}</a>
-            <div class="dropdown-divider"></div>
-            <a class="reload dropdown-item">{{ _("Reload") }}</a>
-            <a class="reload-all dropdown-item">{{ _("Reload all clients") }}</a>
+
+                <h6 class="dropdown-header">Client</h6>
+                {% if android_apk %}
+                    <a class="reload dropdown-item">{{ _("Reload") }}</a>
+                {% endif %}
+                <a class="reload-all dropdown-item">{{ _("Reload all") }}</a>
+
+                <div class="dropdown-divider"></div>
+            </div>
+
             <a class="logout dropdown-item">{{ _("Logout") }}</a>
         </div>
     </div>
 
-    <input class="swipe-header-textbox swipe-header" value="{{ slide.name }}" readonly>
+    <input class="swipe-header swiper-unfocus-on-enter" value="{{ slide.name }}" readonly>
 
     <div class="swipe-content">
         <div class="c_sortable_page_grid" id="sortable_page_grid" style="display:table; position: relative; margin: 0 auto; width: min-content;">
@@ -56,7 +78,7 @@
 
             <div class="add_new_tile_element tile enable-hammer" data-id="" data-type="add-new-tile" style="display: inline-block; background-color: transparent;box-shadow: none;-moz-transition: none; -webkit-transition: none; transition: none;">
                 <div data-id='adding-new-tile-element' data-type="add-new-tile" style='position: absolute; height: 100%;width: 100%; display: inline-block; box-shadow: none; background-color:transparent; -moz-transition: none; -webkit-transition: none; transition: none;'>
-                    <img alt="{{ _('Add') }}" class="add-img" src="{% if mode == "dark" %}{{ url_for('static', filename='img/static/add-dark.png') }}{% else %}{{ url_for('static', filename='img/static/add.png') }}{% endif %}" style='width:30px; position:relative; transform: translate(-50%,-50%); left:30%; top:50%; cursor: pointer;'>
+                    <img alt="{{ _('Add') }}" class="add-img" src="{% if mode == "dark" %}{{ url_for('static', filename='img/static/add/dark.png') }}{% else %}{{ url_for('static', filename='img/static/add/light.png') }}{% endif %}" style='width:30px; position:relative; transform: translate(-50%,-50%); left:30%; top:50%; cursor: pointer;'>
                 </div>
             </div>
 

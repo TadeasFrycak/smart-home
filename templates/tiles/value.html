@@ -6,7 +6,7 @@
                 <span class="tile-value-suffix" style="font-size: 15px">{{ tile.value.suffix }}</span>
             </div>
             <span class="tile-label">{{ tile.label }}</span>
-            <span class="tile-status">TODO ago</span>
+            <span class="tile-status">{% if tile.value.time %}{{ get_time_ago(tile.value.time) }}{% else %}{{ _("N/A") }}{% endif %}</span> <!-- TODO -->
         </div>
         <div class="tile-touch-layer"></div>
     </div>

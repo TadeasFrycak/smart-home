@@ -2,37 +2,28 @@
 
 {% block title %}{{ _("Login") }}{% endblock %}
 
-{% block content %}
+{% block script %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/login.js') }}" defer></script>
+{% endblock %}
 
-    <div class="container auth-container">
-        <form class="text-center" id="login-form" autocomplete="off">
-            <p class="h4 mb-4">{{ _("Login") }}</p>
-            <div class="form-field">
-                <div class="field">
-                    <input id="username" type="text" name="username-entry" class="input" placeholder=" ">
-                    <label for="username" class="label">{{ _("Username") }}</label>
-                </div>
-
-                <div class="field">
-                    {% if browser == "firefox" or browser == "safari" %}
-                        <input id="password" type="password" name="password" class="input" placeholder=" " readonly onfocus="this.removeAttribute('readonly');">
-                    {% else %}
-                        <!-- TODO nesmí jít kopírovat -->
-                        <input id="password" type="text" name="password" style="text-security:disc;-webkit-text-security:disc;-mox-text-security:disc;-moz-text-security:disc;" class="input" placeholder=" " readonly onfocus="this.removeAttribute('readonly');">
-                    {% endif %}
-                    <label for="password" class="label">{{ _("Password") }}</label>
-                </div>
-                <!--
-                -->
+{% block centered %}
+    <form id="login-form" autocomplete="off" action="{{ redirect }}">
+        <p class="h4 mb-4">{{ _("Login") }}</p>
+        <div class="form-field">
+            <div class="field">
+                <input id="username" type="text" class="input" autocomplete="off" placeholder=" " maxlength="40">
+                <label for="username" class="label">{{ _("Username") }}</label>
             </div>
-            <button class="btn btn-info btn-block" type="button" id="login">{{ _("Login") }}</button>
-            <br>
-            {% if registration == True %}
-                <!-- TODO FILIPE, tohle udělej jinak (to tlačítko anonymní režim) - například jako remember me apod -->
-                {{ _("Don't have an account?") }} <a href="{{ url_for('register') }}">{{ _("Register here") }}</a>
-                <button class="btn btn-sm btn-light" type="button" style="position:absolute;right:54px;bottom:27px" id="incognito-login"><img style="width:23px" src="{{ url_for('static', filename='img/static/incognito.png') }}" alt="Anonymous"></button>
-            {% endif %}
-        </form>
-    </div>
+
+            <div class="field">
+                <input id="password" type="password" class="input" autocomplete="off" placeholder=" " readonly onfocus="this.removeAttribute('readonly');" maxlength="80">
+                <label for="password" class="label">{{ _("Password") }}</label>
+            </div>
+        </div>
+        <button class="btn btn-info btn-block" type="button" id="login">{{ _("Login") }}</button>
+        {% if registration == True %}
+        <br>
+            {{ _("Don't have an account?") }} <a href="{{ url_for('register') }}">{{ _("Register here") }}</a>
+        {% endif %}
+    </form>
 {% endblock %}

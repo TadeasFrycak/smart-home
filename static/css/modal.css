@@ -1,8 +1,64 @@
-:root {
-    --main-dark-first: #1b262c;
-    --main-dark-second: #0f4c75;
-    --main-dark-third: #3282b8;
-    --main-dark-fourth: #bbe1fa;
+/* General */
+.dark .modal-here input {
+    color: var(--main-dark-fg-first);
+    background-color: var(--main-dark-bg-second);
+}
+
+.dark .modal-here input:read-only{
+    color: var(--main-dark-fg-first);
+    background-color: var(--main-dark-bg-first);
+}
+
+.dark .close {
+    color: var(--main-dark-fg-first);
+}
+
+textarea {
+    font-size: 11px !important;
+    margin-top: 7px;
+    margin-bottom: 20px;
+}
+
+.dark textarea {
+    font-size: 11px !important;
+    background-color: var(--main-dark-bg-first) !important;
+    color: var(--main-dark-fg-first) !important;
+}
+
+
+
+/* Modal normal */
+.dark .modal-title {
+  color: var(--main-dark-fg-first);
+}
+
+
+
+/* Modal edit */
+.modal-edit-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Modal edit types */
+#tile-type, #modal-type {
+    /* TODO make centering of buttons - (use padding centering) */
+    /*text-align: justify;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;*/
+}
+
+.modal-edit-tile-type {
+    width: auto;
+    margin: 3px;
+}
+
+/* Modal edit icons */
+.modal-edit-icons {
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .modal-edit-icon {
@@ -13,8 +69,8 @@
     border-radius: 5px;
 }
 
-.modal-edit-item-delete {
-    float: right;
+/* Modal edit items */
+.modal-items-edit {
     margin-top: 20px;
 }
 
@@ -22,76 +78,21 @@
     margin-left: 20px;
     margin-top: 15px;
 }
-.modal-edit-select-bcg {
-    width: 180px;
-    transition: 0.5s;
-    padding: 3px;
-    border: 2px solid transparent;
-    border-radius: 5px;
+
+.list-group-item:first-child {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+.list-group-item:last-child {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
-.modal-edit-icons {
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-.modal-content {
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-}
-.dark .modal-content {
-  /* background-color: #222831; */
-  background-color: var(--main-dark-first);
-  color: #fff;
+.dark div.modal-edit-item {
+    background-color: var(--main-dark-bg-first);
+    border-color: var(--main-dark-bg-fifth);
 }
 
-.dark .modal-title {
-  color: #fff;
-}
-
-.dark .modal-content input[type="text"]{
-    background-color: #222831;
-    background-color: #333c4a;
-}
-
-.dark div.modal-edit-item{
-    background-color: #1b262c;
-    border-color: #bbe1fa;
-}
-
-.modal-edit-tile-type {
-    margin-right: 3px;
-    margin-bottom: 3px;
-}
-
-.modal_edit_title {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.modal_items_edit {
+.modal-edit-item-delete {
     margin-top: 20px;
-}
-
-.dark .modal-here input {
-  color: white;
-  background-color: #222831;
-  background-color: #333c4a;
-}
-
-
-
-.dark .modal-here input:read-only{
-    color: white;
-    background-color: red;
-    background-color: var(--main-dark-first);
-  }
-
-.dark .close {
-    color: #fff;
-}
-
-
-textarea{
-    background-color: #333c4a !important;
 }

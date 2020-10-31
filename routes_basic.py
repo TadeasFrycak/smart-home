@@ -1,10 +1,25 @@
 # Basic routes
 from flask_socketio import emit, disconnect
+from flask import request, render_template, abort
 from flask_login import current_user
 from flask_babel import gettext
-from flask import request
 from init import *
 import functools
+
+
+# Log error
+def log_error(func):
+    # TODO na tohle přidat loguru, má lepší debug chyby
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as err:
+            terminal_logger.error(err)
+            raise Exception(err)
+            # return render_template("error.html", header="Err", message=str(err))
+
+    return wrapper
 
 
 # Socketio
@@ -28,17 +43,35 @@ def socketio_login_required(func):
 def check_args(args, data):
     for arg in args:
         if arg not in data:
-            console.print("Arg " + arg + " is NOT in " + str(data), 0.2)
+            terminal.prevent_hack("Arg " + arg + " is NOT in " + str(data), False)
             return False
         else:
-            console.print("Arg " + arg + " is in " + str(data), 0.2)
+            terminal.prevent_hack("Arg " + arg + " is in " + str(data))
 
     if len(args) == len(data):
         return True
 
     else:
-        console.print("Args in " + str(data) + " and in " + str(args) + " are NOT same!", 0.2)
+        terminal.prevent_hack("Args from SocketIO " + str(data) + " and required args " + str(args) + " are NOT same!")
         return False
+
+
+BLACKLISTED_BROWSERS = ["msie"]
+
+
+# Check browser
+def check_browser(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        browser = request.user_agent.browser
+        if browser in BLACKLISTED_BROWSERS:
+            return render_template("error.html", header="Err", message=gettext("Your browser '{}' is not supported. Please download supported browser like Chromium, Firefox, Safari, ...").format(browser))
+
+        else:
+
+            return func(*args, **kwargs)
+
+    return wrapper
 
 
 def role_required(role):
@@ -68,7 +101,7 @@ def socketio_prevent_hack(func):
             data = {}
 
         func_name = func.__name__
-        console.print("Method " + func_name, 0.2)
+        terminal.prevent_hack("Method " + func_name)
 
         tests = []
         if func_name == "tile_value_rwr" and check_args(args=["tile_id", "value"], data=data):
@@ -99,17 +132,26 @@ def socketio_prevent_hack(func):
             tests.append(validator.tile_id(data["tile_id"]))
 
         # Modal
-        elif func_name == "get_normal_modal" and check_args(args=["tile_id"], data=data):
+        elif func_name == "get_normal_modal" and check_args(args=["tile_id", "tab_id"], data=data):
             tests.append(validator.tile_id(data["tile_id"]))
+            tests.append(validator.tab_id(data["tab_id"]))
 
-        elif func_name == "get_edit_modal" and check_args(args=["tile_id"], data=data):
+        elif func_name == "get_edit_modal" and check_args(args=["tile_id", "tab_id"], data=data):
             tests.append(validator.tile_id(data["tile_id"]))
+            tests.append(validator.tab_id(data["tab_id"]))
 
-        elif func_name == "get_add_modal" and check_args(args=["slide_index"], data=data):
+        elif func_name == "get_add_modal" and check_args(args=["slide_index", "tab_id"], data=data):
             tests.append(validator.slide_index(data["slide_index"]))
+            tests.append(validator.tab_id(data["tab_id"]))
 
-        elif func_name == "get_settings_modal" and check_args(args=[], data=data):
-            pass
+        elif func_name == "get_settings_modal" and check_args(args=["tab_id"], data=data):
+            tests.append(validator.tab_id(data["tab_id"]))
+
+        elif (func_name == "get_client_list_modal" or func_name == "get_user_list_modal") and check_args(args=["tab_id"], data=data):
+            tests.append(validator.tab_id(data["tab_id"]))
+
+        elif (func_name == "get_android_modal" or func_name == "modal_close") and check_args(args=["tab_id"], data=data):
+            tests.append(validator.tab_id(data["tab_id"]))
 
         elif func_name == "modal_item_prepend" and check_args(args=["tile_id", "type"], data=data):
             tests.append(validator.tile_id(data["tile_id"]))
@@ -124,7 +166,7 @@ def socketio_prevent_hack(func):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.modal_item_id(data["id"]))
             tests.append(validator.modal_item_id(data["pair_id"]))
-            console.print("Validation is not complete! TODO", 1)
+            terminal.warning("Validation is not complete! TODO")
             # TODO (start_value, end_value, pair_id - je třeba vracet clientovi, zda je správná a zobrazovat, jinak err)
 
         elif func_name == "modal_item_index" and check_args(args=["tile_id", "old_index", "new_index"], data=data):
@@ -145,18 +187,33 @@ def socketio_prevent_hack(func):
         elif func_name == "slide_index_rwr" and check_args(args=["old_index", "new_index"], data=data):
             tests.append(validator.slide_index_change(old_index=data["old_index"], new_index=data["new_index"]))
 
-        elif (func_name == "slide_append" or func_name == "slide_prepend") and check_args(args=[], data=data):
-            pass
+        elif func_name == "slide_append" and check_args(args=["slide_index"], data=data):
+            tests.append(validator.slide_index(data["slide_index"]))
 
         elif func_name == "slide_delete" and check_args(args=["index"], data=data):
             tests.append(validator.slide_index(data["index"]))
+
+        # Before refresh
+        elif func_name == "edit_change" and check_args(args=["state", "tab_id"], data=data):
+            tests.append(validator.edit_change(data["state"]))
+            tests.append(validator.tab_id(data["tab_id"]))
+
+        elif func_name == "slide_change" and check_args(args=["slide_index", "tab_id"], data=data):
+            tests.append(validator.slide_index(data["slide_index"]))
+            tests.append(validator.tab_id(data["tab_id"]))
 
         # Other
         elif func_name == "reload" and check_args(args=[], data=data):
             pass
 
-        elif func_name == "save" and check_args(args=[], data=data):
+        elif func_name == "save_devices" and check_args(args=[], data=data):
             pass
+
+        elif func_name == "show_android_settings" and check_args(args=[], data=data):
+            pass
+
+        elif func_name == "user_mode" and check_args(args=["mode"], data=data):
+            tests.append(validator.user_mode(mode=data["mode"]))
 
         else:  # When method isn't defined here or when check_args failed
             tests.append(False)
@@ -166,30 +223,14 @@ def socketio_prevent_hack(func):
             return func(*args, **kwargs)
 
         else:
-            socketio.emit("notify",
-                          {"title": "Hacker", "message": gettext("Detected bad SocketIO request!"), "type": "danger"},
-                          namespace=app.config["SOCKETIO_NAMESPACE"], broadcast=True)
+            socketio.emit("notify", {"title": gettext("Problem!"),
+                                     "message": gettext("Detected wrong SocketIO request!"), "type": "danger",
+                                     "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"], broadcast=True)
             # disconnect()
             # TODO
             return None
 
     return wrapper
-
-
-# TODO remove in new version
-# def slide_index_check(func):
-#     @functools.wraps(func)
-#     def wrapper(slide_index):
-#         try:
-#             if validator.slide_index(int(slide_index)):
-#                 return func(slide_index)
-#             else:
-#                 abort(404)
-#
-#         except Exception:
-#             abort(404)
-#
-#     return wrapper
 
 
 # Babel

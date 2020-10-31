@@ -6,3 +6,5 @@
 # TODO optimize imports - from init to other files
 # todo python - check for sudo permisison
 # todo spam protection - do @prevent hack se dá jako argument max počet requestů za vteřinu
+# todo aplikace - pokud IP neexistuje, nespadnout
+# TODO po logoutu smazat informace o klientovi (before refresh), aby se to po přihlášení nezobrazilo novému účtu (nebo přidat účet, aby to fungovalo jen pod jedním účtem, pokud to tak ještě nefunguje)

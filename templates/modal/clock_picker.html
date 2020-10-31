@@ -1,0 +1,8 @@
+<div class="input-group mb-2 mr-sm-2">
+    <div class="input-group-prepend">
+        <div class="input-group-text clock-picker-prepend">
+            <img alt="{{ _('Alarm') }}" class="icon-invert" style="width: 20px" src="{{ url_for('static', filename='img/static/alarm.png') }}">
+        </div>
+    </div>
+    <input type="text" class="clockpicker form-control" placeholder="{{ _('Click to set the time...') }}" readonly data-id="{{ item.data.id }}" value="{{ item.value }}">
+</div>

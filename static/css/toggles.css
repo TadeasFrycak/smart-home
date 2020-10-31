@@ -24,13 +24,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
 }
 
+.light .modal-toggle-round {
+    background-color: var(--main-dark-fg-third);
+}
+
 .dark .modal-toggle-round {
-    background-color: #555;
+    background-color: var(--main-dark-fg-fourth);
 }
 
 .modal-toggle-round:before {
@@ -40,21 +43,24 @@
     width: 20px;
     left: 2px;
     bottom: 2px;
-    background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
 }
 
+.light .modal-toggle-round:before {
+    background-color: var(--main-dark-fg-first);
+}
+
 .dark .modal-toggle-round:before {
-    background-color: #ccc;
+    background-color: var(--main-dark-fg-second);
 }
 
 input:checked + .modal-toggle-round {
-    background-color: #17a2b8; /*rgb(48, 209, 88);*/
+    background-color: var(--main-color-first);
 }
 
 input:focus + .modal-toggle-round {
-    box-shadow: 0 0 1px #17a2b8; /*rgb(48, 209, 88)*/;
+    box-shadow: 0 0 1px var(--main-color-first);
 }
 
 input:checked + .modal-toggle-round:before {

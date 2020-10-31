@@ -1,31 +1,33 @@
 .tile {
-  background-color: rgba(173, 173, 173, 0.9);
+  background-color: var(--tile-light-bg-second);
   cursor: pointer;
   height: 100px;
   width: 100px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.4);
+  -webkit-box-shadow: 3px 3px 10px 0 var(--main-shadow-first);
+  -moz-box-shadow: 3px 3px 10px 0 var(--main-shadow-first);
+  box-shadow: 3px 3px 10px 0 var(--main-shadow-first);
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
 
 .dark .tile {
-  color: #ddd;
-  background-color: rgb(40,40,40);
+  color: var(--tile-dark-fg-first);
+  background-color: var(--tile-dark-bg-first);
 }
 
 .dark .tile-display {
-  color: #dcdcdc;
+  color: var(--tile-dark-fg-second);
 }
 .dark .tile-active {
-  background-color: rgb(65,65,65) /*rgb(12, 66, 146);*/
+  background-color: var(--tile-dark-bg-second);
 }
 
 .light .tile-active{
-  background-color: #fff;
+  background-color: var(--tile-light-bg-first);
 }
 
 .tile-icon{
@@ -53,7 +55,7 @@
   font-size: 11px;
   position: absolute;
   margin-top: 5px;
-  color: #666;
+  color: var(--tile-light-fg-second);
 }
 
 .tile-display{
@@ -74,7 +76,7 @@
   width: 100%;
 }
 
-.tile-text{
+.tile-text {
   background-color: transparent;
   position: absolute;
   height: 100%;
@@ -96,11 +98,12 @@
   transition: all 0.3s;
  }
 
+/* TODO BUG v dark modu na podržení tilu problikne, bílé okraje */
 .tile-sortable-move > * {
-  background-color: rgb(116, 113, 113);
+  background-color: rgb(113, 113, 113);
 }
 
-.alarm-clock-glyph{
+.alarm-clock-glyph {
   position:relative;
   display: inline-block;
   border-radius: 50%;
@@ -108,7 +111,7 @@
   border-style: solid;
   width: 23px;
   height: 23px;
-  padding: 0px;
+  padding: 0;
   /* border-color: white; */
   border-color: transparent;
   margin-right: 1px;
@@ -120,7 +123,7 @@
 } */
 
 .alarm-clock-glyph-text{
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   position: absolute;
   top: 10px;
   left: 10px;
@@ -129,9 +132,9 @@
 }
 
 .dark .alarm-clock-glyph-active{
-  background-color: #ffffff61;
+  background-color: var(--tile-dark-bg-third);
 }
 
 .light .alarm-clock-glyph-active{
-  background-color: #88888861;
+  background-color: var(--tile-light-bg-third);
 }

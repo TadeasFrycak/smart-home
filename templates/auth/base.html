@@ -2,8 +2,18 @@
 
 {% block head %}
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+    {% block script %}{% endblock %}
 {% endblock %}
 
 {% block title %}{% endblock %}
 
-{% block content %}{% endblock %}
+{% block content %}
+    <div class="auth-container bcg-normal">
+        <div class="vertical-middle text-center">
+            <div class="form">
+                {% block centered %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

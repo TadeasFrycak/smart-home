@@ -1,7 +1,18 @@
-<div class="modal-daterangepicker" data-pair="{{ item.data.pair }}">
-    <label>{{ item.data.label }}</label>
-    <div class="modal-daterangepicker-input" id="{{ item.data.id }}" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;margin-bottom: 10px;">
-        <i class="fa fa-calendar"></i>&nbsp;
-        <span></span> <i class="fa fa-caret-down"></i>
+{#<div class="modal-daterangepicker" data-pair="{{ item.data.pair }}">#}
+{#    <label>{{ item.data.label }}</label>#}
+{#    <div class="modal-daterangepicker-input" id="{{ item.data.id }}" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;margin-bottom: 10px;">#}
+{#        <i class="fa fa-calendar"></i>&nbsp;#}
+{#        <span></span> <i class="fa fa-caret-down"></i>#}
+{#    </div>#}
+{#</div>#}
+<div id='app'>
+      <v-date-picker v-model='selectedDate' />
     </div>
-</div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          selectedDate: null,
+        }
+      })
+    </script>

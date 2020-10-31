@@ -1,5 +1,6 @@
 import json
-from threading import Thread, Event
+import time
+from threading import Thread, Event, Timer
 import paho.mqtt.client as mqtt
 
 
@@ -16,20 +17,22 @@ class MQTT(Thread):
 
     SEPARATOR = "/"
 
-    def __init__(self, socket_io, ip, console, tmng_rwr):
+    def __init__(self, socket_io, ip, terminal, tmng_r, tmng_rwr, refactoring):
         """
         Init of MQTT class
         :param socket_io: socket_io
         :param ip: current server IP
-        :param console: console
+        :param terminal: terminal
         :param tmng_rwr: tmng_rwr
         """
 
         super().__init__()
         self.__socket_io = socket_io
-        self.__console = console
+        self.__terminal = terminal
         self.__ip = ip
+        self.__tmng_r = tmng_r
         self.__tmng_rwr = tmng_rwr
+        self.__refactoring = refactoring
 
         self.__client = None
 
@@ -53,7 +56,7 @@ class MQTT(Thread):
         :return: None
         """
 
-        self.__console.print("Connected with result code {0}".format(str(rc)), 0.1)
+        self.__terminal.mqtt("Connected with result code {0}".format(str(rc)))
 
         # Subscribing on connect means that if we lose the connection and reconnect then subscriptions will be renewed
         self.subscribe(client=client, topic=self.join_topics(self.HOME_RECEIVE, "#"))
@@ -68,7 +71,7 @@ class MQTT(Thread):
         :return: None
         """
 
-        self.__console.print("Log ({0}): {1}".format(str(level), str(buf)), 0.1)
+        self.__terminal.mqtt("Log ({0}): {1}".format(str(level), str(buf)))
 
     # The callback for when a PUBLISH message is received from the server.
     def on_message(self, client, user_data, msg):
@@ -91,10 +94,12 @@ class MQTT(Thread):
             try:
                 value = json.loads(msg.payload.decode("utf-8"))
 
-            except Exception as e:
+            except Exception as e2:
                 value = msg.payload.decode("utf-8")
 
-        self.__console.print("Received MQTT message {0} on topic {1} with qos {2} and retain flag {3}".format(
+        socketio_value = value
+
+        self.__terminal.mqtt("Received MQTT message {0} on topic {1} with qos {2} and retain flag {3}".format(
             str(msg.payload.decode("utf-8")), str(msg.topic), str(msg.qos), str(msg.retain)))
 
         if len(ids) > 1:
@@ -103,8 +108,15 @@ class MQTT(Thread):
             self.__socket_io.emit("modal_toggle_result", {"tile_id": tile_id, "value": value, "id": item_id}, namespace="/com", broadcast=True)
 
         else:
+            if self.__tmng_r.get_tile_type(tile_id=tile_id) == "value":
+                value = value.copy()
+                value["time"] = time.time()
+
+                socketio_value = value.copy()
+                socketio_value["ago"] = self.__refactoring.get_time_ago(socketio_value["time"])
+
             self.__tmng_rwr.tile_value(new_value=value, tile_id=tile_id)
-            self.__socket_io.emit("tile_value_result", {"id": tile_id, "value": value}, namespace="/com", broadcast=True)
+            self.__socket_io.emit("tile_value_result", {"tile_id": tile_id, "value": socketio_value}, namespace="/com", broadcast=True)
 
     @staticmethod
     def subscribe(client, topic):
@@ -159,7 +171,7 @@ class MQTT(Thread):
             # Other loop*() functions are available that give a threaded interface and a manual interface.
             self.__client.loop_forever()
         except ConnectionRefusedError:
-            self.__console.print("MQTT error - probably not installed mosquitto and mosquitto-clients", 2)
+            self.__terminal.mqtt("MQTT error - probably not installed mosquitto and mosquitto-clients")
 
 
 class Acom:
@@ -167,10 +179,10 @@ class Acom:
     Asynchronous communication class
     """
 
-    def __init__(self, console, socket_io, ip, tmng_rwr):
+    def __init__(self, terminal, socket_io, ip, tmng_r, tmng_rwr, refactoring):
         """
         Init of asynchronous communication class
-        :param console: console
+        :param terminal: terminal
         :param socket_io: socket_io
         :param ip: server IP
         :param tmng_rwr: tmng_rwr
@@ -178,8 +190,10 @@ class Acom:
 
         self.__socket_io = socket_io
         self.__ip = ip
-        self.__console = console
+        self.__terminal = terminal
+        self.__tmng_r = tmng_r
         self.__tmng_rwr = tmng_rwr
+        self.__refactoring = refactoring
         self.mqtt_thread = Thread()
         self.mqtt_stop = Event()
 
@@ -190,6 +204,6 @@ class Acom:
         """
 
         if not self.mqtt_thread.is_alive():
-            self.mqtt_thread = MQTT(socket_io=self.__socket_io, ip=self.__ip, console=self.__console,
-                                    tmng_rwr=self.__tmng_rwr)
+            self.mqtt_thread = MQTT(socket_io=self.__socket_io, ip=self.__ip, terminal=self.__terminal,
+                                    tmng_rwr=self.__tmng_rwr, tmng_r=self.__tmng_r, refactoring=self.__refactoring)
             self.mqtt_thread.start()

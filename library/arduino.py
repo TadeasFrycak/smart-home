@@ -15,13 +15,13 @@ class Arduino:
     LINUX_PORT = "/dev/ttyACM0"
     LINUX_PORT2 = "/dev/ttyACM1"
     
-    def __init__(self, console):
+    def __init__(self, terminal):
         """
         Init of Arduino class
-        :param console: Console class
+        :param terminal: Terminal class
         """
 
-        self.__console = console
+        self.__terminal = terminal
 
         try:
             self.arduino = serial.Serial(self.WINDOWS_PORT, self.BAUDRATE, timeout=self.TIMEOUT)
@@ -40,7 +40,7 @@ class Arduino:
 
                     except Exception as e4:
                         self.arduino = None
-                        self.__console.print("Error in opening port due:\nPORT 1: {0},\nPORT 2: {1},\nPORT 3: {2},"
+                        self.__terminal.warning("Error in opening port due:\nPORT 1: {0},\nPORT 2: {1},\nPORT 3: {2},"
                                              "\nPORT 4: {3}.\nAre the Arduinos connected?".format(e, e2, e3, e4),
                                              priority=1)
 
