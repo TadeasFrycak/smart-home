@@ -8,7 +8,6 @@ from routes_modal import *
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def slide_name_rwr(data):
     """
     Rewrite slide name from edit mode
@@ -32,7 +31,6 @@ def slide_name_rwr(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def slide_index_rwr(data):
     """
     Rewrite slide index (change index of two slides)
@@ -59,7 +57,6 @@ def slide_index_rwr(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def slide_append(data):
     """
     Append new slide to the right
@@ -91,7 +88,6 @@ def slide_append(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def slide_delete(data):
     """
     Delete slide
@@ -117,7 +113,6 @@ def slide_delete(data):
 @socketio_login_required
 @role_required("lower_controller")
 @check_browser
-@log_error
 def slide_change(data):
     slide_index = data["slide_index"]
     tab_id = data["tab_id"]

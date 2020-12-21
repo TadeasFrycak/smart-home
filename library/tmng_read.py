@@ -1,5 +1,4 @@
 from flask_babel import Babel, _, gettext, ngettext, lazy_gettext
-from jinja2 import Environment, PackageLoader, meta, FileSystemLoader
 import library.jinja2schema as jinja2schema
 import datetime
 
@@ -18,7 +17,7 @@ class TemplateManagerRead:
 
     # devices.json
     TYPE = "type"
-    DATA = "data"
+    CONFIG = "config"
     MODAL = "modal"
     ID = "id"
     NAME = "name"
@@ -41,12 +40,13 @@ class TemplateManagerRead:
     X = "x"
     Y = "y"
 
-    def __init__(self, fmng, terminal, default_values, refactoring):
+    def __init__(self, fmng, terminal, default_values, refactoring, default_items):
         """
         Init of class TemplateManagerRead
         :param fmng: FileManager
         """
 
+        self.__default_items = default_items
         self.__fmng = fmng
         self.__terminal = terminal
         self.__refactoring = refactoring
@@ -63,8 +63,14 @@ class TemplateManagerRead:
             # Get item for current device
             for tile in page_content[self.CHILDREN]:
                 # If device have current id
-                if tile["data"]["id"] == tile_id:
+                if tile[self.ID] == tile_id:
                     return tile
+
+    def get_display_tile(self, tile_id):
+        tile = self.get_tile(tile_id)
+        for num, item in enumerate(tile["modal"]):
+            tile["modal"][num]["value"] = self.__default_items.get_object(item["type"]).on_display_value(item["value"])
+        return tile
 
     def get_tile_type(self, tile_id):
         """
@@ -83,13 +89,13 @@ class TemplateManagerRead:
 
         return self.__fmng.list_file_names(path="templates/tiles", name="*.html", extension=False)
 
-    def get_modal_templates(self):
-        """
-        Get modal templates
-        :return: modal templates
-        """
-
-        return self.__fmng.list_file_names(path="templates/modal", name="*.html", extension=False)
+    # def get_modal_templates(self):
+    #     """
+    #     Get modal templates
+    #     :return: modal templates
+    #     """
+    #
+    #     return self.__default_items.get_item_names()
 
     def get_tile_template_values(self, tile_type=None, tile_id=None):
         """
@@ -112,9 +118,9 @@ class TemplateManagerRead:
             for value in dict(variables["tile"]["data"]):
                 if value != "id" and value != "value" and value != "label":
                     try:
-                        data[value] = tile[self.DATA][value]
+                        data[value] = tile[self.CONFIG][value]
 
-                    except Exception as e:
+                    except KeyError:
                         data[value] = self.MODAL_ITEM_UNNAMED
 
             if "icon" in data:
@@ -136,10 +142,23 @@ class TemplateManagerRead:
 
                     data["icon"].append({"name": file, "current": current})
 
-        except Exception as e:  # Tile without data
+        except KeyError:  # Tile without data
             pass
 
         return data
+
+    def get_items_config(self):
+        # configs = self.__fmng.load_files_from_dir(dir_path=self.__fmng.CONFIG_ITEMS_DIR)
+        #
+        # for item in configs:
+        #     for value in configs[item][self.CONFIG]:
+        #         try:
+        #             configs[item][self.CONFIG][value][self.CONFIG][self.LABEL] = self.__refactoring.translate(configs[item][self.CONFIG][value][self.CONFIG][self.LABEL])
+        #         except KeyError:  # Item config value hasn't label
+        #             pass
+        # return configs
+        # TODO optimalizace - + přejmenovat class Items()
+        return self.__default_items.get_item_types()
 
     def get_modal_template_values(self, item_type):
         """
@@ -148,32 +167,13 @@ class TemplateManagerRead:
         :return:
         """
 
-        template = str(self.__fmng.load_file("templates/modal/" + item_type + ".html"))
-        variables = jinja2schema.infer(template)
+        values = self.get_items_config()
+        config = {}
 
-        data = {}
+        for value in values[item_type][self.CONFIG]:
+            config[value] = values[item_type][self.CONFIG][value]["value"]
 
-        try:
-            for value in dict(variables["item"]["data"]):
-                if value == "id":
-                    data[value] = self.__default_values.random_id()
-
-                elif value == "value":
-                    data[value] = self.__default_values.modal_item_value(item_type)
-
-                else:
-                    data[value] = self.MODAL_ITEM_UNNAMED
-
-            if "value" not in data:
-                value = self.__default_values.modal_item_value(item_type)
-
-                if value is not None:
-                    data["value"] = value
-
-        except Exception as e:  # Modal item without data
-            pass
-
-        return data
+        return values[item_type]["value"], config
 
     def get_slide_index(self, tile_id):
         """
@@ -186,30 +186,31 @@ class TemplateManagerRead:
             # Get item for current device
             for tile in page_content[self.CHILDREN]:
                 # If device have current id
-                if tile["data"]["id"] == tile_id:
+                if tile[self.ID] == tile_id:
                     return page_num
 
-    def get_modal_daterangepickers(self, tile_id):
+    def get_modal_date_range_pickers(self, tile_id):
         """
         Return all toggles in modal by id_tile
         :param tile_id: id of tile
         :return: toggles in modal
         """
 
-        daterangepickers = {}
+        date_range_pickers = {}
 
         # Get modal items
         for modal_item in self.get_tile(tile_id=tile_id)[self.MODAL]:
             # If that item is toggle, append
             if modal_item[self.TYPE] == "daterangepicker":
-                daterangepickers[modal_item[self.DATA][self.ID]] = modal_item[self.DATA][self.VALUE]
+                date_range_pickers[modal_item[self.ID]] = modal_item[self.VALUE]
 
-        return daterangepickers
+        return date_range_pickers
 
     def get_modal_graphs(self, tile_id=None, item_id=None):
         """
         Return all toggles in modal by id_tile
-        :param tile_id: id of tile
+        :param item_id: ID of item
+        :param tile_id: ID of tile
         :return: toggles in modal
         """
 
@@ -218,21 +219,21 @@ class TemplateManagerRead:
             # Get tiles (number and content)
             for tile_num, tile_content in enumerate(page_content[self.CHILDREN]):
                 # If that tile is current opened tile
-                if tile_content[self.DATA][self.ID] == tile_id:
+                if tile_content[self.ID] == tile_id:
                     graphs = {}
 
                     # Get modal items
                     for modal_item in tile_content[self.MODAL]:
                         # If that item is toggle, append
                         if modal_item[self.TYPE] == self.GRAPH:
-                            data_x = modal_item[self.DATA][self.VALUE][self.X]
-                            data_y = modal_item[self.DATA][self.VALUE][self.Y]
+                            data_x = modal_item[self.VALUE][self.X]
+                            data_y = modal_item[self.VALUE][self.Y]
                             minimized_x = []
                             minimized_y = []
                             for modal_item2 in tile_content[self.MODAL]:
-                                if modal_item2[self.TYPE] == "daterangepicker" and modal_item2[self.DATA]["pair"] == modal_item[self.DATA][self.ID]:
-                                    start = datetime.datetime.strptime(modal_item2[self.DATA][self.VALUE]["start"], "%Y-%m-%d %H:%M:%S")  # TODO to constant
-                                    end = datetime.datetime.strptime(modal_item2[self.DATA][self.VALUE]["end"], "%Y-%m-%d %H:%M:%S")
+                                if modal_item2[self.TYPE] == "daterangepicker" and modal_item2[self.CONFIG]["pair"] == modal_item[self.ID]:
+                                    start = datetime.datetime.strptime(modal_item2[self.VALUE]["start"], "%Y-%m-%d %H:%M:%S")  # TODO to constant
+                                    end = datetime.datetime.strptime(modal_item2[self.VALUE]["end"], "%Y-%m-%d %H:%M:%S")
 
                                     for num, i in enumerate(data_x):
                                         if datetime.datetime.strptime(i, "%Y-%m-%d %H:%M:%S") >= start and datetime.datetime.strptime(i, "%Y-%m-%d %H:%M:%S") <= end:
@@ -241,14 +242,13 @@ class TemplateManagerRead:
 
                                     break
 
-                            if item_id is not None and modal_item[self.DATA][self.ID] == item_id:
+                            if item_id is not None and modal_item[self.ID] == item_id:
                                 return {self.DATA_X: minimized_x, self.DATA_Y: minimized_y}
 
                             if not minimized_x:
                                 minimized_x = data_x
                                 minimized_y = data_y
 
-                            graphs[modal_item[self.DATA][self.ID]] = {self.DATA_X: minimized_x,
-                                                                      self.DATA_Y: minimized_y}
+                            graphs[modal_item[self.ID]] = {self.DATA_X: minimized_x, self.DATA_Y: minimized_y}
 
                     return graphs

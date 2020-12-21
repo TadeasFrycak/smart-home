@@ -3,10 +3,12 @@ $(document).ready(function(){
 
   socketio.on("register_result", function(data){
     if (data.status === true) {
-      window.location.href = $("#register-form").attr("action");
+      toggleAuth();
     }
     else {
-      console.log("Username is used");
+      $("#reg-username").removeClass("valid").addClass("invalid");
+      setTimeout(() => { $("#reg-username").removeClass("invalid"); }, 3000);
+      console.log("Username is taken");
       $("input#reg-username").val("");
     }
   });
@@ -43,6 +45,7 @@ $(document).ready(function(){
   $("input#reg-password").focusout(function(){
     if (validatePassword("input#reg-password")) {
       $(".password-requirements").slideUp("fast");
+      $("#reg-password").removeClass("invalid").addClass("valid");
     }
   });
   
@@ -50,10 +53,18 @@ $(document).ready(function(){
     validatePassword("input#reg-password");
   });
 
+  $("input#repeat-reg-password").on("input", function(){
+    if (!(validateRepeatPassword("input#reg-password", "input#repeat-reg-password"))) {
+      $("input#repeat-reg-password").removeClass("valid").addClass("invalid");
+    }
+    else {
+      $("input#repeat-reg-password").removeClass("invalid").addClass("valid");
+    }
+  });
+
   function validateUsername(name) {
     $(name).val($(name).val().normalize("NFKD").replace(/[^A-Za-z0-9._-]/g, ""));
     return $(name).val() !== "";
-
   }
 
   function validateName(name) {
@@ -125,6 +136,12 @@ $(document).ready(function(){
       special_label.toggleClass("reg-password-invalid", true);
     }
 
+    if (passed === false) {
+      $("#reg-password").removeClass("valid").addClass("invalid");
+    }
+    else {
+      $("#reg-password").removeClass("invalid").addClass("valid");
+    }
     if (value === "") {
       return null;
     }
@@ -164,7 +181,7 @@ $(document).ready(function(){
     return passed;
   }
 
-  $("body").on("click", "#register", function() {
+  $(document.body).on("click", "#register", function() {
     let validate_fname = validateName("input#first-reg-name");
     let validate_lname = validateName("input#last-reg-name");
     let validate_uname = validateUsername("input#reg-username");

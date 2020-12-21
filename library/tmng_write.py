@@ -3,7 +3,7 @@ class TemplateManagerWrite:
     Template manager write class
     """
 
-    def __init__(self, tmng_r, tmng_rwr, fmng):
+    def __init__(self, tmng_r, tmng_rwr, fmng, default_values):
         """
         Init of template manager write class
         :param tmng_r: tmng_r
@@ -14,6 +14,7 @@ class TemplateManagerWrite:
         self.__fmng = fmng
         self.__tmng_r = tmng_r
         self.__tmng_rwr = tmng_rwr
+        self.__default_values = default_values
 
     # Tile
     def tile_delete(self, tile_id):
@@ -28,28 +29,30 @@ class TemplateManagerWrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN].pop(item_num)
                     return True
 
     # Modal
-    def modal_item_delete(self, tile_id, index):
+    def modal_item_delete(self, tile_id, item_id):
         """
         Modal item delete
         :param tile_id: tile ID
-        :param index: index
+        :param item_id: item ID
         :return: True
         """
 
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
+            for tile_num, tile_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if tile_content[self.__tmng_r.ID] == tile_id:
                     # Get modal items
-                    self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL].pop(index)
-                    return True
+                    for item_num, item_content in enumerate(tile_content[self.__tmng_r.MODAL]):
+                        if item_content[self.__tmng_r.ID] == item_id:
+                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][tile_num][self.__tmng_r.MODAL].pop(item_num)
+                            return True
 
     def append_modal_item(self, item_type, tile_id):  # TODO přejmenovat i tenhle request @app.rout(/append...
         """
@@ -60,7 +63,12 @@ class TemplateManagerWrite:
         """
 
         tile = self.__tmng_r.get_tile(tile_id=tile_id)
-        item = {self.__tmng_r.TYPE: item_type, "data": self.__tmng_r.get_modal_template_values(item_type=item_type)}
+        value, config = self.__tmng_r.get_modal_template_values(item_type=item_type)
+        item = {
+            "type": item_type,
+            "id": self.__default_values.random_id(),
+            "value": value,
+            "config": config}
         tile["modal"].insert(0, item)
 
         self.__tmng_rwr.tile(tile=tile, tile_id=tile_id)

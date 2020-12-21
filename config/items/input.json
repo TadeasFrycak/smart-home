@@ -1,0 +1,37 @@
+{
+  "type": "input",
+  "value": "",
+  "description": "Field for free typing",
+  "config": {
+    "label": {
+      "type": "input",
+      "value": "",
+      "config": {
+        "label": "Label",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "readonly": {
+      "type": "toggle",
+      "value": false,
+      "config": {
+        "label": "Readonly"
+      }
+    },
+    "invalid": {
+      "type": "toggle",
+      "value": false,
+      "config": {
+        "label": "Is invalid"
+      }
+    },
+    "button": {
+      "type": "toggle",
+      "value": false,
+      "config": {
+        "label": "Submit button"
+      }
+    }
+  }
+}

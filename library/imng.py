@@ -14,35 +14,40 @@ class ImageManager:
         self.__terminal = terminal
         self.main()
 
-    def random_background(self, bg_type="light", background="smart"):
+    def random_background(self, current_mode="light", background="smart"):
         """
         Load backgrounds and choose one of them (randomly)
         :return:
         """
 
-        if background != "random" and background != "smart":
+        if background is None:
+            background = "smart"
+
+        types = ["random", "smart", "light", "dark"]
+        if background not in types:
             return background
 
-        for tries in range(5):
-            # Browse directory and load backgrounds
-            backgrounds = []
-            for file in self.__fmng.list_file_names(path=self.IMG_PATH):
-                try:
-                    if background == "random" or (background == "smart" and self.__fmng.backgrounds_data[file]["type"] == bg_type):
-                        backgrounds.append(file)
+        # Browse directory and load backgrounds
+        backgrounds = []
+        for file in self.__fmng.list_file_names(path=self.IMG_PATH):
+            if background == "random":
+                backgrounds.append(file)
 
-                except Exception as e:
-                    self.__terminal.warning(data="Backgrounds changed due {0}".format(e))
-                    self.reclassify()
-                    break
+            elif background == "smart" and self.__fmng.backgrounds_data[file]["type"] == current_mode:
+                backgrounds.append(file)
+
+            elif background == "light" and self.__fmng.backgrounds_data[file]["type"] == "light":
+                backgrounds.append(file)
+
+            elif background == "dark" and self.__fmng.backgrounds_data[file]["type"] == "dark":
+                backgrounds.append(file)
+
+        else:
+            if backgrounds:
+                return random.choice(backgrounds)
+
             else:
-                if backgrounds:
-                    return random.choice(backgrounds)
-
-                else:
-                    return None  # Black background
-
-        self.__terminal.error(data="Fatal error in background chooser!")
+                return None  # Black background
 
     def classify(self, images):
         """

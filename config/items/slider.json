@@ -1,0 +1,72 @@
+{
+  "type": "slider",
+  "value": [40, 60],
+  "config": {
+    "label": {
+      "type": "input",
+      "value": "",
+      "config": {
+        "label": "Label",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "suffix": {
+      "type": "input",
+      "value": "",
+      "config": {
+        "label": "Suffix",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "min": {
+      "type": "input",
+      "value": 0,
+      "config": {
+        "label": "Minimal value",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "max": {
+      "type": "input",
+      "value": 100,
+      "config": {
+        "label": "Maximal value",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "step": {
+      "type": "input",
+      "value": 5,
+      "config": {
+        "label": "Step value",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "smooth": {
+      "type": "toggle",
+      "value": false,
+      "config": {
+        "label": "Smooth"
+      }
+    },
+    "range": {
+      "type": "toggle",
+      "value": false,
+      "config": {
+        "label": "Range"
+      }
+    },
+    "disabled": {
+      "type": "toggle",
+      "value": false,
+      "config": {
+        "label": "Disabled"
+      }
+    }
+  }
+}

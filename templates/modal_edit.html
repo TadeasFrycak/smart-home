@@ -45,8 +45,10 @@
     <h6 style="margin-bottom:20px;">{{ _("Add modal items") }}</h6>
 
     <div id="modal-type">
-        {% for item_name in modal_items %}
-            {% include "modal_edit/modal_type_btn.html" %}
+        {% for item, value in item_config.items() %}
+            {% if value.visible == True %}
+                {% include "modal_edit/modal_type_btn.html" %}
+            {% endif %}
         {% endfor %}
     </div>
 
@@ -60,6 +62,7 @@
     <div class="modal-items-edit">
         <div id="sortable" class="modal_items_edit_sortable list-group col">
             {% for item in modal %}
+                {% set group = "modal-edit-" + item.id %}
                 {% include "modal_edit/item_values.html" %}
             {% endfor %}
 
@@ -71,10 +74,10 @@
                 onEnd: function (/**Event*/evt, /**Event*/originalEvent) {
                     let old_index = evt.oldDraggableIndex;
                     let new_index = evt.newDraggableIndex;
-                    let id_of_caller = $(".modal-here").attr("id_of_caller");
+                    let tileID = store($(".modal-here"), "tile-id");
 
                     socketio.emit("modal_item_index", {
-                        "tile_id": id_of_caller,
+                        "tile_id": tileID,
                         "old_index": old_index,
                         "new_index": new_index
                     });
@@ -88,6 +91,6 @@
     <button type="button" id="scroll-up" class="mr-auto btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %}"><img alt="{{ _('Up') }}" class="icon-invert" src="{{ url_for('static', filename='img/static/arrow-up.png') }}" height="16"></button>
     <button type="button" class="col-5 mr-auto btn btn-sm btn-outline-info" data-dismiss="modal">{{ _("Close") }}</button>
     <button type="button" id="delete-tile" class="trash-modal btn btn-outline-danger">
-        {{ _("Delete") }}
+        <span class="iconify" style="font-size:25px;" data-icon="jam-trash-alt-f" data-inline="false"></span>
     </button>
 {% endblock %}

@@ -1,0 +1,52 @@
+<div class="modal-item" data-id="{{ item.id }}" data-type="{{ item.type }}" data-value="{{ item.value }}" data-config='{{ item.config | tojson | safe }}' data-group="{{ group }}">
+    <div class="form-group-sm row">
+        <label class="col-lg-3 col-form-label">{{ item.config.label }}</label>
+        <div class="input-group col-lg-9" style="margin-bottom: 10px;">
+        <!-- TODO placeholder configurable/automatic????? -->
+            <input class="unfocus-on-enter modal-input form-control form-control-sm {% if item.config.invalid %}is-invalid{% endif %}" maxlength="40"
+                   placeholder='{% if item.config.placeholder == "" %}{% if not item.value %}N/A{% else %}{{ item.value }}{% endif %}{% else %}{{ item.config.placeholder }}{% endif %}'
+                   value='{{ item.value }}' autocomplete="off" {% if item.config.readonly %}readonly{% endif %}>
+            {% if item.config.button %}
+                <div class="input-group-append">
+                    <button class="submit btn btn-sm {% if mode == "light" %}btn-outline-dark{% else %}btn-outline-light{% endif %}" type="button" disabled>{{ _("Submit") }}</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <script type="text/javascript" defer>
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("input", ".modal-input", function() {
+          let modalItem = $(this).closest(".modal-item");
+          modalItem.find("button").prop("disabled", false);
+
+          let config = store(modalItem, "config");
+          if (config.button !== true) {
+            store(modalItem, "value", $(this).val()).trigger("value-transmit");
+          }
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("click", ".submit", function() {
+          let modalItem = $(this).closest(".modal-item");
+          $(this).prop("disabled", true);
+          store(modalItem, "value", modalItem.find(".modal-input").val()).trigger("value-transmit");
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').find(".modal-input").keydown(function(event){
+          let modalItem = $(this).closest(".modal-item");
+          event.keyCode===13 && $(modalItem).find(".submit").click();
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("value-receive", function() {
+          $(this).find("input").val(store($(this), "value"));
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("config-receive", function() {
+          let config = store($(this), "config");
+          $(this).find("label").text(config.label);
+          $(this).find("input").prop("readonly", config.readonly);
+          // Todo placeholde potřebuje na tu automatickou část refresh
+          if (config.placeholder === "") config.placeholder = _("N/A");
+          $(this).find("input").attr("placeholder", config.placeholder);
+          $(this).find("input").toggleClass("is-invalid", config.invalid);
+        });
+    </script>
+</div>

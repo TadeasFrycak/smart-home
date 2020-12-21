@@ -156,21 +156,36 @@
         }
     }
 </style>
-<script>
+<script type="text/javascript">
+  var wait = false;
   $(".turn-on-javascript").hide();
-  let myVar = setTimeout(myTimer, 5000);
+  let myVar = setTimeout(myTimer, 8000);
+  let myInterval;
 
   function myTimer() {
     $(".too-long-loading").hide().fadeIn(1000);
   }
 
+  function next() {
+      if (wait === false) {
+        clearInterval(myVar);
+        setTimeout(function()
+        {
+          $(".preloader").css("pointer-events", "none");
+          $(".too-long-loading").hide().fadeOut(1000);
+          $(".loader").show().fadeOut(1000, function()
+          {
+              $(".preloader").remove();
+          });
+        }, 500);
+      }
+  }
   $(window).on("load", function() {
-    clearInterval(myVar);
-    $(".preloader").css("pointer-events", "none");
-    $(".too-long-loading").hide().fadeOut(1000);
-    $(".loader").show().fadeOut(1000, function() {
-
-      $(".preloader").remove();
-    });
+      next();
+      myInterval = setInterval(next, 100);
+      setInterval(function()
+      {
+          wait = false;
+      }, 5000)
   });
 </script>

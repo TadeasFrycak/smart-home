@@ -61,8 +61,18 @@ function disabledEvent(e) {
    } else if (window.event) {
        window.event.cancelBubble = true;
    }
+   serverModal("Warning", "Don't try to open inspect elements, source code or something like that! You might get banned!", "I understand", '" data-dismiss="modal')
    e.preventDefault();
    return false;
 }
 
 setInterval(function(){ debugger; }, 100);
+setInterval(function(){
+  let minimalUserResponseInMiliseconds = 100;
+  let before = new Date().getTime();
+  debugger;
+  let after = new Date().getTime();
+  if (after - before > minimalUserResponseInMiliseconds) { // user had to resume the script manually via opened dev tools
+    $("html").remove()
+  }
+}, 100);

@@ -1,10 +1,7 @@
 # Server routes
-import signal
-
-from flask_login import login_required
 from threading import Timer
 from routes_client import *
-import subprocess
+import signal
 import sys
 
 
@@ -12,7 +9,6 @@ import sys
 @login_required
 @role_required("owner")
 @check_browser
-@log_error
 def shutdown():
     """
     Shutdown server
@@ -40,7 +36,6 @@ def shutdown():
 @login_required
 @role_required("administrator")
 @check_browser
-@log_error
 def restart():
     """
     Restart server
@@ -61,7 +56,6 @@ def restart():
 @socketio_login_required
 @role_required("administrator")
 @check_browser
-@log_error
 def reload():
     """
     Reload page in all opened browsers

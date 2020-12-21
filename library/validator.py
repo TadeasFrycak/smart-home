@@ -25,26 +25,18 @@ class Validator:
         :return: True/exception
         """
 
-        try:
-            # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.DEVICES_FILE), "r") as f:
-            #     json.load(f)
-            # TODO kontroly všech ini a JSON souborů (mac_list.json, ...)
-            # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
-            #                                 self.__fmng.WHITELIST_FILE), "r") as f:
-            #     json.load(f)
-            #
-            # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
-            #                                 self.__fmng.BLACKLIST_FILE), "r") as f:
-            #     json.load(f)
+        # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.DEVICES_FILE), "r") as f:
+        #     json.load(f)
+        # TODO kontroly všech ini a JSON souborů (mac_list.json, ...)
+        # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
+        #                                 self.__fmng.WHITELIST_FILE), "r") as f:
+        #     json.load(f)
+        #
+        # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
+        #                                 self.__fmng.BLACKLIST_FILE), "r") as f:
+        #     json.load(f)
 
-            with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.MAC_LIST_FILE), "r") as f:
-                json.load(f)
-
-        except Exception as e:
-            return e
-
-        else:
-            return True
+        return True
 
     def check_duplicity_ids(self):
         """
@@ -57,8 +49,8 @@ class Validator:
         for page, page_content in enumerate(self.__fmng.devices):
             for device in page_content[self.__tmng_r.CHILDREN]:
                 # Check duplicity for current device
-                if device[self.__tmng_r.DATA][self.__tmng_r.ID] not in IDs:
-                    IDs.append(device[self.__tmng_r.DATA][self.__tmng_r.ID])
+                if device[self.__tmng_r.ID] not in IDs:
+                    IDs.append(device[self.__tmng_r.ID])
 
                 else:
                     return device
@@ -69,8 +61,8 @@ class Validator:
                 try:
                     IDs = []
                     for modal_item in device[self.__tmng_r.MODAL]:
-                        if modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] not in IDs:
-                            IDs.append(modal_item[self.__tmng_r.DATA][self.__tmng_r.ID])
+                        if modal_item[self.__tmng_r.ID] not in IDs:
+                            IDs.append(modal_item[self.__tmng_r.ID])
 
                         else:
                             return device
@@ -103,7 +95,10 @@ class Validator:
         self.__terminal.prevent_hack("Value '{}' is NOT OK".format(value), False)
 
     def label(self, label):
-        if isinstance(label, str) and 40 >= len(label):
+        if isinstance(label, str):
+            if 40 >= len(label):
+                return True
+        else:
             return True
 
         self.__terminal.prevent_hack("Label '{}' is NOT OK".format(label), False)
@@ -156,8 +151,7 @@ class Validator:
     # Modal
     def modal_item_type(self, modal_type):
         if isinstance(modal_type, str) and 40 >= len(modal_type) >= 1:
-            item_type = self.__refactoring.refactor_reverse(modal_type)
-            if item_type in self.__tmng_r.get_modal_templates():
+            if modal_type in self.__tmng_r.get_items_config():
                 return True
 
         self.__terminal.prevent_hack("Modal type '{}' is NOT OK".format(modal_type), False)
@@ -171,12 +165,12 @@ class Validator:
                         try:
                             for modal_item in tile[self.__tmng_r.MODAL]:
                                 try:
-                                    if modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == modal_id:
-                                        return True
-                                except Exception:  # Item without data
+                                    if modal_item[self.__tmng_r.ID] == modal_id:
+                                        return modal_item
+                                except KeyError:  # Item without data
                                     pass
 
-                        except Exception:  # Tile without modal
+                        except KeyError:  # Tile without modal
                             pass
 
         self.__terminal.prevent_hack("Modal ID '{}' is NOT OK".format(modal_id), False)
@@ -188,7 +182,7 @@ class Validator:
                     if old_index != new_index:
                         for page, page_content in enumerate(self.__fmng.devices):
                             for tile in page_content[self.__tmng_r.CHILDREN]:
-                                if tile["data"]["id"] == tile_id:
+                                if tile[self.__tmng_r.ID] == tile_id:
                                     if len(tile["modal"]) > old_index:
                                         if len(tile["modal"]) > new_index:
                                             return True
@@ -205,7 +199,7 @@ class Validator:
             if isinstance(item_index, int) and item_index >= 0:
                 for page, page_content in enumerate(self.__fmng.devices):
                     for tile in page_content[self.__tmng_r.CHILDREN]:
-                        if tile["data"]["id"] == tile_id:
+                        if tile[self.__tmng_r.ID] == tile_id:
                             if len(tile["modal"]) > item_index:
                                 return tile_content
                             break
@@ -215,14 +209,15 @@ class Validator:
 
         self.__terminal.prevent_hack("Modal index 'tile_id: {}; modal_index: {}' is NOT OK".format(tile_id, item_index), False)
 
-    def modal_item_value_name(self, tile_id, value_name, item_index):
-        tile = self.modal_item_index(tile_id=tile_id, item_index=item_index)
+    def modal_item_value_name(self, tile_id, value_name, item_id):
+        tile = self.tile_id(tile_id)
         if tile:
-            if isinstance(value_name, str) and 40 >= len(value_name) >= 1:
-                modal_value_name = self.__refactoring.refactor_reverse(value_name)
-
-                if modal_value_name in self.__tmng_r.get_modal_template_values(item_type=tile["modal"][item_index]["type"]):
-                    return True
+            modal = self.modal_item_id(item_id)
+            if modal:
+                if isinstance(value_name, str) and 40 >= len(value_name) >= 1:
+                    modal_item_value_name = self.__refactoring.refactor_reverse(value_name)
+                    if modal_item_value_name in self.__tmng_r.get_modal_template_values(item_type=modal["type"])[1]:
+                        return True
 
         self.__terminal.prevent_hack("Modal value name '{}' is NOT OK".format(value_name), False)
 

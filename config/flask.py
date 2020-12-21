@@ -31,7 +31,7 @@ class DevelopmentConfig:
     SESSION_COOKIE_HTTPONLY = True
 
     REMEMBER_COOKIE_NAME = "home-remember"
-    REMEMBER_COOKIE_DURATION = timedelta(weeks=2)
+    REMEMBER_COOKIE_DURATION = timedelta(weeks=4)
     REMEMBER_COOKIE_HTTPONLY = True
 
     SOCKETIO_COOKIE_NAME = "home-socketio"

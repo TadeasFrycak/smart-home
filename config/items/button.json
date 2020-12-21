@@ -1,0 +1,25 @@
+{
+  "type": "button",
+  "value": null,
+  "description": "TODO",
+  "config": {
+    "color": {
+      "type": "input",
+      "value": "danger",
+      "config": {
+        "label": "Color",
+        "invalid": false,
+        "readonly": false
+      }
+    },
+    "label": {
+      "type": "input",
+      "value": "",
+      "config": {
+        "label": "Label",
+        "invalid": false,
+        "readonly": false
+      }
+    }
+  }
+}

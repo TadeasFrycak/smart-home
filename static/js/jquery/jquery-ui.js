@@ -31,7 +31,7 @@ var version = $.ui.version = "1.12.1";
 
 //>>label: Widget
 //>>group: Core
-//>>description: Provides a factory for creating stateful widgets with a common API.
+//>>description: Provides a factory for creating stateful widgets with a common API_HTTPS.
 //>>docs: http://api.jqueryui.com/jQuery.widget/
 //>>demos: http://jqueryui.com/widget/
 
@@ -2629,7 +2629,7 @@ function standardAnimationOption( option ) {
 		return true;
 	}
 
-	// Didn't match any standard API
+	// Didn't match any standard API_HTTPS
 	return false;
 }
 
@@ -6207,7 +6207,7 @@ $.extend( $.ui.autocomplete, {
 } );
 
 // Live region extension, adding a `messages` option
-// NOTE: This is an experimental API. We are still investigating
+// NOTE: This is an experimental API_HTTPS. We are still investigating
 // a full solution for string manipulation and internationalization.
 $.widget( "ui.autocomplete", $.ui.autocomplete, {
 	options: {

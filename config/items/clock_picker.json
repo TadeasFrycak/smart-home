@@ -1,0 +1,15 @@
+{
+  "type": "clock picker",
+  "value": "",
+  "config": {
+    "placeholder": {
+      "type": "input",
+      "value": "Click to set the time...",
+      "config": {
+        "label": "Placeholder",
+        "invalid": false,
+        "readonly": false
+      }
+    }
+  }
+}

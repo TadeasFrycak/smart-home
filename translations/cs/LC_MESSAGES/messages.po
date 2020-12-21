@@ -1,16 +1,16 @@
-# Czech translations for Smart Home.
+# Czech translations for PROJECT.
 # Copyright (C) 2020 ORGANIZATION
-# This file is distributed under the same license as the Smart Home project.
+# This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Smart Home 11.4\n"
-"Report-Msgid-Bugs-To: Frycaktadeas@seznam.cz\n"
-"POT-Creation-Date: 2020-10-02 22:44+0200\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-11-17 21:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Tadeáš Fryčák <Frycaktadeas@seznam.cz>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
 "Language-Team: cs <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2)\n"
@@ -19,123 +19,254 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../routes_basic.py:68
+#: ../routes_basic.py:53
 msgid ""
 "Your browser '{}' is not supported. Please download supported browser "
 "like Chromium, Firefox, Safari, ..."
 msgstr ""
+"Váš prohlížeč '{}' již není podporován. Prosím, stáhněte si jiný moderní "
+"prohlížeč jako například Chrome, Firefox nebo Safari"
 
-#: ../routes_basic.py:226
+#: ../routes_basic.py:212
 msgid "Problem!"
+msgstr "Problém!"
+
+#: ../routes_basic.py:213
+msgid "Detected wrong SocketIO request!"
+msgstr "Detekován špatný SocketIO požadavek!"
+
+#: ../config/items/button.py:12 ../config/items/button.py:18
+msgid "Button"
+msgstr "Tlačítko"
+
+#: ../config/items/button.py:27 ../config/items/graph.py:25
+#: ../config/items/input.py:30 ../config/items/progress_bar.py:28
+#: ../config/items/slider.py:35 ../config/items/toggle.py:29
+msgid "Label"
+msgstr "Název"
+
+#: ../config/items/button.py:28
+msgid "Color"
+msgstr "Barva"
+
+#: ../config/items/clock_picker.py:12
+msgid "Clock picker"
+msgstr "Výběr času"
+
+#: ../config/items/clock_picker.py:18
+msgid "Click to set the time..."
+msgstr "Klikněte pro zadání času..."
+
+#: ../config/items/clock_picker.py:26 ../config/items/progress_bar.py:30
+#: ../config/items/toggle.py:30
+msgid "Placeholder"
+msgstr "Předběžná výplň"
+
+#: ../config/items/date_range_picker.py:12
+msgid "Date picker"
+msgstr "Výběr data"
+
+#: ../config/items/date_range_picker.py:13
+msgid "Pick a date or date range"
+msgstr "Vybere datum nebo rozsah"
+
+#: ../config/items/date_range_picker.py:27 ../config/items/slider.py:41
+msgid "Range"
+msgstr "Rozsah"
+
+#: ../config/items/default.py:11 ../library/tmng_read.py:36
+msgid "Unnamed"
+msgstr "Bez názvu"
+
+#: ../config/items/dropdown.py:12
+msgid "Dropdown"
+msgstr "Rozbalovací nabídka"
+
+#: ../config/items/dropdown.py:13
+msgid "Pick a one from multiple options"
+msgstr "Vyberte jeden nebo více nastavení"
+
+#: ../config/items/graph.py:12 ../config/items/graph.py:17
+msgid "Graph"
+msgstr "Graf"
+
+#: ../config/items/input.py:12 ../config/items/input.py:19
+msgid "Input"
+msgstr "Vstupní pole"
+
+#: ../config/items/input.py:13
+msgid "Field for free typing"
+msgstr "Pole pro volné psaní"
+
+#: ../config/items/input.py:31
+msgid "Readonly"
+msgstr "Pouze pro čtení"
+
+#: ../config/items/input.py:32
+msgid "Invalid"
+msgstr "Nevalidní"
+
+#: ../config/items/input.py:33
+msgid "Confirm button (refresh required)"
+msgstr "Potvrzovací tlačítko (!)"
+
+#: ../config/items/progress_bar.py:12
+msgid "Progress bar"
 msgstr ""
 
-#: ../routes_basic.py:227
-msgid "Detected wrong SocketIO request!"
+#: ../config/items/progress_bar.py:18 ../config/items/toggle.py:12
+#: ../config/items/toggle.py:19
+msgid "Toggle"
+msgstr ""
+
+#: ../config/items/progress_bar.py:31 ../config/items/slider.py:42
+#: ../config/items/toggle.py:31
+msgid "Disabled"
+msgstr ""
+
+#: ../config/items/separator.py:12
+msgid "Separator"
+msgstr ""
+
+#: ../config/items/separator.py:13
+msgid "Separate content"
+msgstr ""
+
+#: ../config/items/slider.py:12 ../config/items/slider.py:19
+msgid "Slider"
+msgstr ""
+
+#: ../config/items/slider.py:13
+msgid "Slide to set value"
+msgstr ""
+
+#: ../config/items/slider.py:36
+msgid "Suffix"
+msgstr ""
+
+#: ../config/items/slider.py:37
+msgid "Minimal value"
+msgstr ""
+
+#: ../config/items/slider.py:38
+msgid "Maximal value"
+msgstr ""
+
+#: ../config/items/slider.py:39
+msgid "Step value"
+msgstr ""
+
+#: ../config/items/slider.py:40
+msgid "Smooth"
+msgstr ""
+
+#: ../config/items/toggle.py:13
+msgid "Toggle value - on/off"
 msgstr ""
 
 #: ../library/refactoring.py:14
 msgid "blank"
-msgstr ""
+msgstr "prázdný"
 
 #: ../library/refactoring.py:15
 msgid "alarm_clock"
-msgstr ""
+msgstr "budík"
 
 #: ../library/refactoring.py:16
 msgid "value_double"
-msgstr ""
+msgstr "dvojitá_hodnota"
 
 #: ../library/refactoring.py:17
 msgid "player"
-msgstr ""
+msgstr "přehrávač"
 
 #: ../library/refactoring.py:18
 msgid "toggle"
-msgstr ""
+msgstr "přepínač"
 
 #: ../library/refactoring.py:20
-msgid "daterangepicker"
-msgstr ""
+msgid "date_range_picker"
+msgstr "výběr_časového_rozmezí"
 
 #: ../library/refactoring.py:21
 msgid "button"
-msgstr ""
+msgstr "tlačítko"
 
 #: ../library/refactoring.py:22
 msgid "dropdown_menu"
-msgstr ""
+msgstr "rozbalovací_nabídka"
 
 #: ../library/refactoring.py:23
 msgid "graph"
-msgstr ""
+msgstr "graf"
 
 #: ../library/refactoring.py:24
 msgid "separator"
-msgstr ""
+msgstr "oddělovač"
 
 #: ../library/refactoring.py:25
 msgid "slider"
-msgstr ""
+msgstr "posuvník"
 
 #: ../library/refactoring.py:26
 msgid "time_picker"
-msgstr ""
+msgstr "výběr_času"
 
 #: ../library/refactoring.py:27
 msgid "progress_bar"
-msgstr ""
+msgstr "ukazatel_průběhu"
 
 #: ../library/refactoring.py:29
 msgid "label"
-msgstr ""
+msgstr "název"
 
 #: ../library/refactoring.py:30
 msgid "value"
-msgstr ""
+msgstr "hodnota"
 
 #: ../library/refactoring.py:31
 msgid "value_min"
-msgstr ""
+msgstr "min_hodnota"
 
 #: ../library/refactoring.py:32
 msgid "value_max"
-msgstr ""
+msgstr "max_hodnota"
 
 #: ../library/refactoring.py:33
 msgid "color"
-msgstr ""
+msgstr "barva"
 
 #: ../library/refactoring.py:34
 msgid "colour"
-msgstr ""
+msgstr "barva"
 
 #: ../library/refactoring.py:35
 msgid "pair"
-msgstr ""
+msgstr "pár"
 
 #: ../library/refactoring.py:36
 msgid "step"
-msgstr ""
+msgstr "krok"
 
 #: ../library/refactoring.py:139
 msgid "now"
-msgstr ""
+msgstr "nyní"
 
 #: ../library/refactoring.py:142
 #, python-format
 msgid "%(num)s minute"
 msgid_plural "%(num)s minutes"
-msgstr[0] "%(num)s minuta"
-msgstr[1] "%(num)s minuty"
-msgstr[2] "%(num)s minut"
+msgstr[0] "%(num)s minut"
+msgstr[1] "%(num)s minuta"
+msgstr[2] "%(num)s minuty"
 
 #: ../library/refactoring.py:145
-#, fuzzy, python-format
+#, python-format
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
-msgstr[0] "%(num)s hodina"
-msgstr[1] "%(num)s hodiny"
-msgstr[2] "%(num)s hodin"
+msgstr[0] "%(num)s hodin"
+msgstr[1] "%(num)s hodina"
+msgstr[2] "%(num)s hodiny"
 
 #: ../library/refactoring.py:148
 #, python-format
@@ -143,7 +274,7 @@ msgid "%(num)s day"
 msgid_plural "%(num)s days"
 msgstr[0] "%(num)s den"
 msgstr[1] "%(num)s dny"
-msgstr[2] "%(num)s dnů"
+msgstr[2] "%(num)s dní"
 
 #: ../library/refactoring.py:151
 #, python-format
@@ -169,157 +300,195 @@ msgstr[0] "%(num)s rok"
 msgstr[1] "%(num)s roky"
 msgstr[2] "%(num)s let"
 
-#: ../library/tmng_read.py:36 ../templates/modal_edit/item_values.html:10
-msgid "Unnamed"
-msgstr "Bez názvu"
-
-#: ../static/js/acom.js:347 ../static/js/acom.js:353
+#: ../static/js/acom.js:354 ../static/js/acom.js:360
 #: ../templates/tiles/toggle.html:7
 msgid "On"
 msgstr "On"
 
-#: ../static/js/acom.js:348 ../static/js/acom.js:352
+#: ../static/js/acom.js:355 ../static/js/acom.js:359
 #: ../templates/tiles/toggle.html:7
 msgid "Off"
 msgstr "Off"
 
-#: ../static/js/acom.js:468 ../templates/slide.html:6
+#: ../static/js/acom.js:484 ../templates/slide.html:6
 msgid "Online"
 msgstr "Online"
 
-#: ../static/js/acom.js:505 ../static/js/main.js:15
+#: ../static/js/acom.js:521 ../static/js/main.js:86 ../static/js/main.js:87
 msgid "Offline"
 msgstr "Offline"
 
 #: ../static/js/edit_events.js:31 ../static/js/edit_events.js:42
 msgid "Slide"
-msgstr ""
+msgstr "Stránka"
 
 #: ../static/js/edit_events.js:31
 msgid "is already on the end!"
-msgstr ""
+msgstr "je již na konci!"
 
 #: ../static/js/edit_events.js:42
 msgid "is already on the beginning!"
-msgstr ""
+msgstr "je již na začátku!"
 
-#: ../static/js/events.js:150 ../templates/slide.html:14
+#: ../static/js/events.js:149 ../templates/slide.html:15
 msgid "Edit mode"
-msgstr ""
+msgstr "Upravovací mód"
 
-#: ../static/js/events.js:201 ../templates/slide.html:2
+#: ../static/js/events.js:200 ../templates/slide.html:2
 msgid "Exit edit mode"
 msgstr "Ukončit upravovací mód"
 
-#: ../static/js/login.js:38 ../static/js/register.js:183
-#: ../templates/auth/login.html:15 ../templates/auth/register.html:27
+#: ../static/js/login.js:44 ../static/js/register.js:200
+#: ../templates/auth/login.html:16 ../templates/auth/login.html:57
 #: ../templates/modal_user_list.html:37
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: ../static/js/login.js:43 ../static/js/register.js:186
-#: ../templates/auth/login.html:20 ../templates/auth/register.html:32
+#: ../static/js/login.js:49 ../static/js/register.js:203
+#: ../templates/auth/login.html:23 ../templates/auth/login.html:64
 msgid "Password"
 msgstr "Heslo"
 
-#: ../static/js/login.js:52 ../static/js/register.js:207
+#: ../static/js/login.js:58 ../static/js/register.js:224
 msgid "and"
-msgstr ""
+msgstr "a"
 
-#: ../static/js/login.js:61 ../static/js/register.js:189
-#: ../static/js/register.js:192 ../static/js/register.js:198
-#: ../static/js/register.js:216
+#: ../static/js/login.js:67 ../static/js/register.js:206
+#: ../static/js/register.js:209 ../static/js/register.js:215
+#: ../static/js/register.js:233
 msgid "Warning"
-msgstr ""
+msgstr "Varování"
 
-#: ../static/js/main.js:15 ../static/js/main.js:23 ../static/js/main.js:30
-#: ../templates/base.html:46 ../templates/error.html:12
+#: ../static/js/main.js:86 ../static/js/main.js:94 ../static/js/main.js:101
+#: ../templates/base.html:48
 msgid "SH"
 msgstr "ChD"
 
-#: ../static/js/main.js:23
+#: ../static/js/main.js:87
+msgid ""
+"Server is now offline. The page will be auto-reloaded after server will "
+"be online. If you think that this message is wrong or this is a bug, you "
+"can reload page manually."
+msgstr ""
+"Spojení se serverem bylo ztraceno. Stránka se ihned obnoví, jakmile "
+"naváže znovu se serverem spojení. Pokud si myslíte, že je tahle zpráva "
+"chyba, můžete stránku obnovit manuálně pomocí tlačítka níže."
+
+#: ../static/js/main.js:94 ../static/js/main.js:95
 msgid "Restarting"
-msgstr ""
+msgstr "Restartování"
 
-#: ../static/js/main.js:30
+#: ../static/js/main.js:95
+msgid ""
+"Server is now restarting. If the server will not turn on automatically "
+"within a minute, please refresh the page manually"
+msgstr ""
+"Server se nyní restartuje. Pokud se stránka neobnoví automaticky do "
+"minuty, prosím, obnovte ji manuálně pomocí tlačítka níže."
+
+#: ../static/js/main.js:101 ../static/js/main.js:102
 msgid "Turned off"
-msgstr ""
+msgstr "Vypnuto"
 
-#: ../static/js/modal_edit_events.js:102
-msgid "id"
-msgstr "id"
+#: ../static/js/main.js:102
+msgid ""
+"Server was turned off. Please, reload the page when you turn on the "
+"server."
+msgstr "Server byl vypnut. Prosím, obnovte stránku, až server opět zapnete."
 
-#: ../static/js/register.js:177 ../templates/auth/register.html:17
+#: ../static/js/main.js:120 ../templates/slide.html:61
+msgid "Reload"
+msgstr "Obnovit"
+
+#: ../static/js/register.js:194 ../templates/auth/login.html:43
 #: ../templates/modal_user_list.html:21
 msgid "First name"
 msgstr "Jméno"
 
-#: ../static/js/register.js:180 ../templates/auth/register.html:22
+#: ../static/js/register.js:197 ../templates/auth/login.html:50
 #: ../templates/modal_user_list.html:29
 msgid "Last name"
 msgstr "Příjmení"
 
-#: ../static/js/register.js:189
+#: ../static/js/register.js:206
 msgid "Password must contain all the required characters!"
-msgstr ""
+msgstr "Heslo musí obsahovat všechny povinné znaky!"
 
-#: ../static/js/register.js:192
+#: ../static/js/register.js:209
 msgid "Password must NOT contain your name or username!"
-msgstr ""
+msgstr "Heslo nesmí obsahovat Vaše jméno nebo Vaše uživatelské jméno!"
 
-#: ../static/js/register.js:195 ../templates/auth/register.html:46
+#: ../static/js/register.js:212 ../templates/auth/login.html:79
 msgid "Repeat password"
 msgstr "Heslo znovu"
 
-#: ../static/js/register.js:198
+#: ../static/js/register.js:215
 msgid "Passwords does not match!"
-msgstr ""
+msgstr "Hesla se neshodují!"
 
-#: ../templates/base.html:2 ../templates/base.html:42 ../templates/base.html:49
-#: ../templates/error.html:1 ../templates/error.html:8
+#: ../templates/base.html:2 ../templates/base.html:44 ../templates/base.html:51
 msgid "en-GB"
 msgstr "cs-CZ"
 
-#: ../templates/base.html:38 ../templates/base.html:39
-#: ../templates/error.html:4 ../templates/error.html:5
+#: ../templates/base.html:40 ../templates/base.html:41
 msgid "Smart home"
 msgstr "Chytrá domácnost"
 
-#: ../templates/base.html:40 ../templates/error.html:6
+#: ../templates/base.html:42
 msgid "control, use, have fun"
-msgstr "kontrolovat, používat, bavit se"
+msgstr "kontrolovat, používat, užívat"
 
-#: ../templates/error.html:12
+#: ../templates/error.html:3 ../templates/error.html:36
 msgid "Error"
 msgstr "Chyba"
 
-#: ../templates/index.html:47
+#: ../templates/error.html:32
+msgid "error icon"
+msgstr "ikona chyby"
+
+#: ../templates/index.html:69
 msgid "Home"
 msgstr "Domů"
 
-#: ../templates/index.html:85
+#: ../templates/index.html:107
 msgid "Let's start"
 msgstr "Začněme"
 
-#: ../templates/index.html:86
+#: ../templates/index.html:108
 msgid ""
 "Let's make your first slide, you can add this slide by the button bellow."
 " After that, you can add your tiles in edit mode."
 msgstr ""
+"Vytvořte si novou stránku pomocí tlačítka níže. Poté si budete moci "
+"přidat jakékoli tily pomocí edit módu."
 
-#: ../templates/index.html:87
+#: ../templates/index.html:109
 msgid "Add new slide"
-msgstr "Přidat novou stránku na konec"
+msgstr "Přidat novou stránku"
 
-#: ../templates/modal.html:17 ../templates/modal_edit.html:89
+#: ../templates/modal.html:17 ../templates/modal_edit.html:92
 msgid "Close"
 msgstr "Zavřít"
 
 #: ../templates/modal_android.html:4
 msgid "Android APK download"
-msgstr "Stáhnout Android APK"
+msgstr "Stráhnout Android APK"
 
-#: ../templates/modal_client_list.html:4 ../templates/slide.html:30
+#: ../templates/modal_android.html:8
+msgid ""
+"Your operating system is Android! We have special application for our "
+"Android users to access Smart home."
+msgstr "Váš operační systém je Android! Máme pro Vás naši aplikaci!"
+
+#: ../templates/modal_android.html:10
+msgid "Download latest *.apk file"
+msgstr "Stáhněte si nejnovější *.apk"
+
+#: ../templates/modal_android.html:11
+msgid "here"
+msgstr "zde"
+
+#: ../templates/modal_client_list.html:4 ../templates/slide.html:31
 msgid "Client list"
 msgstr "Seznam klientů"
 
@@ -333,7 +502,7 @@ msgstr "MAC"
 
 #: ../templates/modal_client_list.html:35
 msgid "Connected"
-msgstr "Připojen od"
+msgstr "Připojen"
 
 #: ../templates/modal_client_list.html:43
 msgid "User"
@@ -361,10 +530,9 @@ msgstr "Balíček aplikace"
 
 #: ../templates/modal_client_list.html:93
 msgid "Browser URL"
-msgstr "URL v prohlížeči"
+msgstr "URL prohlížeče"
 
-#: ../templates/modal_client_list.html:102 ../templates/modal_edit.html:91
-#: ../templates/modal_edit/item_values.html:36
+#: ../templates/modal_client_list.html:102
 #: ../templates/modal_user_list.html:100
 msgid "Delete"
 msgstr "Smazat"
@@ -382,8 +550,7 @@ msgid "Tile ID"
 msgstr "ID tilu"
 
 #: ../templates/modal_edit.html:36 ../templates/modal_edit.html:38
-#: ../templates/modal_edit/item_values.html:26
-#: ../templates/modal_edit/item_values.html:28
+#: ../templates/modal_edit/item_values.html:31
 msgid "MQTT path"
 msgstr "MQTT cesta"
 
@@ -391,28 +558,23 @@ msgstr "MQTT cesta"
 msgid "Add modal items"
 msgstr "Přidat modal itemy"
 
-#: ../templates/modal_edit.html:55
+#: ../templates/modal_edit.html:57
 msgid "Modal items"
 msgstr "Modal itemy"
 
-#: ../templates/modal_edit.html:57
+#: ../templates/modal_edit.html:59
 msgid "Unpack all"
 msgstr "Rozbalit vše"
 
-#: ../templates/modal_edit.html:58
+#: ../templates/modal_edit.html:60
 msgid "Pack all"
 msgstr "Sbalit vše"
 
-#: ../templates/modal_edit.html:88
+#: ../templates/modal_edit.html:91
 msgid "Up"
 msgstr "Nahoru"
 
-#: ../templates/modal_normal.html:21
-msgid "There are no items :("
-msgstr ""
-
-#: ../templates/modal_settings.html:4 ../templates/slide.html:8
-#: ../templates/slide.html:29
+#: ../templates/modal_settings.html:4 ../templates/slide.html:30
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -423,17 +585,17 @@ msgstr "Vzhled"
 #: ../templates/modal_settings.html:13 ../templates/modal_settings.html:14
 #: ../templates/modal_settings.html:66
 msgid "Light"
-msgstr ""
+msgstr "Světlý"
 
 #: ../templates/modal_settings.html:18 ../templates/modal_settings.html:19
 #: ../templates/modal_settings.html:71
 msgid "Dark"
-msgstr ""
+msgstr "Tmavý"
 
 #: ../templates/modal_settings.html:23 ../templates/modal_settings.html:24
 #: ../templates/modal_settings.html:56
 msgid "Smart"
-msgstr ""
+msgstr "Inteligentní"
 
 #: ../templates/modal_settings.html:51
 msgid "Background"
@@ -441,15 +603,15 @@ msgstr "Pozadí"
 
 #: ../templates/modal_settings.html:61
 msgid "Random"
-msgstr ""
+msgstr "Náhodný"
 
 #: ../templates/modal_settings.html:76
 msgid "Choose..."
-msgstr ""
+msgstr "Vyberte..."
 
-#: ../templates/modal_user_list.html:4 ../templates/slide.html:31
+#: ../templates/modal_user_list.html:4 ../templates/slide.html:32
 msgid "User list"
-msgstr ""
+msgstr "Seznam uživatelů"
 
 #: ../templates/modal_user_list.html:45
 msgid "Mode"
@@ -461,7 +623,7 @@ msgstr "Role"
 
 #: ../templates/modal_user_list.html:61
 msgid "Owner"
-msgstr "Majitel"
+msgstr "Vlastník"
 
 #: ../templates/modal_user_list.html:62
 msgid "Administrator"
@@ -469,11 +631,11 @@ msgstr "Administrátor"
 
 #: ../templates/modal_user_list.html:63
 msgid "Manager"
-msgstr "Správce"
+msgstr "Manažer"
 
 #: ../templates/modal_user_list.html:64
 msgid "Visitor"
-msgstr "Návštěvník"
+msgstr "Návštěva"
 
 #: ../templates/modal_user_list.html:65
 msgid "Higher controller"
@@ -485,7 +647,7 @@ msgstr "Nižší kontrolér"
 
 #: ../templates/modal_user_list.html:73
 msgid "Register date"
-msgstr ""
+msgstr "Datum registrace"
 
 #: ../templates/preloader.html:20
 msgid "Wait a moment please..."
@@ -493,133 +655,116 @@ msgstr "Počkejte chvíli prosím..."
 
 #: ../templates/preloader.html:21
 msgid "Turn on JavaScript please..."
-msgstr ""
+msgstr "Zapněte JavaScript prosím..."
 
-#: ../templates/slide.html:20 ../templates/slide.html:81
+#: ../templates/slide.html:21 ../templates/slide.html:82
 msgid "Add"
 msgstr "Přidat"
 
-#: ../templates/slide.html:21
-msgid "Remove"
-msgstr ""
-
 #: ../templates/slide.html:22
-msgid "Move right"
-msgstr ""
+msgid "Remove"
+msgstr "Odstranit"
 
 #: ../templates/slide.html:23
+msgid "Move right"
+msgstr "Posunout doprava"
+
+#: ../templates/slide.html:24
 msgid "Move left"
-msgstr ""
+msgstr "Posunout doleva"
 
-#: ../templates/slide.html:38
+#: ../templates/slide.html:39
 msgid "App settings"
-msgstr ""
+msgstr "Nastavení aplikace"
 
-#: ../templates/slide.html:45
+#: ../templates/slide.html:46
 msgid "APK application"
-msgstr ""
-
-#: ../templates/slide.html:52
-msgid "Save"
-msgstr ""
+msgstr "APK aplikace"
 
 #: ../templates/slide.html:53
+msgid "Save"
+msgstr "Uložit"
+
+#: ../templates/slide.html:54
 msgid "Shutdown"
 msgstr "Vypnout"
 
-#: ../templates/slide.html:54
+#: ../templates/slide.html:55
 msgid "Restart"
-msgstr "Restart"
+msgstr "Restartovat"
 
-#: ../templates/slide.html:60
-msgid "Reload"
-msgstr "Obnovit"
-
-#: ../templates/slide.html:62
+#: ../templates/slide.html:63
 msgid "Reload all"
-msgstr ""
+msgstr "Obnovit všechno"
 
-#: ../templates/slide.html:67
+#: ../templates/slide.html:68
 msgid "Logout"
-msgstr "Odhlásit se"
+msgstr "Odhlásit"
 
-#: ../templates/auth/login.html:3 ../templates/auth/login.html:11
-#: ../templates/auth/login.html:23 ../templates/auth/logout.html:13
-#: ../templates/auth/register.html:52
+#: ../templates/auth/login.html:3 ../templates/auth/login.html:14
+#: ../templates/auth/login.html:30 ../templates/auth/logout.html:16
 msgid "Login"
-msgstr "Přihlásit se"
+msgstr "Přihlásit"
 
-#: ../templates/auth/login.html:26
-msgid "Don't have an account?"
-msgstr "Ještě nemáte účet?"
+#: ../templates/auth/login.html:33
+msgid "I do not have an account"
+msgstr "Nemám ještě účet"
 
-#: ../templates/auth/login.html:26
-msgid "Register here"
-msgstr "Zaregistrujte se"
-
-#: ../templates/auth/logout.html:3 ../templates/auth/logout.html:12
-msgid "Logged out"
-msgstr "Odhlášen"
-
-#: ../templates/auth/logout.html:13
-msgid "See you later"
-msgstr "Nashledanou"
-
-#: ../templates/auth/register.html:3 ../templates/auth/register.html:12
+#: ../templates/auth/login.html:40
 msgid "Registration"
 msgstr "Registrace"
 
-#: ../templates/auth/register.html:36
+#: ../templates/auth/login.html:71
 msgid "Password must contain:"
-msgstr ""
+msgstr "Heslo musí obsahovat:"
 
-#: ../templates/auth/register.html:38
+#: ../templates/auth/login.html:73
 msgid "At least one uppercase and lowercase letter"
-msgstr ""
+msgstr "Alespoň jedno velké a malé písmeno"
 
-#: ../templates/auth/register.html:39
+#: ../templates/auth/login.html:74
 msgid "At least 10 characters"
-msgstr ""
+msgstr "Alespoň 10 znaků"
 
-#: ../templates/auth/register.html:40
+#: ../templates/auth/login.html:75
 msgid "At least one digit"
-msgstr ""
+msgstr "Alespoň jednu číslici"
 
-#: ../templates/auth/register.html:41
+#: ../templates/auth/login.html:76
 msgid "At least one special character"
-msgstr ""
+msgstr "Alespoň jeden speciální znak"
 
-#: ../templates/auth/register.html:50
+#: ../templates/auth/login.html:86
 msgid "Register"
 msgstr "Registrovat"
 
-#: ../templates/auth/register.html:52
-msgid "Already have an account?"
-msgstr "Již máte účet?"
+#: ../templates/auth/login.html:88
+msgid "I have an account"
+msgstr "Už mám účet"
 
-#: ../templates/auth/register.html:60
-msgid "Good day!"
-msgstr "Dobrý den!"
+#: ../templates/auth/logout.html:3 ../templates/auth/logout.html:15
+msgid "Logged out"
+msgstr "Odhlášen"
 
-#: ../templates/auth/register.html:63
-msgid "This is Smart home"
-msgstr "Vítejte v Chytré domácnosti"
+#: ../templates/auth/logout.html:16
+msgid "See you later"
+msgstr "Nashledanou"
 
-#: ../templates/auth/register.html:66
-msgid "Please register to SH now!"
-msgstr "Nejdříve se prosím zaregistrujte"
-
-#: ../templates/modal/time_picker.html:4
+#: ../templates/modal/clock_picker.html:5
 msgid "Alarm"
-msgstr ""
+msgstr "Budík"
 
-#: ../templates/modal/time_picker.html:7
-msgid "Click to set the time..."
-msgstr ""
-
-#: ../templates/modal/time_picker.html:12
+#: ../templates/modal/clock_picker.html:16
 msgid "Done"
-msgstr ""
+msgstr "Hotovo"
+
+#: ../templates/modal/date_range_picker.html:3
+msgid "en"
+msgstr "cs"
+
+#: ../templates/modal/input.html:11
+msgid "Submit"
+msgstr "Potvrdit"
 
 #: ../templates/modal_edit/icon_item.html:1
 #: ../templates/modal_edit/icons.html:2 ../templates/tiles/alarm_clock.html:4
@@ -630,7 +775,23 @@ msgstr "Ikona"
 
 #: ../templates/modal_edit/item_values.html:2
 msgid "Menu"
-msgstr "Nabídka"
+msgstr "Menu"
+
+#: ../templates/modal_edit/item_values.html:19
+msgid "Preview"
+msgstr "Náhled"
+
+#: ../templates/modal_edit/item_values.html:27
+msgid "Item"
+msgstr "Item"
+
+#: ../templates/modal_edit/item_values.html:28
+msgid "ID"
+msgstr "ID"
+
+#: ../templates/modal_edit/item_values.html:37
+msgid "Item config"
+msgstr "Konfigurace itemu"
 
 #: ../templates/tiles/alarm_clock.html:13
 msgid "Monday"
@@ -662,7 +823,7 @@ msgstr "Neděle"
 
 #: ../templates/tiles/player.html:10
 msgid "Thumbnail"
-msgstr "Miniatura"
+msgstr "Náhled"
 
 #: ../templates/tiles/player.html:11
 msgid "Previous"
@@ -678,159 +839,80 @@ msgstr "Přehrát"
 
 #: ../templates/tiles/player.html:14
 msgid "Next"
-msgstr "Následující"
+msgstr "Další"
 
 #: ../templates/tiles/value.html:9
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
-#~ msgid "buffer"
-#~ msgstr ""
+#~ msgid "Color"
+#~ msgstr "Barva"
 
-#~ msgid "Detected bad SocketIO request!"
-#~ msgstr "Detekován špatný SocketIO požadavek!"
+#~ msgid "invalid"
+#~ msgstr "neplatný"
 
-#~ msgid "Server was successfully shutdown"
-#~ msgstr "Server se úspěšně vypnul"
+#~ msgid "readonly"
+#~ msgstr "pouze pro čtení"
 
-#~ msgid "Server was successfully restarted"
-#~ msgstr "Server se úspěšně restartoval"
+#~ msgid "Label"
+#~ msgstr "Název"
 
-#~ msgid "Edit this slide"
-#~ msgstr "Upravit tuto stránku"
+#~ msgid "Readonly"
+#~ msgstr "Pouze pro čtení"
 
-#~ msgid ""
-#~ "You can now create your first "
-#~ "slide in Smart home, then you can"
-#~ " edit it to your own ideas."
-#~ msgstr ""
-#~ "Vytvořte si svou vlastní první stránku!"
-#~ " Poté zvolte 'Upravovací mód' a "
-#~ "upravte si svou stránku dle libosti!"
+#~ msgid "Is invalid"
+#~ msgstr "Neplatný"
 
-#~ msgid "LIGHT"
-#~ msgstr "SVĚTLÝ"
+#~ msgid "Minimal value"
+#~ msgstr "Minimální hodnota"
 
-#~ msgid "DARK"
-#~ msgstr "TMAVÝ"
+#~ msgid "Maximal value"
+#~ msgstr "Maximální hodnota"
 
-#~ msgid "SMART"
-#~ msgstr "INTELIGENTNÍ"
+#~ msgid "Step value"
+#~ msgstr "Krok"
 
-#~ msgid "Prepend new slide"
-#~ msgstr "Přidat novou stránku na začátek"
+#~ msgid "Smooth"
+#~ msgstr "Plynulý"
 
-#~ msgid "Remove this slide"
-#~ msgstr "Odebrat tuto stránku"
+#~ msgid "There are no items :("
+#~ msgstr "Nejsou zde žádné itemy :)"
 
-#~ msgid "Move this slide to the left"
-#~ msgstr "Posunout tuto stránku doleva"
+#~ msgid "Don't have an account?"
+#~ msgstr "Ještě nemáte účet?"
 
-#~ msgid "Move this slide to the right"
-#~ msgstr "Posunout tuto stránku doprava"
+#~ msgid "Register here"
+#~ msgstr "Zaregistrujte se zde"
 
-#~ msgid "Backgrounds"
-#~ msgstr "Pozadí"
+#~ msgid "Already have an account?"
+#~ msgstr "Již máte účet?"
 
-#~ msgid "Client app settings"
-#~ msgstr "Nastavení aplikace"
+#~ msgid "Good day!"
+#~ msgstr "Dobrý den!"
 
-#~ msgid "Save changes"
-#~ msgstr "Uložit změny"
+#~ msgid "This is Smart home"
+#~ msgstr "Vítejte v Chytré domácnosti"
 
-#~ msgid "Android APK"
-#~ msgstr "Android APK"
+#~ msgid "Please register to SH now!"
+#~ msgstr "Prosím, zaregistrujte se!"
 
-#~ msgid "Shutdown server"
-#~ msgstr "Vypnout server"
+#~ msgid "Click to set the time..."
+#~ msgstr "Klikněte pro nastavení času..."
 
-#~ msgid "Restart server"
-#~ msgstr "Restartovat server"
+#~ msgid "TODO"
+#~ msgstr "TODO"
 
-#~ msgid "Reload all clients"
-#~ msgstr "Obnovit všechny klienty"
+#~ msgid "config"
+#~ msgstr "Konfig"
 
-#~ msgid "Female"
-#~ msgstr "Žena"
+#~ msgid "Not implemented yet"
+#~ msgstr "Ještě není implementováno"
 
-#~ msgid "Male"
-#~ msgstr "Muž"
+#~ msgid "Not complete"
+#~ msgstr "Není hotové"
 
-#~ msgid "blank"
-#~ msgstr "prázdný"
+#~ msgid "Field for free typing"
+#~ msgstr "Pole pro psaní"
 
-#~ msgid "alarm_clock"
-#~ msgstr "budík"
-
-#~ msgid "value_double"
-#~ msgstr "dvojitá_hodnota"
-
-#~ msgid "player"
-#~ msgstr "přehrávač"
-
-#~ msgid "toggle"
-#~ msgstr "přepínač"
-
-#~ msgid "daterangepicker"
-#~ msgstr "výběr_období"
-
-#~ msgid "button"
-#~ msgstr "tlačítko"
-
-#~ msgid "dropdown_menu"
-#~ msgstr "rozbalovací_nabídka"
-
-#~ msgid "graph"
-#~ msgstr "graf"
-
-#~ msgid "separator"
-#~ msgstr "oddělovač"
-
-#~ msgid "slider"
-#~ msgstr "posuvník"
-
-#~ msgid "time_picker"
-#~ msgstr "výběr_času"
-
-#~ msgid "progress_bar"
-#~ msgstr "ukazatel_průběhu"
-
-#~ msgid "label"
-#~ msgstr "název"
-
-#~ msgid "value"
-#~ msgstr "hodnota"
-
-#~ msgid "value_min"
-#~ msgstr "minimální_hodnota"
-
-#~ msgid "value_max"
-#~ msgstr "maximální_hodnota"
-
-#~ msgid "color"
-#~ msgstr "barva"
-
-#~ msgid "colour"
-#~ msgstr "barva"
-
-#~ msgid "pair"
-#~ msgstr "vázaný_na"
-
-#~ msgid "step"
-#~ msgstr "krok"
-
-#~ msgid "now"
-#~ msgstr ""
-
-#~ msgid "%(num)s minute"
-#~ msgstr ""
-
-#~ msgid "%(num)s hour"
-#~ msgstr ""
-
-#~ msgid "%(num)s day"
-#~ msgstr ""
-
-#~ msgid "%(num)s year"
-#~ msgstr ""
-
+#~ msgid "Separate contents"
+#~ msgstr "Oddělí obsahy"

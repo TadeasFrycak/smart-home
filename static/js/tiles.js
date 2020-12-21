@@ -21,18 +21,18 @@ $(document).ready(function(){
 // }
 
 // function innerTap(object) {
-//     let isEditActive = $("body").attr("data-is-edit-active");
+//     let isEditActive = store($(document.body), "is-edit-active");
 
-//     if (isEditActive === "false") {
+//     if (isEditActive === false) {
 //         let id = $(object).parent().attr("data-id");
 //         let innerId = $(object).attr("data-inner-id");
     
-//         terminal.log("\r\n--> Inner Tap\r\nID: ");
-//         terminal.log(id);
-//         terminal.log("inner ID: ");
-//         terminal.log(innerId);
-//         terminal.log("object");
-//         terminal.log($(object));
+//         console.log("\r\n--> Inner Tap\r\nID: ");
+//         console.log(id);
+//         console.log("inner ID: ");
+//         console.log(innerId);
+//         console.log("object");
+//         console.log($(object));
 
 //         // for alarm_clock
 //         let parent_type = $(object).parent().attr("data-type");
@@ -45,12 +45,12 @@ $(document).ready(function(){
 
 //             if (parent_element.hasClass("alarm-clock-glyph-active"))
 //             {
-//                 terminal.log("Deactivate " + query);
+//                 console.log("Deactivate " + query);
 //                 parent_element.toggleClass("alarm-clock-glyph-active",false);
 //             }
 //             else
 //             {
-//                 terminal.log("Activate " + query);
+//                 console.log("Activate " + query);
 //                 parent_element.toggleClass("alarm-clock-glyph-active",true);
 //             }
 //         }
@@ -59,7 +59,6 @@ $(document).ready(function(){
 
 function initializeHammerTile(object) {
     let hammer = new Hammer(object);
-
     hammer.on("tap", function(el) {
         tapped(el.target);
     });
@@ -71,43 +70,40 @@ function initializeHammerTile(object) {
 
 function tapped(object) {
     // type of item; [toggle/...]
-    let tileType = $(object).parent().attr("data-type");
+    let tileType = store($(object).parent(), "type");
     // "true" = yes; "false" = no
-    let isEditActive = $("body").attr("data-is-edit-active");
+    let isEditActive = store($(document.body), "is-edit-active");
     // let id = $(object).parent().attr("data-id");
 
     let $this = $(object);
 
     // if edit mode is enabled; edit mode
-    if (isEditActive === "true") {
+    if (isEditActive === true) {
         console.log("Requested edit modal");
         requestEditModal($this);
     }
     
     // if edit mode is disabled; normal mode
-    if (isEditActive === "false") {
+    if (isEditActive === false) {
         if (tileType === "toggle") tappedOnToggle($this);
         if (tileType === "alarm_clock") tappedOnAlarmClock($this);
-        
     }
 }
 
 function pressed(object) {
     // type of item; [toggle/...]
-    // let tileType = $(object).parent().attr("data-type");
     // "true" = yes; "false" = no
-    let isEditActive = $("body").attr("data-is-edit-active");
-    // let id = $(object).parent().attr("data-id");
+    let isEditActive = store($(document.body), "is-edit-active");
 
     let $this = $(object);
 
     // if edit mode is enabled; edit mode
-    if (isEditActive === "true") {
+    if (isEditActive === true) {
         // do nothing
     }
     
     // if edit mode is disabled; normal mode
-    if (isEditActive === "false") {
+    if (isEditActive === false) {
         requestNormalModal($this);
     }
 
@@ -117,7 +113,7 @@ function pressed(object) {
 // CUSTOM EVENTS:
 // Po doteku na Toggle tlačítko ( < init.js )
 function tappedOnToggle($this) {
-    let tileID = $this.parent().attr("data-id");
+    let tileID = store($this.parent(), "id");
     let tileState = $this.parent().find(".tile-status").text().toLowerCase() === "on" ? 0 : 1;
 
     socketio.emit("tile_value", {"tile_id": tileID, "value": tileState});
@@ -125,9 +121,9 @@ function tappedOnToggle($this) {
 
 function tappedOnAlarmClock($this) {
 
-    // terminal.log("lkdsjfksdf");
+    // console.log("lkdsjfksdf");
     let tile_element = $this.parent();
-    let tileID = $this.parent().attr("data-id");
+    let tileID = store($this.parent(), "id");
     // data-active="1"
     // let tileID = $this.parent().attr("data-id");
     // let tileState = $this.parent().find(".tile-status").text().toLowerCase() === "on" ? 0 : 1;
@@ -142,8 +138,8 @@ function tappedOnAlarmClock($this) {
     let sun = tile_element.find(".alarm-clock-glyph[data-type='Sun']").hasClass("alarm-clock-glyph-active")
 
 
-    // terminal.log("Monday:");
-    // terminal.log(mon);
+    // console.log("Monday:");
+    // console.log(mon);
     // let mon = tile_element.attr("data-mon") === "1";
     // let tue = tile_element.attr("data-tue") === "1";
     // let wed = tile_element.attr("data-wed") === "1";

@@ -4,8 +4,7 @@ from routes_slide import *
 
 # Client connect/disconnect
 @socketio.on("connect", namespace=app.config["SOCKETIO_NAMESPACE"])
-@check_browser
-@log_error
+# @check_browser
 def client_connect():
     """
     Event on browser connect
@@ -30,7 +29,6 @@ def client_connect():
 
 @socketio.on("disconnect", namespace=app.config["SOCKETIO_NAMESPACE"])
 @check_browser
-@log_error
 def client_disconnect():
     """
     Event on browser disconnect

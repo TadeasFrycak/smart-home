@@ -5,7 +5,8 @@
         <div class="page-menu-status-wrapper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="server-status">{{ _("Online") }}</span>
             <div class="page-menu-status-wrapper-line">
-                <img alt="{{ _('Settings') }}" src="{{ url_for('static', filename='img/static/settings.png') }}" class="page_settings_icon">
+{#                <img alt="{{ _('Settings') }}" src="{{ url_for('static', filename='img/static/settings.png') }}" class="page_settings_icon">#}
+                <span class="iconify page_settings_icon" data-icon="ph:gear-fill" data-inline="false"></span>
             </div>
         </div>
 
@@ -14,6 +15,13 @@
                 <a class="edit-page dropdown-item">{{ _("Edit mode") }}</a>
                 <div class="dropdown-divider"></div>
             </div>
+
+            {% if doorbird %}
+                <div class="dropdown-mobile">
+                    <a class="doorbird dropdown-item">{{ _("Doorbird") }}</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            {% endif %}
 
             <div class="dropdown-wrapper disappear-on-normal">
                 <h6 class="dropdown-header">Slide</h6>
@@ -78,6 +86,7 @@
 
             <div class="add_new_tile_element tile enable-hammer" data-id="" data-type="add-new-tile" style="display: inline-block; background-color: transparent;box-shadow: none;-moz-transition: none; -webkit-transition: none; transition: none;">
                 <div data-id='adding-new-tile-element' data-type="add-new-tile" style='position: absolute; height: 100%;width: 100%; display: inline-block; box-shadow: none; background-color:transparent; -moz-transition: none; -webkit-transition: none; transition: none;'>
+{#                    <span class="iconify add-img" style="color:var(--main-color-first);width: 40px;height: 40px;" data-icon="zondicons-add-solid" data-inline="false"></span>#}
                     <img alt="{{ _('Add') }}" class="add-img" src="{% if mode == "dark" %}{{ url_for('static', filename='img/static/add/dark.png') }}{% else %}{{ url_for('static', filename='img/static/add/light.png') }}{% endif %}" style='width:30px; position:relative; transform: translate(-50%,-50%); left:30%; top:50%; cursor: pointer;'>
                 </div>
             </div>

@@ -1,5 +1,38 @@
-<div class="progress">
-    <div class="progress-bar progress-bar-striped bg-{{ item.data.color }}" role="progressbar"
-         style="width: {{ item.data.value }}%" aria-valuenow="{{ item.data.value }}" aria-valuemin="{{ item.data.value_min }}"
-         aria-valuemax="{{ item.data.value_max }}">{{ item.data.label }}</div>
+<div class="modal-item" data-id="{{ item.id }}" data-type="{{ item.type }}" data-value="{{ item.value }}" data-config='{{ item.config | tojson | safe }}' data-group="{{ group }}">
+    <div class="progress">
+        <div class="progress-bar bg-{{ item.config.color }}" role="progressbar"
+             style="width: {{ item.value | int * (100 / (item.config.max | int + item.config.min | int)) }}%" aria-valuenow="{{ item.value }}" aria-valuemin="{{ item.config.min }}"
+             aria-valuemax="{{ item.config.max }}">{{ item.config.label }}</div>
+    </div>
+    <script type="text/javascript" defer>
+    $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("value-receive", function() {
+      let config = store($(this), "config");
+      let value = store($(this), "value");
+
+      $(this).find(".progress-bar").attr("aria-valuenow", value);
+      $(this).find(".progress-bar").css("width", value * (100 / (config.max + config.min)) + "%");
+    });
+
+    $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("config-receive", function() {
+      let config = store($(this), "config");
+      let value = store($(this), "value");
+
+      {#console.log(config);#}
+      console.log(value);
+      console.log(config.max + config.min);
+      console.log(value * (100 / (parseFloat(config.max) + parseFloat(config.min))));
+
+      $(this).find(".progress-bar").attr("aria-valuemax", config.max);
+      $(this).find(".progress-bar").attr("aria-valuemin", config.min);
+
+      $(this).find(".progress-bar").attr("aria-valuenow", value);
+      $(this).find(".progress-bar").css("width", (value - parseFloat(config.min)) * (100 / (parseFloat(config.max) - parseFloat(config.min))) + "%");
+
+      $(this).find(".progress-bar").text(config.label);
+      $(this).find(".progress-bar").removeClass(function (index, className) {
+        return (className.match (/(^|\s)bg-\S+/g) || []).join(' ');
+      });
+      $(this).find(".progress-bar").addClass("bg-" + config.color)
+    });
+    </script>
 </div>

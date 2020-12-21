@@ -1,8 +1,5 @@
 # Auth routes
-import time
-
-from flask_login import login_user, logout_user
-from getmac import get_mac_address
+from flask_login import login_user, logout_user, login_required
 from flask import redirect
 from routes_errors import *
 
@@ -10,40 +7,21 @@ from routes_errors import *
 # Unauthorized
 @lmng.unauthorized_handler
 @check_browser
-@log_error
 def unauthorized_handler():
     """
     Unauthorized access to @login_required pages
     :return: login/register page
     """
 
-    ip = request.environ.get("HTTP_X_REAL_IP", request.remote_addr)
-
-    if server_ip == ip:
-        mac = get_mac_address(hostname="localhost")
-    else:
-        mac = get_mac_address(ip=ip)
-
-    mac_list = fmng.mac_list
     mode = sun.day_or_night_now()
 
-    if mac not in mac_list:
-        mac_list.append(mac)
-        fmng.mac_list = mac_list
-
-        return render_template("auth/register.html", background_image=imng.random_background(bg_type=mode),
-                               mode=mode, introduction=fmng.config["default"].getboolean("introduction"),
-                               redirect=request.url_rule)
-
-    else:
-        return render_template("auth/login.html", background_image=imng.random_background(bg_type=mode), mode=mode,
-                               redirect=request.url_rule, registration=fmng.config["default"].getboolean("registrations"))
+    return render_template("auth/login.html", background_image=imng.random_background(current_mode=mode), mode=mode,
+                           redirect=request.url_rule, registration=fmng.config["default"].getboolean("registrations"))
 
 
 # Login
 @app.route("/login", methods=["POST"])
 @check_browser
-@log_error
 def login():
     """
     Login all unlogged users
@@ -59,7 +37,6 @@ def login():
 
 @socketio.on("login", namespace=app.config["SOCKETIO_NAMESPACE"])
 @check_browser
-@log_error
 # TODO prevent heck, kontrolovat stejný regex
 def login_socketio(data):
     """
@@ -91,13 +68,14 @@ def login_socketio(data):
 
 # Logout
 @app.route("/logout")
+# @login_required
 @check_browser
-@log_error
 def logout():
     """
     Logout current user
     :return: None
     """
+
     if current_user.is_authenticated:
         user = {"first_name": current_user.first_name, "last_name": current_user.last_name,
                 "username": current_user.username}
@@ -110,34 +88,14 @@ def logout():
         auth_logger.logout(username=current_user.username, message="IP {0}; MAC {1}; Agent {2}".format(ip, mac, request.user_agent))
 
         logout_user()
-        return render_template("auth/logout.html", user=user, background_image=imng.random_background(bg_type=mode, background=background),
+        return render_template("auth/logout.html", user=user, background_image=imng.random_background(current_mode=mode, background=background),
                                mode=mode)
     else:
         return abort(404)
 
 
-# Register
-@app.route("/register")
-@check_browser
-@log_error
-def register():
-    """
-    Register page
-    :return: register/404
-    """
-
-    if current_user.is_authenticated or fmng.config["default"].getboolean("registrations") is False:
-        return abort(404)
-
-    else:
-        mode = sun.day_or_night_now()
-        return render_template("auth/register.html", background_image=imng.random_background(bg_type=mode), mode=mode,
-                               redirect="/")
-
-
 @socketio.on("register", namespace=app.config["SOCKETIO_NAMESPACE"])
 @check_browser
-@log_error
 def register_socketio(data):
     """
     Register user
@@ -176,7 +134,6 @@ def register_socketio(data):
 @socketio_login_required
 @socketio_prevent_hack
 @check_browser
-@log_error
 def user_mode(data):
     """
     Change current user mode
@@ -197,7 +154,6 @@ def user_mode(data):
 @socketio_login_required
 # TODO @socketio_prevent_hack
 @check_browser
-@log_error
 def user_background(data):
     """
     Change current user background
@@ -215,7 +171,6 @@ def user_background(data):
 # TODO remove this after GUI
 @app.route("/role/<role>")
 @check_browser
-@log_error
 def change_role(role):
     user = User.query.filter_by(username=current_user.username).first()
     user.role = role

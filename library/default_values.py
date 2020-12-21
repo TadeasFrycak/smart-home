@@ -17,41 +17,19 @@ class DefaultValues:
         Make random ID
         :return: random ID
         """
+        # TODO do it better - optimize with tmng_r/validator (twice)
         IDs = []
         for page, page_content in enumerate(self.__fmng.devices):
             for device in page_content["children"]:
                 # Check duplicity for current device
-                if device["data"]["id"] not in IDs:
-                    IDs.append(device["data"]["id"])
+                if device["id"] not in IDs:
+                    IDs.append(device["id"])
 
         random_id = self.create_random_id()
         while random_id in IDs:
             random_id = self.create_random_id()
 
         return random_id
-
-    @staticmethod
-    def modal_item_value(type_of_item):
-        """
-        Get default modal item value - it's not dynamic
-        :param type_of_item: type of item
-        :return: default value
-        """
-
-        if type_of_item == "slider" or type_of_item == "progress_bar":
-            return 50
-
-        elif type_of_item == "toggle":
-            return 0
-
-        elif type_of_item == "daterangepicker":
-            return {"start": "2000-01-01 00:00:00", "end": "2200-01-01 00:00:00"}
-
-        elif type_of_item == "graph":
-            return {"x": [], "y": []}
-
-        else:
-            return None
 
     @staticmethod
     def tile_value(value_name=None, tile_type=None):
@@ -92,8 +70,4 @@ class DefaultValues:
 
         tile_value = self.tile_value(value_name="value", tile_type=self.TILE_TYPE)
 
-        if tile_value:
-            return {"type": self.TILE_TYPE, "value": tile_value, "modal": [], "data": {"id": self.random_id()}}
-
-        else:
-            return {"type": self.TILE_TYPE, "modal": [], "data": {"id": self.random_id()}}
+        return {"id": self.random_id(), "type": self.TILE_TYPE, "value": tile_value, "modal": [], "config": {}}

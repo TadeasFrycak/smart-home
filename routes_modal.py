@@ -1,14 +1,15 @@
 # Modal routes
+import requests
+
 from routes_tile import *
 
 
 # Modals
-@socketio.on("get_modal", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio.on("get_normal_modal", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_prevent_hack
 @socketio_login_required
 @role_required("higher_controller")
 @check_browser
-@log_error
 # TODO chceme logovat, že si uživatel otevřel modal?
 def get_normal_modal(data):
     """
@@ -18,12 +19,12 @@ def get_normal_modal(data):
     """
 
     tile_id = data[tmng_r.TILE_ID]
-    tile = tmng_r.get_tile(tile_id)
+    tile = tmng_r.get_display_tile(tile_id)
     tab_id = data["tab_id"]
 
-    emit("get_modal_result", {"modal": render_template("modal_normal.html", tile=tile),
-                              "graphs": tmng_r.get_modal_graphs(tile_id=tile_id),
-                              "daterangepickers": tmng_r.get_modal_daterangepickers(tile_id=tile_id),
+    mode = sun.get_mode(user_mode=current_user.mode)
+
+    emit("get_normal_modal_result", {"modal": render_template("modal_normal.html", tile=tile, mode=mode),
                               "tile_id": tile_id})
 
     refresh_clients.set_data(tab_id=tab_id, ip=request.environ.get("HTTP_X_REAL_IP", request.remote_addr),
@@ -38,7 +39,6 @@ def get_normal_modal(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def get_edit_modal(data):
     """
     Get edit modal
@@ -50,11 +50,18 @@ def get_edit_modal(data):
     tile_type = tmng_r.get_tile_type(tile_id)
     tab_id = data["tab_id"]
 
+    mode = sun.get_mode(user_mode=current_user.mode)
+
     emit("get_edit_modal_result",
-         {"modal": render_template("modal_edit.html", modal=tmng_r.get_tile(tile_id)[tmng_r.MODAL],
-                                   modal_items=tmng_r.get_modal_templates(), mode=current_user.mode,
-                                   tile_values=tmng_r.get_tile_template_values(tile_type=tile_type, tile_id=tile_id),
-                                   tile_types=tmng_r.get_tile_templates(), tile_type=tile_type, tile_id=tile_id),
+         {"modal": render_template(
+             "modal_edit.html",
+             modal=tmng_r.get_display_tile(tile_id)[tmng_r.MODAL],
+             mode=mode,
+             tile_values=tmng_r.get_tile_template_values(tile_type=tile_type, tile_id=tile_id),
+             tile_types=tmng_r.get_tile_templates(),
+             tile_type=tile_type,
+             tile_id=tile_id,
+             item_config=tmng_r.get_items_config()),
           "tile_id": tile_id})
 
     refresh_clients.set_data(tab_id=tab_id, ip=request.environ.get("HTTP_X_REAL_IP", request.remote_addr),
@@ -69,7 +76,6 @@ def get_edit_modal(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def get_add_modal(data):
     """
     Get add modal
@@ -83,14 +89,15 @@ def get_add_modal(data):
     new_tile = default_values.tile()
     tile_type = new_tile["type"]
     tile_html = render_template(fmng.path_join("tiles", tile_type + ".html"), tile=new_tile)
-    tile_id = new_tile["data"]["id"]
+    tile_id = new_tile["id"]
     fmng.devices[slide_index]["children"].append(new_tile)
 
+    mode = sun.get_mode(user_mode=current_user.mode)
     emit("get_add_tile_result", {"tile_html": tile_html, "slide_index": slide_index}, broadcast=True)
-    emit("get_add_modal_result", {"modal": render_template("modal_edit.html",
-                                                           modal_items=tmng_r.get_modal_templates(),
+    emit("get_edit_modal_result", {"modal": render_template("modal_edit.html",
+                                                           item_config=tmng_r.get_items_config(),
                                                            tile_values=tmng_r.get_tile_template_values(tile_type=tile_type),
-                                                           tile_types=tmng_r.get_tile_templates(), mode=current_user.mode,
+                                                           tile_types=tmng_r.get_tile_templates(), mode=mode,
                                                            tile_type=tile_type, tile_id=tile_id),
                                   "tile_id": tile_id})
 
@@ -108,7 +115,6 @@ def get_add_modal(data):
 @socketio_login_required
 @role_required("lower_controller")
 @check_browser
-@log_error
 def get_settings_modal(data):
     """
     Get settings modal
@@ -128,7 +134,6 @@ def get_settings_modal(data):
 @socketio_login_required
 @role_required("administrator")
 @check_browser
-@log_error
 def get_client_list_modal(data):
     tab_id = data["tab_id"]
 
@@ -145,7 +150,6 @@ def get_client_list_modal(data):
 @socketio_login_required
 @role_required("owner")
 @check_browser
-@log_error
 def get_user_list_modal(data):
     tab_id = data["tab_id"]
 
@@ -177,7 +181,6 @@ def get_user_list_modal(data):
 @socketio_login_required
 @role_required("lower_controller")
 @check_browser
-@log_error
 def get_android_modal(data):
     """
     Get settings modal
@@ -198,7 +201,6 @@ def get_android_modal(data):
 @socketio_login_required
 @role_required("lower_controller")
 @check_browser
-@log_error
 def modal_close(data):
     """
     Get settings modal
@@ -220,7 +222,6 @@ def modal_close(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def modal_item_prepend(data):
     """
     Prepend new modal item
@@ -228,97 +229,54 @@ def modal_item_prepend(data):
     :return: None
     """
 
-    item_type = refactoring.refactor_reverse(data["type"])
+    item_type = data["type"]
     tile_id = data["tile_id"]
 
     item = tmng_w.append_modal_item(item_type=item_type, tile_id=tile_id)
+    mode = sun.get_mode(user_mode=current_user.mode)
+    emit("modal_item_prepend_result",
+         {"fieldset": render_template("modal_edit/item_values.html",
+                                      tile_id=tile_id,
+                                      item_config=tmng_r.get_items_config(),
+                                      item=item, mode=mode,
+                                      group="modal-edit-" + item["id"]),
+          "item": render_template(f"modal/{item_type}.html", item=item, group="modal-dynamic"),
+          "tile_id": tile_id},
+         broadcast=True)
 
-    emit("modal_item_prepend_result", {"item": render_template("modal_edit/item_values.html", tile_id=tile_id, item=item),
-                                       "tile_id": tile_id}, broadcast=True)
     changes_edit_logger.add(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
                             message="new '{}' in tile '{}'".format(item_type, tile_id))
     terminal.debug("Prepend modal item {0} to tile {1}".format(item_type, tile_id))
 
 
 # Modal events
-@socketio.on("modal_slider", namespace=app.config["SOCKETIO_NAMESPACE"])
-@socketio_prevent_hack
-@socketio_login_required
-@role_required("visitor")
-@check_browser
-@log_error
-def modal_slider(data):
-    """
-    Modal slider event
-    :param data: data of socketio request
-    :return: None
-    """
-
-    item_id = data[tmng_r.ID]
-    new_value = data[tmng_r.VALUE]
-    tile_id = data[tmng_r.TILE_ID]
-
-    emit("modal_slider_result", {"id": item_id, "tile_id": tile_id, "value": new_value}, broadcast=True,
-         include_self=False)
-    acom.mqtt_thread.publish(tile_id=tile_id, item_id=item_id, value=new_value)
-    tmng_rwr.modal_item_value(tile_id=tile_id, item_id=item_id, item_type="slider", new_value=new_value)
-    # TODO log on end and save on end too
-
-
-@socketio.on("modal_toggle", namespace=app.config["SOCKETIO_NAMESPACE"])
-@socketio_prevent_hack
-@socketio_login_required
-@role_required("visitor")
-@check_browser
-@log_error
-def modal_toggle(data):
-    """
-    Modal toggle event
-    :param data: data of socketio request
-    :return: None
-    """
-
-    item_id = data[tmng_r.ID]
-    new_value = data[tmng_r.VALUE]
-    tile_id = data[tmng_r.TILE_ID]
-
-    emit("modal_toggle_result", {"id": item_id, "tile_id": tile_id, "value": new_value}, broadcast=True,
-         include_self=False)
-    acom.mqtt_thread.publish(tile_id=tile_id, item_id=item_id, value=new_value)
-    tmng_rwr.modal_item_value(tile_id=tile_id, item_id=item_id, item_type="toggle", new_value=new_value)
-
-    changes_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
-                          message="new value of '{}' from tile '{}' is '{}'".format(item_id, tile_id, new_value))
-    terminal.debug("New value of modal toggle (ID: {}) in tile {} is {}".format(item_id, tile_id, str(new_value)))
-
-
-# TODO zuniverzálnit na jen socketio modal_value
-@socketio.on("modal_clockpicker", namespace=app.config["SOCKETIO_NAMESPACE"])
+# TODO log on end and save on end too (on slider)
+@socketio.on("modal_item_value", namespace=app.config["SOCKETIO_NAMESPACE"])
 # TODO @socketio_prevent_hack
 @socketio_login_required
 @role_required("visitor")
 @check_browser
-@log_error
-def modal_toggle(data):
+def modal_item_value(data):
     """
-    Modal toggle event
+    Modal value event
     :param data: data of socketio request
     :return: None
     """
 
-    item_id = data["item_id"]
+    # TODO sjednotit tmng_r.ID a "id", atd..
+    item_id = data[tmng_r.ID]
+    item_type = data["type"]
     new_value = data[tmng_r.VALUE]
     tile_id = data[tmng_r.TILE_ID]
-    print(item_id, new_value, tile_id)
 
-    emit("modal_clockpicker_result", {"item_id": item_id, "tile_id": tile_id, "value": new_value}, broadcast=True,
-         include_self=False)
+    emit("modal_item_value_result", {"id": item_id, "type": item_type, "tile_id": tile_id, "value": new_value},
+         broadcast=True, include_self=False)
     acom.mqtt_thread.publish(tile_id=tile_id, item_id=item_id, value=new_value)
-    tmng_rwr.modal_item_value(tile_id=tile_id, item_id=item_id, item_type="clock_picker", new_value=new_value)
+    tmng_rwr.modal_item_value(tile_id=tile_id, item_id=item_id, item_type=item_type, new_value=new_value)
 
-    # changes_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
-    #                       message="new value of '{}' from tile '{}' is '{}'".format(item_id, tile_id, new_value))
-    # terminal.debug("New value of modal toggle (ID: {}) in tile {} is {}".format(item_id, tile_id, str(new_value)))
+    changes_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                          message="new value of '{}' from tile '{}' is '{}'".format(item_id, tile_id, new_value))
+    terminal.debug("New value of '{}' from tile '{}' is '{}'".format(item_id, tile_id, str(new_value)))
 
 
 @socketio.on("modal_daterangepicker", namespace=app.config["SOCKETIO_NAMESPACE"])
@@ -326,7 +284,6 @@ def modal_toggle(data):
 @socketio_login_required
 @role_required("visitor")
 @check_browser
-@log_error
 def daterangepicker(data):
     """
     Daterangepicker event
@@ -358,7 +315,6 @@ def daterangepicker(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def modal_item_index(data):
     """
     Rewrite SortableJS modal item index from edit mode
@@ -379,15 +335,14 @@ def modal_item_index(data):
     terminal.debug("Change modal item index in tile (ID: {0}) from {1} to {2}".format(tile_id, old_index, new_index))
 
 
-@socketio.on("modal_item_dynamic_value", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio.on("modal_item_config", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_prevent_hack
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
-def modal_item_value(data):
+def modal_item_config(data):
     """
-    Rewrite one of SortableJS modal item dynamic value (like value, label, colour, ...) from edit mode
+    Rewrite one of SortableJS modal item config value (like label, colour, ...) from edit mode
     :param data: data of socketio request
     :return: None
     """
@@ -395,13 +350,38 @@ def modal_item_value(data):
     tile_id = data[tmng_r.TILE_ID]
     value_name = refactoring.refactor_reverse(data["value_name"])
     new_value = data["new_value"]
-    item_index = int(data[INDEX])
+    item_id = data["id"]
 
-    tmng_rwr.modal_item_dynamic_value(new_value=new_value, value_name=value_name, tile_id=tile_id, index=item_index)
+    emit("modal_item_config_result", {"tile_id": tile_id, "value_name": value_name, "new_value": new_value,
+                                            "id": item_id}, broadcast=True)
+    tmng_rwr.modal_item_config(new_value=new_value, value_name=value_name, tile_id=tile_id, item_id=item_id)
 
     changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
-                               message="new item value '{}' from item '{}' in tile '{}' is '{}'".format(value_name, item_index, tile_id, new_value))
-    terminal.debug(f"Change modal item value ({value_name}) in tile (ID: {tile_id}) to {new_value} (item index is {item_index})")
+                               message="new item value '{}' from item '{}' in tile '{}' is '{}'".format(value_name, item_id, tile_id, new_value))
+    terminal.debug(f"Change modal item value ({value_name}) in tile (ID: {tile_id}) to {new_value} (item ID is {item_id})")
+
+
+@socketio.on("modal_item_id", namespace=app.config["SOCKETIO_NAMESPACE"])
+# TODO @socketio_prevent_hack
+@socketio_login_required
+@role_required("manager")
+@check_browser
+def modal_item_id(data):
+    """
+    Rewrite ID of SortableJS modal item from edit mode
+    :param data: data of socketio request
+    :return: None
+    """
+
+    tile_id = data[tmng_r.TILE_ID]
+    item_id = data["id"]
+    new_id = data["new_id"]
+
+    tmng_rwr.modal_item_id(new_id=new_id, tile_id=tile_id, item_id=item_id)
+    emit("modal_item_id_result", {"id": item_id, "new_id": new_id, "tile_id": tile_id}, broadcast=True)
+    changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                               message="new item ID of item '{}' in tile '{}' is '{}'".format(item_id, tile_id, new_id))
+    terminal.debug(f"Change modal item ID in tile (ID: {tile_id}) to {new_id} (item ID is {item_id})")
 
 
 @socketio.on("modal_item_delete", namespace=app.config["SOCKETIO_NAMESPACE"])
@@ -409,7 +389,6 @@ def modal_item_value(data):
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def modal_item_delete(data):
     """
     Delete SortableJS modal item from edit mode
@@ -418,11 +397,11 @@ def modal_item_delete(data):
     """
 
     tile_id = data[tmng_r.TILE_ID]
-    item_index = int(data[INDEX])
+    item_id = data["id"]
 
-    emit("modal_item_delete_result", {"tile_id": tile_id, "index": item_index}, broadcast=True)
-    tmng_w.modal_item_delete(index=item_index, tile_id=tile_id)
+    emit("modal_item_delete_result", {"tile_id": tile_id, "id": item_id}, broadcast=True)
+    tmng_w.modal_item_delete(item_id=item_id, tile_id=tile_id)
 
     changes_edit_logger.remove(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
-                               message="item '{}' from tile '{}'".format(item_index, tile_id))
-    terminal.debug("Delete modal item in tile (ID: {0}) from index {1}".format(tile_id, str(item_index)))
+                               message="item '{}' from tile '{}'".format(item_id, tile_id))
+    terminal.debug("Delete modal item in tile (ID: {0}) from index {1}".format(tile_id, item_id))

@@ -7,6 +7,9 @@ $(document).ready(function() {
     }
     else {
       console.log("Wrong username or password");
+      $(".horizontal-middle").effect("shake");
+      $("#password").addClass("invalid");
+      setTimeout(() => { $("#password").removeClass("invalid"); }, 3000);
       $("#username").removeAttr("disabled");
       $("#password").removeAttr("disabled");
       $("#password").val("");
@@ -30,7 +33,10 @@ $(document).ready(function() {
     $("#username").val($("#username").val().normalize("NFKD").replace(/[^A-Za-z0-9._-]/g, ""))
   });
 
-  $("body").on("click", "#login", function() {
+  $(document.body).on("click", ".switch-auth", function() {
+    toggleAuth();
+  });
+  $(document.body).on("click", "#login", function() {
     let wrong = false;
     let emptyLabels = [];
     if($("#username").val() === "") {
@@ -72,3 +78,11 @@ $(document).ready(function() {
     }
   });
 });
+
+function toggleAuth() {
+  $(".horizontal-middle").fadeOut("slow", function() {
+    $("#login-form").toggle();
+    $("#register-form").toggle();
+    $(".horizontal-middle").fadeIn("slow");
+  });
+}

@@ -5,9 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    Your operating system is Android!
-    We have special application for our Android users to access Smart home.
+    {{ _("Your operating system is Android! We have special application for our Android users to access Smart home.") }}
     <br><br>
-    Download latest *.apk file
-    <a target="_blank" href="{{ url_for('static', filename='android/' + get_latest_apk()) }}">here</a>
+    {{ _("Download latest *.apk file") }}
+    <a target="_blank" href="{{ url_for('static', filename='android/' + get_latest_apk()) }}">{{ _("here") }}</a>
 {% endblock %}

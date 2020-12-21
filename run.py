@@ -19,6 +19,7 @@ import os
 # TODO MQTT check
 # TODO vypisovat info zde
 # TODO na RPi nejde nainstalovat Telegram bot, ale program píše, že nainstaloval správně, kontrolovat exit status commandu
+
 ready = False
 restarting = False
 

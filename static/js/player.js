@@ -6,7 +6,7 @@
 //   let music = new Audio("music/Bon Jovi - Its My Life.mp3");
 //   //var prank = new Audio("static/music/Hymna Ruské federace - Гимн России.mp3");
 //   //prank.play();
-//   $("body").on("click", ".stop", function(e) {
+//   $(document.body).on("click", ".stop", function(e) {
 //     $(".stop").show().fadeOut("slow");
 //     $(".play").hide().fadeIn("slow");
 //
@@ -18,7 +18,7 @@
 //     marq.length = 0;
 //   });
 //
-//   $("body").on("click", ".play", function(e) {
+//   $(document.body).on("click", ".play", function(e) {
 //     $(".play").show().fadeOut("slow");
 //     $(".stop").hide().fadeIn("slow");
 //     music.play();
@@ -150,7 +150,7 @@
 //
 //   var file = document.getElementById("thefile");
 //   var audio = document.getElementById("audio");
-//   terminal.log(file.files);
+//   console.log(file.files);
 //   file.onchange = function() {
 //    $(".bcg-real").show().fadeOut(2000);
 //     setTimeout(() => {
@@ -174,7 +174,7 @@
 //     analyser.fftSize = 256;
 //
 //     var bufferLength = analyser.frequencyBinCount;
-//     terminal.log(bufferLength);
+//     console.log(bufferLength);
 //
 //     var dataArray = new Uint8Array(bufferLength);
 //

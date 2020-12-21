@@ -6,7 +6,7 @@ class TemplateManagerRewrite:
     # TODO jde to sjednotit, bude dynamická jedna věc a tam bude:
     #  [data][VALUE (z argumentů funkce)] a poté is_in_data, sjednotí se tak všechno
 
-    def __init__(self, fmng, tmng_r, default_values):
+    def __init__(self, fmng, tmng_r, default_values, default_items):
         """
         Init of template manager rewrite class
         :param fmng: fmng class
@@ -17,6 +17,7 @@ class TemplateManagerRewrite:
         self.__fmng = fmng
         self.__tmng_r = tmng_r
         self.__default_values = default_values
+        self.__default_items = default_items
 
     # Tile
     def tile(self, tile_id, tile):
@@ -33,7 +34,7 @@ class TemplateManagerRewrite:
             # Get item for current device
             for tile_num, tile_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If device have current id
-                if tile_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if tile_content[self.__tmng_r.ID] == tile_id:
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][tile_num] = tile
                     return True
 
@@ -61,8 +62,8 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
-                    self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA][self.__tmng_r.ID] = new_id
+                if item_content[self.__tmng_r.ID] == tile_id:
+                    self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.ID] = new_id
                     return True
 
     def tile_value(self, tile_id, new_value):
@@ -78,7 +79,7 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     if isinstance(new_value, dict) and isinstance(item_content[self.__tmng_r.VALUE], dict):
                         for key in new_value.keys():  # TODO není moc dobré
                             self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.VALUE][key] = new_value[key]
@@ -99,10 +100,10 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     # If current icon isn't same
-                    if self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA]["icon"] != new_icon:
-                        self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA]["icon"] = new_icon
+                    if self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.CONFIG]["icon"] != new_icon:
+                        self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.CONFIG]["icon"] = new_icon
                         return True
 
                     else:
@@ -122,7 +123,7 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.LABEL] = new_label
                     return True
 
@@ -139,7 +140,7 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.TYPE] = new_type
                     value_names = self.__tmng_r.get_tile_template_values(tile_id=tile_id, tile_type=new_type)
                     # Append default values
@@ -150,20 +151,42 @@ class TemplateManagerRewrite:
 
                     for j in value_names:
                         try:
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA][j]
+                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.CONFIG][j]
 
                         except Exception as e:
                             value = self.__default_values.tile_value(value_name=j, tile_type=new_type)
 
                             if value:
-                                self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA][j] = value
+                                self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.CONFIG][j] = value
 
                             else:
-                                self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.DATA][j] = self.__tmng_r.UNNAMED
+                                self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.CONFIG][j] = self.__tmng_r.UNNAMED
 
                     return True
 
     # Modal states
+    def modal_item_id(self, tile_id, item_id, new_id):
+        """
+        Modal item value rewrite
+        :param tile_id: ID of tile
+        :param item_id: item ID
+        :param new_id: new ID
+        :return: True
+        """
+
+        # Get pages (number and content)
+        for page_num, page_content in enumerate(self.__fmng.devices):
+            # Get tiles (number and content)
+            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
+                # If that tile is current opened tile, rewrite
+                if item_content[self.__tmng_r.ID] == tile_id:
+                    # Get modal items
+                    for modal_num, modal_item in enumerate(item_content[self.__tmng_r.MODAL]):
+                        # If that item is toggle, rewrite
+                        if modal_item[self.__tmng_r.ID] == item_id:
+                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.ID] = new_id
+                            return True
+
     def modal_item_value(self, tile_id, item_id, item_type, new_value):
         """
         Modal item value rewrite
@@ -179,12 +202,12 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     # Get modal items
                     for modal_num, modal_item in enumerate(item_content[self.__tmng_r.MODAL]):
                         # If that item is toggle, rewrite
-                        if modal_item[self.__tmng_r.TYPE] == item_type and modal_item[self.__tmng_r.DATA][self.__tmng_r.ID] == item_id:
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE] = new_value
+                        if modal_item[self.__tmng_r.TYPE] == item_type and modal_item[self.__tmng_r.ID] == item_id:
+                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE] = self.__default_items.get_object(item_type).on_new_value(self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][modal_num][self.__tmng_r.VALUE], new_value)
                             return True
 
     def modal_item_index(self, tile_id, old_index, new_index):
@@ -201,31 +224,31 @@ class TemplateManagerRewrite:
             # Get tiles (number and content)
             for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     # Get modal items
                     self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL].insert(new_index, self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL].pop(old_index))
                     return True
 
-    def modal_item_dynamic_value(self, tile_id, new_value, value_name, index):
+    def modal_item_config(self, tile_id, new_value, value_name, item_id):
         """
         Modal item dynamic value
         :param tile_id: tile ID
         :param value_name: value name
         :param new_value: new value
-        :param index: index
+        :param item_id: ID of item
         :return: True
         """
 
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
+            for tile_num, tile_content in enumerate(page_content[self.__tmng_r.CHILDREN]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if tile_content[self.__tmng_r.ID] == tile_id:
                     # Get modal items
-                    for value in item_content[self.__tmng_r.MODAL][index][self.__tmng_r.DATA]:
-                        if value == value_name:
-                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][item_num][self.__tmng_r.MODAL][index][self.__tmng_r.DATA][value] = new_value
+                    for item_num, item_content in enumerate(tile_content[self.__tmng_r.MODAL]):
+                        if item_content[self.__tmng_r.ID] == item_id:
+                            self.__fmng.devices[page_num][self.__tmng_r.CHILDREN][tile_num][self.__tmng_r.MODAL][item_num][self.__tmng_r.CONFIG][value_name] = new_value
                             return True
 
     # Slide
@@ -261,11 +284,11 @@ class TemplateManagerRewrite:
         # Get pages (number and content)
         for page_num, page_content in enumerate(self.__fmng.devices):
             # Get tiles (number and content)
-            for item_num, item_content in enumerate(page_content[self.__tmng_r.DATA]):
+            for item_num, item_content in enumerate(page_content[self.__tmng_r.CONFIG]):
                 # If that tile is current opened tile, rewrite
-                if item_content[self.__tmng_r.DATA][self.__tmng_r.ID] == tile_id:
+                if item_content[self.__tmng_r.ID] == tile_id:
                     for num, i in enumerate(item_content[self.__tmng_r.MODAL]):
                         if i["type"] == "graph":
-                            self.__fmng.devices[page_num][self.__tmng_r.DATA][item_num][self.__tmng_r.MODAL][num]["data"]["data_x"].append(data_x)
-                            self.__fmng.devices[page_num][self.__tmng_r.DATA][item_num][self.__tmng_r.MODAL][num]["data"]["data_y"].append(data_y)
+                            self.__fmng.devices[page_num][self.__tmng_r.CONFIG][item_num][self.__tmng_r.MODAL][num]["data"]["data_x"].append(data_x)
+                            self.__fmng.devices[page_num][self.__tmng_r.CONFIG][item_num][self.__tmng_r.MODAL][num]["data"]["data_y"].append(data_y)
                     return True

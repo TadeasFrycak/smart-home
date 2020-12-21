@@ -63,23 +63,40 @@ class Terminal:
                 subprocess.run(["cls"])
             except Exception:
                 pass
-        self.print(data="{}   _____                      _     _                          \n".format(self.FG_COLORS["cyan"] + self.SPECIAL["bold"]) +
-                        "  / ____|                    | |   | |                         \n" +
-                        " | (___  _ __ ___   __ _ _ __| |_  | |__   ___  _ __ ___   ___ \n" +
-                        "  \\___ \\| '_ ` _ \\ / _` | '__| __| | '_ \\ / _ \\| '_ ` _ \\ / _ \\\n" +
-                        "  ____) | | | | | | (_| | |  | |_  | | | | (_) | | | | | |  __/\n" +
-                        " |_____/|_| |_| |_|\\__,_|_|   \\__| |_| |_|\\___/|_| |_| |_|\\___|\n{}".format(self.END))
 
-    # def question(self, question):
-    #     quest = input(self.FG_COLORS["blue"] + self.SPECIAL["bold"] + "Q -> ?\t" + self.END + self.FG_COLORS["white"] + question + self.END).lower()
-    #     if quest == "y" or quest == "":
-    #         return True
-    #
-    #     elif quest == "n":
-    #         return False
-    #
-    #     else:
-    #         return self.question(question="Wrong input [Y/n] ")
+        print()
+        subprocess.call(["catimg", "-w", "80", "./static/img/static/favicon_python.png"])
+
+        self.go_back(100)
+
+        print()
+
+        self.print(
+            "\t\t\t\t\t  _____ _    _         \n" +
+            "\t\t\t\t\t / ____| |  | |  Smart \n" +
+            "\t\t\t\t\t| (___ | |__| |  Home  \n" +
+            "\t\t\t\t\t \\___ \\|  __  |      \n" +
+            "\t\t\t\t\t ____) | |  | |        \n" +
+            "\t\t\t\t\t|_____/|_|  |_|        \n")
+
+        self.print(self.FG_COLORS["black"] + self.BG_COLORS["white"] + self.SPECIAL[
+            "bold"] + "\t\t\t\t\t ↓ About ↓ " + self.END)
+        self.print(self.FG_COLORS["white"] + self.SPECIAL[
+            "bold"] + "\t\t\t\t\tAuthors\t" + self.END + "Fryčák, Szkandera")
+        self.print(self.FG_COLORS["white"] + self.SPECIAL[
+            "bold"] + "\t\t\t\t\tVersion\t" + self.END + os.path.basename(os.getcwd()))
+        self.print(self.FG_COLORS["white"] + self.SPECIAL[
+            "bold"] + "\t\t\t\t\tCreated\t" + self.END + "26.05.2019 17:29")
+        self.go_forward(11)
+
+    @staticmethod
+    def go_forward(amount):
+        for i in range(amount):
+            print()
+
+    def go_back(self, amount):
+        for i in range(amount):
+            self.print("\033[A", end="")
 
     def status(self, data, value=True):
         if value:
@@ -103,8 +120,14 @@ class Terminal:
 
         if not status and self.__priority <= 2:
             self.__logger.debug(data)
+
+            cur_frame = inspect.currentframe()
+            cal_frame = inspect.getouterframes(cur_frame, 2)
+            source = cal_frame[1][1]
+            source = os.path.basename(source)
+
             self.print(self.BG_COLORS["red"] + self.SPECIAL["bold"] + "PHack\t" + self.END + self.FG_COLORS[
-                "white"] + data)
+                "white"] + data + self.SPECIAL["bold"] + " (" + source + ":" + str(cal_frame[1][2]) + ")" + self.END)
 
         elif self.__priority == 0:
             self.__logger.debug(data)
@@ -138,7 +161,7 @@ class Terminal:
 
             if self.__log_lines:
                 # TODO WARN text do konstanty
-                self.print("{bg}{white}{bold}WARNING{end}\t{data} ({white}{bold}{source}:{line}{end})".format(
+                self.print("{bg}{white}{bold}WARNING{end}\t{data} {white}{bold}({source}:{line}){end}".format(
                     bg=self.BG_COLORS["yellow"], white=self.FG_COLORS["white"], bold=self.SPECIAL["bold"], end=self.END,
                     source=str(source), line=str(cal_frame[1][2]), data=data))
             else:
@@ -161,7 +184,7 @@ class Terminal:
                                       namespace="/com")
 
             if self.__log_lines:
-                self.print("{bg}{white}{bold}ERROR{end}\t{data} ({white}{bold}{source}:{line}{end})".format(
+                self.print("{bg}{white}{bold}ERROR{end}\t{data} {white}{bold}({source}:{line}){end}".format(
                     bg=self.BG_COLORS["red"], white=self.FG_COLORS["white"], bold=self.SPECIAL["bold"], end=self.END,
                     source=str(source), line=str(cal_frame[1][2]), data=data))
             else:
@@ -169,9 +192,10 @@ class Terminal:
                     bg=self.BG_COLORS["red"], white=self.FG_COLORS["white"], bold=self.SPECIAL["bold"], end=self.END,
                     data=data))
 
-    def print(self, data=None):
+    def print(self, data=None, end="\n"):
         """
         Print to terminal
+        :param end: end of print
         :param data: data to print
         :return:
         """
@@ -179,4 +203,4 @@ class Terminal:
         data = str(data)
 
         if self.__priority == 0:
-            print(data + self.END)
+            print(data + self.END, end=end)

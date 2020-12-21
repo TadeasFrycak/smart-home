@@ -7,21 +7,6 @@ from init import *
 import functools
 
 
-# Log error
-def log_error(func):
-    # TODO na tohle přidat loguru, má lepší debug chyby
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except Exception as err:
-            terminal_logger.error(err)
-            raise Exception(err)
-            # return render_template("error.html", header="Err", message=str(err))
-
-    return wrapper
-
-
 # Socketio
 def socketio_login_required(func):
     """
@@ -172,12 +157,13 @@ def socketio_prevent_hack(func):
         elif func_name == "modal_item_index" and check_args(args=["tile_id", "old_index", "new_index"], data=data):
             tests.append(validator.modal_item_index_change(tile_id=data["tile_id"], old_index=data["old_index"], new_index=data["new_index"]))
 
-        elif func_name == "modal_item_value" and check_args(args=["tile_id", "value_name", "new_value", "index"], data=data):
-            tests.append(validator.modal_item_value_name(tile_id=data["tile_id"], value_name=data["value_name"], item_index=data["index"]))
+        elif func_name == "modal_item_config" and check_args(args=["tile_id", "value_name", "new_value", "id"], data=data):
+            tests.append(validator.modal_item_value_name(tile_id=data["tile_id"], value_name=data["value_name"], item_id=data["id"]))
             tests.append(validator.label(data["new_value"]))
 
-        elif func_name == "modal_item_delete" and check_args(args=["tile_id", "index"], data=data):
-            tests.append(validator.modal_item_index(tile_id=data["tile_id"], item_index=data["index"]))
+        elif func_name == "modal_item_delete" and check_args(args=["tile_id", "id"], data=data):
+            tests.append(validator.tile_id(data["tile_id"]))
+            tests.append(validator.modal_item_id(modal_id=data["id"]))
 
         # Slide
         elif func_name == "slide_name_rwr" and check_args(args=["new_name", "index"], data=data):
@@ -226,6 +212,7 @@ def socketio_prevent_hack(func):
             socketio.emit("notify", {"title": gettext("Problem!"),
                                      "message": gettext("Detected wrong SocketIO request!"), "type": "danger",
                                      "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"], broadcast=True)
+            # emit("reload")
             # disconnect()
             # TODO
             return None

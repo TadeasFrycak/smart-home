@@ -1,4 +1,6 @@
 # Main routes
+import shutil
+
 from flask import send_from_directory
 from routes_server import *
 import htmlmin
@@ -9,7 +11,6 @@ import htmlmin
 @login_required
 @role_required("lower_controller")
 @check_browser
-@log_error
 def index():
     """
     Main index page
@@ -35,8 +36,8 @@ def index():
             
     # TODO minify není cesta
     return htmlmin.minify(render_template("index.html", slides=fmng.devices, mode=mode, probably=probably,
-                                          background_image=imng.random_background(bg_type=mode, background=current_user.background),
-                                          android_apk=android_apk, android_browser=android_browser),
+                                          background_image=imng.random_background(current_mode=mode, background=current_user.background),
+                                          android_apk=android_apk, android_browser=android_browser, doorbird=fmng.config["doorbird"].getboolean("active")),
                           remove_empty_space=True, remove_comments=True, reduce_empty_attributes=True,
                           reduce_boolean_attributes=True, remove_optional_attribute_quotes=True,
                           remove_all_empty_space=True)
@@ -47,7 +48,6 @@ def index():
 @login_required
 @role_required("lower_controller")
 @check_browser
-@log_error
 def edit_change(data):
     tab_id = data["tab_id"]
     state = data["state"]
@@ -63,7 +63,6 @@ def edit_change(data):
 @login_required
 @role_required("administrator")
 @check_browser
-@log_error
 def devices_return():
     """
     Devices file return
@@ -78,7 +77,6 @@ def devices_return():
 @socketio_login_required
 @role_required("manager")
 @check_browser
-@log_error
 def save_devices():
     """
     Save to devices.json
@@ -93,7 +91,6 @@ def save_devices():
 @role_required("lower_controller")
 @socketio_prevent_hack
 @check_browser
-@log_error
 def show_android_settings():
     ip = request.environ.get("HTTP_X_REAL_IP", request.remote_addr)
     acom.mqtt_thread.publish_android(ip)

@@ -1,21 +1,21 @@
-function beforeRefresh(slide=swiper.realIndex) {
+/*function beforeRefresh(slide=swiper.realIndex) {
   let tileID;
-  if ($("body").hasClass("modal-open")) {
-    tileID = $(".modal-here").attr("id_of_caller");
+  if ($(document.body).hasClass("modal-open")) {
+    tileID = store($(".modal-here"), "tile-id");
   }
   else {
     tileID = null;
   }
-  if ($(".swipe-body").data("index-change") === true) {
-    socketio.emit("before_refresh", {"data": {"slide_index": slide, "edit": $("body").attr("data-is-edit-active"),
+  if (store($(".swipe-body"), "index-change") === true) {
+    socketio.emit("before_refresh", {"data": {"slide_index": slide, "edit": store($(document.body), "is-edit-active"),
         "tile_id": tileID}, "tab_id": sessionStorage.tabID, "slide_index_change": true})
   }
   else {
-    socketio.emit("before_refresh", {"data": {"slide_index": slide, "edit": $("body").attr("data-is-edit-active"),
+    socketio.emit("before_refresh", {"data": {"slide_index": slide, "edit": store($(document.body), "is-edit-active"),
         "tile_id": tileID}, "tab_id": sessionStorage.tabID, "slide_index_change": false})
   }
 
-}
+}*/
 
 $(document).ready(function(){
   // ----------------------------------------------
@@ -36,7 +36,7 @@ $(document).ready(function(){
     }
   });
 
-  swiper.slideTo($(".swipe-body").data("slide"), 0);
+  swiper.slideTo(store($(".swipe-body"), "slide"), 0);
 
   // Events
   swiper.on("slideChange", function () {

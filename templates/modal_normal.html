@@ -6,9 +6,10 @@
 
 {% block content %}
     {% if tile.type == "alarm_clock" %}
-        <div data-static>
+        <div class="modal-static">
+        {% set group = "modal-static" %}
             {% for key, value in tile["value"].items() %}
-                {% set item = {"type": "toggle", "data": {"label": _(refactor(key)), "id": key}, "value": value} %}
+                {% set item = {"type": "toggle", "config": {"label": _(refactor(key)), "id": key}, "value": value} %}
                 {% include "modal/toggle.html" %}
             {% endfor %}
         </div>
@@ -16,13 +17,10 @@
         {% include "modal/separator.html" %}
     {% endif %}
 
-    {% if tile.modal == [] %}
-        <br>
-        <div class="text-center">{{ _("There are no items :(") }}</div>
-        <br>
-    {% else %}
+    <div class="modal-dynamic">
+        {% set group = "modal-dynamic" %}
         {% for item in tile.modal %}
             {% include "modal/" + item["type"] + ".html" %}
         {% endfor %}
-    {% endif %}
+    </div>
 {% endblock %}

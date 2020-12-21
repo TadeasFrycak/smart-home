@@ -1,8 +1,8 @@
 <div class="grid-square">
-    <div class="tile enable-hammer" data-id="{{ tile.data.id }}"  data-type="{{ tile.type }}">
+    <div class="tile enable-hammer" data-id="{{ tile.id }}"  data-type="{{ tile.type }}">
         <div class="tile-text">
             <div class="tile-display">
-                <div class="tile-value-value tile-input-value">{{ tile.value.value }}</div>
+                <div class="tile-value-value tile-input-value">{{ (((tile.value.value | float) * 10) | round) / 10 }}</div>
                 <span class="tile-value-suffix" style="font-size: 15px">{{ tile.value.suffix }}</span>
             </div>
             <span class="tile-label">{{ tile.label }}</span>

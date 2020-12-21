@@ -1,8 +1,8 @@
 <div class="grid-square">
-    <div class="tile enable-hammer {% if tile.value == 1 %}tile-active{% endif %}" data-id="{{ tile.data.id }}" data-type="{{ tile.type }}">
+    <div class="tile enable-hammer {% if tile.value == 1 %}tile-active{% endif %}" data-id="{{ tile.id }}" data-type="{{ tile.type }}">
         <span class="toggle-dot" {% if tile.value == 1 %}style="background-color: rgba(0, 196, 42, 0.28);"{% endif %}></span>
         <div class="tile-text">
-            <img alt="{{ _('Icon') }}" src="{{ '/img/icons/'+tile.data.icon }}" class="tile-icon icon-invert">
+            <img alt="{{ _('Icon') }}" src="{{ '/img/icons/'+tile.config.icon }}" class="tile-icon icon-invert">
             <span class="tile-label">{{ tile.label }}</span>
             <span class="tile-status">{% if tile.value == 1 %}{{ _("On") }}{% else %}{{ _("Off") }}{% endif %}</span>
         </div>

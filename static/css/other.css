@@ -47,10 +47,12 @@ input {
 
 
 .page_settings_icon {
+    font-size: 45px;
     position: absolute;
     width: 24px;
     right: -33px;
-    top: -4px;
+    /*top: -4px;*/
+    top: -15px;
 }
 
 .dark .icon-invert {

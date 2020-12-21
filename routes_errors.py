@@ -10,9 +10,15 @@ def access_denied(event):
     :return: error.html
     """
 
-    mode = sun.get_mode(user_mode=current_user.mode)
+    if current_user.is_authenticated:
+        mode = sun.get_mode(user_mode=current_user.mode)
+        background = current_user.background
+    else:
+        mode = sun.day_or_night_now()
+        background = None
+
     return render_template("error.html", header=401, message=str(event), mode=mode,
-                           background_image=imng.random_background(bg_type=mode, background=current_user.background))
+                           background_image=imng.random_background(current_mode=mode, background=background))
 
 
 @app.errorhandler(403)
@@ -23,9 +29,15 @@ def access_denied(event):
     :return: error.html
     """
 
-    mode = sun.get_mode(user_mode=current_user.mode)
+    if current_user.is_authenticated:
+        mode = sun.get_mode(user_mode=current_user.mode)
+        background = current_user.background
+    else:
+        mode = sun.day_or_night_now()
+        background = None
+
     return render_template("error.html", header=403, message=str(event), mode=mode,
-                           background_image=imng.random_background(bg_type=mode, background=current_user.background))
+                           background_image=imng.random_background(current_mode=mode, background=background))
 
 
 @app.errorhandler(404)
@@ -36,9 +48,15 @@ def page_not_found(event):
     :return: error.html
     """
 
-    mode = sun.get_mode(user_mode=current_user.mode)
+    if current_user.is_authenticated:
+        mode = sun.get_mode(user_mode=current_user.mode)
+        background = current_user.background
+    else:
+        mode = sun.day_or_night_now()
+        background = None
+
     return render_template("error.html", header=404, message=str(event), mode=mode,
-                           background_image=imng.random_background(bg_type=mode, background=current_user.background))
+                           background_image=imng.random_background(current_mode=mode, background=background))
 
 
 @app.errorhandler(410)
@@ -49,16 +67,28 @@ def gone(event):
     :return: error.html
     """
 
-    mode = sun.get_mode(user_mode=current_user.mode)
+    if current_user.is_authenticated:
+        mode = sun.get_mode(user_mode=current_user.mode)
+        background = current_user.background
+    else:
+        mode = sun.day_or_night_now()
+        background = None
+
     return render_template("error.html", header=410, message=str(event), mode=mode,
-                           background_image=imng.random_background(bg_type=mode, background=current_user.background))
+                           background_image=imng.random_background(current_mode=mode, background=background))
 
 
 @app.errorhandler(429)
 def internal_server_error(event):
-    mode = sun.get_mode(user_mode=current_user.mode)
+    if current_user.is_authenticated:
+        mode = sun.get_mode(user_mode=current_user.mode)
+        background = current_user.background
+    else:
+        mode = sun.day_or_night_now()
+        background = None
+
     return render_template("error.html", header=429, message=str(event), mode=mode,
-                           background_image=imng.random_background(bg_type=mode, background=current_user.background))
+                           background_image=imng.random_background(current_mode=mode, background=background))
 
 
 @app.errorhandler(500)
@@ -69,6 +99,12 @@ def internal_server_error(event):
     :return: error.html
     """
 
-    mode = sun.get_mode(user_mode=current_user.mode)
+    if current_user.is_authenticated:
+        mode = sun.get_mode(user_mode=current_user.mode)
+        background = current_user.background
+    else:
+        mode = sun.day_or_night_now()
+        background = None
+
     return render_template("error.html", header=500, message=str(event), mode=mode,
-                           background_image=imng.random_background(bg_type=mode, background=current_user.background))
+                           background_image=imng.random_background(current_mode=mode, background=background))

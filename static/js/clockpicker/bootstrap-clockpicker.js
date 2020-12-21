@@ -129,9 +129,9 @@
 				'</div>'].join('');
 			
 			var amPmButtons = $(amPmButtonsTemplate);
-			//amPmButtons.appendTo(plate);
+			amPmButtons.appendTo(plate);
 			
-			////Not working b/c they are not shown when this runs
+			////Not working bcs they are not shown when this runs
 			//$('clockpicker-am-button')
 			//    .on("click", function() {
 			//        self.amOrPm = "AM";
@@ -172,6 +172,9 @@
 		this.spanHours.click($.proxy(this.toggleView, this, 'hours'));
 		this.spanMinutes.click($.proxy(this.toggleView, this, 'minutes'));
 
+		input.on("focusout", function() {
+			self.hide();
+		})
 		// Show or toggle
 		input.on('focus.clockpicker click.clockpicker', $.proxy(this.show, this));
 		addon.on('click.clockpicker', $.proxy(this.toggle, this));
@@ -496,7 +499,7 @@
 		// });
 		//
 		// $(self.popover).parent().click(function(event){
-		// 	terminal.log(event);
+		// 	console.log(event);
 		// 	event.stopPropagation();
 		// });
 
@@ -509,7 +512,7 @@
 				self.hide();
 			}
 		// 	var target = $(e.target);
-		// 	terminal.log("jsem tam");
+		// 	console.log("jsem tam");
 		// 	if (target[0] === $(self.popover).find(".clockpicker-button")[0]) {
 		// 		self.done();
 		//

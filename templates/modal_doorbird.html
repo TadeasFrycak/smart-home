@@ -1,0 +1,52 @@
+{% extends "modal.html" %}
+
+{% block title %}
+    {{ "Doorbird" }}
+{% endblock %}
+
+{% block content %}
+    <h5>{{ _("Info") }}</h5>
+    <form>
+        <div class="form-group-sm row">
+            <div class="col-5">
+                {{ _("Image resolution") }}
+            </div>
+            <div class="col-7">
+                FullHD
+            </div>
+        </div>
+        <div class="form-group-sm row">
+            <div class="col-5">
+                {{ _("Video resolution") }}
+            </div>
+            <div class="col-7">
+                VGA
+            </div>
+        </div>
+        <div class="form-group-sm row">
+            <div class="col-5">
+                {{ _("Framerate") }}
+            </div>
+            <div class="col-7 doorbird-framerate">
+                0 {{ _("FPS") }}
+            </div>
+        </div>
+    </form>
+    <br>
+    <h5>{{ _("Live video") }}</h5>
+    <div style="height:50%;margin-bottom: 10px;">
+        <img class="doorbird-live-image" src="{{ image }}" style="width:100%;" alt="{{ _("Live video") }}">
+    </div>
+    <button class="btn btn-warning doorbird-open-door">
+        <span class="iconify" style="width:20px;height:100%;margin-bottom:2px;margin-right:2px;" data-icon="bi:key" data-inline="false"></span>
+        {{ _("Unlock") }}
+    </button>
+    <button class="btn btn-warning doorbird-light-on">
+        <span class="iconify" style="width:20px;height:100%;margin-bottom:2px;margin-right:4px;" data-icon="octicon-light-bulb-16" data-inline="false"></span>
+        {{ _("Light on") }}
+    </button>
+    <button class="btn btn-warning doorbird-take-photo">
+        <span class="iconify" style="width:20px;height:100%;margin-bottom:4px;margin-right:2px;" data-icon="feather-camera" data-inline="false"></span>
+        {{ _("Take photo") }}
+    </button>
+{% endblock %}

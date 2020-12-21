@@ -1,3 +1,19 @@
+// Instant changes
+ let modalData = isModalOpen(null, null, true);
+if (modalData) {
+  wait = true;
+}
+
+// Hide elements visible only in
+let isEditActive = store($(document.body), "is-edit-active");
+if (isEditActive === true) {
+
+  $(".add_new_tile_element").show();
+  $(".exit-edit-mode-button").show();
+  $(".bcg-edit").show();
+}
+resize();
+
 $(document).ready(function(){
   /*
   *
@@ -5,26 +21,17 @@ $(document).ready(function(){
   *
   */
 
-  // terminal.log("+----------------------------------+");
-  // terminal.log("|                                  |");
-  // terminal.log("|          Smart home 11.4         |");
-  // terminal.log("|     Author: Szkandera, Fryčák    |");
-  // terminal.log("|                                  |");
-  // terminal.log("|          ©  2019 - 2020          |");
-  // terminal.log("|                                  |");
-  // terminal.log("+----------------------------------+");
-
-  console.log("   _____                      _     _                          \n" +
-      "  / ____|                    | |   | |                         \n" +
-      " | (___  _ __ ___   __ _ _ __| |_  | |__   ___  _ __ ___   ___ \n" +
-      "  \\___ \\| '_ ` _ \\ / _` | '__| __| | '_ \\ / _ \\| '_ ` _ \\ / _ \\\n" +
-      "  ____) | | | | | | (_| | |  | |_  | | | | (_) | | | | | |  __/\n" +
-      " |_____/|_| |_| |_|\\__,_|_|   \\__| |_| |_|\\___/|_| |_| |_|\\___|\n" +
-      "                                                               \n")
+  console.log(
+            "  _____ _    _         \n" +
+            " / ____| |  | |  Smart \n" +
+            "| (___ | |__| |  Home  \n" +
+            " \\___ \\|  __  |      \n" +
+            " ____) | |  | |        \n" +
+            "|_____/|_|  |_|        \n\n")
 
   $(".swiper-pagination").dblclick(function(){
     toggleFullscreen();
-});
+  });
   function toggleFullscreen(elem) {
   elem = elem || document.documentElement;
 
@@ -61,8 +68,8 @@ $(document).ready(function(){
   */
 
   // Hide elements visible only in
-  let isEditActive = $("body").attr("data-is-edit-active");
-  if (isEditActive === "false") {
+  let isEditActive = store($(document.body), "is-edit-active");
+  if (isEditActive === false) {
     $(".dropdown-wrapper").filter(".disappear-on-normal").each(function() {
       $( this ).css("display", "none");
     });
@@ -72,33 +79,11 @@ $(document).ready(function(){
     changePageToEdit(true);
   }
 
-  let tileID = $(".swipe-body").attr("data-modal-id");
-  let tileType = $(".swipe-body").attr("data-modal-type");
-  if (tileType === "normal" && tileID) {
-    socketio.emit("get_modal", {"tile_id": tileID, "tab_id": sessionStorage.tabID})
-  }
-  else if (tileType === "edit" && tileID) {
-    socketio.emit("get_edit_modal", {"tile_id": tileID, "tab_id": sessionStorage.tabID})
-  }
-  else if (tileType === "client_list" && tileID) {
-    socketio.emit("get_client_list_modal", {"tab_id": sessionStorage.tabID})
-  }
-  else if (tileType === "user_list" && tileID) {
-    socketio.emit("get_user_list_modal", {"tab_id": sessionStorage.tabID})
-  }
-  else if (tileType === "android" && tileID) {
-    socketio.emit("get_android_modal", {"tab_id": sessionStorage.tabID})
-  }
-  else if (tileType === "settings" && tileID) {
-    socketio.emit("get_settings_modal", {"tab_id": sessionStorage.tabID})
-  }
-
   if (location.hash !== "" || location.search !== "") {
     console.log("Cleaning URL...");
     window.history.pushState("", "", "/");
   }
   resize();
-
   // Name of page changed
   $(".swipe-header").on("input", function(){
     let nameOfPageChanged = $(this).val();
@@ -118,7 +103,6 @@ function resize() {
   let howMany = (width)/tileWidth;
   howMany = Math.floor(howMany); // Round down
   let tilesWidth = Math.ceil(howMany*tileWidth+1); // Round up
-  // terminal.log(tilesWidth);
   $(".c_sortable_page_grid").css("width", tilesWidth);
 }
 

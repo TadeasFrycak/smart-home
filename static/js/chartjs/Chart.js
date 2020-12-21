@@ -6543,7 +6543,7 @@ var controller_radar = core_datasetController.extend({
 
 		// Desired view properties
 		point._model = {
-			x: x, // value not used in dataset scale, but we want a consistent API between scales
+			x: x, // value not used in dataset scale, but we want a consistent API_HTTPS between scales
 			y: y,
 			skip: custom.skip || isNaN(x) || isNaN(y),
 			// Appearance
@@ -7875,7 +7875,7 @@ var platform = helpers$1.extend({
 
 	/**
 	 * Called at chart construction time, returns a context2d instance implementing
-	 * the [W3C Canvas 2D Context API standard]{@link https://www.w3.org/TR/2dcontext/}.
+	 * the [W3C Canvas 2D Context API_HTTPS standard]{@link https://www.w3.org/TR/2dcontext/}.
 	 * @param {*} item - The native item from which to acquire context (platform specific)
 	 * @param {object} options - The chart options
 	 * @returns {CanvasRenderingContext2D} context2d instance
@@ -7928,7 +7928,7 @@ var core_plugins = {
 	/**
 	 * This identifier is used to invalidate the descriptors cache attached to each chart
 	 * when a global plugin is registered or unregistered. In this case, the cache ID is
-	 * incremented and descriptors are regenerated during following API calls.
+	 * incremented and descriptors are regenerated during following API_HTTPS calls.
 	 * @private
 	 */
 	_cacheId: 0,

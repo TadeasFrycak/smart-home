@@ -17,7 +17,7 @@ class Refactoring:
         "player": lazy_gettext("player"),
         "toggle": lazy_gettext("toggle"),
         # Modal type
-        "daterangepicker": lazy_gettext("daterangepicker"),
+        "date_range_picker": lazy_gettext("date_range_picker"),
         "button": lazy_gettext("button"),
         "dropdown_menu": lazy_gettext("dropdown_menu"),
         "graph": lazy_gettext("graph"),
@@ -100,8 +100,8 @@ class Refactoring:
         try:
             return self.dictionary[data]
 
-        except Exception as e:
-            return data
+        except KeyError:
+            return gettext(data)
 
     def translate_reverse(self, data):
         """

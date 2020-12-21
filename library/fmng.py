@@ -11,13 +11,13 @@ class FileManager:
 
     DATA_DIR = "data"
     CONFIG_DIR = "config"
+    CONFIG_ITEMS_DIR = CONFIG_DIR + "/items"
     TEMPLATES_DIR = "templates"
     TEMP_DIR = "temp"
 
     DEVICES_FILE = "devices.json"
     WHITELIST_FILE = "whitelist.ini"
     BLACKLIST_FILE = "blacklist.ini"
-    MAC_LIST_FILE = "mac_list.json"
 
     BACKGROUNDS_FILE = "backgrounds_data.json"
     REFRESH_FILE = "refresh_data.json"
@@ -36,8 +36,8 @@ class FileManager:
     def load_file(self, path=None, default=None):
         """
         Load value
-        :param default: default value
-        :param path: path to value
+        :param default: default value to return if nothing
+        :param path: path to file
         :return:
         """
 
@@ -51,12 +51,28 @@ class FileManager:
 
                 else:
                     data = f.read()
+
         except FileNotFoundError:
             with open(path, mode="w+", encoding=self.CHARSET) as f:
                 data = default
                 json.dump(data, f)
 
         return data
+
+    # def load_files_from_dir(self, dir_path):
+    #     """
+    #     Loads all files content from dir
+    #     :param dir_path:
+    #     :return:
+    #     """
+    #     final_json = {}
+    #
+    #     for file in os.listdir(dir_path):
+    #         whole_path = self.path_join(dir_path, file)
+    #         if os.path.isfile(whole_path) and ".json" in file:
+    #             final_json[os.path.splitext(file)[0]] = self.load_file(path=whole_path)
+    #
+    #     return final_json
 
     def write_file(self, path, data, is_json):
         """
@@ -180,24 +196,6 @@ class FileManager:
         """
 
         return self.load_file(path=self.path_join(self.CONFIG_DIR, self.BLACKLIST_FILE))
-
-    @property
-    def mac_list(self):
-        """
-        Get MAC list JSON
-        :return:
-        """
-
-        return self.load_file(path=self.path_join(self.DATA_DIR, self.MAC_LIST_FILE))
-
-    @mac_list.setter
-    def mac_list(self, mac_list):
-        """
-        Get MAC list JSON
-        :return:
-        """
-
-        self.write_file(path=self.path_join(self.DATA_DIR, self.MAC_LIST_FILE), data=mac_list, is_json=True)
 
     def get_latest_apk(self):
         apks = self.list_file_names(path="static/android", name="*.apk")

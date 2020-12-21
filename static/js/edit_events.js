@@ -5,23 +5,23 @@
 */
 
 $(document).ready(function(){
-  $("body").on("click", ".save", function() {
+  $(document.body).on("click", ".save", function() {
     socketio.emit("save");
   });
 
   // Kliknutí na "přidat stránku" v Menu
-  $("body").on("click", ".append-slide", function() {
+  $(document.body).on("click", ".append-slide", function() {
     let index = swiper.realIndex;
     socketio.emit("slide_append", {"slide_index": index});
   });
 
   // Click on "Remove slide" in dropdown
-  $("body").on("click", ".remove-slide", function() {
+  $(document.body).on("click", ".remove-slide", function() {
     let index = swiper.realIndex;
     socketio.emit("slide_delete", {"index": index});
   });
 
-  $("body").on("click", ".move-slide-right", function() {
+  $(document.body).on("click", ".move-slide-right", function() {
     let old_index = swiper.realIndex;
     let new_index = swiper.realIndex+1;
     if (swiper.slides.length !== new_index) {
@@ -32,7 +32,7 @@ $(document).ready(function(){
     }
   });
 
-  $("body").on("click", ".move-slide-left", function() {
+  $(document.body).on("click", ".move-slide-left", function() {
     let old_index = swiper.realIndex;
     let new_index = swiper.realIndex-1;
     if (new_index !== -1) {

@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +14,7 @@
             </div>
             <div class="modal-footer">
                 {% block footer %}
-                    <button type="button" class="btn btn-info" data-dismiss="modal">{{ _("Close") }}</button>
+                    <button type="button" class="btn btn-info btn-close" data-dismiss="modal">{{ _("Close") }}</button>
                 {% endblock %}
             </div>
         </div>

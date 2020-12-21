@@ -31,6 +31,7 @@
                 height: 100%;
             }
             .modal-settings-page-appearance {
+                cursor: pointer;
                 width: 100px;
                 height: 100px;
                 display: inline-block;
@@ -50,34 +51,34 @@
 
     <span style="margin-right: 100%;">{{ _("Background") }}</span>
 
-    <div style="position:relative;margin-top: 6px; margin-bottom:6px" id="tile-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons">
-        <label style="margin-bottom:6px;" class="btn btn-secondary active">
-            <input type="radio" name="options" autocomplete="off" checked>
+    <div style="position:relative;margin-top: 6px; margin-bottom:6px" id="background-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons">
+        <label style="margin-bottom:6px;" class="btn btn-secondary background-type {% if current_background == "smart" %}active{% endif %}">
+            <input type="radio" data-type="smart" name="options" autocomplete="off">
             <span>{{ _("Smart") }}</span>
         </label>
 
-        <label style="margin-bottom:6px;" class="btn btn-secondary">
-            <input type="radio" name="options" autocomplete="off">
+        <label style="margin-bottom:6px;" class="btn btn-secondary background-type {% if current_background == "random" %}active{% endif %}">
+            <input type="radio" data-type="random" name="options" autocomplete="off">
             <span>{{ _("Random") }}</span>
         </label>
 
-        <label style="margin-bottom:6px;" class="btn btn-secondary">
-            <input type="radio" name="options" autocomplete="off">
+        <label style="margin-bottom:6px;" class="btn btn-secondary background-type {% if current_background == "light" %}active{% endif %}">
+            <input type="radio" data-type="light" name="options" autocomplete="off">
             <span>{{ _("Light") }}</span>
         </label>
 
-        <label style="margin-bottom:6px;" class="btn btn-secondary">
-            <input type="radio" name="options" autocomplete="off">
+        <label style="margin-bottom:6px;" class="btn btn-secondary background-type {% if current_background == "dark" %}active{% endif %}">
+            <input type="radio" data-type="dark" name="options" autocomplete="off">
             <span>{{ _("Dark") }}</span>
         </label>
 
-        <label style="margin-bottom:6px;" class="btn btn-secondary">
-            <input type="radio" name="options" autocomplete="off">
-            <span>{{ _("Choose...") }}</span>
+        <label style="margin-bottom:6px;" class="btn btn-secondary background-type {% if current_background != "smart" and current_background != "light" and current_background != "dark" and current_background != "random" %}active{% endif %}">
+            <input type="radio" data-type="static" name="options" autocomplete="off">
+            <span>{{ _("Static") }}</span>
         </label>
     </div>
 
-    <div class="fotorama" data-auto="false" style="">
+    <div class="fotorama" data-auto="false" style="display:{% if current_background != "smart" and current_background != "light" and current_background != "dark" and current_background != "random" %}block{% else %}none{% endif %};">
         <a href="{{ url_for('static', filename='img/backgrounds/original/' + current_background) }}"></a> <!-- TODO - data-thumb="" - přidat thumbnail v malé velikosti, třeba HD -->
         {% for key, value in backgrounds.items() %}
             {% if value["type"] == "light" and key != current_background %}

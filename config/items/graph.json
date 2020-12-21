@@ -1,0 +1,16 @@
+{
+  "type": "graph",
+  "value": null,
+  "description": "Not complete",
+  "config": {
+    "label": {
+      "type": "input",
+      "value": "",
+      "config": {
+        "label": "Label",
+        "invalid": false,
+        "readonly": false
+      }
+    }
+  }
+}

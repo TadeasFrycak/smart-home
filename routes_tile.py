@@ -1,6 +1,4 @@
 # Tile routes
-from flask_babel import ngettext
-
 from routes_auth import *
 import json
 import inspect
@@ -12,7 +10,6 @@ import inspect
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_value_rwr(data):
     """
     Rewrite tile value (real value)
@@ -37,7 +34,6 @@ def tile_value_rwr(data):
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_id_rwr(data):
     """
     Rewrite tile ID
@@ -47,6 +43,8 @@ def tile_id_rwr(data):
 
     tile_id = data["tile_id"]
     new_id = data["new_id"]
+
+    refresh_clients.new_tile_id(tile_id, new_id)
 
     emit("tile_id_result", {"tile_id": tile_id, "new_id": new_id}, broadcast=True)
     tmng_rwr.tile_id(tile_id=tile_id, new_id=new_id)
@@ -61,7 +59,6 @@ def tile_id_rwr(data):
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_index_rwr(data):
     """
     Rewrite tile index (change index of two tiles)
@@ -88,7 +85,6 @@ def tile_index_rwr(data):
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_label_rwr(data):
     """
     Rewrite tile label (name)
@@ -112,7 +108,6 @@ def tile_label_rwr(data):
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_type_rwr(data):
     """
     Rewrite tile type (value, toggle, ...)
@@ -154,7 +149,6 @@ def tile_type_rwr(data):
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_icon_rwr(data):
     """
     Rewrite tile icon
@@ -179,7 +173,6 @@ def tile_icon_rwr(data):
 @socketio_prevent_hack
 @role_required("manager")
 @check_browser
-@log_error
 def tile_delete(data):
     """
     Delete tile

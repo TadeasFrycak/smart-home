@@ -1,3 +1,6 @@
+// Initialise communication
+socketio = io("/com");
+
 $(document).ready(function(){
 //   window.onbeforeunload = function(){
 //   return 'Are you sure you want to leave?';
@@ -10,10 +13,10 @@ $(document).ready(function(){
 //   alert(msg)
 //     if (terminal) {
 //         if (typeof msg == "string") {
-//             terminal.log(msg);
+//             console.log(msg);
 //         } else {
 //             for (var i = 0; i < msg.length; i++) {
-//                 terminal.log(msg[i]);
+//                 console.log(msg[i]);
 //             }
 //         }
 //     }
@@ -66,8 +69,7 @@ $(document).ready(function(){
 //         ]);
 //     }
 // }
-  // Initialise communication
-  socketio = io("/com");
+
   // setTimeout(function(){
   //   vibrate = navigator.vibrate ? 'vibrate' : navigator.webkitVibrate ? 'webkitVibrate' : null;
   // }, 1000);
@@ -84,7 +86,7 @@ $(document).ready(function(){
     if (!serverModalOpened) {
       console.log("disconnect");
       document.title = _("Offline") + " | " + _("SH");
-      serverModal("Offline", "Server is now offline. The page will be auto-reloaded after server will be online. If you think that this message is wrong or this is a bug, you can reload page manually.");
+      serverModal(_("Offline"), _("Server is now offline. The page will be auto-reloaded after server will be online. If you think that this message is wrong or this is a bug, you can reload page manually."));
     }
   });
 
@@ -92,14 +94,14 @@ $(document).ready(function(){
     console.log("restart");
     serverModalOpened = true;
     document.title = _("Restarting") + " | " + _("SH");
-    serverModal("Restarting", "Server is now restarting. If the server will not turn on automatically within a minute, please refresh the page manually");
+    serverModal(_("Restarting"), _("Server is now restarting. If the server will not turn on automatically within a minute, please refresh the page manually"));
   });
 
   socketio.on("shutdown", function () {
     console.log("shutdown");
     serverModalOpened = true;
     document.title = _("Turned off") + " | " + _("SH");
-    serverModal("Turned off", "Server was turned off. Please, reload the page when you turn on the server.");
+    serverModal(_("Turned off"), _("Server was turned off. Please, reload the page when you turn on the server."));
   });
 
   socketio.on("reconnect", function() {
@@ -109,20 +111,20 @@ $(document).ready(function(){
 
   // Asynchronous communication for global notifications
   socketio.on("notify", function(msg) {
-    notify(msg.title, msg.message, msg.type, msg.delay);
+    notify(_(msg.title), _(msg.message), msg.type, msg.delay);
   });
 
-  $("body").on("click", ".reload", function() {
+  $(document.body).on("click", ".reload", function() {
     location.reload();
   });
 });
 
-function serverModal(header, message) {
-    $("#myModal").hide();
+function serverModal(header, message, button=_("Reload"), command="reload") {
+    $("#my-modal").hide();
     $(".modal-here").empty();
-    $(".modal-here").append('<div class="modal fade" id="modal-server" tabindex="-1" role="dialog" aria-hidden="true"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLongTitle">' + header + '</h5> </div> <div class="modal-body">' + message + '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger reload">Reload</button></div></div></div></div>');
+    $(".modal-here").append('<div class="modal fade" id="modal-server" tabindex="-1" role="dialog" aria-hidden="true"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLongTitle">' + header + '</h5> </div> <div class="modal-body">' + message + '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger ' + command +'">' + button + '</button></div></div></div></div>');
     // navigator[vibrate](50);
-    $("#modal-server").modal({backdrop: "static", keyboard: true});
+    $("#modal-server").modal({backdrop: "static", keyboard: false});
 }
 
 function notify(title, message, type, delay) {

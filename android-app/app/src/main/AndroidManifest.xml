@@ -24,14 +24,18 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan|adjustResize">
 
-        <service android:name=".BackgroundService" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings" />
-        <!-- Move page up when writing -->
+        <receiver
+            android:name="Restarter"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="restartservice" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".MainActivity"
-        android:configChanges="orientation|screenSize"> <!-- Don't reloadPage app on rotate -->
+            android:configChanges="orientation|screenSize"> <!-- Don't reloadPage app on rotate -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +43,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings" />
+
+        <service
+            android:name=".BackgroundService"
+            android:enabled="true" />
+        <service
+            android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
 
 </manifest>

@@ -15,61 +15,66 @@ $(document).ready(function(){
     hideDropdown(this, e);
   });
 
-  $("body").on("click", ".edit-page", function() {
-    let current_edit_status = $("body").attr("data-is-edit-active");
+  $(document.body).on("click", ".edit-page", function() {
+    let current_edit_status = store($(document.body), "is-edit-active");
     //DEBUG.logDebug("Current edit status: " + current_edit_status);
-    if (current_edit_status === "false") changePageToEdit();
-    if (current_edit_status === "true") changePageToNormal();
+    if (current_edit_status === false) changePageToEdit();
+    if (current_edit_status === true) changePageToNormal();
   });
 
   // Button exit edit mode
-  $("body").on("click", ".exit-edit-mode-button", function() {
+  $(document.body).on("click", ".exit-edit-mode-button", function() {
     changePageToNormal();
   });
 
-  $("body").on("click", ".settings", function() {
+  $(document.body).on("click", ".settings", function() {
     // Request modal - Normal / Edit
     console.log("Requested settings");
     socketio.emit("get_settings_modal", {"tab_id": sessionStorage.tabID});
 
   });
 
-  $("body").on("click", ".client-list", function() {
+  $(document.body).on("click", ".client-list", function() {
     // Request modal - Normal / Edit
     console.log("Requested client list");
     socketio.emit("get_client_list_modal", {"tab_id": sessionStorage.tabID});
   });
 
-  $("body").on("click", ".user-list", function() {
+  $(document.body).on("click", ".user-list", function() {
     console.log("Requested user list");
     socketio.emit("get_user_list_modal", {"tab_id": sessionStorage.tabID});
   });
 
-  $("body").on("click", ".android-apk", function() {
+  $(document.body).on("click", ".doorbird", function() {
+    console.log("Requested Doorbird modal");
+    socketio.emit("get_doorbird_modal", {"tab_id": sessionStorage.tabID});
+  });
+
+  $(document.body).on("click", ".android-apk", function() {
     // Request Android APK download modal
     console.log("Requested Android modal");
     socketio.emit("get_android_modal", {"tab_id": sessionStorage.tabID});
   });
 
-  $("body").on("click", ".android-settings", function() {
+  $(document.body).on("click", ".android-settings", function() {
     // Request Android APK download modal
     console.log("Requested Android settings");
     socketio.emit("show_android_settings");
   });
 
-  $("body").on("click", ".shutdown", function() {
+  $(document.body).on("click", ".shutdown", function() {
     $.post("/shutdown", {});
   });
 
-  $("body").on("click", ".logout", function() {
+  $(document.body).on("click", ".logout", function() {
     setTimeout(function(){window.location.href = "/logout";},250);
   });
 
-  $("body").on("click", ".reload-all", function() {
+  $(document.body).on("click", ".reload-all", function() {
     socketio.emit("reload_all");
   });
 
-  $("body").on("click", ".restart", function() {
+  $(document.body).on("click", ".restart", function() {
     $.post("/restart", {});
   });
 });
@@ -83,56 +88,30 @@ function hideDropdown(myThis, e) {
     $(myThis).find(".dropdown-menu").first().stop(true, true).slideUp(400, function(){
       $(".dropdown").removeClass("show");
       $(".dropdown-menu").removeClass("show");
-      $(".dropdown").find(".dropdown-toggle").attr("aria-expanded","false");
+      $(".dropdown").find(".dropdown-toggle").attr("aria-expanded", false);
     });
 }
 
 function modalClose() {
   $(".modal-here").empty();
+  store($(".modal-here"), "type", false)
   $(".clockpicker-popover").hide();
   socketio.emit("modal_close", {"tab_id": sessionStorage.tabID});
 }
 
-function displaySettingsModal(result){
-  // var json = JSON.parse(result);
-
-  $(".modal-here").empty().append(result.modal);
-  $("#myModal").modal({ keyboard: true });
-  $("#myModal").on("hide.bs.modal", function (e) {
+function displayModal(modal, type, tile_id) {
+  store($(".modal-here"), "type", type)
+  $("#my-modal").modal("hide");
+  // $(".btn-close").click().trigger("hide.bs.modal");
+    // navigator[vibrate](50);
+  $(".modal-here").empty().append(modal);
+  $("#my-modal").modal({ keyboard: true }).on("hide.bs.modal", function (e) {
     modalClose();
   });
+  let tileID = (typeof tile_id !== "undefined") ? tile_id : null;
+  store($(".modal-here"), "tile-id", tileID);
 
-  $( ".modal-settings-page-appearance" ).click(function() {
-    let change_to = $(this).attr("data-type");
-    socketio.emit("user_mode", {"mode": change_to});
-    console.log( "Change appearance to " + change_to );
-    modalSettingsAppearanceImageTap(this);
-  });
-
-  $('.fotorama')
-        // Listen to the events
-      // TODO tohle není ten správný event, reaguje po načtení obrázku, ne po zvolení
-        .on('fotorama:showend ',  // Stage image of some frame is loaded
-            function (e, fotorama, extra) {
-              // terminal.log('## ' + e.type);
-              // terminal.log('active frame', fotorama.activeFrame);
-              // terminal.log('additional data', extra);
-              let background = fotorama.activeFrame.img.split("/");
-              socketio.emit("user_background", {"background": background[background.length-1]})
-            }
-        )
-        // Initialize fotorama manually
-        .fotorama({
-    allowfullscreen: true,
-    nav: "thumbs",
-    keyboard: {"home": true, "end": true},
-  });
-
-  // new Swiper('.settingSwiper', {
-  //   slidesPerView: 4,
-  //   spaceBetween: 30,
-  //   centeredSlides: true,
-  // });
+  wait = false;
 }
 
 // add_new_tile_element
@@ -140,7 +119,7 @@ function displaySettingsModal(result){
 function changePageToNormal() {
 
   socketio.emit("edit_change", {"state": false, "tab_id": sessionStorage.tabID});
-  $("body").attr("data-is-edit-active", false);
+  store($(document.body), "is-edit-active", false);
   // updateSearchBar();
   swiper.allowTouchMove = true;
   $(".add_new_tile_element").show().fadeOut(2000);
@@ -167,24 +146,18 @@ function changePageToNormal() {
 
 function changePageToEdit(instantly=false) {
   socketio.emit("edit_change", {"state": true, "tab_id": sessionStorage.tabID});
-  $("body").attr("data-is-edit-active", true);
+  store($(document.body), "is-edit-active", true);
   // updateSearchBar();
 
   let SortablePages = document.getElementsByClassName("c_sortable_page_grid");
   
   swiper.allowTouchMove = false;
-  if (instantly) {
-    $(".add_new_tile_element").show();
-    $(".exit-edit-mode-button").show();
-    $(".bcg-edit").show();
-  }
-  else {
+  if (!instantly) {
     $(".add_new_tile_element").hide().fadeIn(2000);
     $(".exit-edit-mode-button").hide().fadeIn(2000);
     $(".bcg-edit").fadeIn(2000);
   }
 
-  
   // Přidělí každému "+" tlačítko Hammer
   $(".add_new_tile_element").each(function() {
     let hammer = new Hammer(this);
@@ -232,9 +205,9 @@ function bindSortable(index,item) {
 
     onUpdate: function (evt) {
       socketio.emit("tile_index", {"slide_index": swiper.realIndex, "old_index": evt.oldIndex, "new_index": evt.newIndex});
-      // terminal.log("Slide: " + swiper.realIndex);
-      // terminal.log("Old index: " + evt.oldIndex);
-      // terminal.log("New index: " + evt.newIndex);
+      // console.log("Slide: " + swiper.realIndex);
+      // console.log("Old index: " + evt.oldIndex);
+      // console.log("New index: " + evt.newIndex);
     },
     // Element dragging started
 	  onStart: function () {

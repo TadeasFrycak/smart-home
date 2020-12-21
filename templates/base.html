@@ -11,21 +11,16 @@
         <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/backgrounds.css') }}">
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery.min.js') }}"></script>
-{#        <script type="text/javascript" src="{{ url_for('static', filename='js/live/live.js') }}" defer></script>#}
-{#        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery-migrate-1.4.1.min.js') }}"></script>#}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery-ui.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/vue/vue.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/popper/popper.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap-notify.min.js') }}" defer></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/socket_io/socket.io.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/socket/socket.io.min.js') }}" defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/iconify/iconify.min.js') }}" defer></script>
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-        <!--<script type="text/javascript" src="{{ url_for('static', filename='js/prevent_hack.js') }}" defer></script>-->
-
-        <!-- 1. Link Vue Javascript -->
-        <script src='https://unpkg.com/vue/dist/vue.js'></script>
-
-        <!-- 2. Link VCalendar Javascript (Plugin automatically installed) -->
-        <script src='https://unpkg.com/v-calendar'></script>
+{#        <script type="text/javascript" src="{{ url_for('static', filename='js/prevent_hack.js') }}" defer></script>#}
 
         <script src="{{ url_for('babel_catalog') }}"></script>
 
@@ -36,7 +31,7 @@
                 }
             {% endif %}
             .bcg-edit {
-                background-image: url({{ url_for('static', filename='img/static/edit_bg.jpg') }});
+                background-image: url({{ url_for('static', filename='img/static/9.jpg') }});
             }
         </style>
         {% block head %} {% endblock %}
@@ -61,9 +56,9 @@
         <div class="bcg-normal bcg-old"></div>
         <div class="bcg-edit"></div>
 
-        {% block content %} {% endblock %}
-
         <div class="modal-here"></div>
+
+        {% block content %} {% endblock %}
 
         {% if android_browser %}
             <div class="modal-android"></div>

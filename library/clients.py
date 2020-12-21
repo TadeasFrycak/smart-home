@@ -67,8 +67,11 @@ class Clients:
 
 
 class Refresh:
+    DOORBIRD_DELAY = 120
+
     def __init__(self, fmng):
         self.__fmng = fmng
+        self.__doorbird_time = 0
 
     def set_data(self, tab_id, ip, browser, username, slide=None, modal_id=None, modal_type=None, edit=None):
         self.remove_old()
@@ -125,6 +128,9 @@ class Refresh:
 
                 probably.append(new_data)
 
+        if time.time() - self.DOORBIRD_DELAY < self.__doorbird_time:
+            probably.append({"modal": {"type": "doorbird"}, "tab_id": "everyone"})
+
         return probably
 
     def remove_old(self):
@@ -156,3 +162,11 @@ class Refresh:
 
             elif refresh["data"]["slide"] == new_index:
                 self.__fmng.refresh_data[num]["data"]["slide"] = old_index
+
+    def new_tile_id(self, old_tile_id, new_tile_id):
+        for num, refresh in enumerate(self.__fmng.refresh_data):
+            if refresh["data"]["modal"]["id"] == old_tile_id:
+                self.__fmng.refresh_data[num]["data"]["modal"]["id"] = new_tile_id
+
+    def doorbird(self):
+        self.__doorbird_time = time.time()

@@ -40,6 +40,20 @@ textarea {
     font-weight: 600;
 }
 
+.modal-preview {
+    padding: 0 15px 8px;
+    border-radius: 7px;
+    /*background-color: var(--main-dark-bg-second);*/
+    border: 1px solid var(--main-dark-bg-fourth);
+    margin-bottom: 10px;
+}
+.modal-fieldset-legend {
+    font-size: 16px;
+    width: auto;
+    padding: 0 10px;
+    margin-bottom: 0;
+    font-weight: bold
+}
 /* Modal edit types */
 #tile-type, #modal-type {
     /* TODO make centering of buttons - (use padding centering) */
@@ -75,7 +89,7 @@ textarea {
 }
 
 .modal-edit-item-dropdown {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     margin-top: 15px;
 }
 
@@ -94,5 +108,5 @@ textarea {
 }
 
 .modal-edit-item-delete {
-    margin-top: 20px;
+    float: right;
 }

@@ -91,7 +91,7 @@
 
   /**
    * Dom7 2.1.3
-   * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
+   * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API_HTTPS
    * http://framework7.io/docs/dom.html
    *
    * Copyright 2019, Vladimir Kharlampidi

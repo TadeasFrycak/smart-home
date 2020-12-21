@@ -11,6 +11,7 @@ package cz.frycak.smarthome;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -28,8 +30,25 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.judemanutd.autostarter.AutoStartPermissionHelper;
+
+
+import java.net.URISyntaxException;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MainActivity extends AppCompatActivity {
     private WebView webview;
@@ -38,7 +57,24 @@ public class MainActivity extends AppCompatActivity {
     private Button settingsButton;
     private boolean settingsShowed;
     private boolean settingsChanged;
+    Intent mServiceIntent;
+    private BackgroundService mYourService;
+    private static final String TAG = MainActivity.class.getSimpleName();
+//    MqttAndroidClient client;
 
+
+//    private Socket mSocket;
+//    {
+//        try {
+//            mSocket = IO.socket("http://192.168.88.25:5000/com");
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    private void attemptSend() {
+//        mSocket.emit("doorbird_open_door");
+//    }
 
     @SuppressLint("StaticFieldLeak")
     private static MainActivity instance;
@@ -51,6 +87,58 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        mSocket.connect();
+//        attemptSend();
+//        startMqtt();
+
+
+        /*String clientId = MqttClient.generateClientId();
+        client = new MqttAndroidClient(this.getApplicationContext(), "tcp://192.168.88.25:1883",clientId);
+        //client = new MqttAndroidClient(this.getApplicationContext(), "tcp://192.168.43.41:1883",clientId);
+
+        try {
+            IMqttToken token = client.connect();
+            token.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Toast.makeText(MainActivity.this,"connected!!",Toast.LENGTH_LONG).show();
+                    setSubscription();
+                    published();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Toast.makeText(MainActivity.this,"connection failed!!",Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+
+        client.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
+
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                if (message.toString().equals("1")) {
+                    device.flashlight(true, 0);
+                    device.flashlight(true, 1);
+                }
+                else {
+                    device.flashlight(false, 0);
+                    device.flashlight(false, 1);
+                }
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
+            }
+        });*/
+
 
         device = new DeviceControl(this);
 
@@ -101,7 +189,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        startService(new Intent(this, BackgroundService.class));
+        mYourService = new BackgroundService();
+        mServiceIntent = new Intent(this, mYourService.getClass());
+        if (!isMyServiceRunning(mYourService.getClass())) {
+            startService(mServiceIntent);
+        }
+
         // TODO nefunguje v simulaci
 
         reloadPage();
@@ -124,6 +217,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*public void published(){
+
+        String topic = "home/wl8915";
+        String message = "1";
+        try {
+            client.publish(topic, message.getBytes(),0,false);
+            Toast.makeText(this,"Published Message",Toast.LENGTH_SHORT).show();
+        } catch ( MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setSubscription(){
+
+        try{
+
+            client.subscribe("#",0);
+
+
+        }catch (MqttException e){
+            e.printStackTrace();
+        }
+    }*/
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("Service status", "Running");
+                return true;
+            }
+        }
+        Log.i ("Service status", "Not running");
+        return false;
+    }
+//    @Override
+//    protected void onDestroy() {
+//        stopService(mServiceIntent);
+//        super.onDestroy();
+//    }
     @Override
     protected void onResume() {
         super.onResume();

@@ -4,12 +4,15 @@
 
 {% block script %}
     <script type="text/javascript">
-        setTimeout(() => {window.location.href = "http://" + window.location.hostname + ":" + window.location.port;}, 1000000);
+        setTimeout(() => {window.location.href = "http://" + window.location.hostname + ":" + window.location.port;}, 10000);
     </script>
 {% endblock %}
 
 {% block centered %}
     <style>
+    .horizontal-middle {
+        max-width: 510px;
+    }
     #status-icon {
         display: flex;
         flex-direction: column;
