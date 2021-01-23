@@ -1,0 +1,229 @@
+<!-- TODO hodně věcí je zde nakopírovaných několikrát -> vymyslet něco lepšího - nějaké funkce, .... -->
+<div class="modal-item" data-id="{{ item.id }}" data-type="{{ item.type }}" data-value="{{ item.value }}" data-config='{{ item.config | tojson | safe }}' data-group="{{ group }}">
+    <div class="form-group-sm row">
+        <label class="col-lg-3 col-form-label">{{ item.config.label }}</label>
+        <div class="col-lg-9">
+        <!-- TODO placeholder configurable/automatic????? -->
+            {% if not (item.value is iterable and (item.value is not string and item.value is not mapping)) %}
+                {% do item.update({"value": [item.value]}) %}
+            {% endif %}
+            {% for string in item.value %}
+                <div class="input-group input-group-sm" style="margin-bottom: 10px;">
+                    {% if item.config.prepend %}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text form-control-sm">{{ item.config.prepend }}</span>
+                        </div>
+                    {% endif %}
+                    {% if not item.config.count %}{% set count = 1 | int %}{% else %}{% set count = item.config.count | int %}{% endif %}
+                    {% for i in range(count) %}
+                        <input class="unfocus-on-enter modal-input form-control form-control-sm {% if item.config.invalid %}is-invalid{% endif %}"
+                               maxlength="40"
+                               placeholder='{% if item.config.placeholder == "" %}{% if not string %}N/A{% else %}{{ string }}{% endif %}{% else %}{{ item.config.placeholder }}{% endif %}'
+                               value='{{ string }}'
+                               autocomplete="off"
+                               {% if item.config.readonly %}readonly{% endif %}
+                               type="{% if item.config.number %}number{% else %}text{% endif %}"
+                        >
+                    {% endfor %}
+                    {% if item.config.list %}
+                        <div class="input-group-append remove-input">
+                            <button type="button" class="btn btn-sm btn-outline-danger no-open" style="padding: .15rem .35rem;width: 50px;">
+                                <span class="iconify no-open" style="font-size: 20px;" data-icon="jam-trash-alt-f" data-inline="false"></span>
+                            </button>
+                        </div>
+                    {% elif item.config.button %}
+                        <div class="input-group-append ">
+                            <button class="submit btn btn-sm form-control-sm {% if mode == "light" %}btn-outline-dark{% else %}btn-outline-light{% endif %}" type="button" disabled>{{ _("Submit") }}</button>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div style="{% if not item.config.list %}display:none{% endif %}">
+                <button type="button" class="btn add-input btn-sm btn-block btn-outline-warning col-lg">Add</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" defer>
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("click", ".add-input", function() {
+          let modalItem = $(this).closest(".modal-item");
+          let element = modalItem.find(".input-group").last();
+          element.clone().insertAfter(element);
+          let last = modalItem.find(".input-group").last().hide().slideDown();
+          last.find("input").val("");
+
+          let values = [];
+          modalItem.find("input").each(function (){
+            values.push($(this).val())
+          });
+          store(modalItem, "value", values).trigger("value-transmit");
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("click", ".remove-input", function() {
+          let modalItem = $(this).closest(".modal-item");
+
+          if (modalItem.find(".input-group").length > 1) {
+            store($(this).closest(".input-group"), "removing", true)
+
+            let values = [];
+            modalItem.find("input").each(function () {
+              if (store($(this).closest(".input-group"), "removing") !== true) {
+                values.push($(this).val())
+              }
+            });
+            store(modalItem, "value", values).trigger("value-transmit");
+          }
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("input", ".modal-input", function() {
+          let modalItem = $(this).closest(".modal-item");
+          modalItem.find("button").prop("disabled", false);
+
+          let config = store(modalItem, "config");
+          if (config.button !== true) {
+            let values;
+            if (config.list === true) {
+              values = [];
+              modalItem.find("input").each(function (){
+                values.push($(this).val())
+              });
+            }
+            else {
+              values = $(this).val();
+            }
+            store(modalItem, "value", values).trigger("value-transmit");
+          }
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').find(".modal-input").blur(function() {
+          let modalItem = $(this).closest(".modal-item");
+          let config = store(modalItem, "config");
+          if (config.button === true) {
+            modalItem.find(".submit").prop("disabled", true);
+            let values;
+            if (config.list === true) {
+              values = [];
+              modalItem.find("input").each(function (){
+                values.push($(this).val())
+              });
+            }
+            else {
+              values = $(this).val();
+            }
+            store(modalItem, "value", values).trigger("value-transmit");
+          }
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("click", ".submit", function() {
+          let modalItem = $(this).closest(".modal-item");
+          $(this).prop("disabled", true);
+          let config = store(modalItem, "config");
+          let values;
+          if (config.list === true) {
+            values = [];
+            modalItem.find("input").each(function (){
+              values.push($(this).val())
+            });
+          }
+          else {
+            values = $(this).val();
+          }
+          store(modalItem, "value", values).trigger("value-transmit");
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').find(".modal-input").keydown(function(event){
+          let modalItem = $(this).closest(".modal-item");
+          event.keyCode===13 && $(modalItem).find(".submit").click();
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("value-receive", function() {
+          let modalItem = $(this).closest(".modal-item");
+          let value = store($(this), "value");
+          let config = store(modalItem, "config");
+
+          if (config.list === true) {
+            let inputs = modalItem.find("input");
+            let removing = false;
+            let removed = false;
+
+            if (inputs.length < value.length) {
+              let element = modalItem.find(".input-group").last();
+              element.clone().insertAfter(element);
+              let last = modalItem.find(".input-group").last().hide().slideDown();
+              last.find("input").val("");
+            }
+
+            else if (value.length < inputs.length) {
+              removing = true;
+            }
+            let lastValue;
+
+            value.forEach(function(val, index) {
+              if (removing) {
+                lastValue = val;
+                if ($(inputs[index]).val() !== val && removing && removed === false) {
+                  removed = true;
+                  $(inputs[index]).closest(".input-group").slideUp(function() {
+                    $(this).remove();
+                  })
+                }
+              }
+              else {
+                $(inputs[index]).val(val);
+              }
+            });
+
+            let length = modalItem.find(".input-group").length;
+            if (removing && !removed) {
+              if (lastValue === inputs.last().val()) {
+                inputs.last().closest(".input-group").remove();
+              }
+              else {
+                length -= 1;
+                inputs.last().closest(".input-group").last().slideUp(function() {
+                  $(this).remove();
+                })
+              }
+            }
+
+            // Disable delete button if length <= 1
+            modalItem.find(".input-group-append").find("button").prop("disabled", length <= 1)
+          }
+          else {
+            $(this).find("input").val(value);
+          }
+        });
+
+        $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').on("config-receive", function() {
+          let config = store($(this), "config");
+          $(this).find("label").text(config.label);
+          $(this).find("input").prop("readonly", config.readonly);
+          // Todo placeholde potřebuje na tu automatickou část refresh
+          if (config.placeholder === "") config.placeholder = _("N/A");
+          $(this).find("input").attr("placeholder", config.placeholder);
+          $(this).find("input").toggleClass("is-invalid", config.invalid);
+
+          // Prepend box
+          if (config.prepend !== "" && typeof config.prepend !== 'undefined') {
+            if ($(this).find(".input-group-prepend").length === 0) {
+              $('<div class="input-group-prepend"><span class="input-group-text"></span></div>').insertBefore($(this).find("input"));
+            }
+            $(this).find(".input-group-prepend").find(".input-group-text").text(config.prepend);
+          }
+          else {
+            $(this).find(".input-group-prepend").remove();
+          }
+          // Append button
+          if (config.button) {
+            if ($(this).find(".input-group-append").length === 0) {
+                $('<div class="input-group-append"><button class="submit btn btn-sm {% if mode == "light" %}btn-outline-dark{% else %}btn-outline-light{% endif %}" type="button" disabled>{{ _("Submit") }}</button></div>').insertAfter($(this).find("input"));
+            }
+          }
+          else if (!config.list) {
+            $(this).find(".input-group-append").remove();
+          }
+
+          $(this).find("input").attr("type", config.number ? "number" : "text")
+        });
+    </script>
+</div>

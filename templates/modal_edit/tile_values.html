@@ -1,9 +1,8 @@
-<div class="tile-values-wrapper">
-    {% for value in tile_values %}
-        {% if value == "icon" %}
-            {% include "modal_edit/icons.html" %}
-        {% else %}
-            {% include "modal_edit/tile_value.html" %}
-        {% endif %}
-    {% endfor %}
-</div>
+{% for value in tile_config[tile.type]["config"] %}
+    {% set default_item = tile_config[tile.type]["config"][value] %}
+    {% set item = {"type": default_item.type, "config": default_item.config, "id": value, "value": tile["config"][value]} %}
+
+    {% if default_item %}
+        {% include "items/" + item["type"] + ".html" %}
+    {% endif %}
+{% endfor %}

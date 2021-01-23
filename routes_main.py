@@ -1,9 +1,5 @@
 # Main routes
-import shutil
-
-from flask import send_from_directory
 from routes_server import *
-import htmlmin
 
 
 # Index page
@@ -82,6 +78,7 @@ def save_devices():
     Save to devices.json
     :return:
     """
+
     fmng.devices = fmng.devices
     terminal.debug("Devices saved")
 

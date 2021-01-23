@@ -1,5 +1,4 @@
-from flask_babel import Babel, _, gettext, ngettext, lazy_gettext
-import library.jinja2schema as jinja2schema
+from flask_babel import lazy_gettext
 import datetime
 
 
@@ -9,7 +8,6 @@ class TemplateManagerRead:
     """
 
     # Main, system
-    ICON_PATH = "static/img/icons"
     BACK = "../"
 
     # App.py
@@ -40,17 +38,17 @@ class TemplateManagerRead:
     X = "x"
     Y = "y"
 
-    def __init__(self, fmng, terminal, default_values, refactoring, default_items):
+    def __init__(self, fmng, terminal, refactoring, default_items, default_tiles):
         """
         Init of class TemplateManagerRead
         :param fmng: FileManager
         """
 
         self.__default_items = default_items
+        self.__default_tiles = default_tiles
         self.__fmng = fmng
         self.__terminal = terminal
         self.__refactoring = refactoring
-        self.__default_values = default_values
 
     def get_tile(self, tile_id):
         """
@@ -65,6 +63,29 @@ class TemplateManagerRead:
                 # If device have current id
                 if tile[self.ID] == tile_id:
                     return tile
+
+    def get_protocol(self, tile_id, item_id=None):
+        # Get pages (number and content)
+        for page_content in self.__fmng.devices:
+            # Get item for current device
+            for tile in page_content[self.CHILDREN]:
+                # If device have current id
+                if tile[self.ID] == tile_id:
+                    if item_id:
+                        for item in tile[self.MODAL]:
+                            if item[self.ID] == item_id:
+                                return item["protocols"]
+
+                    else:
+                        return tile["protocols"]
+
+    def get_item(self, tile_id, item_id):
+        tile = self.get_tile(tile_id)
+        # Get pages (number and content)
+        for item_content in tile["modal"]:
+            # Get item for current device
+            if item_content[self.ID] == item_id:
+                return item_content
 
     def get_display_tile(self, tile_id):
         tile = self.get_tile(tile_id)
@@ -81,99 +102,11 @@ class TemplateManagerRead:
 
         return self.get_tile(tile_id=tile_id)[self.TYPE]
 
-    def get_tile_templates(self):
-        """
-        Get tile templates
-        :return: tile templates
-        """
-
-        return self.__fmng.list_file_names(path="templates/tiles", name="*.html", extension=False)
-
-    # def get_modal_templates(self):
-    #     """
-    #     Get modal templates
-    #     :return: modal templates
-    #     """
-    #
-    #     return self.__default_items.get_item_names()
-
-    def get_tile_template_values(self, tile_type=None, tile_id=None):
-        """
-        Get tile template values
-        :param tile_type: tile type
-        :param tile_id: tile ID
-        :return:
-        """
-
-        template = str(self.__fmng.load_file("templates/tiles/" + tile_type + ".html"))
-        variables = jinja2schema.infer(template)
-
-        tile = None
-        data = {}
-
-        if tile_id:
-            tile = self.get_tile(tile_id=tile_id)
-
-        try:
-            for value in dict(variables["tile"]["data"]):
-                if value != "id" and value != "value" and value != "label":
-                    try:
-                        data[value] = tile[self.CONFIG][value]
-
-                    except KeyError:
-                        data[value] = self.MODAL_ITEM_UNNAMED
-
-            if "icon" in data:
-                if data["icon"] != self.MODAL_ITEM_UNNAMED:
-                    current_icon = data["icon"]
-
-                else:
-                    current_icon = self.__default_values.tile_value(value_name="icon")
-
-                data["icon"] = []
-
-                # Browse directory and load backgrounds
-                for file in self.__fmng.list_file_names(path=self.ICON_PATH):
-                    if file == current_icon:
-                        current = True
-
-                    else:
-                        current = False
-
-                    data["icon"].append({"name": file, "current": current})
-
-        except KeyError:  # Tile without data
-            pass
-
-        return data
+    def get_tiles_config(self):
+        return self.__default_tiles.get_tile_edit_objects()
 
     def get_items_config(self):
-        # configs = self.__fmng.load_files_from_dir(dir_path=self.__fmng.CONFIG_ITEMS_DIR)
-        #
-        # for item in configs:
-        #     for value in configs[item][self.CONFIG]:
-        #         try:
-        #             configs[item][self.CONFIG][value][self.CONFIG][self.LABEL] = self.__refactoring.translate(configs[item][self.CONFIG][value][self.CONFIG][self.LABEL])
-        #         except KeyError:  # Item config value hasn't label
-        #             pass
-        # return configs
-        # TODO optimalizace - + přejmenovat class Items()
-        return self.__default_items.get_item_types()
-
-    def get_modal_template_values(self, item_type):
-        """
-        Get modal template values
-        :param item_type: modal item type
-        :return:
-        """
-
-        values = self.get_items_config()
-        config = {}
-
-        for value in values[item_type][self.CONFIG]:
-            config[value] = values[item_type][self.CONFIG][value]["value"]
-
-        return values[item_type]["value"], config
+        return self.__default_items.get_item_edit_objects()
 
     def get_slide_index(self, tile_id):
         """

@@ -46,53 +46,21 @@ function initTileTap(hammer, $this, add_new_item)
   });
 }
 
-function initImages(){
-  $(".modal-edit-icon").each(function() {
-    if (store($(this), 'selected') === true){
-      if ($(document.body).hasClass("dark")) {
-        $(this).css({"border": "2px solid rgb(232, 93, 71)"});
-      }
-      else {
-        $(this).css({"border": "2px solid rgb(23, 162, 184)"});
-      }
-    }
-    Hammer(this).on("tap", function(elem) {
-      // ( > modal_edit_events.js )
-      modalEditPreviewImageTap(elem);
-    });
-  });
+function requestNormalModal(object)
+{
+  let tileID = store(object, "id");
+  socketio.emit("get_normal_modal", {"tile_id": tileID, "tab_id": sessionStorage.tabID});
 }
 
-
-// /get_modal 
-//    > tileId
-
-// /get_add_tile_modal
-//    > slideIndex
-
-// /get_edit_modal
-//    > tileId
-
-// function addNewTile()
-// {
-//   socketio.emit("get_add_modal", {"slide_index": swiper.realIndex});
-// }
-
-function requestNormalModal($this)
+function requestEditModal(object)
 {
-  let object_id = store($this.parent(), "id");
-  socketio.emit("get_normal_modal", {"tile_id": object_id, "tab_id": sessionStorage.tabID});
-}
+  let tileID = store(object, "id");
 
-function requestEditModal($this)
-{
-  let object_id = store($this.parent(), "id");
-
-  if (store($this.parent(), "type") === "add-new-tile") {
+  if (object.length === 0) {
     socketio.emit("get_add_modal", {"slide_index": swiper.realIndex, "tab_id": sessionStorage.tabID});
   }
   else {
-    socketio.emit("get_edit_modal", {"tile_id": object_id, "tab_id": sessionStorage.tabID});
+    socketio.emit("get_edit_modal", {"tile_id": tileID, "tab_id": sessionStorage.tabID});
   }
   
 }
@@ -109,34 +77,76 @@ function modalDynamicValueSend(object) {
         "tile_id": store($(".modal-here"), "tile-id"), "type": store($(object), "type")});
     // }
 }
+
+function initializeTileDynamic() {
+  $('.modal-item[data-group="tile-dynamic"]').on("value-transmit", function() {
+    socketio.emit("tile_config", {
+      "value_name": store($(this), "id"),
+      "tile_id": store($(".modal-here"), "tile-id"),
+      "value": store($(this), "value")
+    });
+  });
+}
+
+function tileProtocolInit(object) {
+  let value = store($(object), "value");
+  let valueName = store($(object), "id");
+  let protocol = store($(object).closest("fieldset"), "type");
+  let tileID = store($(object).closest("fieldset"), "id")
+
+  socketio.emit("tile_protocol_values", {
+      "value_name": valueName,
+      "protocol": protocol,
+      "tile_id": tileID,
+      "value": value
+    });
+}
+
+function modalItemProtocolInit(object) {
+  let value = store($(object), "value");
+  let valueName = store($(object), "id");
+  let protocol = store($(object).closest("fieldset"), "type");
+  let itemID = store($(object).closest("fieldset"), "id")
+  let tileID = store($(".modal-here"), "tile-id");
+  socketio.emit("modal_item_protocol_values", {
+      "value_name": valueName,
+      "protocol": protocol,
+      "id": itemID,
+      "tile_id": tileID,
+      "value": value
+    });
+}
+
 function initializeModalEditItems(data) {
   $(".modal-edit-item-dropdown").slideUp();
   let tile_id = store($(".modal-here"), "tile-id");
   DEBUG.logDebug("Parent Tile ID: " + tile_id);
-  var tile_name = $(".tile[data-id="+tile_id+"]").find(".tile-label").text();
-  DEBUG.logDebug("Parent Tile Name :" + tile_name);  
-  $("#tile_name").val(tile_name);
-
-  $("#tile-mqtt-path").val("home/" + tile_id);
 
   $(".modal-edit-item-delete").on("click",function(e){
     // ( > modal_edit_events.js )
     modalEditItemDelete(this);
   });
 
-  $('.modal-item[data-group^="modal-edit-"]').on("value-transmit", function(event) {
+  $('.modal-item[data-group^="modal-edit-"]').on("value-transmit", function() {
     modalEditItemInit(this);
   });
 
-  $(".modal-edit-tile-dynamic-value").on("input",function(e){
-    // ( > modal_edit_events.js )
-    modalEditTileTextChanged(this);
+  $('.modal-item[data-group="protocol-tile"]').on("value-transmit", function() {
+    tileProtocolInit(this);
   });
-  
-  $("#tile-id").on("input",function(){
+
+  $('.modal-item[data-group="protocol-item"]').on("value-transmit", function() {
+    modalItemProtocolInit(this);
+  });
+
+  $('.modal-item[data-group="tile"][data-id="tile-id"]').on("value-transmit", function() {
     // ( > modal_edit_events.js )
     modalEditTileIDchanged(this);
   });
+  if (!$.trim($(".tile-values-wrapper").html())) {
+    $("#tile-dynamic-values").hide()
+  }
+  initializeTileDynamic();
 
   $(".modal-edit-tile-type").on("click", "input",  function() {
     DEBUG.log("Tile type changed");
@@ -146,15 +156,34 @@ function initializeModalEditItems(data) {
 
     tileTypeChanged(tileID,type_name);
   });
-  
+
+  $(".tile-protocol-label").on("click", "input",  function() {
+    DEBUG.log("Tile protocol changed");
+    // ( > modal_edit_events.js )
+    let type_name = store($(this).parent(), "type");
+    let state = $(this).parent().hasClass("active") ? "remove" : "add";
+    let tileID = store($(this).parent(), "id");
+
+    tileProtocol(tileID, type_name, state);
+  });
+
+  $(".item-protocol-label").on("click", "input",  function() {
+    DEBUG.log("Item protocol changed");
+    // ( > modal_edit_events.js )
+    let type_name = store($(this).parent(), "type");
+    let state = $(this).parent().hasClass("active") ? "remove" : "add";
+    let tileID = store($(".modal-here"), "tile-id");
+    let itemID = store($(this).parent(), "id");
+
+    modalItemProtocol(tileID, itemID, type_name, state);
+  });
+
   $("#tile_name").on("input",function(){
     // ( > modal_edit_events.js )
     modalEditTileTitleChanged();
   });
 
-  initImages();
-
-  // Unfocus input 
+  // Unfocus input
   $(".unfocus-on-enter").keydown(function(event){
     event.keyCode===13 && $(this).blur();
   });

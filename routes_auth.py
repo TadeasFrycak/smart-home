@@ -1,6 +1,4 @@
 # Auth routes
-from flask_login import login_user, logout_user, login_required
-from flask import redirect
 from routes_errors import *
 
 

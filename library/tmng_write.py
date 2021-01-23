@@ -3,7 +3,7 @@ class TemplateManagerWrite:
     Template manager write class
     """
 
-    def __init__(self, tmng_r, tmng_rwr, fmng, default_values):
+    def __init__(self, tmng_r, tmng_rwr, fmng, default_items):
         """
         Init of template manager write class
         :param tmng_r: tmng_r
@@ -14,7 +14,7 @@ class TemplateManagerWrite:
         self.__fmng = fmng
         self.__tmng_r = tmng_r
         self.__tmng_rwr = tmng_rwr
-        self.__default_values = default_values
+        self.__default_items = default_items
 
     # Tile
     def tile_delete(self, tile_id):
@@ -62,13 +62,9 @@ class TemplateManagerWrite:
         :return: None
         """
 
+        # TODO zajímavě řešené - udělat appendování pouze itemu, ne celého tilu!
         tile = self.__tmng_r.get_tile(tile_id=tile_id)
-        value, config = self.__tmng_r.get_modal_template_values(item_type=item_type)
-        item = {
-            "type": item_type,
-            "id": self.__default_values.random_id(),
-            "value": value,
-            "config": config}
+        item = self.__default_items.get_object(item_type).make_object()
         tile["modal"].insert(0, item)
 
         self.__tmng_rwr.tile(tile=tile, tile_id=tile_id)

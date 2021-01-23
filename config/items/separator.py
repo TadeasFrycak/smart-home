@@ -1,4 +1,4 @@
-from flask_babel import lazy_gettext
+from flask_babel import gettext
 from config.items.default import Item
 
 
@@ -9,5 +9,5 @@ class Separator(Item):
 
     TYPE = "separator"
     VISIBLE = True
-    NAME = lazy_gettext("Separator")
-    DESCRIPTION = lazy_gettext("Separate content")
+    NAME = gettext("Separator")
+    DESCRIPTION = gettext("Separate content")

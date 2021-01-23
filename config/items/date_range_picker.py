@@ -1,4 +1,4 @@
-from flask_babel import lazy_gettext
+from flask_babel import gettext
 from config.items.default import Item
 
 
@@ -8,9 +8,9 @@ class DateRangePicker(Item):
     """
 
     TYPE = "date_range_picker"
-    VISIBLE = True
-    NAME = lazy_gettext("Date picker")
-    DESCRIPTION = lazy_gettext("Pick a date or date range")
+    VISIBLE = False
+    NAME = gettext("Date picker")
+    DESCRIPTION = gettext("Pick a date or date range")
 
     @property
     def config(self):
@@ -24,5 +24,5 @@ class DateRangePicker(Item):
 
         return {
             self._RANGE: Toggle().make_object(value=self.config[self._RANGE],
-                                              label=lazy_gettext("Range"))
+                                              label=gettext("Range"))
         }

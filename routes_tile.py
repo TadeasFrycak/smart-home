@@ -1,7 +1,5 @@
 # Tile routes
 from routes_auth import *
-import json
-import inspect
 
 
 # Tile rewrites
@@ -20,9 +18,7 @@ def tile_value_rwr(data):
     tile_id = data[tmng_r.TILE_ID]
     value = data[tmng_r.VALUE]
 
-    emit("tile_value_result", {tmng_r.TILE_ID: tile_id, tmng_r.VALUE: value}, broadcast=True)
-    acom.mqtt_thread.publish(tile_id=tile_id, value=json.dumps(value))
-    tmng_rwr.tile_value(new_value=value, tile_id=tile_id)
+    tile_publish(tile_id=tile_id, value=value)
 
     changes_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
                           message="tile '{}'s value set to '{}'".format(tile_id, value))
@@ -119,22 +115,16 @@ def tile_type_rwr(data):
     old_type = tmng_r.get_tile_type(tile_id=tile_id)
     new_type = refactoring.refactor_reverse(data["new_type"])
 
-    if old_type != new_type:  # Prevent icon blinking (when clicking too times)
-        tile = tmng_r.get_tile(tile_id)
-        old_tile_values = render_template(fmng.path_join("modal_edit", "tile_values.html"),
-                                          tile_values=tmng_r.get_tile_template_values(tile_type=old_type,
-                                                                                      tile_id=tile_id))
-        new_tile_values = render_template(fmng.path_join("modal_edit", "tile_values.html"),
-                                          tile_values=tmng_r.get_tile_template_values(tile_type=new_type,
-                                                                                      tile_id=tile_id))
-
-        if old_tile_values == new_tile_values:
-            tile_values = None
-        else:
-            tile_values = new_tile_values
-
+    if old_type != new_type:  # Prevent from icon blinking (when clicking too times)
         tmng_rwr.tile_type(new_type=new_type, tile_id=tile_id)
-        emit("tile_type_result", {"tile_values": tile_values, "tile_id": tile_id,
+
+        tile = tmng_r.get_tile(tile_id)
+        tile_values = render_template(fmng.path_join("modal_edit", "tile_values.html"),
+                                      tile=tile,
+                                      tile_config=tmng_r.get_tiles_config(),
+                                      group="tile-dynamic")
+
+        emit("tile_type_result", {"tile_values": tile_values, "tile_id": tile_id, "type": new_type,
                                   "tile_html": render_template(
                                       fmng.path_join("tiles", tmng_r.get_tile_type(tile_id) + ".html"), tile=tile)},
              broadcast=True)
@@ -144,12 +134,12 @@ def tile_type_rwr(data):
         terminal.debug("Change tile (ID: {0}) type to {1}".format(tile_id, new_type))
 
 
-@socketio.on("tile_icon", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio.on("tile_config", namespace=app.config["SOCKETIO_NAMESPACE"])
 @socketio_login_required
-@socketio_prevent_hack
+# TODO @socketio_prevent_hack a odebrat z prevent hacku tile_icon
 @role_required("manager")
 @check_browser
-def tile_icon_rwr(data):
+def tile_config_rwr(data):
     """
     Rewrite tile icon
     :param data: data of socketio request
@@ -157,14 +147,69 @@ def tile_icon_rwr(data):
     """
 
     tile_id = data[tmng_r.TILE_ID]
-    new_icon = data["new_icon"]
+    value_name = data["value_name"]
+    value = data["value"]
 
-    if tmng_rwr.tile_icon(new_icon=new_icon, tile_id=tile_id):  # Prevent icon blinking (when clicking too times)
-        emit("tile_icon_result", {"tile_id": tile_id, "new_icon": "/img/icons/" + new_icon}, broadcast=True)
+    if tmng_rwr.tile_config(tile_id=tile_id, value_name=value_name, value=value):
+        emit("tile_config_result", {"tile_id": tile_id, "value_name": value_name, "value": value}, broadcast=True)
 
         changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
-                                   message="tile '{}''s icon changed to '{}'".format(tile_id, new_icon))
-        terminal.debug("Change tile (ID: {0}) icon to {1}".format(tile_id, new_icon))
+                                   message="tile '{}''s '{}' changed to '{}'".format(tile_id, value_name, value))
+        terminal.debug("Change tile (ID: {0}) {2} to {1}".format(tile_id, value, value_name))
+
+
+@socketio.on("tile_protocol_values", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio_login_required
+# TODO @socketio_prevent_hack a odebrat z prevent hacku tile_icon
+@role_required("manager")
+@check_browser
+def tile_config_rwr(data):
+    tile_id = data[tmng_r.TILE_ID]
+    protocol = data["protocol"]
+    value_name = data["value_name"]
+    value = data["value"]
+
+    old_config, new_config = tmng_rwr.tile_protocol_values(tile_id=tile_id, value_name=value_name, value=value, protocol=protocol)
+    if new_config:
+        emit("tile_protocol_values_result", {"tile_id": tile_id, "value_name": value_name, "value": value, "protocol": protocol}, broadcast=True, include_self=False)
+
+        default_protocols.get_object(protocol).edit_listener(old_config=old_config, new_config=new_config)
+
+        changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                                   message="tile '{}''s protocol 's '{}' changed to '{}'".format(tile_id, value_name, value))
+        terminal.debug("Change tile (ID: {0}) {2} to {1}".format(tile_id, value, value_name))
+
+
+@socketio.on("tile_protocol", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio_login_required
+# TODO @socketio_prevent_hack
+@role_required("manager")
+@check_browser
+def tile_protocol(data):
+    tile_id = data[tmng_r.TILE_ID]
+    new_protocol = data["new_protocol"]
+    state = data["state"]
+
+    result = tmng_rwr.tile_protocol(tile_id=tile_id, protocol=new_protocol, state=state, protocol_object=default_protocols.get_object(new_protocol))
+    html = None
+    if state == "add":
+        html = render_template("modal_edit/protocol_values.html",
+                               id=tile_id, protocol_config=get_protocols_config(),
+                               protocols=tmng_r.get_tile(tile_id)["protocols"],
+                               group="protocol-tile",
+                               protocol=new_protocol)
+
+    emit("tile_protocol_result", {"tile_id": tile_id, "new_protocol": new_protocol, "state": state,
+                                  "html": html}, broadcast=True)
+    if state == "add":
+        default_protocols.get_object(new_protocol).add_listener()
+
+    elif state == "remove":
+        default_protocols.get_object(new_protocol).remove_listener(config=result)
+
+    changes_edit_logger.remove(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
+                               message="tile '{}' protocol '{}' to '{}'".format(tile_id, state, new_protocol))
+    terminal.debug("'{1}' protocol of tile (ID: {0}) '{2}'".format(tile_id, state, new_protocol))
 
 
 # Tile deletes
@@ -183,8 +228,11 @@ def tile_delete(data):
     tile_id = data[tmng_r.TILE_ID]
 
     emit("tile_delete_result", {"tile_id": tile_id}, broadcast=True)
-    tmng_w.tile_delete(tile_id=tile_id)
 
+    for protocol in tmng_r.get_protocol(tile_id):
+        default_protocols.get_object(protocol["type"]).remove_listener(config=protocol["config"])
+
+    tmng_w.tile_delete(tile_id=tile_id)
     changes_edit_logger.remove(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
                                message="tile '{}'".format(tile_id))
     terminal.debug("Delete tile (ID: {0})".format(tile_id))

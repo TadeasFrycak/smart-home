@@ -1,4 +1,9 @@
-from flask_babel import lazy_gettext
+import random
+import string
+import time
+
+from library.fmng import FileManager
+from flask_babel import gettext
 
 
 class Item:
@@ -8,18 +13,21 @@ class Item:
 
     TYPE = None
     VISIBLE = False
-    NAME = lazy_gettext("Unnamed")
+    NAME = gettext("Unnamed")
+    PROTOCOLS = []
     DESCRIPTION = ""
     VALUE = None
 
     # Arguments
     # TODO na tohle udělat jeden speciální soubor
+    _ID = "id"
     _TYPE = "type"
     _VISIBLE = "visible"
     _NAME = "name"
     _DESCRIPTION = "description"
     _VALUE = "value"
     _CONFIG = "config"
+    _PROTOCOLS = "protocols"
 
     # General
     _LABEL = "label"
@@ -37,14 +45,26 @@ class Item:
     _PLACEHOLDER = "placeholder"
 
     # Input
+    _NUMBER = "number"
     _READONLY = "readonly"
     _INVALID = "invalid"
     _BUTTON = "button"
+    _PREPEND = "prepend"
+    _LIST = "list"
+    _COUNT = "count"
 
     # Button
     _COLOR = "color"
 
+    # Button group
+    _BUTTONS = "btn_group"
+    _CHECKBOX = "checkbox"
+
+    # Dropdown
+    _OPTIONS = "options"
+
     def __init__(self, *args, **kwargs):
+        self._fmng = FileManager()
         pass
 
     @property
@@ -86,6 +106,19 @@ class Item:
     def on_display_value(value):
         return value
 
+    @staticmethod
+    def create_random_string(length=2):
+        return "".join(random.choices(string.ascii_lowercase, k=length))
+
+    def random_id(self):
+        """
+        Make random ID
+        :return: random ID
+        """
+        random_id = self.create_random_string() + "-" + str(time.time())
+
+        return random_id
+
     def make_object(self, value=None, **kwargs):
         """
         Make item object with data to save
@@ -98,9 +131,11 @@ class Item:
             value = self.VALUE
 
         return {
+            self._ID: self.random_id(),
             self._TYPE: self.TYPE,
             self._VALUE: value,
-            self._VISIBLE: True,  # TODO this is for implement in future
+            self._PROTOCOLS: [],
+            self._VISIBLE: True,  # TODO this is for implement in future (hide function in edit)
             self._CONFIG: self._merge(default=self.config, kwargs=kwargs)
         }
 
@@ -112,10 +147,12 @@ class Item:
         :return: object
         """
         return {
+            self._ID: self.random_id(),
             self._TYPE: self.TYPE,
             self._VISIBLE: self.VISIBLE,
             self._NAME: self.NAME,
             self._DESCRIPTION: self.DESCRIPTION,
             self._VALUE: self.VALUE,
+            self._PROTOCOLS: [],
             self._CONFIG: self.edit_config
         }

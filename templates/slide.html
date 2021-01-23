@@ -58,8 +58,6 @@
             <div class="dropdown-wrapper disappear-on-normal">
                 <h6 class="dropdown-header">Server</h6>
                 <a class="save dropdown-item">{{ _("Save") }}</a>
-                <a class="shutdown dropdown-item">{{ _("Shutdown") }}</a>
-                <a class="restart dropdown-item">{{ _("Restart") }}</a>
 
                 <div class="dropdown-divider"></div>
 
@@ -76,7 +74,7 @@
         </div>
     </div>
 
-    <input class="swipe-header swiper-unfocus-on-enter" value="{{ slide.name }}" readonly>
+    <input class="swipe-header swiper-unfocus-on-enter unselectable" value="{{ slide.name }}" disabled>
 
     <div class="swipe-content">
         <div class="c_sortable_page_grid" id="sortable_page_grid" style="display:table; position: relative; margin: 0 auto; width: min-content;">
@@ -84,16 +82,12 @@
                 {% include "tiles/" + tile.type + ".html" %}
             {% endfor %}
 
-            <div class="add_new_tile_element tile enable-hammer" data-id="" data-type="add-new-tile" style="display: inline-block; background-color: transparent;box-shadow: none;-moz-transition: none; -webkit-transition: none; transition: none;">
-                <div data-id='adding-new-tile-element' data-type="add-new-tile" style='position: absolute; height: 100%;width: 100%; display: inline-block; box-shadow: none; background-color:transparent; -moz-transition: none; -webkit-transition: none; transition: none;'>
-{#                    <span class="iconify add-img" style="color:var(--main-color-first);width: 40px;height: 40px;" data-icon="zondicons-add-solid" data-inline="false"></span>#}
-                    <img alt="{{ _('Add') }}" class="add-img" src="{% if mode == "dark" %}{{ url_for('static', filename='img/static/add/dark.png') }}{% else %}{{ url_for('static', filename='img/static/add/light.png') }}{% endif %}" style='width:30px; position:relative; transform: translate(-50%,-50%); left:30%; top:50%; cursor: pointer;'>
+            <div class="add_new_tile_element add-tile-alpha tile" data-id="">
+                <div style="position:relative; transform: translate(-50%,-50%); left:50%; top:50%;display:inline-block;">
+                    <span class="iconify add-img" style="color:aliceblue;width: 30px;height: 30px; cursor: pointer;" data-icon="zondicons-add-solid" data-inline="false"></span>
                 </div>
             </div>
 
-            <script>
-                $(".add_new_tile_element").hide();
-            </script>
         </div>
         <div class="end-block"></div>
     </div>

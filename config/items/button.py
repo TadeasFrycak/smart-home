@@ -1,4 +1,4 @@
-from flask_babel import lazy_gettext
+from flask_babel import gettext, lazy_gettext
 from config.items.default import Item
 
 
@@ -15,7 +15,7 @@ class Button(Item):
     @property
     def config(self):
         return {
-            self._LABEL: lazy_gettext("Button"),
+            self._LABEL: self.NAME,
             self._COLOR: "info",
         }
 

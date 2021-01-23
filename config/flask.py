@@ -20,7 +20,7 @@ class DevelopmentConfig:
 
     SECRET_KEY = "R`xk^U+234>a3P&ef5{kagBFk\g,DE`;/g<NwS#,`'K}gfk5p5\&XD.ce;*8_56x"
 
-    LANGUAGES = ["cs", "ru", "de", "sk", "en"]
+    LANGUAGES = ["cs", "en"]
     BABEL_DEFAULT_LOCALE = "en"
 
     SQLALCHEMY_DATABASE_URI = "sqlite:///data/database.sqlite"

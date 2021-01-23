@@ -4,15 +4,15 @@
     package="cz.frycak.smarthome">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- Telefon oprávnění -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" />
 
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -24,13 +24,18 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustPan|adjustResize">
 
-        <receiver
-            android:name="Restarter"
-            android:enabled="true"
-            android:exported="true">
+        <receiver android:name=".DoorbirdUnlock">
             <intent-filter>
-                <action android:name="restartservice" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/doorbird_unlock_info" />
+        </receiver>
+
+        <receiver android:name=".UnlockReceiver">
+
         </receiver>
 
         <activity
@@ -43,16 +48,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings" />
 
         <service
-            android:name=".BackgroundService"
-            android:enabled="true" />
-        <service
-            android:name="org.eclipse.paho.android.service.MqttService" />
+            android:name=".ForegroundService"
+            android:foregroundServiceType="location|camera|microphone" />
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
 
 </manifest>

@@ -1,13 +1,23 @@
-<div class="grid-square">
-    <div class="tile enable-hammer" data-id="{{ tile.id }}" style="width:212px;" data-type="{{ tile.type }}">
+<div class="tile-item" data-id="{{ tile.id }}" data-type="{{ tile.type }}" data-value="{{ tile.value }}" data-config='{{ tile.config | tojson | safe }}'>
+    <div class="tile" style="width:212px;">
         <div class="tile-text">
-            <img alt="{{ _('Icon') }}" src="{{ '/img/icons/'+tile.config.icon }}" class="tile-icon icon-invert" style="left: 27px;top: 16px">
+            <img alt="{{ _('Icon') }}" src="{{ url_for('static', filename='img/icons/' + tile.config.icon) }}" class="tile-icon icon-invert" style="left: 27px;top: 16px">
             <div style="width: 100px;height: 40px;position: absolute;left: 100px;top: 14px;">
                 <span class="tile-label" style="font-size: 18px;top: 0;height: 46px;width: 100px;">{{ tile.label }}</span>
             </div>
             <div style="position: absolute;top: 62px;left: 30px;font-size: 20px;"><span class="tile-value-left">{{ tile.value.left.value }} </span><span class="tile-suffix-left"> {{ tile.value.left.suffix }}</span></div>
             <div style="position: absolute;top: 62px;left: 104px;font-size: 20px;"><span class="tile-value-right">{{ tile.value.right.value }} </span><span class="tile-suffix-right"> {{ tile.value.right.suffix }}</span></div>
         </div>
-        <div class="tile-touch-layer"></div>
     </div>
+
+    <script type="text/javascript">
+      $('.tile-item[data-id="{{ tile.id }}"]').on("value-receive", function() {
+        let value = store($(this), "value");
+
+        $(this).find(".tile-value-left").text(value.left.value);
+        $(this).find(".tile-value-right").text(value.right.value);
+        $(this).find(".tile-suffix-left").text(value.left.suffix);
+        $(this).find(".tile-suffix-right").text(value.right.suffix);
+      });
+    </script>
 </div>

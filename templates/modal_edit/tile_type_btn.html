@@ -1,4 +1,4 @@
-<label style="margin-bottom:6px;" class="modal-edit-tile-type btn btn-secondary {% if tile_type == tile_name %}active{%endif%}">
-    <input type="radio" name="options" autocomplete="off" {% if tile_type == tile_name %}checked{%endif%}>
-    <span>{{ refactor(tile_name) }}</span>
+<label style="margin-bottom:6px;" data-type="{{ value.type }}" class="modal-edit-tile-type btn btn-secondary {% if tile["type"] == value.type %}active{%endif%}">
+    <input type="radio" name="options" autocomplete="off">
+    <span>{{ value.name }}</span>
 </label>

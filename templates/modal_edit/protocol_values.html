@@ -1,0 +1,17 @@
+{% for protocol_value in protocols %}
+    {% if protocol_value["type"] == protocol %}
+        <fieldset class="modal-fieldset" data-id="{{ id }}" data-type="{{ protocol }}">
+            <legend class="modal-fieldset-legend">{{ protocol_config[protocol]["name"] }}</legend>
+
+            {% for value in protocol_config[protocol]["config"] %}
+                {% set default_item = protocol_config[protocol]["config"][value] %}
+
+                {% set item = {"type": default_item.type, "config": default_item.config, "id": value, "value": protocol_value["config"][value]} %}
+
+                {% if default_item %}
+                    {% include "items/" + item["type"] + ".html" %}
+                {% endif %}
+            {% endfor %}
+        </fieldset>
+    {% endif %}
+{% endfor %}

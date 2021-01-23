@@ -14,28 +14,47 @@
   transition: all 0.3s;
 }
 
+.add_new_tile_element {
+  transform: scale(0.7);
+  transition: all 0.5s;
+  display: inline-block;
+  margin: 0 6px;
+  box-shadow: none;
+}
+
 .dark .tile {
   color: var(--tile-dark-fg-first);
   background-color: var(--tile-dark-bg-first);
 }
-
 .dark .tile-display {
   color: var(--tile-dark-fg-second);
 }
 .dark .tile-active {
   background-color: var(--tile-dark-bg-second);
 }
-
-.light .tile-active{
-  background-color: var(--tile-light-bg-first);
+.dark .add-tile-alpha {
+  background-color: var(--tile-dark-bg-first-alpha);
+}
+.dark .add_new_tile_element:hover {
+  background-color: var(--tile-dark-bg-first-alpha-half) !important;
 }
 
-.tile-icon{
+.light .tile-active {
+  background-color: var(--tile-light-bg-first);
+}
+.light .add-tile-alpha {
+  background-color: var(--tile-light-bg-second-alpha);
+}
+.light .add_new_tile_element:hover {
+  background-color: var(--tile-light-bg-second-alpha-half) !important;
+}
+
+.tile-icon {
   height: 38%;
   position: absolute;
 }
 
-.tile-label{
+.tile-label {
   top: 23px;
   max-width: 80px;
   height: 65px;
@@ -51,14 +70,14 @@
   position: relative;
 }
 
-.tile-status{
+.tile-status {
   font-size: 11px;
   position: absolute;
   margin-top: 5px;
   color: var(--tile-light-fg-second);
 }
 
-.tile-display{
+.tile-display {
   font-size: 30px;
   margin: 0;
   color: #3b3b3b;
@@ -68,20 +87,12 @@
   display: -webkit-inline-box;
 }
 
-
-.tile-touch-layer{
-  background-color: transparent;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
-
 .tile-text {
   background-color: transparent;
   position: absolute;
   height: 100%;
   width: 100%;
-  padding: 10px
+  padding: 10px;
 }
 
 .toggle-dot {
@@ -96,15 +107,18 @@
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
- }
-
-/* TODO BUG v dark modu na podržení tilu problikne, bílé okraje */
-.tile-sortable-move > * {
-  background-color: rgb(113, 113, 113);
 }
 
-.alarm-clock-glyph {
-  position:relative;
+.dark .tile-sortable-move > * {
+  background-color: var(--tile-dark-bg-first-alpha);
+}
+
+.light .tile-sortable-move > * {
+  background-color: var(--tile-light-bg-second-alpha);
+}
+
+.ac-glyph {
+  position: relative;
   display: inline-block;
   border-radius: 50%;
   border-width: 1px;
@@ -117,12 +131,11 @@
   margin-right: 1px;
   transition: all 0.3s;
 }
- 
-/* .light .alarm-clock-glyph{
+
+/* .light .ac-glyph{
   border-color: rgb(160, 159, 159);
 } */
-
-.alarm-clock-glyph-text{
+.ac-glyph-text {
   transform: translate(-50%, -50%);
   position: absolute;
   top: 10px;
@@ -131,10 +144,12 @@
   font-size: 11px;
 }
 
-.dark .alarm-clock-glyph-active{
+.dark .ac-glyph-active {
   background-color: var(--tile-dark-bg-third);
 }
 
-.light .alarm-clock-glyph-active{
+.light .ac-glyph-active {
   background-color: var(--tile-light-bg-third);
 }
+
+/*# sourceMappingURL=tiles.css.map */

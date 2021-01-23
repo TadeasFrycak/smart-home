@@ -1,0 +1,44 @@
+<div class="modal-item" data-id="{{ item.id }}" data-type="{{ item.type }}" data-value="{{ item.value }}" data-config='{{ item.config | tojson | safe }}' data-group="{{ group }}">
+    <canvas></canvas>
+</div>
+
+<script type="text/javascript">
+  // Generates graph
+  $('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]').each(function(){
+    new Chart($(this).children(), {
+      type: "line",
+      data: {
+        labels: {{ item.value.x | tojson | safe }},
+        datasets: [{
+          label: store($(this), "header"),
+          borderColor: "rgb(255, 99, 132)",
+          data: {{ item.value.y | tojson | safe }}
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            {#time: {
+              displayFormats: {
+                'millisecond': 'MMM DD',
+                'second': 'MMM DD',
+                'minute': 'MMM DD',
+                'hour': 'MMM DD',
+                'day': 'MMM DD',
+                'week': 'MMM DD',
+                'month': 'MMM DD',
+                'quarter': 'MMM DD',
+                'year': 'MMM DD',
+              }
+            }#}
+          }],
+        yAxes: [{
+          ticks: {
+            {#beginAtZero: true#}
+          }
+        }]
+      }}
+    });
+  });
+</script>

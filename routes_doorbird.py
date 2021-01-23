@@ -1,5 +1,5 @@
 from routes_main import *
-import requests
+
 
 @socketio.on("get_doorbird_modal", namespace=app.config["SOCKETIO_NAMESPACE"])
 # TODO @socketio_prevent_hack
@@ -18,7 +18,7 @@ def get_doorbird_modal(data):
     mode = sun.get_mode(user_mode=current_user.mode)
 
     image = doorbird.live_image(resolution="vga")
-    socketio.emit("get_doorbird_modal_result", {"modal": render_template("modal_doorbird.html", mode=mode, image=image)}, namespace=app.config["SOCKETIO_NAMESPACE"])
+    emit("get_doorbird_modal_result", {"modal": render_template("modal_doorbird.html", mode=mode, image=image)})
 
     refresh_clients.set_data(tab_id=tab_id, ip=request.environ.get("HTTP_X_REAL_IP", request.remote_addr),
                              browser=request.user_agent.browser, modal_type="doorbird",

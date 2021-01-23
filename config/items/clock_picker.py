@@ -1,4 +1,4 @@
-from flask_babel import lazy_gettext
+from flask_babel import gettext
 from config.items.default import Item
 
 
@@ -9,13 +9,13 @@ class ClockPicker(Item):
 
     TYPE = "clock_picker"
     VISIBLE = True
-    NAME = lazy_gettext("Clock picker")
+    NAME = gettext("Clock picker")
     VALUE = ""
 
     @property
     def config(self):
         return {
-            self._PLACEHOLDER: lazy_gettext("Click to set the time..."),
+            self._PLACEHOLDER: gettext("Click to set the time..."),
         }
 
     @property
@@ -23,5 +23,5 @@ class ClockPicker(Item):
         from config.items.input import Input
 
         return {
-            self._PLACEHOLDER: Input().make_object(value=self.config[self._PLACEHOLDER], label=lazy_gettext("Placeholder"))
+            self._PLACEHOLDER: Input().make_object(value=self.config[self._PLACEHOLDER], label=gettext("Placeholder"))
         }

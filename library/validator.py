@@ -25,15 +25,15 @@ class Validator:
         :return: True/exception
         """
 
-        # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.DEVICES_FILE), "r") as f:
+        # with open(self.fmng.path_join(self.fmng.DATA_DIR, self.fmng.DEVICES_FILE), "r") as f:
         #     json.load(f)
         # TODO kontroly všech ini a JSON souborů (mac_list.json, ...)
-        # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
-        #                                 self.__fmng.WHITELIST_FILE), "r") as f:
+        # with open(self.fmng.path_join(self.fmng.DATA_DIR, self.fmng.APP_CONFIG_DIR,
+        #                                 self.fmng.WHITELIST_FILE), "r") as f:
         #     json.load(f)
         #
-        # with open(self.__fmng.path_join(self.__fmng.DATA_DIR, self.__fmng.APP_CONFIG_DIR,
-        #                                 self.__fmng.BLACKLIST_FILE), "r") as f:
+        # with open(self.fmng.path_join(self.fmng.DATA_DIR, self.fmng.APP_CONFIG_DIR,
+        #                                 self.fmng.BLACKLIST_FILE), "r") as f:
         #     json.load(f)
 
         return True
@@ -74,7 +74,7 @@ class Validator:
 
     def tile_id(self, tile):
         if isinstance(tile, str) and 40 >= len(tile) >= 6:
-            if re.match("^[a-zA-Z0-9-_]+$", tile):
+            if re.match("^[a-zA-Z0-9-.]+$", tile):  # TODO první jsou dvě písmenka, pak pomlčka, pak integer s časem - kontrolovat
                 tile_content = self.__tmng_r.get_tile(tile_id=tile)
                 if tile_content:
                     return tile_content
@@ -107,7 +107,7 @@ class Validator:
         if isinstance(tile_type, str) and 40 >= len(tile_type) >= 1:
             tile_type = self.__refactoring.refactor_reverse(tile_type)
 
-            if tile_type in self.__tmng_r.get_tile_templates():
+            if tile_type in self.__tmng_r.get_tiles_config():
                 return True
 
         self.__terminal.prevent_hack("Tile type '{}' is NOT OK".format(tile_type), False)
@@ -158,7 +158,7 @@ class Validator:
 
     def modal_item_id(self, modal_id):
         if isinstance(modal_id, str) and 40 >= len(modal_id) >= 6:
-            if re.match("^[a-zA-Z0-9-_]+$", modal_id):
+            if re.match("^[a-zA-Z0-9-.]+$", modal_id):
                 # Check duplicity for items in modals
                 for page, page_content in enumerate(self.__fmng.devices):
                     for tile in page_content[self.__tmng_r.CHILDREN]:
@@ -215,9 +215,11 @@ class Validator:
             modal = self.modal_item_id(item_id)
             if modal:
                 if isinstance(value_name, str) and 40 >= len(value_name) >= 1:
-                    modal_item_value_name = self.__refactoring.refactor_reverse(value_name)
-                    if modal_item_value_name in self.__tmng_r.get_modal_template_values(item_type=modal["type"])[1]:
-                        return True
+                    return True
+                    # TODO validace value_name
+                    # modal_item_value_name = self.__refactoring.refactor_reverse(value_name)
+
+                    # if modal_item_value_name in self.__tmng_r.get_modal_template_values(item_type=modal["type"])[1]:
 
         self.__terminal.prevent_hack("Modal value name '{}' is NOT OK".format(value_name), False)
 

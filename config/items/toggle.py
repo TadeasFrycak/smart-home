@@ -1,4 +1,4 @@
-from flask_babel import lazy_gettext
+from flask_babel import gettext
 from config.items.default import Item
 
 
@@ -9,14 +9,14 @@ class Toggle(Item):
 
     TYPE = "toggle"
     VISIBLE = True
-    NAME = lazy_gettext("Toggle")
-    DESCRIPTION = lazy_gettext("Toggle value - on/off")
+    NAME = gettext("Toggle")
+    DESCRIPTION = gettext("Toggle value - on/off")
     VALUE = False
 
     @property
     def config(self):
         return {
-            self._LABEL: lazy_gettext("Toggle"),
+            self._LABEL: self.NAME,
             self._PLACEHOLDER: "",
             self._DISABLED: False
         }
@@ -26,7 +26,7 @@ class Toggle(Item):
         from config.items.input import Input
 
         return {
-            self._LABEL: Input().make_object(value=self.config[self._LABEL], label=lazy_gettext("Label")),
-            self._PLACEHOLDER: Input().make_object(value=self.config[self._PLACEHOLDER], label=lazy_gettext("Placeholder")),
-            self._DISABLED: self.make_object(value=self.config[self._DISABLED], label=lazy_gettext("Disabled"))
+            self._LABEL: Input().make_object(value=self.config[self._LABEL], label=gettext("Label")),
+            self._PLACEHOLDER: Input().make_object(value=self.config[self._PLACEHOLDER], label=gettext("Placeholder")),
+            self._DISABLED: self.make_object(value=self.config[self._DISABLED], label=gettext("Disabled"))
         }

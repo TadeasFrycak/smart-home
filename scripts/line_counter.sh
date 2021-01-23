@@ -1,0 +1,2 @@
+#pygount --suffix=py,js,css,html,json,scss,md,sh,txt,ini,cfg --format=summary --folders-to-skip venv,jquery,bootstrap,swiper,vue,sortable,clockpicker,hammer,iconify,live,range-slider,test,chartjs,socket,popper,animate,apexcharts
+pygount --suffix=py,js,css,html --format=summary --folders-to-skip venv,jquery,bootstrap,swiper,vue,sortable,clockpicker,hammer,iconify,live,range-slider,test,chartjs,socket,popper,animate,apexcharts,moment,fotorama,test_files

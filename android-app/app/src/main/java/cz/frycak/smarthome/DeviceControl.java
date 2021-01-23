@@ -1,43 +1,61 @@
 package cz.frycak.smarthome;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+
+import static android.content.Context.WIFI_SERVICE;
 
 
 public class DeviceControl {
     private Context mainActivity;
 
+    @SuppressLint("StaticFieldLeak")
+    private static DeviceControl instance;
+    public static DeviceControl getInstance() {
+        return instance;
+    }
+
     // Constructor
     public DeviceControl(Context context) {
         mainActivity = context;
+        instance = this;
     }
 
     // Flashlight
     public void flashlight(boolean state, int number) {
+        // TODO tohle dořešit, s těmi právi + pokud není blesk, nespadnout
+//        if (ContextCompat.checkSelfPermission(mainActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions((Activity) mainActivity, new String[] {Manifest.permission.CAMERA}, 50);
+//        }
         CameraManager cameraManager = (CameraManager) mainActivity.getSystemService(Context.CAMERA_SERVICE);
 
         try {
             String cameraId = cameraManager.getCameraIdList()[number];
             cameraManager.setTorchMode(cameraId, state);
-        }
-
-        catch (CameraAccessException e) {
+        } catch (Exception e) {
             Log.e("Flashlight", String.valueOf(e));
         }
     }
@@ -59,6 +77,11 @@ public class DeviceControl {
     // Toast notification
     public void toast(String text) {
         Toast.makeText(mainActivity.getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    public String ip() {
+        WifiManager wifiManager = (WifiManager) mainActivity.getApplicationContext().getSystemService(WIFI_SERVICE);
+        return Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
     }
 
     // Normal notification

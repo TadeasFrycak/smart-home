@@ -41,7 +41,7 @@ class Terminal:
 
     END = "\033[0m"
 
-    def __init__(self, logger, priority=0, socket_io=None, log_lines=True):
+    def __init__(self, logger, log_only=False, priority=0, socket_io=None, log_lines=True):
         """
         Init of terminal class
         :param socket_io: declare of socket_io
@@ -52,42 +52,41 @@ class Terminal:
         assert isinstance(priority, int), "terminal priority should be int"
 
         self.__logger = logger
+        self.__log_only = log_only
         self.__priority = priority
         self.__socket_io = socket_io
         self.__log_lines = log_lines
-        os.system("cls")
-        try:
-            subprocess.run(["clear"])
-        except Exception:
+
+        if log_only is False:
             try:
                 subprocess.run(["cls"])
-            except Exception:
-                pass
+            except FileNotFoundError:
+                subprocess.run(["clear"])
 
-        print()
-        subprocess.call(["catimg", "-w", "80", "./static/img/static/favicon_python.png"])
+            print()
+            subprocess.call(["catimg", "-w", "80", "./static/img/static/favicon_python.png"])
 
-        self.go_back(100)
+            self.go_back(100)
 
-        print()
+            print()
 
-        self.print(
-            "\t\t\t\t\t  _____ _    _         \n" +
-            "\t\t\t\t\t / ____| |  | |  Smart \n" +
-            "\t\t\t\t\t| (___ | |__| |  Home  \n" +
-            "\t\t\t\t\t \\___ \\|  __  |      \n" +
-            "\t\t\t\t\t ____) | |  | |        \n" +
-            "\t\t\t\t\t|_____/|_|  |_|        \n")
+            self.print(
+                "\t\t\t\t\t  _____ _    _         \n" +
+                "\t\t\t\t\t / ____| |  | |  Smart \n" +
+                "\t\t\t\t\t| (___ | |__| |  Home  \n" +
+                "\t\t\t\t\t \\___ \\|  __  |      \n" +
+                "\t\t\t\t\t ____) | |  | |        \n" +
+                "\t\t\t\t\t|_____/|_|  |_|        \n")
 
-        self.print(self.FG_COLORS["black"] + self.BG_COLORS["white"] + self.SPECIAL[
-            "bold"] + "\t\t\t\t\t ↓ About ↓ " + self.END)
-        self.print(self.FG_COLORS["white"] + self.SPECIAL[
-            "bold"] + "\t\t\t\t\tAuthors\t" + self.END + "Fryčák, Szkandera")
-        self.print(self.FG_COLORS["white"] + self.SPECIAL[
-            "bold"] + "\t\t\t\t\tVersion\t" + self.END + os.path.basename(os.getcwd()))
-        self.print(self.FG_COLORS["white"] + self.SPECIAL[
-            "bold"] + "\t\t\t\t\tCreated\t" + self.END + "26.05.2019 17:29")
-        self.go_forward(11)
+            self.print(self.FG_COLORS["black"] + self.BG_COLORS["white"] + self.SPECIAL[
+                "bold"] + "\t\t\t\t\t ↓ About ↓ " + self.END)
+            self.print(self.FG_COLORS["white"] + self.SPECIAL[
+                "bold"] + "\t\t\t\t\tAuthors\t" + self.END + "Fryčák, Szkandera")
+            self.print(self.FG_COLORS["white"] + self.SPECIAL[
+                "bold"] + "\t\t\t\t\tVersion\t" + self.END + os.path.basename(os.getcwd()))
+            self.print(self.FG_COLORS["white"] + self.SPECIAL[
+                "bold"] + "\t\t\t\t\tCreated\t" + self.END + "26.05.2019 17:29")
+            self.go_forward(11)
 
     @staticmethod
     def go_forward(amount):
@@ -129,8 +128,8 @@ class Terminal:
             self.print(self.BG_COLORS["red"] + self.SPECIAL["bold"] + "PHack\t" + self.END + self.FG_COLORS[
                 "white"] + data + self.SPECIAL["bold"] + " (" + source + ":" + str(cal_frame[1][2]) + ")" + self.END)
 
-        elif self.__priority == 0:
-            self.__logger.debug(data)
+        # elif self.__priority == 0:
+        #     self.__logger.debug(data)
         #     self.print(self.FG_COLORS["green"] + self.SPECIAL["bold"] + "PHack:\t" + self.END + self.FG_COLORS["white"] + data)
 
     def mqtt(self, data):
@@ -200,7 +199,8 @@ class Terminal:
         :return:
         """
 
-        data = str(data)
+        if self.__log_only is False:
+            data = str(data)
 
-        if self.__priority == 0:
-            print(data + self.END, end=end)
+            if self.__priority == 0:
+                print(data + self.END, end=end)

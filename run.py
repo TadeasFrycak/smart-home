@@ -15,9 +15,7 @@ import os
 # TODO sudo apt install python3-pip
 # TODO zde bude validace souborů, JSONů, ...
 # TODO Nebude Ok, jen pokud najde chybu, tak něco vypíše + na začátku napíše info
-# TODO ověřovat Python verzi
 # TODO MQTT check
-# TODO vypisovat info zde
 # TODO na RPi nejde nainstalovat Telegram bot, ale program píše, že nainstaloval správně, kontrolovat exit status commandu
 
 ready = False
@@ -44,23 +42,6 @@ def ctrl(signal_number, stack_frame):
         # TODO nebo udělat z run.py a start.py jeden soubor/implementovat tyhle killovací věci do start.py
         terminal.warning("Pressed Ctrl+C.. Exiting.. Please don't use this to shutdown the server")
         exit_program()
-
-
-def shutdown(signal_number, stack_frame):
-    if ready:
-        print()
-        # TODO (clean logs, __pycache__, ...) - create for this *.sh file
-        terminal.print(terminal.FG_COLORS["cyan"] + terminal.SPECIAL["bold"] + "I must clean space after me! Wait please..." +
-              terminal.END)
-        terminal.print(terminal.FG_COLORS["cyan"] + terminal.SPECIAL["bold"] + "Server shutdown" + terminal.END)
-        exit_program()
-
-
-def restart(signal_number, stack_frame):
-    if ready:
-        global restarting
-        restarting = True
-        kill()
 
 
 def install(to_install):
@@ -93,8 +74,6 @@ if user_id == 0:  # Is run as root
 
 
 signal.signal(signal.SIGINT, ctrl)
-signal.signal(signal.SIGUSR1, shutdown)
-signal.signal(signal.SIGUSR2, restart)
 
 kill()
 

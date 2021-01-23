@@ -62,20 +62,12 @@ $(document).ready(function(){
     socketio.emit("show_android_settings");
   });
 
-  $(document.body).on("click", ".shutdown", function() {
-    $.post("/shutdown", {});
-  });
-
   $(document.body).on("click", ".logout", function() {
     setTimeout(function(){window.location.href = "/logout";},250);
   });
 
   $(document.body).on("click", ".reload-all", function() {
     socketio.emit("reload_all");
-  });
-
-  $(document.body).on("click", ".restart", function() {
-    $.post("/restart", {});
   });
 });
 
@@ -102,7 +94,7 @@ function modalClose() {
 function displayModal(modal, type, tile_id) {
   store($(".modal-here"), "type", type)
   $("#my-modal").modal("hide");
-  // $(".btn-close").click().trigger("hide.bs.modal");
+  $(".btn-close").click().trigger("hide.bs.modal");
     // navigator[vibrate](50);
   $(".modal-here").empty().append(modal);
   $("#my-modal").modal({ keyboard: true }).on("hide.bs.modal", function (e) {
@@ -122,7 +114,9 @@ function changePageToNormal() {
   store($(document.body), "is-edit-active", false);
   // updateSearchBar();
   swiper.allowTouchMove = true;
-  $(".add_new_tile_element").show().fadeOut(2000);
+  $(".add_new_tile_element").css("transition", "background 0.5s").show().fadeOut(2000, function (){
+    $(this).removeAttr("style").hide();
+  });
   $(".exit-edit-mode-button").show().fadeOut(2000);
   $(".bcg-edit").fadeOut(2000);
   setTimeout(() => {
@@ -139,7 +133,8 @@ function changePageToNormal() {
   destroySortable();
   
   $(".swipe-header").each(function() {
-    $( this ).prop("readonly",true)
+    $( this ).prop("disabled",true)
+    $(this).addClass("unselectable");
     // $( this ).css({"border-bottom-width":"0px","border-bottom-style":"none","width":"fit-content"});
   });
 }
@@ -153,18 +148,16 @@ function changePageToEdit(instantly=false) {
   
   swiper.allowTouchMove = false;
   if (!instantly) {
-    $(".add_new_tile_element").hide().fadeIn(2000);
+    $(".add_new_tile_element").css("transition", "background 0.5s").hide().fadeIn(2000, function (){
+      $(this).removeAttr("style");
+    });
     $(".exit-edit-mode-button").hide().fadeIn(2000);
     $(".bcg-edit").fadeIn(2000);
   }
 
   // Přidělí každému "+" tlačítko Hammer
   $(".add_new_tile_element").each(function() {
-    let hammer = new Hammer(this);
-
-    // hammer.on("tap", function() {
-    //   addNewTile();
-    // });
+    initializeHammerTile(this);
   });
   
   // Vytvoří sortable položky 
@@ -181,7 +174,8 @@ function changePageToEdit(instantly=false) {
   }, 400);
 
   $(".swipe-header").each(function() {
-    $( this ).prop("readonly",false)
+    $( this ).prop("disabled",false)
+    $(this).removeClass("unselectable");
     // $( this ).css({"border-bottom-width":"1px","border-bottom-style":"solid","width":"fit-content"});
   });
 }
@@ -202,12 +196,13 @@ function bindSortable(index,item) {
     animation: 150,
     swapThreshold: 1,
     ghostClass: "tile-sortable-move",
+    filter: ".add_new_tile_element",
 
-    onUpdate: function (evt) {
-      socketio.emit("tile_index", {"slide_index": swiper.realIndex, "old_index": evt.oldIndex, "new_index": evt.newIndex});
-      // console.log("Slide: " + swiper.realIndex);
-      // console.log("Old index: " + evt.oldIndex);
-      // console.log("New index: " + evt.newIndex);
+    onUpdate: function (event) {
+      let oldIndex = event.oldDraggableIndex;
+      let newIndex = event.newDraggableIndex;
+
+      socketio.emit("tile_index", {"slide_index": swiper.realIndex, "old_index": oldIndex, "new_index": newIndex});
     },
     // Element dragging started
 	  onStart: function () {
@@ -221,18 +216,6 @@ function bindSortable(index,item) {
       $(temp_element).each(function(){
         initializeHammerTile(this);
       });
-
-      // $(temp_element).each(function(){
-      //   let hammer = new Hammer(this);
-      //   hammer.on("tap", function() {
-      //     addNewTile();
-      //   });
-      // })
-
-      // $(test_element).appendTo(".c_sortable_page_grid");
-    },  
+    },
   });
 }
-
-// -webkit-user-select: none; -webkit-user-drag: none;
-// margin-left: 50px;/* top: -81px; */display: inline-block; box-shadow: none; background-color: transparent; transition: none; -webkit-user-select: none; -webkit-user-drag: none;

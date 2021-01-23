@@ -40,7 +40,7 @@ textarea {
     font-weight: 600;
 }
 
-.modal-preview {
+.modal-fieldset {
     padding: 0 15px 8px;
     border-radius: 7px;
     /*background-color: var(--main-dark-bg-second);*/

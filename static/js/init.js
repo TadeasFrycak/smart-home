@@ -12,6 +12,9 @@ if (isEditActive === true) {
   $(".exit-edit-mode-button").show();
   $(".bcg-edit").show();
 }
+else {
+  $(".add_new_tile_element").hide();
+}
 resize();
 
 $(document).ready(function(){
@@ -100,7 +103,7 @@ window.onresize = function(){
 function resize() {
   const tileWidth = 112
   let width = $(".swipe-content").width()
-  let howMany = (width)/tileWidth;
+  howMany = (width)/tileWidth;
   howMany = Math.floor(howMany); // Round down
   let tilesWidth = Math.ceil(howMany*tileWidth+1); // Round up
   $(".c_sortable_page_grid").css("width", tilesWidth);

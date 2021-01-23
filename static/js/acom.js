@@ -2,106 +2,67 @@
 // Receive asynchronous communication
 // ----------------------------------------------
 
-socketio.on("user_mode_result", function(data) {
-  if (data.mode === "light") {
-    $(document.body).removeClass("dark").addClass("light");
-    $(".add-img").attr("src", "img/static/add/light.png");
-  }
-  else if (data.mode === "dark") {
-    $(document.body).removeClass("light").addClass("dark");
-    $(".add-img").attr("src", "img/static/add/dark.png");
 
-  }
-});
-
-socketio.on("user_background_result", function(data) {
-  console.log(data.background);
-  $("<div class='bcg-new bcg-normal'></div>").insertBefore(".bcg-old");
-  $(".bcg-new").css("background-image", "url(img/backgrounds/" + data.background + ")");
-  let tmpImg = new Image() ;
-  tmpImg.src = "img/backgrounds/" + data.background
-  tmpImg.onload = function() {
-    $(".bcg-old").fadeOut(2000, function() {
-      this.remove();
-      $(".bcg-normal").removeClass("bcg-new").addClass("bcg-old");
-    });
-  };
-});
-
-socketio.on("slide_name_result", function(data){
-  let chosen_slide_name_textbox = $($(".swiper-slide")[data.slide_index]).find(".swipe-header");
-  $(chosen_slide_name_textbox).val(data.name);
-});
-
-socketio.on("modal_item_index_result", function(data){
-  let old_index = data.old_index;
-  let new_index = data.new_index;
-
-  if (isModalOpen(null, data.tile_id)) {
-    let all_tiles_within_slide = $(".modal_items_edit_sortable").find(".modal-edit-item");
-    let selected_item_old = all_tiles_within_slide[old_index];
-    let selected_item_new;
-
-    let temporary_item_old = $(selected_item_old).clone();
-
-    $(selected_item_old).remove();
-
-    if (new_index === all_tiles_within_slide.length) {
-      selected_item_new = all_tiles_within_slide[new_index - 1];
-      $(temporary_item_old).insertAfter($(selected_item_new));
-    } else {
-      selected_item_new = all_tiles_within_slide[new_index];
-      if (new_index > old_index) $(temporary_item_old).insertAfter($(selected_item_new));
-      if (new_index < old_index) $(temporary_item_old).insertBefore($(selected_item_new));
-    }
-  }
-});
-
-socketio.on("modal_item_delete_result", function(data) {
-  console.log(data.tile_id);
-  console.log(data.id);
-
-  if (isModalOpen(null, data.tile_id)) {
-    let item = $(".modal_items_edit_sortable").find('.modal-edit-item[data-id="' + data.id+ '"]');
-    // $(item).find(".modal-edit-item-dropdown").slideUp(function(){
-    //   $(this).remove();
-    // })
-    // setTimeout(() => {
-      $(item).slideUp(function() {
-        $(this).remove();
-      });
-    // }, 500);
-
-    $('.modal-item[data-id="' + data.id+ '"]').slideUp(function() {
-      $(this).remove();
-    });
-  }
-});
-
+// Tile sync
 socketio.on("tile_delete_result", function(data){
-  $(".tile[data-id="+data.tile_id+"]").parent().fadeOut(function() {$(this).remove()});
+  $(".tile-item[data-id='"+data.tile_id+"']").show().toggle("slide:right").removeAttr("style");
+  setTimeout(() => {$(".tile-item[data-id='"+data.tile_id+"']").remove()}, 600)
+
+  if (isModalOpen("edit", data.tile_id)) {
+    $('#my-modal').modal('hide');
+  }
 });
 
-socketio.on("tile_icon_result", function(data){
-  $(".tile[data-id="+data.tile_id+"] .tile-icon").attr("src", data.new_icon);
+socketio.on("tile_config_result", function(data){
+  if (isModalOpen("edit", data.tile_id)) {
+    store($('.modal-item[data-group="tile-dynamic"][data-id=' + data.value_name +']'), "value", data.value).trigger("value-receive");
+  }
+  let tile = $('.tile-item[data-id="' + data.tile_id +'"]');
+  let config = store(tile, "config");
+  config[data.value_name] = data.value;
+  store(tile, "config", config).trigger("config-receive");
 });
 
 socketio.on("tile_type_result", function(data){
   if (isModalOpen("edit", data.tile_id)) {
+    $("#tile-type label").removeClass("active");
+    $("#tile-type label[data-type='" + data.type +"']").addClass("active");
+
     if (data.tile_values) {
-      $(".tile-values-wrapper").empty().append(data.tile_values);
-      initImages();
+      if ($("#tile-dynamic-values").is(":hidden")) {
+        $(".tile-values-wrapper").append(data.tile_values);
+        $("#tile-dynamic-values").slideDown();
+        initializeTileDynamic();
+      }
+      else {
+        console.log($(".tile-values-wrapper").html().trim());
+        console.log(data.tile_values.trim())
+        if ($(".tile-values-wrapper").html().trim() !== data.tile_values.trim()) {  // TODO not working
+          $(".tile-values-wrapper").slideUp(function() {
+            $(".tile-values-wrapper").empty().append(data.tile_values).slideDown();
+            initializeTileDynamic();
+          });
+        }
+      }
+    }
+    else {
+      $("#tile-dynamic-values").slideUp(function() {
+        $(".tile-values-wrapper").empty();
+      });
     }
   }
 
-  $(".tile[data-id="+data.tile_id+"]").parent().replaceWith(data.tile_html);
-  $(".tile[data-id="+data.tile_id+"]").each(function(){
+  $(".tile-item[data-id='"+data.tile_id+"']").replaceWith(data.tile_html)
+  $(".tile-item[data-id='"+data.tile_id+"']").each(function() {
     initializeHammerTile(this);
-  });
+  })
 });
 
 socketio.on("tile_label_result", function(data){
-  $(".tile[data-id="+data.tile_id+"] .tile-label").text(data.new_label);
+  if (isModalOpen("edit", data.tile_id)) {
+    $("#tile_name").val(data.new_label);
+  }
+  $(".tile-item[data-id='"+data.tile_id+"'] .tile-label").text(data.new_label);
 });
 
 socketio.on("tile_index_result", function(data){
@@ -109,15 +70,12 @@ socketio.on("tile_index_result", function(data){
   let new_index = data.new_index;
   let slide_index = data.slide_index;
 
-  // console.log({old_index,new_index,slide_index});
-
   let selected_slide = $(".swiper-slide")[slide_index];
-  let all_tiles_within_slide = $(selected_slide).find(".grid-square");
+  let all_tiles_within_slide = $(selected_slide).find(".tile-item");
   let selected_tile_old = all_tiles_within_slide[old_index];
   let selected_tile_new;
 
   let temporary_tile_old = $(selected_tile_old).clone();
-  // let temporary_tile_new = $(selected_tile_new).clone();
 
   $(selected_tile_old).remove();
 
@@ -130,64 +88,84 @@ socketio.on("tile_index_result", function(data){
     if (new_index>old_index) $(temporary_tile_old).insertAfter($(selected_tile_new));
     if (new_index<old_index) $(temporary_tile_old).insertBefore($(selected_tile_new));
   }
-  // if (old_index == 0)
-  // {
-  // }
-  // else
-  // {
-  //   $(selected_tile_new).replaceWith($(temporary_tile_old));
-  //   $(selected_tile_old).replaceWith($(temporary_tile_new));
-  // }
 });
 
 socketio.on("tile_id_result", function(data) {
-  store($(".tile[data-id='"+data.tile_id+"']"), "id", data.new_id);
-  $("#tile-mqtt-path").val("home/" + data.new_id);
-  $(".modal-here").attr("data-tile-id", data.new_id);
-  $('.modal-item[data-id="item-mqtt-path"]').each(function () {
-    let itemID = store($(this), "value").split("/")[2];
-    store($(this), "value", "home/" + data.new_id + "/" + itemID).trigger("value-receive");
-  })
+  // Tile in slide
+  if (isModalOpen("edit", data.tile_id)) {
+    // Tile ID & MQTT in edit modal
+    store($(".modal-item[data-id='tile-id'][data-group='tile']"), "value", data.new_id).trigger("value-receive");
+    store($(".modal-item[data-id='tile-mqtt-path'][data-group='tile']"), "value", "home/" + data.new_id).trigger("value-receive");
+    // Modal here
+    store($(".modal-here"), "tile-id", data.new_id);
+    // Modal items
+    $('.modal-item[data-id="item-mqtt-path"]').each(function () {
+      let itemID = store($(this), "value").split("/")[2];
+      store($(this), "value", "home/" + data.new_id + "/" + itemID).trigger("value-receive");
+    })
+  }
+  store($(".tile-item[data-id='"+data.tile_id+"']"), "id", data.new_id);
 });
 
-socketio.on("modal_item_prepend_result", function(data) {
-  if (isModalOpen(null, data.tile_id)) {
-    let fieldset = $(data.fieldset);
-    let item = $(data.item);
+socketio.on("tile_value_result", function(data) {
+  let tile = $('.tile-item[data-id="' + data.tile_id + '"]');
+  store(tile, "value", data.value).trigger("value-receive");
+});
 
-    $(".modal_items_edit_sortable").prepend(fieldset);
-    $(".modal-dynamic").prepend(item);
-
-    $(fieldset).hide().slideDown();
-    $(item).hide().slideDown();
-
-    $(fieldset).find(".modal-edit-item-delete").on("click",function(e){
-      modalEditItemDelete(this);
-    });
-    $(fieldset).find('.modal-item[data-group^="modal-edit-"]').on("value-transmit", function(event) {
-      modalEditItemInit(this);
-    });
-
-    $(item).on("value-transmit", function() {
-      modalDynamicValueSend(this);
-    });
+socketio.on("tile_protocol_values_result", function(data) {
+  if(isModalOpen("edit", data.tile_id)) {
+    store($("fieldset[data-type='" + data.protocol + "'][data-id='" + data.tile_id + "']").find('.modal-item[data-group="protocol-tile"][data-id="' + data.value_name + '"]'), "value", data.value).trigger("value-receive");
   }
 });
 
-socketio.on("get_add_tile_result", function(data) {
-  let selected_slide = $($(".swiper-slide")[data.slide_index]).find(".add_new_tile_element");
-  $(data.tile_html).insertBefore(selected_slide).hide().fadeIn();
-  let tile_array = $($(".swiper-slide")[data.slide_index]).find(".grid-square");
-  let appended_tile = $(tile_array[tile_array.length-1]);
+socketio.on("tile_protocol_result", function(data) {
+  if(isModalOpen("edit", data.tile_id)) {
+    if (data.state === "add") {
+      $("#tile-protocol").find("label[data-type='" + data.new_protocol +"']").addClass("active");
+      $(".tile-protocols-wrapper").append(data.html);
+      $(".tile-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "']").hide().slideDown().find('.modal-item[data-group="protocol-tile"]').on("value-transmit", function() {
+        tileProtocolInit(this);
+      });
+    }
 
-  $(appended_tile).each(function(){
-     console.log("Initializing");
-
-     initializeHammerTile(this);
-     $(this).removeAttr("style");
-  });
+    else if (data.state === "remove") {
+      $("#tile-protocol").find("label[data-type='" + data.new_protocol +"']").removeClass("active");
+      let section = $(".tile-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "']");
+      section.slideUp(function () {
+        $(this).remove();
+      })
+    }
+  }
 });
 
+socketio.on("modal_item_protocol_values_result", function(data) {
+  if(isModalOpen("edit", data.tile_id)) {
+    store($("fieldset[data-type='" + data.protocol + "'][data-id='" + data.id + "']").find('.modal-item[data-group="protocol-item"][data-id="' + data.value_name + '"]'), "value", data.value).trigger("value-receive");
+  }
+});
+
+socketio.on("modal_item_protocol_result", function(data) {
+  if(isModalOpen("edit", data.tile_id)) {
+    if (data.state === "add") {
+      $(".item-protocol-btn[data-id='" + data.id + "']").find("label[data-type='" + data.new_protocol +"']").addClass("active");
+      $(".item-protocols-wrapper").append(data.html);
+      $(".item-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "'][data-id='" + data.id + "']").hide().slideDown().find('.modal-item[data-group="protocol-item"]').on("value-transmit", function() {
+        modalItemProtocolInit(this);
+      });
+    }
+
+    else if (data.state === "remove") {
+      $(".item-protocol-btn[data-id='" + data.id + "']").find("label[data-type='" + data.new_protocol +"']").removeClass("active");
+      let section = $(".item-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "'][data-id='" + data.id + "']");
+      section.slideUp(function () {
+        $(this).remove();
+      })
+    }
+  }
+});
+
+
+// Showing modals
 socketio.on("get_normal_modal_result", function(data) {
   displayModal(data.modal, "normal", data.tile_id);
 
@@ -197,35 +175,11 @@ socketio.on("get_normal_modal_result", function(data) {
   });
 });
 
-socketio.on("doorbird_live_image", function(data) {
-  $(".doorbird-live-image").attr("src", data.image);
-  $(".doorbird-framerate").text(data.framerate + " " + _("FPS"));
-});
-
-socketio.on("doorbird_event", function() {
-  if (store($(".modal-here"), "type") !== "doorbird") {
-    socketio.emit("get_doorbird_modal", {"tab_id": sessionStorage.tabID});
-  }
-});
 socketio.on("get_edit_modal_result", function(data) {
   console.log("Received edit modal");
   displayModal(data.modal, "edit", data.tile_id);
 
   initializeModalEditItems();
-});
-
-socketio.on("modal_item_id_result", function(data) {
-  if (isModalOpen(null, data.tile_id)) {
-    let obj = $('.modal-item[data-id="item-mqtt-path"][data-group="modal-edit-' + data.id + '"]');
-    store(obj, "value", "home/" + data.tile_id + "/" + data.new_id).trigger("value-receive");
-
-    store($(obj).closest(".modal-edit-item"), "id", data.new_id);
-    store($('.modal-item[data-id="' + data.id + '"]'), "id", data.new_id)
-
-    $('.modal-item[data-group="modal-edit-' + data.id + '"]').each(function(){
-      store($(this), "group", "modal-edit-" + data.new_id);
-    });
-  }
 });
 
 socketio.on("get_settings_modal_result", function(data) {
@@ -289,8 +243,228 @@ socketio.on("get_android_modal_result", function(data) {
   displayModal(data.modal, "android");
 });
 
+socketio.on("get_add_tile_result", function(data) {
+  let selectedSlide = $($(".swiper-slide")[data.slide_index]);
+  let selectedBtn = selectedSlide.find(".add_new_tile_element");
+  $(data.tile_html).insertBefore(selectedBtn)
+  let tile_array = $($(".swiper-slide")[data.slide_index]).find(".tile-item");
+  let appended_tile = $(tile_array[tile_array.length-1]);
+
+  let isEditActive = store($(document.body), "is-edit-active");
+
+  $(appended_tile).each(function(){
+    initializeHammerTile(this);
+  });
+
+  // Animation
+  if (isEditActive === true) {
+    appended_tile.hide();
+    selectedBtn.removeClass("add-tile-alpha").css({"transform": "scale(1)"})
+
+
+    setTimeout(() => {
+      // New line must have special animation - to prevent foul blink
+      if ((selectedSlide.find(".tile-item").length-1) % howMany === howMany -1) {
+          appended_tile.show();
+          selectedBtn.addClass("add-tile-alpha").removeAttr("style").css("transition", "none").hide().fadeIn(function () {
+            $(this).removeAttr("style");
+          });
+      }
+      else {
+        appended_tile.hide().toggle("slide:left").removeAttr("style");
+        selectedBtn.addClass("add-tile-alpha").removeAttr("style");
+      }
+    }, 500);
+
+  }
+  else {
+    appended_tile.hide().toggle("slide:left").removeAttr("style");
+  }
+
+});
+
+
+// Modal sync
+socketio.on("modal_item_prepend_result", function(data) {
+  if (isModalOpen(null, data.tile_id)) {
+    // TODO rozdělit na normal dynamic modal a na edit modal
+    let fieldset = $(data.fieldset);
+    let item = $(data.item);
+
+    $(".modal_items_edit_sortable").prepend(fieldset);
+    $(".modal-dynamic").prepend(item);
+
+    $(fieldset).hide().slideDown();
+    $(item).hide().slideDown();
+
+    $(fieldset).find(".modal-edit-item-delete").on("click",function(e){
+      modalEditItemDelete(this);
+    });
+    $(fieldset).find('.modal-item[data-group^="modal-edit-"]').on("value-transmit", function(event) {
+      modalEditItemInit(this);
+    });
+
+    $(item).on("value-transmit", function() {
+      modalDynamicValueSend(this);
+    });
+    $(fieldset).find(".item-protocol-label").on("click", "input",  function() {
+    DEBUG.log("Item protocol changed");
+    // ( > modal_edit_events.js )
+      // TODO tohle se má dělat až v té funkci, je to totiž už dvakrát nakopáírované
+    let type_name = store($(this).parent(), "type");
+    let state = $(this).parent().hasClass("active") ? "remove" : "add";
+    let tileID = store($(".modal-here"), "tile-id");
+    let itemID = store($(this).parent(), "id");
+
+    modalItemProtocol(tileID, itemID, type_name, state);
+  });
+  }
+});
+
+socketio.on("modal_item_index_result", function(data){
+  let old_index = data.old_index;
+  let new_index = data.new_index;
+
+  if (isModalOpen(null, data.tile_id)) {
+    let all_tiles_within_slide = $(".modal_items_edit_sortable").find(".modal-edit-item");
+    let selected_item_old = all_tiles_within_slide[old_index];
+    let selected_item_new;
+
+    let temporary_item_old = $(selected_item_old).clone();
+
+    $(selected_item_old).remove();
+
+    if (new_index === all_tiles_within_slide.length) {
+      selected_item_new = all_tiles_within_slide[new_index - 1];
+      $(temporary_item_old).insertAfter($(selected_item_new));
+    } else {
+      selected_item_new = all_tiles_within_slide[new_index];
+      if (new_index > old_index) $(temporary_item_old).insertAfter($(selected_item_new));
+      if (new_index < old_index) $(temporary_item_old).insertBefore($(selected_item_new));
+    }
+  }
+});
+
+socketio.on("modal_item_delete_result", function(data) {
+  console.log(data.tile_id);
+  console.log(data.id);
+
+  if (isModalOpen(null, data.tile_id)) {
+    let item = $(".modal_items_edit_sortable").find('.modal-edit-item[data-id="' + data.id+ '"]');
+      $(item).slideUp(function() {
+        $(this).remove();
+      });
+
+    $('.modal-item[data-id="' + data.id+ '"]').slideUp(function() {
+      $(this).remove();
+    });
+  }
+});
+
+socketio.on("modal_item_id_result", function(data) {
+  if (isModalOpen(null, data.tile_id)) {
+    let obj = $('.modal-item[data-id="item-mqtt-path"][data-group="modal-edit-' + data.id + '"]');
+    store(obj, "value", "home/" + data.tile_id + "/" + data.new_id).trigger("value-receive");
+    store($('.modal-item[data-id="id"][data-group="modal-edit-' + data.id + '"]'), "value", data.new_id).trigger("value-receive");
+
+    store($(obj).closest(".modal-edit-item"), "id", data.new_id);
+    store($('.modal-item[data-id="' + data.id + '"]'), "id", data.new_id)  // Preview + dynamic
+
+    $('.modal-item[data-group="modal-edit-' + data.id + '"]').each(function(){
+      store($(this), "group", "modal-edit-" + data.new_id);
+    });
+  }
+});
+
+socketio.on("modal_item_config_result", function(data) {
+  if (isModalOpen(null, data.tile_id)) {
+    // TODO jen pokud je edit mód, tak dělat první řádek a pokud není, tak druhý
+    store($('.modal-item[data-group="modal-edit-' + data.id + '"][data-id="' + data.value_name + '"]'), "value", data.new_value).trigger("value-receive");
+    let currentItem = $('.modal-item[data-group="modal-dynamic"][data-id="' + data.id + '"], .modal-item[data-group="modal-fieldset"][data-id="' + data.id + '"]');
+    let config = store(currentItem, "config");
+    config[data.value_name] = data.new_value;
+    store(currentItem, "config", config).trigger("config-receive");
+  }
+});
+
+socketio.on("modal_item_value_result", function(data) {
+  // If tile ID is same
+  if (isModalOpen(null, data.tile_id)) {
+    let item = $('.modal-item[data-id="' + data.id + '"][data-group="modal-dynamic"]');
+    // If type of item is same
+    store(item, "value", data.value).trigger("value-receive");
+  }
+});
+
+
+// Modal settings sync
+socketio.on("user_mode_result", function(data) {
+  if (data.mode === "light") {
+    $(document.body).removeClass("dark").addClass("light");
+    $(".add-img").attr("src", "img/static/add/light.png");
+  }
+  else if (data.mode === "dark") {
+    $(document.body).removeClass("light").addClass("dark");
+    $(".add-img").attr("src", "img/static/add/dark.png");
+  }
+});
+
+socketio.on("user_background_result", function(data) {
+  console.log(data.background);
+  $("<div class='bcg-new bcg-normal'></div>").insertBefore(".bcg-old");
+  $(".bcg-new").css("background-image", "url(img/backgrounds/" + data.background + ")");
+  let tmpImg = new Image() ;
+  tmpImg.src = "img/backgrounds/" + data.background
+  tmpImg.onload = function() {
+    $(".bcg-old").fadeOut(2000, function() {
+      this.remove();
+      $(".bcg-normal").removeClass("bcg-new").addClass("bcg-old");
+    });
+  };
+});
+
+
+// Doorbird sync
+socketio.on("doorbird_live_image", function(data) {
+  if (isModalOpen("doorbird")) {
+    $(".doorbird-live-image").attr("src", data.image);
+    $(".doorbird-framerate").text(data.framerate + " " + _("FPS"));
+  }
+});
+
+
+
+let audioContext = new AudioContext();
+
+
+
+function onError(e) {
+    console.log(e);
+}
+
+
+socketio.on("doorbird_audio", function(data) {
+  console.log(data)
+  audioContext.decodeAudioData(data, function (buffer) {
+      console.log(buffer);
+  }, onError);
+
+});
+
+socketio.on("doorbird_event", function() {
+  if (store($(".modal-here"), "type") !== "doorbird") {
+    socketio.emit("get_doorbird_modal", {"tab_id": sessionStorage.tabID});
+  }
+});
+
+// Slide sync
 socketio.on("slide_index_result", function() {
   store($(".swipe-body"), "index-change", true);
+});
+
+socketio.on("slide_name_result", function(data){
+  let chosen_slide_name_textbox = $($(".swiper-slide")[data.slide_index]).find(".swipe-header");
+  $(chosen_slide_name_textbox).val(data.name);
 });
 
 socketio.on("slide_delete_result", function(data) {
@@ -334,26 +508,6 @@ socketio.on("slide_append_result", function(data) {
     swiper.slideTo(data.slide_index+1, 0);
   }
 
-  // if (isEditActive === "true") {
-  //   $(".add_new_tile_element").hide().fadeIn(2000);
-  //   $(".exit-edit-mode-button").hide().fadeIn(2000);
-
-  //   // Připnutí Hammer pro každé "+" tlačítko
-  //   $(".swiper-slide-active .add-new-tile-element").each(function() {
-  //     let hammer = new Hammer(this);
-  //     hammer.on("tap", function(el) {
-  //       addNewTile();
-  //     });
-  //   });
-
-    // lastSlide.find(".add_new_tile_element").each(function() {
-    //   let hammer = new Hammer(this);
-
-    //   hammer.on("tap", function() {
-    //     addNewTile();
-    //   });
-    // });
-
     lastSlide.find(".swipe-header").each(function() {
       $( this ).prop("readonly",false)
       // $( this ).css({"border-bottom-width":"1px","border-bottom-style":"solid","width":"fit-content"});
@@ -371,154 +525,6 @@ socketio.on("slide_append_animation_result", function(data) {
   swiper.slideTo(data.slide_index, 1000);
 });
 
-// socketio.on("slide_prepend_result", function(data) {
-//   swiper.prependSlide(data.slide);
-
-//   let isEditActive = $(document.body).attr("data-is-edit-active");
-
-//   if (isEditActive === "true") {
-//     $(".add_new_tile_element").hide().fadeIn(2000);
-//     $(".exit-edit-mode-button").hide().fadeIn(2000);
-
-//     // Připnutí Hammer pro každé "+" tlačítko
-//     $(".swiper-slide-active .add_new_tile_element").each(function() {
-//       let hammer = new Hammer(this);
-//       hammer.on("tap", function(el) {
-//         addNewTile();
-//       });
-//     });
-
-//     let lastSortablePage = document.getElementsByClassName("c_sortable_page_grid");
-//     bindSortable(SortableTiles.length,lastSortablePage[lastSortablePage.length-1]);
-//   }
-// });
-
-socketio.on("slide_prepend_animation_result", function() {
-  swiper.slideTo(0, 1000);
-});
-
-// Asynchronous communication for tile
-socketio.on("tile_value_result", function(data) {
-  // Test each tile on the page
-  let tileID = data.tile_id;
-  let tileElement = $(".tile[data-id="+tileID+"]");
-  let tileType = store(tileElement, "type");
-  console.log("Tile_value_result event")
-
-  // Tile type is toggle
-  if (tileType === "toggle") {
-
-    // console.log("Update Toggle")
-    let tileStateLast = $(tileElement).find(".tile-status").text();
-    let tileStateCurrent = data.value;
-    // console.log("Last status: " + tileStateLast);
-    // console.log("Current status: " + tileStateCurrent);
-    // console.log($(tileElement));
-
-    // Turn tile off
-    if (tileStateLast.toLowerCase() === _("On").toLowerCase() && tileStateCurrent === 0) {
-      $(tileElement).find(".tile-status").text(_("Off")); $(tileElement).toggleClass("tile-active");
-      $(tileElement).find(".toggle-dot").css("background-color","rgba(255, 0, 0, 0.28)");
-    }
-    // Turn tile on
-    else if (tileStateLast.toLowerCase() === _("Off").toLowerCase() && tileStateCurrent === 1) {
-      $(tileElement).find(".tile-status").text(_("On")); $(tileElement).toggleClass("tile-active");
-      $(tileElement).find(".toggle-dot").css("background-color","rgba(0, 196, 42, 0.28)");
-    }
-  }
-  // Tile type is value
-  else if (tileType === "value") {
-    tileElement.find(".tile-value-value").text(Math.round(data.value.value * 10) / 10);
-    tileElement.find(".tile-value-suffix").text(data.value.suffix);
-    tileElement.find(".tile-status").text(data.value.ago);
-  }
-  else if (tileType === "value_double") {
-    tileElement.find(".tile-value-left").text(data.value.left.value);
-    tileElement.find(".tile-value-right").text(data.value.right.value);
-    tileElement.find(".tile-suffix-left").text(data.value.left.suffix);
-    tileElement.find(".tile-suffix-right").text(data.value.right.suffix);
-  }
-  else if (tileType === "alarm_clock") {
-    let tileActive = data.value.main;
-    let tileId = data.tile_id;
-
-    let tileMon = data.value.monday;
-    let tileTue = data.value.tuesday;
-    let tileWed = data.value.wednesday;
-    let tileThu = data.value.thursday;
-    let tileFri = data.value.friday;
-    let tileSat = data.value.saturday;
-    let tileSun = data.value.sunday;
-
-    let tileElement = $(".tile[data-id="+tileId+"]");
-
-    console.log(tileMon);
-    // TODO:
-    // tileActive = true;
-
-    // tileMon = false;
-    // tileTue = false;
-    // tileWed = false;
-    // tileThu = false;
-    // tileFri = false;
-    // tileSat = true;
-    // tileSun = false;
-
-    if (tileActive === true) {
-      tileElement.toggleClass("tile-active",true);
-    }
-    else if (tileActive === false){
-      tileElement.toggleClass("tile-active",false);
-    }
-
-    let tileDay = "Mon"
-    if (tileMon === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileMon === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-    tileDay = "Tue"
-    if (tileTue === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileTue === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-    tileDay = "Wed"
-    if (tileWed === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileWed === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-    tileDay = "Thu"
-    if (tileThu === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileThu === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-    tileDay = "Fri"
-    if (tileFri === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileFri === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-    tileDay = "Sat"
-    if (tileSat === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileSat === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-    tileDay = "Sun"
-    if (tileSun === true) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",true);
-    else if (tileSun === false) tileElement.find(".alarm-clock-glyph[data-type="+tileDay+"]").toggleClass("alarm-clock-glyph-active",false);
-  }
-});
-
-socketio.on("modal_item_config_result", function(data) {
-  if (isModalOpen(null, data.tile_id)) {
-    // TODO jen pokud je edit mód, tak dělat první řádek a pokud není, tak druhý
-    store($('.modal-item[data-group="modal-edit-' + data.id + '"][data-id="' + data.value_name + '"]'), "value", data.new_value).trigger("value-receive");
-
-    let currentItem = $('.modal-item[data-group="modal-dynamic"][data-id="' + data.id + '"], .modal-item[data-group="modal-preview"][data-id="' + data.id + '"]');
-    let config = store(currentItem, "config");
-    config[data.value_name] = data.new_value;
-    store(currentItem, "config", config).trigger("config-receive");
-  }
-});
-
-// Asynchronous communication for modal toggle
-socketio.on("modal_item_value_result", function(data) {
-  // If tile ID is same
-  if (isModalOpen(null, data.tile_id)) {
-    let item = $('.modal-item[data-id="' + data.id + '"][data-group="modal-dynamic"]');
-    // If type of item is same
-    if (store(item, "type") === data.type) {
-      console.log(data.value);
-      store(item, "value", data.value).trigger("value-receive");
-    }
-  }
-});
 
 // Renew
 socketio.on("graph_rwr", function(data) {
@@ -542,14 +548,20 @@ socketio.on("graph_rwr", function(data) {
   }
 });
 
+
+// Client
 socketio.on("connect", function() {
   console.log("Client connected to server");
-  let modalData = isModalOpen(null, null, true);
-  if (modalData) {
-    console.log("Opening", modalData);
-    socketio.emit("get_"+modalData["type"]+"_modal", {"tile_id": modalData["tile_id"], "tab_id": sessionStorage.tabID})
+  if (reconnected) {
+    location.reload()
   }
-  $(".server-status").text(_("Online"));
+  else{
+    let modalData = isModalOpen(null, null, true);
+    if (modalData) {
+      socketio.emit("get_"+modalData["type"]+"_modal", {"tile_id": modalData["tile_id"], "tab_id": sessionStorage.tabID})
+    }
+    $(".server-status").text(_("Online"));
+  }
 });
   let ping_pong_times = [];
   let start_time;
@@ -588,11 +600,11 @@ socketio.on("disconnect", function() {
 
   $(".server-status").text(_("Offline"));
 
-  if (store($(document.body), "is-edit-active") === true) {
+  /*if (store($(document.body), "is-edit-active") === true) {
     $(".bcg-normal").css({"opacity": 0, "transition": "0s all"});
     $(".bcg-edit").css({"opacity": 0.5, "transition": "0.5s all"});
   }
   else {
     $(".bcg-normal").css({"opacity": 0.4});
-  }
+  }*/
 });

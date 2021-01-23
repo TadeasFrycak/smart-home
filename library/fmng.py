@@ -151,7 +151,6 @@ class FileManager:
         :param devices: devices to write
         :return:
         """
-
         self.__devices = devices
         self.write_file(self.path_join(self.DATA_DIR, self.DEVICES_FILE), devices, True)
 

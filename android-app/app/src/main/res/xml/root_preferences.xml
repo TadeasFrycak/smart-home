@@ -3,12 +3,13 @@
     <PreferenceCategory app:title="@string/server">
 
         <EditTextPreference
+            app:defaultValue="192.168.88.25"
             app:key="server_ip"
             app:title="@string/server_ip"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="80"
+            app:defaultValue="5000"
             app:entries="@array/server_port"
             app:entryValues="@array/server_port_values"
             app:key="server_port"
@@ -22,6 +23,43 @@
             app:key="mqtt_port"
             app:title="@string/mqtt_port"
             app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/device_control">
+
+        <EditTextPreference
+            app:key="device_id"
+            app:title="@string/device_id"
+            app:useSimpleSummaryProvider="true" />
+
+        <CheckBoxPreference
+            app:defaultValue="true"
+            app:key="camera"
+            app:title="@string/camera"
+            app:summaryOff="@string/camera_off"
+            app:summaryOn="@string/camera_on"/>
+
+        <CheckBoxPreference
+            app:defaultValue="true"
+            app:key="audio"
+            app:title="@string/audio"
+            app:summaryOff="@string/audio_off"
+            app:summaryOn="@string/audio_on"/>
+
+        <CheckBoxPreference
+            app:defaultValue="true"
+            app:key="vibration"
+            app:title="@string/vibration"
+            app:summaryOff="@string/vibration_off"
+            app:summaryOn="@string/vibration_on"/>
+
+        <CheckBoxPreference
+            app:defaultValue="false"
+            app:key="gps"
+            app:title="@string/gps"
+            app:summaryOff="@string/gps_off"
+            app:summaryOn="@string/gps_on"/>
 
     </PreferenceCategory>
 

@@ -67,7 +67,7 @@ class Clients:
 
 
 class Refresh:
-    DOORBIRD_DELAY = 120
+    DOORBIRD_DELAY = 0  # TODO
 
     def __init__(self, fmng):
         self.__fmng = fmng

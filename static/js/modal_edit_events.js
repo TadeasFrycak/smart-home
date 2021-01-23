@@ -25,7 +25,6 @@ $(document).ready(function(){
   $(document.body).on("click", "#delete-tile", function() {
     let tileID = store($(".modal-here"), "tile-id");
 
-    $('#my-modal').modal('hide');
     socketio.emit("tile_delete", {"tile_id": tileID});
   });
 
@@ -83,40 +82,23 @@ function modalEditItemTextChanged(object) {
 }
 
 // ( < modal_init.js )
-function modalEditTileTextChanged(object) {
-  let nameOfThisItem = $(object).parent().parent().find("label").text();
-
-  let tileID = store($(".modal-here"), "tile-id");
-  // let textbox_old_val = $(object).attr("placeholder");
-  let textbox_new_val = $(object).val();
-
-  socketio.emit("tile_dynamic_value", {"value_name": nameOfThisItem, "tile_id": tileID, "new_value": textbox_new_val});
-}
-
-// ( < modal_init.js )
 function tileTypeChanged(tileID,type_name) {
   DEBUG.logDebug("Change Tile Type to: " + type_name + " (ID: "+tileID+") ");
   socketio.emit("tile_type", {"tile_id": tileID, "new_type": type_name});
 }
 
 // ( < modal_init.js )
-function modalEditPreviewImageTap(elem) {
-  $(".modal-edit-icon").each(function() {
-    $(this).css({"border": "2px solid transparent"});
-    store($(this), 'selected',false);
-  });
-  if ($(document.body).hasClass("dark")) {
-    $(elem.target).css({"border": "2px solid rgb(232, 93, 71)"});
-  }
-  else {
-    store($(elem.target), 'selected',true);
-    $(elem.target).css({"border": "2px solid rgb(23, 162, 184)"});
-  }
+function tileProtocol(tileID,type_name, state) {
+  console.log(tileID, type_name, state)
+  // DEBUG.logDebug("Change Tile Type to: " + type_name + " (ID: "+tileID+") ");
+  socketio.emit("tile_protocol", {"tile_id": tileID, "new_protocol": type_name, "state": state});
+}
 
-  let name = store($(elem.target), "name");
-  let tile_id = store($(".modal-here"), "tile-id");
-  
-  socketio.emit("tile_icon", {"tile_id": tile_id, "new_icon": name});
+// ( < modal_init.js )
+function modalItemProtocol(tileID, itemID, type_name, state) {
+  console.log(tileID, type_name, state)
+  // DEBUG.logDebug("Change Tile Type to: " + type_name + " (ID: "+tileID+") ");
+  socketio.emit("modal_item_protocol", {"tile_id": tileID, "id": itemID, "new_protocol": type_name, "state": state});
 }
 
 // ( < modal_init.js )
@@ -133,13 +115,20 @@ function modalEditTileTitleChanged() {
 // ( < modal_init.js )
 function modalEditTileIDchanged(object) {
   // ( > modal_edit_events.js )
-  if (validateID($(object).val()) === true) {
-    // DEBUG.logDebug("Find item with: " + tileID);
-    // DEBUG.logDebug("New ID: " + tile_id);
+  let newID = store($(object), "value");
+
+  if (validateID(newID)) {
+    let config = store($(object), "config");
+    config["invalid"] = false;
+    store($(object), "config", config).trigger("config-receive");
+
     let tileID = store($(".modal-here"), "tile-id");
-    let tile_id = $("#tile-id").val();
 
-    socketio.emit("tile_id", {"tile_id": tileID, "new_id": tile_id});
+    socketio.emit("tile_id", {"tile_id": tileID, "new_id": newID});
   }
-
+  else {
+    let config = store($(object), "config");
+    config["invalid"] = true;
+    store($(object), "config", config).trigger("config-receive");
+  }
 }

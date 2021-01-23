@@ -23,12 +23,16 @@
     /* Tiles */
     --tile-light-bg-first: var(--main-light-bg-first);
     --tile-light-bg-second: #bebebe;
+    --tile-light-bg-second-alpha: #bebebe55;
+    --tile-light-bg-second-alpha-half: #bebebeAA;
     --tile-light-bg-third: #d2d2d2;
 
     --tile-light-fg-first: var(--main-light-fg-first);
     --tile-light-fg-second: #666;
 
     --tile-dark-bg-first: #282828;
+    --tile-dark-bg-first-alpha: #28282885;
+    --tile-dark-bg-first-alpha-half: #282828BB;
     --tile-dark-bg-second: #414141;
     --tile-dark-bg-third: #666;
 

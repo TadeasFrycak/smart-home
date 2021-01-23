@@ -1,90 +1,115 @@
 {% extends "modal.html" %}
 
 {% block head %}
-    <input type="text" class="unfocus-on-enter modal-title modal-edit-title form-control form-control-lg" id="tile_name" maxlength="40" placeholder="{{ _('Tile name') }}" autocomplete="off">
+    <input type="text" class="unfocus-on-enter modal-title modal-edit-title form-control form-control-lg" id="tile_name"
+           maxlength="40" placeholder="{{ _('Tile name') }}" autocomplete="off" value="{{ tile["label"] }}">
 {% endblock %}
 
 {% block content %}
     <form>
-        <div class="form-group-sm row">
-            <label for="tile-type" class="col-sm-3 col-form-label">{{ _("Tile type") }}</label>
-            <div class="col-sm-9">
-                <div style="position:relative; margin-bottom:6px" id="tile-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons"> <!--modal_edit_tile_types-->
-                    {% for tile_name in tile_types %}
-                        {% include "modal_edit/tile_type_btn.html" %}
+        <fieldset class="modal-fieldset">
+            <legend class="modal-fieldset-legend">{{ _("Tile") }}</legend>
+
+            <div class="form-group-sm row">
+                <label for="tile-type" class="col-lg-3 col-form-label">{{ _("Tile type") }}</label>
+                <div class="col-lg-9">
+                    <div style="position:relative; margin-bottom:6px" id="tile-type" class="btn-group-justified btn-group-toggle" data-toggle="buttons">
+                        {% for item, value in tile_config.items() %}
+                            {% if value.visible == True %}
+                                {% include "modal_edit/tile_type_btn.html" %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group-sm row">
+                <label class="col-lg-3 col-form-label">{{ _("Tile protocols") }}</label>
+                <div class="col-lg-9">
+                    <div style="position:relative; margin-bottom:6px" id="tile-protocol" class="btn-group-justified btn-group-toggle" data-toggle="buttons">
+                        {% for item, value in protocol_config.items() %}
+                            {% if value.visible == True %}
+                                <label style="margin-bottom:6px;" data-type="{{ value.type }}" data-id="{{ tile.id }}" class="modal-edit-protocol tile-protocol-label btn btn-secondary {% for protocol_value in tile["protocols"] %}{% if protocol_value["type"] == value.type %}active{% endif %}{% endfor %}">
+                                    <input type="checkbox" checked autocomplete = "off"> {{ value.name }}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            TODO - get this out <!-- TODO get this out - možná nechatp jen na zobrazení??? i v modalu???? -->
+            {% set group = "tile" %}
+            {% set item = {"type": "input", "config": {"label": _("Tile ID"), "readonly": true, "invalid": false, "button": false}, "id": "tile-id", "value": tile["id"]} %}
+            {% include "items/" + item["type"] + ".html" %}
+        </fieldset>
+
+        <div class="tile-protocols-wrapper">
+            {% set protocols = tile["protocols"] %}
+            {% for protocol, value in protocol_config.items() %}
+                {% set group = "protocol-tile" %}
+                {% set id = tile["id"] %}
+                {% include "modal_edit/protocol_values.html" %}
+            {% endfor %}
+        </div>
+
+        <fieldset class="modal-fieldset" id="tile-dynamic-values">
+            <legend class="modal-fieldset-legend">{{ _("Tile config") }}</legend>
+            <div class="tile-values-wrapper">
+                {% set group = "tile-dynamic" %}
+                {% include "modal_edit/tile_values.html" %}
+            </div>
+        </fieldset>
+
+        <hr>
+
+        <fieldset class="modal-fieldset">
+            <legend class="modal-fieldset-legend">{{ _("Add modal item") }}</legend>
+
+            <div id="modal-type">
+                {% for item, value in item_config.items() %}
+                    {% if value.visible == True %}
+                        {% include "modal_edit/modal_type_btn.html" %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </fieldset>
+
+        <fieldset class="modal-fieldset" style="position: relative;">
+            <legend class="modal-fieldset-legend">{{ _("Modal items") }}</legend>
+            <div style="display: inline-block;position:absolute;top:-25px;right:15px;" class="btn-group float-right">
+                <button type="button" id="unpack-items" class="btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %} btn-sm">{{ _("Unpack all") }}</button>
+                <button type="button" id="collapse-items" class="btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %} btn-sm">{{ _("Pack all") }}</button>
+            </div>
+            <div class="modal-items-edit">
+                <div id="sortable" class="modal_items_edit_sortable list-group col" style="padding-right: 0;margin-bottom:5px">
+                    {% for item in tile["modal"] %}
+                        {% set group = "modal-edit-" + item.id %}
+                        {% include "modal_edit/item_values.html" %}
                     {% endfor %}
                 </div>
             </div>
-        </div>
+            <script type="text/javascript">
+                new Sortable(sortable, {
+                    handle: ".menu-handle", // handle"s class
+                    animation: 150,
+                    onEnd: function (/**Event*/evt, /**Event*/originalEvent) {
+                        let oldIndex = evt.oldDraggableIndex;
+                        let newIndex = evt.newDraggableIndex;
+                        if (oldIndex !== newIndex) {  // Prevent SocketIO prevent hack
+                            let tileID = store($(".modal-here"), "tile-id");
 
-        {% include "modal_edit/tile_values.html" %}
-
-        <div class="form-group-sm row">
-            <label for="tile-id" class="col-sm-3 col-form-label">{{ _("Tile ID") }}</label>
-            <div class="col-sm-9">
-                <script type="text/javascript">
-                    function AvoidSpace(event) {
-                        let k = event ? event.which : window.event.keyCode;
-                        if (k === 32) return false;
-                    }
-                </script>
-                <input id="tile-id" class="unfocus-on-enter form-control form-control-sm" type="text" maxlength="40" placeholder="{{ _('Tile ID') }}" value="{{ tile_id }}" onkeypress="return AvoidSpace(event)">
-            </div>
-        </div>
-
-        <div class="form-group-sm row">
-            <label for="tile-mqtt-path" class="col-sm-3 col-form-label">{{ _("MQTT path") }}</label>
-            <div class="col-sm-9">
-                <input id="tile-mqtt-path" class="unfocus-on-enter form-control form-control-sm" type="text" placeholder="{{ _('MQTT path') }}" readonly>
-            </div>
-        </div>
-
+                            socketio.emit("modal_item_index", {
+                                "tile_id": tileID,
+                                "old_index": oldIndex,
+                                "new_index": newIndex
+                            });
+                        }
+                    },
+                });
+            </script>
+        </fieldset>
     </form>
-    <hr>
-
-    <h6 style="margin-bottom:20px;">{{ _("Add modal items") }}</h6>
-
-    <div id="modal-type">
-        {% for item, value in item_config.items() %}
-            {% if value.visible == True %}
-                {% include "modal_edit/modal_type_btn.html" %}
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <hr>
-
-    <h6 style="display:inline-block;margin-bottom:0">{{ _("Modal items") }}</h6>
-    <div style="display: inline-block;" class="btn-group float-right">
-        <button type="button" id="unpack-items" class="btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %} btn-sm">{{ _("Unpack all") }}</button>
-        <button type="button" id="collapse-items" class="btn btn-{% if mode == "dark" %}dark{% else %}light{% endif %} btn-sm">{{ _("Pack all") }}</button>
-    </div>
-    <div class="modal-items-edit">
-        <div id="sortable" class="modal_items_edit_sortable list-group col">
-            {% for item in modal %}
-                {% set group = "modal-edit-" + item.id %}
-                {% include "modal_edit/item_values.html" %}
-            {% endfor %}
-
-        </div>
-        <script type="text/javascript">
-            new Sortable(sortable, {
-                handle: ".menu-handle", // handle"s class
-                animation: 150,
-                onEnd: function (/**Event*/evt, /**Event*/originalEvent) {
-                    let old_index = evt.oldDraggableIndex;
-                    let new_index = evt.newDraggableIndex;
-                    let tileID = store($(".modal-here"), "tile-id");
-
-                    socketio.emit("modal_item_index", {
-                        "tile_id": tileID,
-                        "old_index": old_index,
-                        "new_index": new_index
-                    });
-                },
-            });
-        </script>
-    </div>
 {% endblock %}
 
 {% block footer %}

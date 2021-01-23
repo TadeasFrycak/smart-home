@@ -1,6 +1,8 @@
 from config.items.date_range_picker import DateRangePicker
 from config.items.clock_picker import ClockPicker
 from config.items.progress_bar import ProgressBar
+from config.items.button_group import ButtonGroup
+from config.items.icon_picker import IconPicker
 from config.items.separator import Separator
 from config.items.dropdown import Dropdown
 from config.items.button import Button
@@ -14,7 +16,9 @@ class Items:
     INSTANCES = [
         DateRangePicker(),
         ClockPicker(),
+        ButtonGroup(),
         ProgressBar(),
+        IconPicker(),
         Separator(),
         Dropdown(),
         Button(),
@@ -27,9 +31,8 @@ class Items:
     def __init__(self):
         pass
 
-    def get_item_types(self):
+    def get_item_edit_objects(self):
         items = {}
-
         for instance in self.INSTANCES:
             item_object = instance.make_full_object()
             items[item_object["type"]] = item_object

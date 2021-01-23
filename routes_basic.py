@@ -1,10 +1,5 @@
 # Basic routes
-from flask_socketio import emit, disconnect
-from flask import request, render_template, abort
-from flask_login import current_user
-from flask_babel import gettext
 from init import *
-import functools
 
 
 # Socketio
@@ -227,7 +222,7 @@ def get_locale():
     Get best language
     :return: Best language for current user lang
     """
-
+    # TODO timezone + ukládat language do databáze
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 

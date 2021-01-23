@@ -10,17 +10,17 @@
         {% set group = "modal-static" %}
             {% for key, value in tile["value"].items() %}
                 {% set item = {"type": "toggle", "config": {"label": _(refactor(key)), "id": key}, "value": value} %}
-                {% include "modal/toggle.html" %}
+                {% include "items/toggle.html" %}
             {% endfor %}
         </div>
-        {% include "modal/separator.html" %}
-        {% include "modal/separator.html" %}
+        {% include "items/separator.html" %}
+        {% include "items/separator.html" %}
     {% endif %}
 
     <div class="modal-dynamic">
         {% set group = "modal-dynamic" %}
         {% for item in tile.modal %}
-            {% include "modal/" + item["type"] + ".html" %}
+            {% include "items/" + item["type"] + ".html" %}
         {% endfor %}
     </div>
 {% endblock %}

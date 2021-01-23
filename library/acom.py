@@ -1,12 +1,11 @@
-import json
-import shutil
-import time
-from threading import Thread, Event, Timer
-from flask import render_template
-import paho.mqtt.client as mqtt
 import requests
 from flask_babel import lazy_gettext, gettext
-from flask_login import current_user
+from threading import Thread, Event, Timer
+import paho.mqtt.client as mqtt
+import face_recognition
+import base64
+import time
+import os
 
 
 class MQTT(Thread):
@@ -67,7 +66,7 @@ class MQTT(Thread):
         self.__terminal.mqtt("Connected with result code {0}".format(str(rc)))
 
         # Subscribing on connect means that if we lose the connection and reconnect then subscriptions will be renewed
-        self.subscribe(client=client, topic=self.join_topics(self.HOME_RECEIVE, "#"))
+        # self.subscribe(client=client, topic=self.join_topics(self.HOME_RECEIVE, "#"))
         self.subscribe(client=client, topic=self.join_topics(self.DOORBIRD_RECEIVE, "#"))
 
     def on_log(self, client, user_data, level, buf):
@@ -100,44 +99,9 @@ class MQTT(Thread):
             if ids[0] == self.DOORBIRD_RECEIVE:
                 if ids[1] == "open_door":
                     self.__doorbird.open_door()
-            else:
-                ids.remove(self.HOME_RECEIVE)
-
-                tile_id = ids[0]
-                try:
-                    value = int(msg.payload.decode("utf-8"))
-
-                except Exception as e:
-                    try:
-                        value = float(msg.payload.decode("utf-8"))
-
-                    except Exception as e:
-                        try:
-                            value = json.loads(msg.payload.decode("utf-8"))
-
-                        except Exception as e2:
-                            value = msg.payload.decode("utf-8")
-
-                socketio_value = value
-
-                if len(ids) > 1:
-                    item_id = ids[1]
-                    self.__tmng_rwr.modal_toggle(tile_id=tile_id, item_id=item_id, new_value=value)
-                    self.__socket_io.emit("modal_item_value_result", {"tile_id": tile_id, "value": value, "id": item_id}, namespace="/com", broadcast=True)
-
-                else:
-                    if self.__tmng_r.get_tile_type(tile_id=tile_id) == "value":
-                        value = value.copy()
-                        value["time"] = time.time()
-
-                        socketio_value = value.copy()
-                        socketio_value["ago"] = self.__refactoring.get_time_ago(socketio_value["time"])
-
-                    self.__tmng_rwr.tile_value(new_value=value, tile_id=tile_id)
-                    self.__socket_io.emit("tile_value_result", {"tile_id": tile_id, "value": socketio_value}, namespace="/com", broadcast=True)
 
         except Exception as e:
-            self.__terminal.error("MQTT", e)
+            self.__terminal.error(e)
 
     @staticmethod
     def subscribe(client, topic):
@@ -180,7 +144,7 @@ class MQTT(Thread):
         :param image: image data
         :return: None
         """
-        print(self.join_topics(self.DOORBIRD_SEND, event), image)
+
         self.__client.publish(self.join_topics(self.DOORBIRD_SEND, event), image)
 
     def run(self):
@@ -195,7 +159,7 @@ class MQTT(Thread):
             self.__client.on_log = self.on_log
 
             self.__client.username_pw_set(username=self.USERNAME, password=self.PASSWORD)
-            self.__client.connect(self.__ip, 1883, 60)
+            self.__client.connect("127.0.0.1", 1883, 60)
 
             # Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.
             # Other loop*() functions are available that give a threaded interface and a manual interface.
@@ -205,6 +169,8 @@ class MQTT(Thread):
 
 
 class DoorbirdEvents(Thread):
+    KNOWN_DIR = "doorbird/known"
+
     def __init__(self, socket_io, ip, terminal, tmng_r, tmng_rwr, refactoring, app, doorbird, sun, mqtt_thread, refresh_clients):
         super().__init__()
         self.__socket_io = socket_io
@@ -221,31 +187,90 @@ class DoorbirdEvents(Thread):
 
         self.__client = None
 
-    def run(self):
-        while True:
-            self.__refresh_clients.doorbird()
-            response = self.__doorbird.monitor()
+        self.__known_faces = {}
 
-            for line in response.iter_lines():
-                content = line.decode().split(":")
-                if "doorbell" == content[0] and content[1] == "H":
-                    self.__socket_io.emit("notify", {"title": gettext("Doorbell"),
-                                                     "message": gettext("Someone ring on the doorbell!"),
-                                                     "type": "info",
-                                                     "delay": 5000}, namespace=self.__app.config["SOCKETIO_NAMESPACE"],
-                                          broadcast=True)
-                elif "motionsensor" == content[0] and content[1] == "H":
-                    self.__socket_io.emit("notify", {"title": gettext("Doorbell"),
-                                                     "message": gettext("Someone moved in front of the doorbell!"),
-                                                     "type": "info",
-                                                     "delay": 5000}, namespace=self.__app.config["SOCKETIO_NAMESPACE"],
-                                          broadcast=True)
-                else:
-                    continue
-                self.__refresh_clients.doorbird()
-                self.__doorbird.take_photo(content[0])
-                self.__mqtt.publish_doorbird(content[0], "1")  # self.__doorbird.live_image(resolution="VGA"))
-                self.__socket_io.emit("doorbird_event", broadcast=True, namespace=self.__app.config["SOCKETIO_NAMESPACE"])
+    def make_known_faces(self):
+        # For every file in dir
+        for num, file in enumerate(os.listdir(self.KNOWN_DIR)):
+            # Validation, if file is really image file
+            if file.endswith(".jpg"):
+                picture = face_recognition.load_image_file(os.path.join(self.KNOWN_DIR, file))
+                # Protection [0] - in the photo must be only one person
+                encoding = face_recognition.face_encodings(picture)[0]
+
+                self.__known_faces[os.path.splitext(file)[0]] = encoding
+
+    def is_known(self, file_path):
+        unknown_picture = face_recognition.load_image_file(file_path)
+        try:
+            unknown_face_encoding = face_recognition.face_encodings(unknown_picture)[0]  # TODO vzít oba dva z fotky, pokud tam jsou
+        except IndexError:
+            return False
+
+        results = face_recognition.compare_faces(list(self.__known_faces.values()), unknown_face_encoding)
+
+        return True in results
+
+    def run(self):
+        self.make_known_faces()  # TODO save this to temp dir
+        self.__refresh_clients.doorbird()
+        while True:
+            try:
+                response = self.__doorbird.monitor()
+
+                for line in response.iter_lines():
+                    content = line.decode().split(":")
+                    if "doorbell" == content[0] and content[1] == "H":
+                        self.__mqtt.publish_doorbird(content[0], self.__doorbird.live_image(resolution="VGA", without_header=True))
+
+                        self.__socket_io.emit("notify", {"title": gettext("Doorbell"),
+                                                         "message": gettext("Someone ring on the doorbell!"),
+                                                         "type": "info",
+                                                         "delay": 5000}, namespace=self.__app.config["SOCKETIO_NAMESPACE"],
+                                              broadcast=True)
+
+                        self.__doorbird.take_photo(content[0])
+
+                        if self.is_known(self.__doorbird.take_photo("temp", "VGA")):
+                            self.__doorbird.open_door()
+
+                        self.__refresh_clients.doorbird()
+                        self.__socket_io.emit("doorbird_event", broadcast=True,
+                                              namespace=self.__app.config["SOCKETIO_NAMESPACE"])
+
+                    elif "motionsensor" == content[0] and content[1] == "H":
+                        self.__socket_io.emit("notify", {"title": gettext("Doorbell"),
+                                                         "message": gettext("Someone moved in front of the doorbell!"),
+                                                         "type": "info",
+                                                         "delay": 5000}, namespace=self.__app.config["SOCKETIO_NAMESPACE"],
+                                              broadcast=True)
+
+                    else:
+                        continue
+            except requests.exceptions.ChunkedEncodingError as e:
+                print("====================================")
+                print("monitor.cgi - ChunkedEncodingError")
+                print("---------------")
+
+                print(e)
+
+                print("---------------")
+                print("monitor.cgi - ChunkedEncodingError")
+                print("====================================")
+                time.sleep(1)
+                continue
+            except requests.exceptions.ConnectionError as e:
+                print("====================================")
+                print("monitor.cgi - ConnectionError")
+                print("---------------")
+
+                print(e)
+
+                print("---------------")
+                print("monitor.cgi - ConnectionError")
+                print("====================================")
+                time.sleep(1)
+                continue
 
 
 class DoorbirdVideo(Thread):
@@ -268,16 +293,48 @@ class DoorbirdVideo(Thread):
         frames = 0
 
         while True:
-            response = self.__doorbird.live_image(resolution="vga")
-            frames += 1
+            try:
+                response = self.__doorbird.video()
+                for line in response.iter_lines(delimiter="--my-boundary".encode("iso-8859-1")):
+                    frames += 1
+                    try:
+                        without_header = line.decode("iso-8859-1").split("\r\n\r\n")[1].encode("iso-8859-1")
+                        base64_encoded = base64.b64encode(without_header).decode("utf-8")
+                        content = self.__doorbird.image_header(base64_encoded)
 
-            current_time = time.time()
-            if current_time - last_time > 1:
-                last_time = current_time
-                framerate = frames
-                frames = 0
+                    except IndexError:  # Empty
+                        continue
 
-            self.__socket_io.emit("doorbird_live_image", {"image": response, "framerate": framerate}, broadcast=True, namespace="/com")
+                    current_time = time.time()
+                    if current_time - last_time > 1:
+                        last_time = current_time
+                        framerate = frames
+                        frames = 0
+                    self.__socket_io.emit("doorbird_live_image", {"image": content, "framerate": framerate}, broadcast=True, namespace="/com")
+            except requests.exceptions.ChunkedEncodingError as e:
+                print("====================================")
+                print("video.cgi - ChunkedEncodingError")
+                print("---------------")
+
+                print(e)
+
+                print("---------------")
+                print("video.cgi - ChunkedEncodingError")
+                print("====================================")
+                time.sleep(1)
+                continue
+            except requests.exceptions.ConnectionError as e:
+                print("====================================")
+                print("video.cgi - ConnectionError")
+                print("---------------")
+
+                print(e)
+
+                print("---------------")
+                print("video.cgi - ConnectionError")
+                print("====================================")
+                time.sleep(1)
+                continue
 
 
 class Acom:
@@ -285,7 +342,7 @@ class Acom:
     Asynchronous communication class
     """
 
-    def __init__(self, terminal, socket_io, ip, tmng_r, tmng_rwr, refactoring, app, doorbird, sun, refresh_clients):
+    def __init__(self, terminal, socket_io, ip, tmng_r, tmng_rwr, refactoring, app, doorbird, sun, refresh_clients, fmng):
         """
         Init of asynchronous communication class
         :param terminal: terminal
@@ -304,6 +361,7 @@ class Acom:
         self.__doorbird = doorbird
         self.__sun = sun
         self.__refresh_clients = refresh_clients
+        self.__fmng = fmng
 
         self.mqtt_thread = Thread()
         self.mqtt_stop = Event()
@@ -325,10 +383,11 @@ class Acom:
                                     tmng_rwr=self.__tmng_rwr, tmng_r=self.__tmng_r, refactoring=self.__refactoring, doorbird=self.__doorbird)
             self.mqtt_thread.start()
 
-        if not self.doorbird_events_thread.is_alive():
-            self.doorbird_events_thread = DoorbirdEvents(socket_io=self.__socket_io, ip=self.__ip, terminal=self.__terminal, tmng_rwr=self.__tmng_rwr, tmng_r=self.__tmng_r, refactoring=self.__refactoring, app=self.__app, doorbird=self.__doorbird, sun=self.__sun, mqtt_thread=self.mqtt_thread, refresh_clients=self.__refresh_clients)
-            self.doorbird_events_thread.start()
+        if self.__fmng.config["doorbird"].getboolean("active"):
+            if not self.doorbird_events_thread.is_alive():
+                self.doorbird_events_thread = DoorbirdEvents(socket_io=self.__socket_io, ip=self.__ip, terminal=self.__terminal, tmng_rwr=self.__tmng_rwr, tmng_r=self.__tmng_r, refactoring=self.__refactoring, app=self.__app, doorbird=self.__doorbird, sun=self.__sun, mqtt_thread=self.mqtt_thread, refresh_clients=self.__refresh_clients)
+                self.doorbird_events_thread.start()
 
-        if not self.doorbird_video_thread.is_alive():
-            self.doorbird_video_thread = DoorbirdVideo(socket_io=self.__socket_io, ip=self.__ip, terminal=self.__terminal, tmng_rwr=self.__tmng_rwr, tmng_r=self.__tmng_r, refactoring=self.__refactoring, app=self.__app, doorbird=self.__doorbird)
-            self.doorbird_video_thread.start()
+            if not self.doorbird_video_thread.is_alive():
+                self.doorbird_video_thread = DoorbirdVideo(socket_io=self.__socket_io, ip=self.__ip, terminal=self.__terminal, tmng_rwr=self.__tmng_rwr, tmng_r=self.__tmng_r, refactoring=self.__refactoring, app=self.__app, doorbird=self.__doorbird)
+                self.doorbird_video_thread.start()

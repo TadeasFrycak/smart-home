@@ -17,4 +17,31 @@
     <string name="caching_on">Dočasné soubory se budou ukládat a poslední relace zůstane zachována</string>
     <string name="caching_off">Dočasné soubory se nebudou ukládat a poslední relace nezůstane zachována</string>
     <string name="mqtt_port">MQTT port</string>
+    <!-- Notifikace -->
+    <string name="app_is_running">Aplikace běží na pozadí</string>
+    <string name="doorbird">Doorbird</string>
+    <string name="doorbird_doorbell">Doorbird - zvonek</string>
+    <string name="doorbird_doorbell_message">Někdo je za dveřmi!</string>
+    <string name="doorbird_motionsensor">Doorbird - pohyb</string>
+    <string name="doorbird_motionsensor_message">Někdo se pohl před zvonkem!</string>
+    <!-- Widget -->
+    <string name="appwidget_text">Odemknout Doorbird</string>
+    <string name="unlock">Odemknout</string>
+    <string name="unlock_send">Požadavek na odemknutí odeslán…</string>
+    <string name="configure">Upravit</string>
+    <string name="add_widget">Přidat rozšíření</string>
+    <string name="device_control">Kontrola zařízení</string>
+    <string name="device_id">Device ID</string>
+    <string name="camera"><![CDATA[Kamera & blesk]]></string>
+    <string name="camera_off">Server nemůže ovládat Vaši kameru nebo blesk</string>
+    <string name="camera_on">Server může ovládat Vaši kameru a blesk</string>
+    <string name="audio">Audio</string>
+    <string name="audio_off">Server nemůže ovládat vaše reproduktory</string>
+    <string name="audio_on">Server může ovládat vaše reproduktory</string>
+    <string name="vibration">Vibrace</string>
+    <string name="vibration_off">Server nemůže ovládat vibrace</string>
+    <string name="vibration_on">Server může ovládat vibrace</string>
+    <string name="gps">GPS pozice</string>
+    <string name="gps_off">Server nemůže získat pomocí GPS pozici</string>
+    <string name="gps_on">Server může získat pomocí GPS pozici</string>
 </resources>
