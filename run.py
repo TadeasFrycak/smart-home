@@ -87,13 +87,17 @@ with open("requirements.txt", mode="r") as f:
             if split_dependency[0] == "#" and split_dependency[1] == "python":
                 # terminal.error("Python requirement is not valid")
                 dependency_version = StrictVersion(split_dependency[3])
-                python_version = StrictVersion(platform.python_version())
-                if ((python_version >= dependency_version) and split_dependency[2] == ">=") or ((python_version == dependency_version) and split_dependency[2] == "==") or ((python_version <= dependency_version) and split_dependency[2] == "<="):
-                    pass
+                try:
+                    python_version = StrictVersion(platform.python_version())
+                    if ((python_version >= dependency_version) and split_dependency[2] == ">=") or ((python_version == dependency_version) and split_dependency[2] == "==") or ((python_version <= dependency_version) and split_dependency[2] == "<="):
+                        pass
 
-                else:
-                    terminal.error("Python version '{}' is wrong. Required version is '{}'".format(python_version, dependency_version))
-                    exit_program()
+                    else:
+                        terminal.error("Python version '{}' is wrong. Required version is '{}'".format(python_version, dependency_version))
+                        exit_program()
+
+                except ValueError:
+                    pass
 
             else:
                 terminal.error("Python requirement is not in requirements.txt")

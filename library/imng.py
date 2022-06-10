@@ -65,7 +65,7 @@ class ImageManager:
         print()
         # todo original bude v backgrounds, blur ve složce blur, redukovanáí kvalita v reduce/, ....
         for num, path in enumerate(images):
-            print_state(num, len(images), 0, "Loading image")
+            print_state(num, len(images), 0, " Loading image")
             image = Image.open(path)
 
             print_state(num, len(images), 30, "Averaging pixels")

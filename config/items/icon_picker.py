@@ -10,7 +10,7 @@ class IconPicker(Item):
     TYPE = "icon_picker"
     VISIBLE = False
     NAME = gettext("Icon picker")
-    DESCRIPTION = gettext("Choose Icon")
+    PROTOCOLS_ABLE = ["mqtt"]
     VALUE = "none.png"
 
     ICON_PATH = "static/img/icons"

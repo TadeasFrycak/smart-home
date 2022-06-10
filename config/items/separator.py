@@ -10,4 +10,3 @@ class Separator(Item):
     TYPE = "separator"
     VISIBLE = True
     NAME = gettext("Separator")
-    DESCRIPTION = gettext("Separate content")

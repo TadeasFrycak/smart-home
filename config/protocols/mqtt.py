@@ -1,10 +1,13 @@
-import json
-import time
+import random
+import string
 
 from config.protocols.default import Protocol
-from threading import Thread
 from flask_babel import gettext
+from threading import Thread
+
 import paho.mqtt.client as mqtt
+import time
+import json
 
 
 class MqttThread(Thread):
@@ -12,10 +15,15 @@ class MqttThread(Thread):
     MQTT class
     """
 
-    HOME_SEND = "client"
-    HOME_RECEIVE = "home"
-    DOORBIRD_SEND = "doorbird_client"
-    DOORBIRD_RECEIVE = "doorbird_home"
+    HOME_SEND = "tx"
+    HOME_RECEIVE = "rx"
+    HOME_WARNING = "warn"
+    HOME_ERROR = "err"
+    HOME_HELLO = "hello"
+    HOME_DEBUG = "debug"
+
+    HOME_GET_RECEIVE = "gr"
+    HOME_GET_SEND = "gt"
 
     USERNAME = "home"
     PASSWORD = "xbYRJocj08YEtazIg90QEYiccembElT1"
@@ -57,7 +65,13 @@ class MqttThread(Thread):
         :return: None
         """
 
-        self.__terminal.mqtt("Connected with result code {0}".format(str(rc)))
+        self.__terminal.protocol("MQTT", "Connected with result code {0}".format(str(rc)))
+
+        self.__client.subscribe(topic=self.join_topics(self.HOME_ERROR, "#"))
+        self.__client.subscribe(topic=self.join_topics(self.HOME_WARNING, "#"))
+        self.__client.subscribe(topic=self.join_topics(self.HOME_HELLO, "#"))
+        self.__client.subscribe(topic=self.join_topics(self.HOME_DEBUG, "#"))
+        self.__client.subscribe(topic=self.join_topics(self.HOME_GET_RECEIVE, "#"))
 
         self.__can_subscribe = True
         for topic in self.__queue:
@@ -75,28 +89,51 @@ class MqttThread(Thread):
         :return: None
         """
 
-        self.__terminal.mqtt("Received MQTT message {0} on topic {1} with qos {2} and retain flag {3}".format(
-            str(msg.payload.decode("utf-8")), str(msg.topic), str(msg.qos), str(msg.retain)))
+        self.__terminal.protocol("MQTT", "Received MQTT message {0} on topic {1} with qos {2} and retain flag {3}".format(
+            str(msg.payload.decode("utf-8"))[:30], str(msg.topic), str(msg.qos), str(msg.retain)))
 
-        # ids = msg.topic.split(self.SEPARATOR)
-        # ids.remove(self.HOME_RECEIVE)
+        real_topic = msg.topic.split(self.SEPARATOR)
+        value = msg.payload.decode("utf-8")
 
-        try:
-            value = int(msg.payload.decode("utf-8"))
+        header = real_topic.pop(0)
+        if header == self.HOME_ERROR:
+            message = json.loads(value)
+            self.__general.updater.error(message["title"], message["value"])
 
-        except ValueError:
+        elif header == self.HOME_WARNING:
+            message = json.loads(value)
+            self.__general.updater.warning(message["title"], message["value"])
+
+        elif header == self.HOME_HELLO:
+            self.__general.updater.connection_success(" -> ".join(real_topic), value)
+
+        elif header == self.HOME_DEBUG:
+            message = json.loads(value)
+            self.__general.updater.error(message["title"], message["value"])
+
+        elif header == self.HOME_RECEIVE:
+            real_topic = self.SEPARATOR.join(real_topic)
+
             try:
-                value = float(msg.payload.decode("utf-8"))
-            except ValueError:
-                if msg.payload.decode("utf-8").lower() == "false" or msg.payload.decode("utf-8").lower() == "true":
-                    value = msg.payload.decode("utf-8").lower() == "true"
-                else:
-                    try:
-                        value = json.loads(msg.payload.decode("utf-8"))
+                value = json.loads(value)
 
-                    except json.decoder.JSONDecodeError:
-                        value = msg.payload.decode("utf-8")
-        self.__general.update(protocol_type="mqtt", value=value, config_part={"path": msg.topic})  # TODO brát z mateřské třídy, nepsat natvrdo mqtt, path
+            except json.decoder.JSONDecodeError:
+                pass
+
+            self.__general.update(protocol_type="mqtt", value=value, config_part={"path": real_topic})  # TODO brát z mateřské třídy, nepsat natvrdo mqtt, path
+
+        elif header == self.HOME_GET_RECEIVE:
+            send_value = None
+
+            if len(real_topic) == 1:
+                send_value = self.__general.get_tile_value(real_topic[0])
+
+            elif len(real_topic) == 2:
+                send_value = self.__general.get_item_value(real_topic[0], real_topic[1])
+
+            real_topic = self.SEPARATOR.join(real_topic)
+
+            self.publish(send_value, self.SEPARATOR.join([self.HOME_GET_SEND, real_topic]))
 
     def on_log(self, client, user_data, level, buf):
         """
@@ -108,7 +145,7 @@ class MqttThread(Thread):
         :return: None
         """
         if "PINGRESP" not in str(buf) and "PINGREQ" not in str(buf):
-            self.__terminal.mqtt("Log ({0}): {1}".format(str(level), str(buf)))
+            self.__terminal.protocol("MQTT", "Log ({0}): {1}".format(str(level), str(buf)))
 
     def subscribe(self, topic):
         """
@@ -117,11 +154,14 @@ class MqttThread(Thread):
         :return: None
         """
 
+        joined = self.join_topics(self.HOME_RECEIVE, topic)
+
         if not self.__can_subscribe:
-            self.__queue.append(topic)
+            self.__queue.append(joined)
+            time.sleep(0.00000000000000000001)  # Required delay
+
         else:
-            # self.__client.subscribe(topic=self.join_topics(self.HOME_RECEIVE, topic))
-            self.__client.subscribe(topic=topic)  # TODO ochrana, udělat jen client na odchozí a home na příchozéí
+            self.__client.subscribe(topic=joined)
 
     def unsubscribe(self, topic):
         """
@@ -129,11 +169,10 @@ class MqttThread(Thread):
         :param topic:
         :return: None
         """
-
-        # self.__client.unsubscribe(topic=self.join_topics(self.HOME_RECEIVE, topic))
-        self.__client.unsubscribe(topic=topic)
+        self.__client.unsubscribe(topic=self.join_topics(self.HOME_RECEIVE, topic))
 
     def publish(self, value, path):
+        # TODO join topics here
         """
         MQTT publish
         :param path:
@@ -141,7 +180,10 @@ class MqttThread(Thread):
         :return: None
         """
 
-        self.__client.publish(path, str(value))
+        if type(value) == bool:
+            value = 1 if value else 0
+
+        self.__client.publish(self.join_topics(self.HOME_SEND, path), str(value))
 
     def run(self):
         """
@@ -161,7 +203,7 @@ class MqttThread(Thread):
             # Other loop*() functions are available that give a threaded interface and a manual interface.
             self.__client.loop_forever()
         except ConnectionRefusedError:
-            self.__terminal.mqtt("MQTT error - probably not installed mosquitto and mosquitto-clients")
+            self.__terminal.protocol("MQTT", "Error - probably not installed mosquitto and mosquitto-clients")
 
 
 class MQTT(Protocol):
@@ -180,7 +222,7 @@ class MQTT(Protocol):
             self.thread.start()
 
     def config(self):
-        path = f"{self.__HOME}/test"
+        path = "".join(random.choices(string.ascii_lowercase, k=2)) + "".join(random.choices(string.digits.lower(), k=4))
         return {
             self._PATH: path
         }
@@ -189,7 +231,7 @@ class MQTT(Protocol):
         from config.items.input import Input
 
         return {
-            self._PATH: Input().make_object(value=self.config()[self._PATH], prepend="home", readonly=False, button=True, label=gettext("Path")),
+            self._PATH: Input().make_object(value=self.config()[self._PATH], prepend="rx+tx/", readonly=False, button=True, label=gettext("Path")),
         }
 
     def add_listener_inner(self, config):
@@ -200,3 +242,5 @@ class MQTT(Protocol):
 
     def publish(self, config, value):
         self.thread.publish(value=value, path=config[self._PATH])
+        # TODO QoS
+        self._general.update(protocol_type=self.TYPE, value=value, config_part={"path": config[self._PATH]})

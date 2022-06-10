@@ -168,5 +168,6 @@ class Refresh:
             if refresh["data"]["modal"]["id"] == old_tile_id:
                 self.__fmng.refresh_data[num]["data"]["modal"]["id"] = new_tile_id
 
+    # TODO tohle teď fungovat nebude
     def doorbird(self):
         self.__doorbird_time = time.time()

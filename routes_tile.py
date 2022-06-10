@@ -17,37 +17,11 @@ def tile_value_rwr(data):
 
     tile_id = data[tmng_r.TILE_ID]
     value = data[tmng_r.VALUE]
-
     tile_publish(tile_id=tile_id, value=value)
 
     changes_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
                           message="tile '{}'s value set to '{}'".format(tile_id, value))
     terminal.debug("Change tile (ID: {0}) value to {1}".format(tile_id, str(value)))
-
-
-@socketio.on("tile_id", namespace=app.config["SOCKETIO_NAMESPACE"])
-@socketio_login_required
-@socketio_prevent_hack
-@role_required("manager")
-@check_browser
-def tile_id_rwr(data):
-    """
-    Rewrite tile ID
-    :param data: data of socketio request
-    :return: None
-    """
-
-    tile_id = data["tile_id"]
-    new_id = data["new_id"]
-
-    refresh_clients.new_tile_id(tile_id, new_id)
-
-    emit("tile_id_result", {"tile_id": tile_id, "new_id": new_id}, broadcast=True)
-    tmng_rwr.tile_id(tile_id=tile_id, new_id=new_id)
-
-    changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
-                               message="tile '{}'s ID set to '{}'".format(tile_id, new_id))
-    terminal.debug("Change tile ID from {0} to {1}".format(tile_id, str(new_id)))
 
 
 @socketio.on("tile_index", namespace=app.config["SOCKETIO_NAMESPACE"])
@@ -91,7 +65,8 @@ def tile_label_rwr(data):
     tile_id = data[tmng_r.TILE_ID]
     new_label = data["new_label"]
 
-    emit("tile_label_result", {"tile_id": tile_id, "new_label": new_label}, broadcast=True)
+    emit("tile_label_result", {"tile_id": tile_id, "new_label": new_label, "tile_only": False}, broadcast=True, include_self=False)
+    emit("tile_label_result", {"tile_id": tile_id, "new_label": new_label, "tile_only": True})
     tmng_rwr.tile_label(tile_id=tile_id, new_label=new_label)
 
     changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
@@ -113,7 +88,16 @@ def tile_type_rwr(data):
 
     tile_id = data[tmng_r.TILE_ID]
     old_type = tmng_r.get_tile_type(tile_id=tile_id)
-    new_type = refactoring.refactor_reverse(data["new_type"])
+    new_type = data["new_type"]
+
+    old_tile = tmng_r.get_tile(tile_id)
+
+    tiles_config = tmng_r.get_tiles_config()
+
+    old_tile_values = render_template(fmng.path_join("modal_edit", "tile_values.html"),
+                                      tile=old_tile,
+                                      tile_config=tiles_config,
+                                      group="tile-dynamic")
 
     if old_type != new_type:  # Prevent from icon blinking (when clicking too times)
         tmng_rwr.tile_type(new_type=new_type, tile_id=tile_id)
@@ -121,12 +105,38 @@ def tile_type_rwr(data):
         tile = tmng_r.get_tile(tile_id)
         tile_values = render_template(fmng.path_join("modal_edit", "tile_values.html"),
                                       tile=tile,
-                                      tile_config=tmng_r.get_tiles_config(),
+                                      tile_config=tiles_config,
                                       group="tile-dynamic")
 
+        if old_tile_values == tile_values:  # Prevent from sliding up and back down with same content
+            tile_values = False
+
+        if tiles_config[new_type]["protocols_able"]:
+            tile_protocol_btns = render_template("modal_edit/tile_protocol_btns.html", tile=tile, tile_config=tiles_config, group="tile", protocol_config=get_protocols_config())
+
+        else:
+            tile_protocol_btns = False
+
+        # Delete protocols that cannot be in new tile type
+        for i in tile["protocols"].copy():
+            if i["type"] not in tiles_config[new_type]["protocols_able"]:
+                protocols = []
+                for j in tile["protocols"]:
+                    if i["type"] != j["type"]:
+                        protocols.append(j["type"])
+
+                state, new_protocol = tmng_rwr.tile_protocols_check(tile_id=tile_id, protocols=protocols)
+                result = tmng_rwr.tile_protocol(tile_id=tile_id, protocol=new_protocol, state=state,
+                                                protocol_object=default_protocols.get_object(new_protocol))
+
+                emit("tile_protocol_result",
+                     {"tile_id": tile_id, "protocols": protocols, "new_protocol": new_protocol, "state": state,
+                      "html": None}, broadcast=True)
+                default_protocols.get_object(new_protocol).remove_listener(config=result)
+
         emit("tile_type_result", {"tile_values": tile_values, "tile_id": tile_id, "type": new_type,
-                                  "tile_html": render_template(
-                                      fmng.path_join("tiles", tmng_r.get_tile_type(tile_id) + ".html"), tile=tile)},
+                                  "tile_protocol_btns": tile_protocol_btns,
+                                  "tile_html": render_template("tiles/tile.html", tile=tile)},
              broadcast=True)
 
         changes_edit_logger.change(username=current_user.username, func_name=inspect.currentframe().f_code.co_name,
@@ -187,9 +197,9 @@ def tile_config_rwr(data):
 @check_browser
 def tile_protocol(data):
     tile_id = data[tmng_r.TILE_ID]
-    new_protocol = data["new_protocol"]
-    state = data["state"]
+    protocols = data["protocols"]
 
+    state, new_protocol = tmng_rwr.tile_protocols_check(tile_id=tile_id, protocols=protocols)
     result = tmng_rwr.tile_protocol(tile_id=tile_id, protocol=new_protocol, state=state, protocol_object=default_protocols.get_object(new_protocol))
     html = None
     if state == "add":
@@ -197,10 +207,11 @@ def tile_protocol(data):
                                id=tile_id, protocol_config=get_protocols_config(),
                                protocols=tmng_r.get_tile(tile_id)["protocols"],
                                group="protocol-tile",
-                               protocol=new_protocol)
+                               protocol=new_protocol, mode=sun.get_mode(user_mode=current_user.mode))
 
-    emit("tile_protocol_result", {"tile_id": tile_id, "new_protocol": new_protocol, "state": state,
+    emit("tile_protocol_result", {"tile_id": tile_id, "protocols": protocols, "new_protocol": new_protocol, "state": state,
                                   "html": html}, broadcast=True)
+
     if state == "add":
         default_protocols.get_object(new_protocol).add_listener()
 

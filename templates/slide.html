@@ -79,7 +79,7 @@
     <div class="swipe-content">
         <div class="c_sortable_page_grid" id="sortable_page_grid" style="display:table; position: relative; margin: 0 auto; width: min-content;">
             {% for tile in slide.children %}
-                {% include "tiles/" + tile.type + ".html" %}
+                {% include "tiles/tile.html" %}
             {% endfor %}
 
             <div class="add_new_tile_element add-tile-alpha tile" data-id="">

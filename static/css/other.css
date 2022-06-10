@@ -201,13 +201,6 @@ input {
     /*transition: 0.5s all;*/
 }
 
-[data-notify-position="top-center"] {
-    width: auto;
-    position: absolute !important;
-    left: 20px !important;
-    right: 20px !important;
-}
-
 .swipe-content, .swiper-container, .c_sortable_page_grid {
     overflow: hidden;
 }

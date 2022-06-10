@@ -15,7 +15,7 @@ class Item:
     VISIBLE = False
     NAME = gettext("Unnamed")
     PROTOCOLS = []
-    DESCRIPTION = ""
+    PROTOCOLS_ABLE = []
     VALUE = None
 
     # Arguments
@@ -24,10 +24,10 @@ class Item:
     _TYPE = "type"
     _VISIBLE = "visible"
     _NAME = "name"
-    _DESCRIPTION = "description"
     _VALUE = "value"
     _CONFIG = "config"
     _PROTOCOLS = "protocols"
+    _PROTOCOLS_ABLE = "protocols_able"
 
     # General
     _LABEL = "label"
@@ -52,6 +52,7 @@ class Item:
     _PREPEND = "prepend"
     _LIST = "list"
     _COUNT = "count"
+    _MAX_LENGTH = "max_length"
 
     # Button
     _COLOR = "color"
@@ -62,6 +63,11 @@ class Item:
 
     # Dropdown
     _OPTIONS = "options"
+
+    _ON_VALUE = "on_value"
+    _OFF_VALUE = "off_value"
+
+    _URL = "url"
 
     def __init__(self, *args, **kwargs):
         self._fmng = FileManager()
@@ -100,15 +106,18 @@ class Item:
 
     @staticmethod
     def on_new_value(before, current):
-        return current
+        return current, current
 
     @staticmethod
-    def on_display_value(value):
+    def on_display_value(value, config=None):
         return value
 
     @staticmethod
     def create_random_string(length=2):
         return "".join(random.choices(string.ascii_lowercase, k=length))
+
+    def modal_close(self):
+        pass
 
     def random_id(self):
         """
@@ -151,8 +160,8 @@ class Item:
             self._TYPE: self.TYPE,
             self._VISIBLE: self.VISIBLE,
             self._NAME: self.NAME,
-            self._DESCRIPTION: self.DESCRIPTION,
             self._VALUE: self.VALUE,
             self._PROTOCOLS: [],
+            self._PROTOCOLS_ABLE: self.PROTOCOLS_ABLE,
             self._CONFIG: self.edit_config
         }

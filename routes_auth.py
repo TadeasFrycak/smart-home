@@ -21,47 +21,27 @@ def unauthorized_handler():
 @app.route("/login", methods=["POST"])
 @check_browser
 def login():
-    """
-    Login all unlogged users
-    :return: ok
-    """
-
-    # TODO remove this in the future --> look for better solution
-    for user in users:
-        login_user(user["user"], user["remember"])
-
-    return OK
-
-
-@socketio.on("login", namespace=app.config["SOCKETIO_NAMESPACE"])
-@check_browser
-# TODO prevent heck, kontrolovat stejný regex
-def login_socketio(data):
-    """
-    Login user
-    :param data: data of socketio request
-    :return: None
-    """
+    # TODO prevent heck, kontrolovat stejný regex
 
     ip = request.environ.get("HTTP_X_REAL_IP", request.remote_addr)
     mac = clients.get_mac_from_ip(ip=ip)
 
-    username = data["username"].strip().lower()  # TODO v uživatelském poli půjde zadat pouze malými písmeny +PHACK
-    password = data["password"]
-    remember = data["remember"]
+    username = request.form.get("username")  # TODO v uživatelském poli půjde zadat pouze malými písmeny +PHACK
+    password = request.form.get("password")
+    remember = request.form.get("remember")
 
     user = User.query.filter_by(username=username).first()
     # take the user supplied password, hash it, and compare it to the hashed password in database
     if not user or not user.check_password(password):
-        auth_logger.wrong_login(username=username, message="IP {0}; MAC {1}; Agent {2}".format(ip, mac, request.user_agent))
-        emit("login_result", {"status": False})
-        emit("notify", {"title": "Login", "message": "Username or password is wrong!", "type": "danger", "delay": 5000})
+        auth_logger.wrong_login(username=username,
+                                message="IP {0}; MAC {1}; Agent {2}".format(ip, mac, request.user_agent))
+        return {"status": False}
 
     else:
         auth_logger.login(username=username, message="IP {0}; MAC {1}; Agent {2}".format(ip, mac, request.user_agent))
-        users.append({"user": user, "remember": remember})
         login_user(user=user, remember=remember)
-        emit("login_result", {"status": True})
+
+        return {"status": True}
 
 
 # Logout
@@ -92,9 +72,9 @@ def logout():
         return abort(404)
 
 
-@socketio.on("register", namespace=app.config["SOCKETIO_NAMESPACE"])
+@app.route("/register", methods=["POST"])
 @check_browser
-def register_socketio(data):
+def register():
     """
     Register user
     :param data: data of socketio request
@@ -102,10 +82,10 @@ def register_socketio(data):
     """
 
     if fmng.config["default"].getboolean("registrations"):
-        first_name = data["first_name"].strip().capitalize()
-        last_name = data["last_name"].strip().capitalize()
-        username = data["username"].strip().lower()
-        password = data["password"]
+        first_name = request.form.get("first_name").strip().capitalize()
+        last_name = request.form.get("last_name").strip().capitalize()
+        username = request.form.get("username").strip().lower()
+        password = request.form.get("password")
 
         # TODO ochrany jako username != heslo apodobně
         # print(prevent_hack.check(first_name=first_name, last_name=last_name, username=username, password=password,
@@ -113,8 +93,7 @@ def register_socketio(data):
         user = User.query.filter_by(username=username).first()  # if returns user, then username already exists in database
 
         if user:
-            emit("register_result", {"status": False})
-            emit("notify", {"title": "Error", "message": "Username is already taken!", "type": "danger", "delay": 5000})
+            return {"status": False}
 
         else:
             new_user = User(first_name=first_name, last_name=last_name, username=username)
@@ -123,9 +102,11 @@ def register_socketio(data):
             database.session.add(new_user)  # Add the new user to the database
             database.session.commit()
 
-            emit("register_result", {"status": True})
+            return {"status": True}
     else:
-        pass  # TODO tady je to hacker
+        socketio.emit("notify", {"title": gettext("Problem!"),
+                                 "message": gettext("Detected hacker in registrations!"), "type": "danger",
+                                 "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"], broadcast=True)  # TODO tady je to hacker
 
 
 @socketio.on("user_mode", namespace=app.config["SOCKETIO_NAMESPACE"])

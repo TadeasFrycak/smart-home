@@ -88,10 +88,6 @@ def socketio_prevent_hack(func):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.tile_value(data["value"]))
 
-        elif func_name == "tile_id_rwr" and check_args(args=["tile_id", "new_id"], data=data):
-            tests.append(validator.tile_id(data["tile_id"]))
-            tests.append(validator.tile_new_id(data["new_id"]))
-
         elif func_name == "tile_index_rwr" and check_args(args=["slide_index", "old_index", "new_index"], data=data):
             tests.append(validator.tile_index(slide_index=data["slide_index"], old_index=data["old_index"],
                                               new_index=data["new_index"]))
@@ -116,7 +112,7 @@ def socketio_prevent_hack(func):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.tab_id(data["tab_id"]))
 
-        elif func_name == "get_edit_modal" and check_args(args=["tile_id", "tab_id"], data=data):
+        elif (func_name == "get_edit_modal" or func_name == "modal_close") and check_args(args=["tile_id", "tab_id"], data=data):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.tab_id(data["tab_id"]))
 
@@ -130,7 +126,7 @@ def socketio_prevent_hack(func):
         elif (func_name == "get_client_list_modal" or func_name == "get_user_list_modal") and check_args(args=["tab_id"], data=data):
             tests.append(validator.tab_id(data["tab_id"]))
 
-        elif (func_name == "get_android_modal" or func_name == "modal_close") and check_args(args=["tab_id"], data=data):
+        elif func_name == "get_android_modal" and check_args(args=["tab_id"], data=data):
             tests.append(validator.tab_id(data["tab_id"]))
 
         elif func_name == "modal_item_prepend" and check_args(args=["tile_id", "type"], data=data):
@@ -141,13 +137,6 @@ def socketio_prevent_hack(func):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.modal_item_id(data["id"]))
             tests.append(validator.tile_value(data["value"]))
-
-        elif func_name == "modal_daterangepicker" and check_args(args=["tile_id", "start_value", "end_value", "pair_id", "id"], data=data):
-            tests.append(validator.tile_id(data["tile_id"]))
-            tests.append(validator.modal_item_id(data["id"]))
-            tests.append(validator.modal_item_id(data["pair_id"]))
-            terminal.warning("Validation is not complete! TODO")
-            # TODO (start_value, end_value, pair_id - je třeba vracet clientovi, zda je správná a zobrazovat, jinak err)
 
         elif func_name == "modal_item_index" and check_args(args=["tile_id", "old_index", "new_index"], data=data):
             tests.append(validator.modal_item_index_change(tile_id=data["tile_id"], old_index=data["old_index"], new_index=data["new_index"]))
@@ -260,3 +249,11 @@ def load_user(user_id):
 @socketio_login_required
 def ping():
     emit("my-pong")
+
+
+# HTTP ping
+@app.route("/ping")
+def ping_http():
+    return "my-pong"
+
+

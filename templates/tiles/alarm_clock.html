@@ -1,63 +1,34 @@
-<div class="tile-item" data-id="{{ tile.id }}" data-type="{{ tile.type }}" data-value="{{ tile.value }}" data-config='{{ tile.config | tojson | safe }}'>
-    <div class="tile {% if tile.value.main == 1 %}tile-active{% endif %}" style="width:212px;">
-        <div class="tile-text">
-            <img alt="{{ _('Icon') }}" src="{{ url_for('static', filename='img/icons/' + tile.config.icon) }}" class="tile-icon icon-invert" style="left: 27px;top: 16px">
-            <span style="width: 118px;height: auto;position: absolute;left: 80px;top: 13px;text-align:center;font-size: 22px;">12:44</span>
+<div class="tile {% if tile.value.main == 1 %}tile-active{% endif %}" style="width:212px;">
+    <div class="tile-text">
+        <img alt="{{ _('Icon') }}" src="{{ url_for('static', filename='img/icons/' + tile.config.icon) }}" class="tile-icon icon-invert" style="left: 27px;top: 16px">
+        <span style="width: 118px;height: auto;position: absolute;left: 80px;top: 13px;text-align:center;font-size: 22px;">12:44</span>
 
-            <div style="width: 118px;height: 15px;position: absolute;left: 80px;top: 44px;overflow: hidden;">
-                <span class="tile-label" style="font-size: 15px;top: 0;vertical-align: initial;height: auto;width: 118px;max-width: 118px;text-align: center;">{{ tile.label }}</span>
+        <div style="width: 118px;height: 15px;position: absolute;left: 80px;top: 44px;overflow: hidden;">
+            <span class="tile-label" style="font-size: 15px;top: 0;vertical-align: initial;height: auto;width: 118px;max-width: 118px;text-align: center;">{{ tile.label }}</span>
+        </div>
+
+        <div style="position:absolute;top:68px;left:10px">
+            <div class="ac-glyph {% if tile.value.monday %}ac-glyph-active{% endif %}" data-type="monday">
+                <span class="ac-glyph-text" >{{ _("Monday")[0] }}</span>
             </div>
-
-            <div style="position:absolute;top:68px;left:10px">
-                <div class="ac-glyph {% if tile.value.monday %}ac-glyph-active{% endif %}" data-type="monday">
-                    <span class="ac-glyph-text" >{{ _("Monday")[0] }}</span>
-                </div>
-                <div class="ac-glyph {% if tile.value.tuesday %}ac-glyph-active{% endif %}" data-type="tuesday">
-                    <span class="ac-glyph-text" >{{ _("Tuesday")[0] }}</span>
-                </div>
-                <div class="ac-glyph {% if tile.value.wednesday %}ac-glyph-active{% endif %}" data-type="wednesday">
-                    <span class="ac-glyph-text" >{{ _("Wednesday")[0] }}</span>
-                </div>
-                <div class="ac-glyph {% if tile.value.thursday %}ac-glyph-active{% endif %}" data-type="thursday">
-                    <span class="ac-glyph-text" >{{ _("Thursday")[0] }}</span>
-                </div>
-                <div class="ac-glyph {% if tile.value.friday %}ac-glyph-active{% endif %}" data-type="friday">
-                    <span class="ac-glyph-text" >{{ _("Friday")[0] }}</span>
-                </div>
-                <div class="ac-glyph {% if tile.value.saturday %}ac-glyph-active{% endif %}" data-type="saturday">
-                    <span class="ac-glyph-text" >{{ _("Saturday")[0] }}</span>
-                </div>
-                <div class="ac-glyph {% if tile.value.sunday %}ac-glyph-active{% endif %}" data-type="sunday">
-                    <span class="ac-glyph-text" >{{ _("Sunday")[0] }}</span>
-                </div>
+            <div class="ac-glyph {% if tile.value.tuesday %}ac-glyph-active{% endif %}" data-type="tuesday">
+                <span class="ac-glyph-text" >{{ _("Tuesday")[0] }}</span>
+            </div>
+            <div class="ac-glyph {% if tile.value.wednesday %}ac-glyph-active{% endif %}" data-type="wednesday">
+                <span class="ac-glyph-text" >{{ _("Wednesday")[0] }}</span>
+            </div>
+            <div class="ac-glyph {% if tile.value.thursday %}ac-glyph-active{% endif %}" data-type="thursday">
+                <span class="ac-glyph-text" >{{ _("Thursday")[0] }}</span>
+            </div>
+            <div class="ac-glyph {% if tile.value.friday %}ac-glyph-active{% endif %}" data-type="friday">
+                <span class="ac-glyph-text" >{{ _("Friday")[0] }}</span>
+            </div>
+            <div class="ac-glyph {% if tile.value.saturday %}ac-glyph-active{% endif %}" data-type="saturday">
+                <span class="ac-glyph-text" >{{ _("Saturday")[0] }}</span>
+            </div>
+            <div class="ac-glyph {% if tile.value.sunday %}ac-glyph-active{% endif %}" data-type="sunday">
+                <span class="ac-glyph-text" >{{ _("Sunday")[0] }}</span>
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-      $('.tile-item[data-id="{{ tile.id }}"]').on("value-receive", function() {
-        let value = store($(this), "value");
-
-        for (let key in value) {
-          let currentValue = value[key];
-          if (key === "main"){
-            $(this).find(".tile").toggleClass("tile-active", currentValue);
-          }
-          else $(this).find(".ac-glyph[data-type=" + key + "]").toggleClass("ac-glyph-active", currentValue);
-        }
-      });
-      
-      $('.tile-item[data-id="{{ tile.id }}"]').on("tap", function() {
-        store($(this), "value", {
-          "main":      !$(this).find(".tile").hasClass("tile-active"),
-          "monday":     $(this).find(".ac-glyph[data-type='monday']")   .hasClass("ac-glyph-active"),
-          "tuesday":    $(this).find(".ac-glyph[data-type='tuesday']")  .hasClass("ac-glyph-active"),
-          "wednesday":  $(this).find(".ac-glyph[data-type='wednesday']").hasClass("ac-glyph-active"),
-          "thursday":   $(this).find(".ac-glyph[data-type='thursday']") .hasClass("ac-glyph-active"),
-          "friday":     $(this).find(".ac-glyph[data-type='friday']")   .hasClass("ac-glyph-active"),
-          "saturday":   $(this).find(".ac-glyph[data-type='saturday']") .hasClass("ac-glyph-active"),
-          "sunday":     $(this).find(".ac-glyph[data-type='sunday']")   .hasClass("ac-glyph-active")
-        }).trigger("value-transmit");
-      });
-    </script>
 </div>

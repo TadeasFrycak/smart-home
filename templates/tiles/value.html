@@ -1,21 +1,10 @@
-<div class="tile-item" data-id="{{ tile.id }}" data-type="{{ tile.type }}" data-value="{{ tile.value }}" data-config='{{ tile.config | tojson | safe }}'>
-    <div class="tile">
-        <div class="tile-text">
-            <div class="tile-display">
-                <div class="tile-value-value tile-input-value">{{ (((tile.value.value | float) * 10) | round) / 10 }}</div>
-                <span class="tile-value-suffix" style="font-size: 15px">{{ tile.value.suffix }}</span>
-            </div>
-            <span class="tile-label">{{ tile.label }}</span>
-            <span class="tile-status">{% if tile.value.time %}{{ get_time_ago(tile.value.time) }}{% else %}{{ _("N/A") }}{% endif %}</span> <!-- TODO -->
+<div class="tile">
+    <div class="tile-text">
+        <div class="tile-display">
+            <div class="tile-value-value tile-input-value">{{ tile.value.value|int }}</div>
+            <span class="tile-value-suffix" style="font-size: 15px">{{ tile.value.suffix }}</span>
         </div>
+        <span class="tile-label">{{ tile.label }}</span>
+        <span class="tile-status">{% if tile.value.time %}{{ get_time_ago(tile.value.time) }}{% else %}{{ _("N/A") }}{% endif %}</span> <!-- TODO -->
     </div>
-    <script type="text/javascript">
-      $('.tile-item[data-id="{{ tile.id }}"]').on("value-receive", function() {
-        let value = store($(this), "value");
-
-        $(this).find(".tile-value-value").text(Math.round(value.value * 10) / 10);  // TODO není hezké úplně všude, není elegantní
-        $(this).find(".tile-value-suffix").text(value.suffix);
-        $(this).find(".tile-status").text(value.ago);
-      });
-    </script>
 </div>

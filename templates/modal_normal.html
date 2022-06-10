@@ -1,5 +1,9 @@
 {% extends "modal.html" %}
 
+{% block class %}
+    modal-normal
+{% endblock %}
+
 {% block title %}
     {{ tile.label }}
 {% endblock %}
@@ -10,9 +14,10 @@
         {% set group = "modal-static" %}
             {% for key, value in tile["value"].items() %}
                 {% set item = {"type": "toggle", "config": {"label": _(refactor(key)), "id": key}, "value": value} %}
-                {% include "items/toggle.html" %}
+                {% include "items/item.html" %}
             {% endfor %}
         </div>
+        <!-- TODO modal-static, modal-dynamic??????? -->
         {% include "items/separator.html" %}
         {% include "items/separator.html" %}
     {% endif %}
@@ -20,7 +25,7 @@
     <div class="modal-dynamic">
         {% set group = "modal-dynamic" %}
         {% for item in tile.modal %}
-            {% include "items/" + item["type"] + ".html" %}
+            {% include "items/item.html" %}
         {% endfor %}
     </div>
 {% endblock %}

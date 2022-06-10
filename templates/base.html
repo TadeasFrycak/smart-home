@@ -12,11 +12,9 @@
 
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery-ui.min.js') }}" defer></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/vue/vue.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/popper/popper.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap/bootstrap-notify.min.js') }}" defer></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/socket/socket.io.min.js') }}" defer></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/iconify/iconify.min.js') }}" defer></script>
 {#    TODO live JS#}
 {#        <script type="text/javascript" src="{{ url_for('static', filename='js/live/live.js') }}" defer></script>#}
@@ -37,7 +35,6 @@
             }
         </style>
         {% block head %} {% endblock %}
-
         <meta charset="UTF-8">
         <meta name="description" content="{{ _('Smart home') }}">
         <meta name="subject" content="{{ _('Smart home') }}">
@@ -51,7 +48,6 @@
     </head>
 
     <body lang="{{ _("en-GB") }}" class="{{ mode }}" data-is-edit-active="false">
-
         <div class="preloader">
             {% include "preloader.html" %}
         </div>

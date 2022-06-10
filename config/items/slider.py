@@ -10,7 +10,7 @@ class Slider(Item):
     TYPE = "slider"
     VISIBLE = True
     NAME = gettext("Slider")
-    DESCRIPTION = gettext("Slide to set value")
+    PROTOCOLS_ABLE = ["mqtt"]
     VALUE = [50, 80]
 
     @property

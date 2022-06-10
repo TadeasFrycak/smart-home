@@ -8,5 +8,5 @@ class Player(Tile):
     """
 
     TYPE = "player"
-    VISIBLE = False
+    VISIBLE = True
     NAME = gettext("Player")

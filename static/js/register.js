@@ -1,18 +1,6 @@
 $(document).ready(function(){
   // TODO přidat podmínku, aby heslo nemohlo obsahovat jméno, příjmení ani username (předtím dát jmeno.lower() a prijmeni.lower() a password.lower() nebo toLowerCase nebo jak je to v JS)
 
-  socketio.on("register_result", function(data){
-    if (data.status === true) {
-      toggleAuth();
-    }
-    else {
-      $("#reg-username").removeClass("valid").addClass("invalid");
-      setTimeout(() => { $("#reg-username").removeClass("invalid"); }, 3000);
-      console.log("Username is taken");
-      $("input#reg-username").val("");
-    }
-  });
-
   let inputNames = ["#first-reg-name", "#last-reg-name", "#reg-username", "#reg-password", "#repeat-reg-password"];
   for (let i=0; i < inputNames.length; i++) {
     $(inputNames[i]).bind("cut copy paste", function(e) {
@@ -53,7 +41,7 @@ $(document).ready(function(){
     validatePassword("input#reg-password");
   });
 
-  $("input#repeat-reg-password").on("input", function(){
+  $("input#repeat-reg-password, input#reg-password").on("input", function(){
     if (!(validateRepeatPassword("input#reg-password", "input#repeat-reg-password"))) {
       $("input#repeat-reg-password").removeClass("valid").addClass("invalid");
     }
@@ -243,12 +231,25 @@ $(document).ready(function(){
     if (validate_fname && validate_lname && validate_uname && validate_password && validate_repeat_password && password_check) {
       console.log("Validation successful");
 
-      socketio.emit("register", {
+      $.post("/register", {
         "first_name": $("input#first-reg-name").val(),
         "last_name": $("input#last-reg-name").val(),
         "username": $("input#reg-username").val().toLowerCase().trim(),
         "password": $("input#reg-password").val()
         // "sex": sex
+      }, function (result) {
+        console.log(result);
+        if (result.status === true) {
+          toggleAuth();
+        }
+        else {
+          console.log("Username is taken");
+          notify(_("Error"), _("Username is already taken!"), "danger", 5000)
+
+          $("#reg-username").removeClass("valid").addClass("invalid");
+          setTimeout(() => { $("#reg-username").removeClass("invalid"); }, 3000);
+          $("input#reg-username").val("");
+        }
       });
     }
   });

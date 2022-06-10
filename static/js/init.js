@@ -1,3 +1,5 @@
+// "use strict";
+
 // Instant changes
  let modalData = isModalOpen(null, null, true);
 if (modalData) {
@@ -23,14 +25,6 @@ $(document).ready(function(){
   *   Inicializování předmětů (při i po načtení stránky)
   *
   */
-
-  console.log(
-            "  _____ _    _         \n" +
-            " / ____| |  | |  Smart \n" +
-            "| (___ | |__| |  Home  \n" +
-            " \\___ \\|  __  |      \n" +
-            " ____) | |  | |        \n" +
-            "|_____/|_|  |_|        \n\n")
 
   $(".swiper-pagination").dblclick(function(){
     toggleFullscreen();

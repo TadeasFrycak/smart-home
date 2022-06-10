@@ -1,9 +1,11 @@
+from config.tiles.prusa import Prusa
 from config.tiles.value_double import ValueDouble
 from config.tiles.alarm_clock import AlarmClock
 from config.tiles.toggle import Toggle
 from config.tiles.player import Player
 from config.tiles.blank import Blank
 from config.tiles.value import Value
+import copy
 
 
 class Tiles:
@@ -12,6 +14,7 @@ class Tiles:
         AlarmClock(),
         Player(),
         Toggle(),
+        Prusa(),
         Value(),
         Blank()
     ]
@@ -35,4 +38,4 @@ class Tiles:
                 return instance
 
     def get_default(self):
-        return self.get_object(self.DEFAULT_TILE_TYPE).make_object()
+        return copy.deepcopy(self.get_object(self.DEFAULT_TILE_TYPE).make_object())

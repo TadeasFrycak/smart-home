@@ -10,6 +10,7 @@ class ValueDouble(Tile):
     TYPE = "value_double"
     VISIBLE = True
     NAME = gettext("Value Double")
+    PROTOCOLS_ABLE = ["mqtt"]
     VALUE = {"left": {"value": "Null", "suffix": ""}, "right": {"value": "Null", "suffix": ""}}
 
     @property

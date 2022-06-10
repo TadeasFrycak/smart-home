@@ -10,7 +10,6 @@ class DateRangePicker(Item):
     TYPE = "date_range_picker"
     VISIBLE = False
     NAME = gettext("Date picker")
-    DESCRIPTION = gettext("Pick a date or date range")
 
     @property
     def config(self):

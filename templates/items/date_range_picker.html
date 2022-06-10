@@ -1,31 +1,30 @@
-<div class="modal-item" data-id="{{ item.id }}" data-type="{{ item.type }}" data-value="{{ item.value }}" data-config='{{ item.config | tojson | safe }}' data-group="{{ group }}">
-    {#<div id='app'>
-        <v-date-picker v-model='selectedDate' color="indigo" locale={{ _("en") }} {% if mode == "dark" %}is-dark{% endif %} {% if item.config.range == True %}is-range{% endif %}></v-date-picker>
-    </div>
-    <script type="text/javascript" defer>
-      new Vue({
-        el: '#app',
-        data: {
-          selectedDate: null,
-        }
-      })
-    </script>#}
-
-    <div id='app'>
-        <template>
-            <v-date-picker v-model="range" color="indigo" locale={{ _("en") }} {% if mode == "dark" %}is-dark{% endif %} {% if item.config.range == True %}is-range{% endif %}>
-                <template v-slot="{ inputValue, togglePopover }">
-                    <input :value="inputValue" @click="togglePopover()">
-                </template>
-            </v-date-picker>
-        </template>
-    </div>
-    <script type="text/javascript" defer>
-      new Vue({
-        el: '#app',
-        data: {
-          range: new Date(),
-        }
-      });
-    </script>
+{#<div id='app'>
+    <v-date-picker v-model='selectedDate' color="indigo" locale={{ _("en") }} {% if mode == "dark" %}is-dark{% endif %} {% if item.config.range == True %}is-range{% endif %}></v-date-picker>
 </div>
+<script type="text/javascript" defer>
+  new Vue({
+    el: '#app',
+    data: {
+      selectedDate: null,
+    }
+  })
+</script>#}
+
+<div id='app'>
+    <template>
+        <v-date-picker v-model="range" color="indigo" locale={{ _("en") }} {% if mode == "dark" %}is-dark{% endif %} {% if item.config.range == True %}is-range{% endif %}>
+            <template v-slot="{ inputValue, togglePopover }">
+                <input :value="inputValue" @click="togglePopover()">
+            </template>
+        </v-date-picker>
+    </template>
+</div>
+<script type="text/javascript" defer>
+  item($('.modal-item[data-id="{{ item.id }}"][data-group="{{ group }}"]'));
+  new Vue({
+    el: '#app',
+    data: {
+      range: new Date(),
+    }
+  });
+</script>

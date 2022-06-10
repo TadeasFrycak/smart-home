@@ -2,6 +2,51 @@
 // Receive asynchronous communication
 // ----------------------------------------------
 
+socketio = io("/com", {
+  forceNew: true,
+  reconnectionDelay: 100,
+  reconnectionDelayMax: 500
+});
+reconnected = false;
+
+
+// setTimeout(function(){
+//   vibrate = navigator.vibrate ? 'vibrate' : navigator.webkitVibrate ? 'webkitVibrate' : null;
+// }, 1000);
+
+let serverModalOpened = false;
+
+function serverModal(header, message, button=_("Reload"), command="reload") {
+    $("#my-modal").hide();
+    $(".modal-here").empty();
+    $(".modal-here").append('<div class="modal fade" id="modal-server" tabindex="-1" role="dialog" aria-hidden="true"> <div class="modal-dialog modal-dialog-centered" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLongTitle">' + header + '</h5> </div> <div class="modal-body">' + message + '</div> <div class="modal-footer"> <button type="button" class="btn btn-danger ' + command +'">' + button + '</button></div></div></div></div>');
+    // navigator[vibrate](50);
+    $("#modal-server").modal({backdrop: "static", keyboard: false});
+}
+
+// Reload page
+socketio.on("reload", function() {
+  console.log("Server command: reload");
+  location.reload();
+});
+
+socketio.on("reconnect", function() {
+  console.log("Server reconnected! Reloading...");
+  location.reload();
+});
+
+// Asynchronous communication for global notifications
+audio = new Audio("/static/sound/beep.mp3");
+socketio.on("notify", function(msg) {
+  wait = false;
+  audio.play();
+  notify(_(msg.title), _(msg.message), msg.type, msg.delay);
+});
+
+$(document.body).on("click", ".reload", function() {
+  location.reload();
+});
+
 
 // Tile sync
 socketio.on("tile_delete_result", function(data){
@@ -25,8 +70,18 @@ socketio.on("tile_config_result", function(data){
 
 socketio.on("tile_type_result", function(data){
   if (isModalOpen("edit", data.tile_id)) {
-    $("#tile-type label").removeClass("active");
-    $("#tile-type label[data-type='" + data.type +"']").addClass("active");
+    store($('.modal-item[data-group="tile"][data-id="type"]'), "value", data.type)
+
+    if (data.tile_protocol_btns) {
+      $(".tile-protocol-btns").slideDown().empty().append(data.tile_protocol_btns);
+      $('.modal-item[data-group="tile"][data-id="protocol-btn"]').on("value-transmit", function() {
+        tileProtocol(this);
+      });
+
+    }
+    else {
+      $(".tile-protocol-btns").slideUp();
+    }
 
     if (data.tile_values) {
       if ($("#tile-dynamic-values").is(":hidden")) {
@@ -35,17 +90,13 @@ socketio.on("tile_type_result", function(data){
         initializeTileDynamic();
       }
       else {
-        console.log($(".tile-values-wrapper").html().trim());
-        console.log(data.tile_values.trim())
-        if ($(".tile-values-wrapper").html().trim() !== data.tile_values.trim()) {  // TODO not working
-          $(".tile-values-wrapper").slideUp(function() {
-            $(".tile-values-wrapper").empty().append(data.tile_values).slideDown();
-            initializeTileDynamic();
-          });
-        }
+        $(".tile-values-wrapper").slideUp(function() {
+          $(".tile-values-wrapper").empty().append(data.tile_values).slideDown();
+          initializeTileDynamic();
+        });
       }
     }
-    else {
+    else if (data.tile_values !== false) {
       $("#tile-dynamic-values").slideUp(function() {
         $(".tile-values-wrapper").empty();
       });
@@ -55,14 +106,19 @@ socketio.on("tile_type_result", function(data){
   $(".tile-item[data-id='"+data.tile_id+"']").replaceWith(data.tile_html)
   $(".tile-item[data-id='"+data.tile_id+"']").each(function() {
     initializeHammerTile(this);
-  })
+  });
+
+  tileValueTransmit($(".tile-item[data-id='"+data.tile_id+"']"));
+
 });
 
 socketio.on("tile_label_result", function(data){
-  if (isModalOpen("edit", data.tile_id)) {
-    $("#tile_name").val(data.new_label);
-  }
   $(".tile-item[data-id='"+data.tile_id+"'] .tile-label").text(data.new_label);
+  if (!data.tile_only) {
+    if (isModalOpen("edit", data.tile_id)) {
+      $("#tile_name").val(data.new_label);
+    }
+  }
 });
 
 socketio.on("tile_index_result", function(data){
@@ -85,26 +141,9 @@ socketio.on("tile_index_result", function(data){
   }
   else {
     selected_tile_new = all_tiles_within_slide[new_index];
-    if (new_index>old_index) $(temporary_tile_old).insertAfter($(selected_tile_new));
+    if (new_index>old_index) $(temporary_tile_old).insertAfter($(selected_tile_new));;
     if (new_index<old_index) $(temporary_tile_old).insertBefore($(selected_tile_new));
   }
-});
-
-socketio.on("tile_id_result", function(data) {
-  // Tile in slide
-  if (isModalOpen("edit", data.tile_id)) {
-    // Tile ID & MQTT in edit modal
-    store($(".modal-item[data-id='tile-id'][data-group='tile']"), "value", data.new_id).trigger("value-receive");
-    store($(".modal-item[data-id='tile-mqtt-path'][data-group='tile']"), "value", "home/" + data.new_id).trigger("value-receive");
-    // Modal here
-    store($(".modal-here"), "tile-id", data.new_id);
-    // Modal items
-    $('.modal-item[data-id="item-mqtt-path"]').each(function () {
-      let itemID = store($(this), "value").split("/")[2];
-      store($(this), "value", "home/" + data.new_id + "/" + itemID).trigger("value-receive");
-    })
-  }
-  store($(".tile-item[data-id='"+data.tile_id+"']"), "id", data.new_id);
 });
 
 socketio.on("tile_value_result", function(data) {
@@ -120,8 +159,9 @@ socketio.on("tile_protocol_values_result", function(data) {
 
 socketio.on("tile_protocol_result", function(data) {
   if(isModalOpen("edit", data.tile_id)) {
+
+    store($('.modal-item[data-group="tile"][data-id="protocol-btn"]'), "value", data.protocols).trigger("value-receive");
     if (data.state === "add") {
-      $("#tile-protocol").find("label[data-type='" + data.new_protocol +"']").addClass("active");
       $(".tile-protocols-wrapper").append(data.html);
       $(".tile-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "']").hide().slideDown().find('.modal-item[data-group="protocol-tile"]').on("value-transmit", function() {
         tileProtocolInit(this);
@@ -129,7 +169,7 @@ socketio.on("tile_protocol_result", function(data) {
     }
 
     else if (data.state === "remove") {
-      $("#tile-protocol").find("label[data-type='" + data.new_protocol +"']").removeClass("active");
+      // $("#tile-protocol").find("label[data-type='" + data.new_protocol +"']").removeClass("active");
       let section = $(".tile-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "']");
       section.slideUp(function () {
         $(this).remove();
@@ -140,22 +180,25 @@ socketio.on("tile_protocol_result", function(data) {
 
 socketio.on("modal_item_protocol_values_result", function(data) {
   if(isModalOpen("edit", data.tile_id)) {
-    store($("fieldset[data-type='" + data.protocol + "'][data-id='" + data.id + "']").find('.modal-item[data-group="protocol-item"][data-id="' + data.value_name + '"]'), "value", data.value).trigger("value-receive");
+    store($("fieldset[data-type='" + data.protocol + "'][data-id='" + data.id + "']").find('.modal-item[data-group^="protocol-item-"][data-id="' + data.value_name + '"]'), "value", data.value).trigger("value-receive");
   }
 });
 
 socketio.on("modal_item_protocol_result", function(data) {
   if(isModalOpen("edit", data.tile_id)) {
+    store($('.modal-item[data-group="item-protocol-btn"][data-id="' + data.id + '"]'), "value", data.protocols).trigger("value-receive");
+
     if (data.state === "add") {
-      $(".item-protocol-btn[data-id='" + data.id + "']").find("label[data-type='" + data.new_protocol +"']").addClass("active");
-      $(".item-protocols-wrapper").append(data.html);
-      $(".item-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "'][data-id='" + data.id + "']").hide().slideDown().find('.modal-item[data-group="protocol-item"]').on("value-transmit", function() {
+      $(".item-protocols-wrapper[data-id='" + data.id + "']").append(data.html);
+      $(".item-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "'][data-id='" + data.id + "']").hide().slideDown().find('.modal-item[data-group^="protocol-item-"]').on("value-transmit", function() {
+        modalItemProtocolInit(this);
+      });
+      $('.modal-item[data-group^="protocol-item-"]').on("value-transmit", function() {
         modalItemProtocolInit(this);
       });
     }
 
     else if (data.state === "remove") {
-      $(".item-protocol-btn[data-id='" + data.id + "']").find("label[data-type='" + data.new_protocol +"']").removeClass("active");
       let section = $(".item-protocols-wrapper").find("fieldset[data-type='" + data.new_protocol + "'][data-id='" + data.id + "']");
       section.slideUp(function () {
         $(this).remove();
@@ -176,7 +219,6 @@ socketio.on("get_normal_modal_result", function(data) {
 });
 
 socketio.on("get_edit_modal_result", function(data) {
-  console.log("Received edit modal");
   displayModal(data.modal, "edit", data.tile_id);
 
   initializeModalEditItems();
@@ -301,23 +343,15 @@ socketio.on("modal_item_prepend_result", function(data) {
       modalEditItemDelete(this);
     });
     $(fieldset).find('.modal-item[data-group^="modal-edit-"]').on("value-transmit", function(event) {
-      modalEditItemInit(this);
+      modalEditItemTextChanged(this);
     });
 
     $(item).on("value-transmit", function() {
       modalDynamicValueSend(this);
     });
-    $(fieldset).find(".item-protocol-label").on("click", "input",  function() {
-    DEBUG.log("Item protocol changed");
-    // ( > modal_edit_events.js )
-      // TODO tohle se má dělat až v té funkci, je to totiž už dvakrát nakopáírované
-    let type_name = store($(this).parent(), "type");
-    let state = $(this).parent().hasClass("active") ? "remove" : "add";
-    let tileID = store($(".modal-here"), "tile-id");
-    let itemID = store($(this).parent(), "id");
-
-    modalItemProtocol(tileID, itemID, type_name, state);
-  });
+    $(fieldset).find('.modal-item[data-group="item-protocol-btn"]').on("value-transmit", function() {
+      modalItemProtocol(this);
+    });
   }
 });
 
@@ -325,7 +359,7 @@ socketio.on("modal_item_index_result", function(data){
   let old_index = data.old_index;
   let new_index = data.new_index;
 
-  if (isModalOpen(null, data.tile_id)) {
+  if (isModalOpen("edit", data.tile_id)) {
     let all_tiles_within_slide = $(".modal_items_edit_sortable").find(".modal-edit-item");
     let selected_item_old = all_tiles_within_slide[old_index];
     let selected_item_new;
@@ -342,6 +376,31 @@ socketio.on("modal_item_index_result", function(data){
       if (new_index > old_index) $(temporary_item_old).insertAfter($(selected_item_new));
       if (new_index < old_index) $(temporary_item_old).insertBefore($(selected_item_new));
     }
+  }
+
+  else if (isModalOpen("normal", data.tile_id)) {
+    let items = $(".modal-item[data-group='modal-dynamic']");  // [data-id='" + data.id + "']
+    let selected_item_old = items[old_index];
+    let selected_item_new;
+
+    let temporary_item_old = $(selected_item_old).clone();
+
+    $(selected_item_old).remove();
+
+    if (new_index === items.length) {
+      selected_item_new = items[new_index - 1];
+      $(temporary_item_old).insertAfter($(selected_item_new));
+    } else {
+      selected_item_new = items[new_index];
+      if (new_index > old_index) $(temporary_item_old).insertAfter($(selected_item_new));
+      if (new_index < old_index) $(temporary_item_old).insertBefore($(selected_item_new));
+    }
+    let testItem = $($(".modal-item[data-group='modal-dynamic']")[new_index]);
+    console.log(testItem);
+    item(testItem);
+    $(testItem).on("value-transmit", function() {
+      modalDynamicValueSend(this);
+    });
   }
 });
 
@@ -361,29 +420,30 @@ socketio.on("modal_item_delete_result", function(data) {
   }
 });
 
-socketio.on("modal_item_id_result", function(data) {
-  if (isModalOpen(null, data.tile_id)) {
-    let obj = $('.modal-item[data-id="item-mqtt-path"][data-group="modal-edit-' + data.id + '"]');
-    store(obj, "value", "home/" + data.tile_id + "/" + data.new_id).trigger("value-receive");
-    store($('.modal-item[data-id="id"][data-group="modal-edit-' + data.id + '"]'), "value", data.new_id).trigger("value-receive");
-
-    store($(obj).closest(".modal-edit-item"), "id", data.new_id);
-    store($('.modal-item[data-id="' + data.id + '"]'), "id", data.new_id)  // Preview + dynamic
-
-    $('.modal-item[data-group="modal-edit-' + data.id + '"]').each(function(){
-      store($(this), "group", "modal-edit-" + data.new_id);
-    });
-  }
-});
-
 socketio.on("modal_item_config_result", function(data) {
-  if (isModalOpen(null, data.tile_id)) {
-    // TODO jen pokud je edit mód, tak dělat první řádek a pokud není, tak druhý
-    store($('.modal-item[data-group="modal-edit-' + data.id + '"][data-id="' + data.value_name + '"]'), "value", data.new_value).trigger("value-receive");
-    let currentItem = $('.modal-item[data-group="modal-dynamic"][data-id="' + data.id + '"], .modal-item[data-group="modal-fieldset"][data-id="' + data.id + '"]');
+  function save(currentItem) {
     let config = store(currentItem, "config");
     config[data.value_name] = data.new_value;
     store(currentItem, "config", config).trigger("config-receive");
+  }
+
+  if (isModalOpen("normal", data.tile_id)) {
+    save($('.modal-item[data-group="modal-dynamic"][data-id="' + data.id + '"]'));
+  }
+
+  else if (isModalOpen("edit", data.tile_id)) {
+    // Update label text in header of item
+    if (data.value_name === "label") {
+      $(".item-label[data-id='" + data.id +"']").text(data.new_value)
+    }
+
+    // Update preview
+    save($('.modal-item[data-group="modal-fieldset"][data-id="' + data.id + '"]'));
+
+    // Update config items - if I am not sender
+    if (!data.preview_only) {
+      store($('.modal-item[data-group="modal-edit-' + data.id + '"][data-id="' + data.value_name + '"]'), "value", data.new_value).trigger("value-receive");
+    }
   }
 });
 
@@ -481,7 +541,6 @@ socketio.on("slide_delete_result", function(data) {
 });
 
 socketio.on("slide_append_result", function(data) {
-  console.log(data.slide_index);
   swiper.addSlide(data.slide_index, data.slide);
 
   // let isEditActive = store($(document.body), "is-edit-active");
@@ -509,7 +568,7 @@ socketio.on("slide_append_result", function(data) {
   }
 
     lastSlide.find(".swipe-header").each(function() {
-      $( this ).prop("readonly",false)
+      $(this).prop("disabled",false).removeClass("unselectable");
       // $( this ).css({"border-bottom-width":"1px","border-bottom-style":"solid","width":"fit-content"});
     });
 
@@ -544,15 +603,16 @@ socketio.on("graph_rwr", function(data) {
     }
   }
   catch {
-    console.log("acom.js > something failed I guess");
+    console.error("acom.js > something failed I guess");
   }
 });
 
 
 // Client
 socketio.on("connect", function() {
-  console.log("Client connected to server");
+  // console.info("Client connected to server");
   if (reconnected) {
+    console.info("Client reconnected to the server");
     location.reload()
   }
   else{
@@ -596,15 +656,14 @@ socketio.on("connect", function() {
   });
 
 socketio.on("disconnect", function() {
-  console.log("Client disconnected from server");
-
   $(".server-status").text(_("Offline"));
 
-  /*if (store($(document.body), "is-edit-active") === true) {
-    $(".bcg-normal").css({"opacity": 0, "transition": "0s all"});
-    $(".bcg-edit").css({"opacity": 0.5, "transition": "0.5s all"});
+  if (!serverModalOpened) {
+    document.title = _("Offline") + " | " + _("SH");
+    setTimeout(() => {
+      console.log("Client disconnected from server");
+      reconnected = true;
+      serverModal(_("Offline"), _("Server is now offline. The page will be auto-reloaded after server will be online. If you think that this message is wrong or this is a bug, you can reload page manually."));
+      }, 1000);
   }
-  else {
-    $(".bcg-normal").css({"opacity": 0.4});
-  }*/
 });

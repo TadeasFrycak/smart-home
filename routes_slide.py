@@ -1,5 +1,5 @@
 # Slide routes
-from routes_modal import *
+from routes_item import *
 
 
 # Slide rewrites

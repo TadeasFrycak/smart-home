@@ -10,7 +10,7 @@ class Toggle(Item):
     TYPE = "toggle"
     VISIBLE = True
     NAME = gettext("Toggle")
-    DESCRIPTION = gettext("Toggle value - on/off")
+    PROTOCOLS_ABLE = ["mqtt", "alarm"]
     VALUE = False
 
     @property
@@ -18,7 +18,9 @@ class Toggle(Item):
         return {
             self._LABEL: self.NAME,
             self._PLACEHOLDER: "",
-            self._DISABLED: False
+            self._DISABLED: False,
+            self._ON_VALUE: 1,
+            self._OFF_VALUE: 0
         }
 
     @property
@@ -27,6 +29,8 @@ class Toggle(Item):
 
         return {
             self._LABEL: Input().make_object(value=self.config[self._LABEL], label=gettext("Label")),
-            self._PLACEHOLDER: Input().make_object(value=self.config[self._PLACEHOLDER], label=gettext("Placeholder")),
-            self._DISABLED: self.make_object(value=self.config[self._DISABLED], label=gettext("Disabled"))
+            self._ON_VALUE: Input().make_object(value=self.config[self._ON_VALUE], label=gettext("On value")),
+            self._OFF_VALUE: Input().make_object(value=self.config[self._OFF_VALUE], label=gettext("Off value"))
+            # self._PLACEHOLDER: Input().make_object(value=self.config[self._PLACEHOLDER], label=gettext("Placeholder")),
+            # self._DISABLED: self.make_object(value=self.config[self._DISABLED], label=gettext("Disabled"))
         }

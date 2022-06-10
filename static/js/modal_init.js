@@ -107,7 +107,7 @@ function modalItemProtocolInit(object) {
   let valueName = store($(object), "id");
   let protocol = store($(object).closest("fieldset"), "type");
   let itemID = store($(object).closest("fieldset"), "id")
-  let tileID = store($(".modal-here"), "tile-id");
+  let tileID = isModalOpen().tile_id;
   socketio.emit("modal_item_protocol_values", {
       "value_name": valueName,
       "protocol": protocol,
@@ -128,54 +128,37 @@ function initializeModalEditItems(data) {
   });
 
   $('.modal-item[data-group^="modal-edit-"]').on("value-transmit", function() {
-    modalEditItemInit(this);
+    modalEditItemTextChanged(this);
   });
 
   $('.modal-item[data-group="protocol-tile"]').on("value-transmit", function() {
     tileProtocolInit(this);
   });
 
-  $('.modal-item[data-group="protocol-item"]').on("value-transmit", function() {
+  $('.modal-item[data-group^="protocol-item-"]').on("value-transmit", function() {
     modalItemProtocolInit(this);
   });
 
-  $('.modal-item[data-group="tile"][data-id="tile-id"]').on("value-transmit", function() {
-    // ( > modal_edit_events.js )
-    modalEditTileIDchanged(this);
-  });
   if (!$.trim($(".tile-values-wrapper").html())) {
     $("#tile-dynamic-values").hide()
   }
   initializeTileDynamic();
 
-  $(".modal-edit-tile-type").on("click", "input",  function() {
+  $('.modal-item[data-group="tile"][data-id="type"]').on("value-transmit", function() {
     DEBUG.log("Tile type changed");
     // ( > modal_edit_events.js )
-    let type_name = $(this).parent().text().trim();
-    let tileID = store($(".modal-here"), "tile-id");
+    let type_name = store(this, "value");
+    let tileID = isModalOpen().tile_id;
 
     tileTypeChanged(tileID,type_name);
   });
 
-  $(".tile-protocol-label").on("click", "input",  function() {
-    DEBUG.log("Tile protocol changed");
-    // ( > modal_edit_events.js )
-    let type_name = store($(this).parent(), "type");
-    let state = $(this).parent().hasClass("active") ? "remove" : "add";
-    let tileID = store($(this).parent(), "id");
-
-    tileProtocol(tileID, type_name, state);
+  $('.modal-item[data-group="tile"][data-id="protocol-btn"]').on("value-transmit", function() {
+    tileProtocol(this);
   });
 
-  $(".item-protocol-label").on("click", "input",  function() {
-    DEBUG.log("Item protocol changed");
-    // ( > modal_edit_events.js )
-    let type_name = store($(this).parent(), "type");
-    let state = $(this).parent().hasClass("active") ? "remove" : "add";
-    let tileID = store($(".modal-here"), "tile-id");
-    let itemID = store($(this).parent(), "id");
-
-    modalItemProtocol(tileID, itemID, type_name, state);
+  $('.modal-item[data-group="item-protocol-btn"]').on("value-transmit", function() {
+    modalItemProtocol(this);
   });
 
   $("#tile_name").on("input",function(){
@@ -187,35 +170,4 @@ function initializeModalEditItems(data) {
   $(".unfocus-on-enter").keydown(function(event){
     event.keyCode===13 && $(this).blur();
   });
-}
-
-function modalEditItemInit(object) {
-  // ( > modal_edit_events.js )
-    if (store($(object), "id") === "id") {
-      // ( > modal_edit_events.js )
-      let itemID = store($(object), "value");
-      if (validateID(itemID)) {
-        let oldItemID = store($(object), "group").substr(11);
-        let tileID = store($(".modal-here"), "tile-id");
-
-        let config = store($(object), "config");
-        config["invalid"] = false;
-        store($(object), "config", config).trigger("config-receive");
-
-        socketio.emit("modal_item_id", {
-          "tile_id": tileID,
-          "new_id": itemID,
-          "id" : oldItemID
-        });
-        console.log(store($(object), "group"));
-      }
-      else {
-        let config = store($(object), "config");
-        config["invalid"] = true;
-        store($(object), "config", config).trigger("config-receive");
-      }
-    }
-    else {
-      modalEditItemTextChanged(object);
-    }
 }

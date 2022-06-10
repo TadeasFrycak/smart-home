@@ -10,7 +10,7 @@ class Dropdown(Item):
     TYPE = "dropdown"
     VISIBLE = True
     NAME = gettext("Dropdown")
-    DESCRIPTION = gettext("Pick an option")
+    PROTOCOLS_ABLE = ["mqtt"]
 
     VALUE = gettext("Second")
 
@@ -32,5 +32,5 @@ class Dropdown(Item):
         return {
             self._LABEL: Input().make_object(value=self.config[self._LABEL], label=gettext("Label")),
             self._OPTIONS: Input().make_object(value=self.config[self._OPTIONS], placeholder=gettext("Option"),
-                                               list=True, label=gettext("Options (RR)"))
+                                               list=True, label=gettext("Options (partially RR)"))
         }

@@ -10,4 +10,5 @@ class Value(Tile):
     TYPE = "value"
     VISIBLE = True
     NAME = gettext("Value")
+    PROTOCOLS_ABLE = ["mqtt"]
     VALUE = {"value": "Null", "time": None, "suffix": ""}

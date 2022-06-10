@@ -1,58 +1,65 @@
 <div class="list-group-item modal-edit-item" data-id="{{ item.id }}" style="position: relative;">
     <img alt="{{ _('Menu') }}" src="{{ url_for('static', filename='img/static/menu.png') }}" class="menu-handle icon-invert" style="height: 13px;margin-right: 10px;width:15px; cursor:pointer;">
     <span style="font-weight:bold;font-size:15px;">{{ item_config[item.type]["name"] }}</span>
-    {% if item_config[item.type]["description"] %}
+
+    {% if item.config.label %}
         <span style="margin-left:10px;margin-right:10px;">-</span>
-        <span style="font-style:italic;">{{ item_config[item.type]["description"] }}</span>
-    {% else %}
+        <span class="item-label" data-id="{{ item.id }}" style="font-style:italic;">{{ item.config.label }}</span>
     {% endif %}
+
     <button type="button" class="btn btn-sm btn-outline-danger no-open modal-edit-item-delete" style="padding: .15rem .35rem;">
-            <span class="iconify no-open" style="font-size: 17px;" data-icon="jam-trash-alt-f" data-inline="false"></span>
-{#            <span>{{ _("Delete") }}</span>#}
-        </button>
+        <span class="iconify no-open" style="font-size: 17px;" data-icon="jam-trash-alt-f" data-inline="false"></span>
+    </button>
+
     <div class="modal-edit-item-dropdown">
         <form>
             {% set remember_item = item %}
-            {% set remember_group = group %}
 
+            {% set group = "modal-fieldset" %}
             <fieldset class="modal-fieldset">
                 <legend class="modal-fieldset-legend">{{ _("Preview") }}</legend>
-                {% set group = "modal-fieldset" %}
                 {% set item = remember_item %}
-                {% include "items/" + remember_item["type"] + ".html" %}
-                {% set group = remember_group %}
+                {% include "items/item.html" %}
             </fieldset>
 
-            <fieldset class="modal-fieldset">
-                <legend class="modal-fieldset-legend">{{ _("Item") }}</legend>
-                {#{% set item = {"type": "input", "config": {"label": _("ID"), "readonly": false, "invalid": false, "button": true}, "id": "id", "value": item["id"]} %}
-                {% include "items/" + item["type"] + ".html" %}
+            {% if item_config[remember_item.type]["protocols_able"] %}
+                {% set group = "item-protocol-btn" %}
+                <fieldset class="modal-fieldset">
+                    <legend class="modal-fieldset-legend">{{ _("Item") }}</legend>
+                    <!-- Make options -->
+                    {% set protocol_options = [] %}
+                    {% for item, value in protocol_config.items() %}
+                        {% if value.visible == True %}
+                            {% if value.type in item_config[remember_item.type]["protocols_able"] %}
+                                {% do protocol_options.append([value.type, value.name]) %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
 
-                {% set item = {"type": "input", "config": {"label": _("MQTT path"), "readonly": true, "invalid": false}, "id": "item-mqtt-path", "value": "home/" + tile["id"] + "/" + remember_item["id"]} %}
-                {% include "items/" + item["type"] + ".html" %}#}
-                <div class="form-group-sm row">
-                    <label class="col-lg-3 col-form-label">{{ _("Item protocols") }}</label>
-                    <div class="col-lg-9">
-                        <div style="position:relative; margin-bottom:6px" class="btn-group-justified btn-group-toggle item-protocol-btn" data-id="{{ remember_item.id }}" data-toggle="buttons">
-                            {% for item, value in protocol_config.items() %}
-                                {% if value.visible == True %}
-                                    <label style="margin-bottom:6px;" data-type="{{ value.type }}" data-id="{{ remember_item.id }}" class="modal-edit-item-protocol item-protocol-label btn btn-secondary {% for protocol_value in remember_item["protocols"] %}{% if protocol_value["type"] == value.type %}active{% endif %}{% endfor %}">
-                                        <input type="checkbox" checked autocomplete = "off"> {{ value.name }}
-                                    </label>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-            <div class="item-protocols-wrapper">
+                    <!-- Find values -->
+                    {% set protocol_values = [] %}
+                    {% for value in item["protocols"] %}
+                        {% if value["type"] == value.type %}
+                        {% do protocol_values.append(value.type) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- Render -->
+                    {% set item = {"type": "button_group", "id": item.id, "config": {"label": _("Item protocols"), "checkbox": true, "options": protocol_options}, "value": protocol_values} %}
+                    {% include "items/item.html" %}
+                </fieldset>
+            {% endif %}
+
+            {% set group = "protocol-item-" + remember_item.id %}
+            <div class="item-protocols-wrapper" data-id="{{ remember_item["id"] }}">
                 {% set protocols = remember_item["protocols"] %}
                 {% for protocol, value in protocol_config.items() %}
-                    {% set group = "protocol-item" %}
                     {% set id = remember_item["id"] %}
                     {% include "modal_edit/protocol_values.html" %}
                 {% endfor %}
             </div>
+
+            {% set group = "modal-edit-" + item.id %}
             {% if item_config[remember_item.type]["config"] != {} %}
                 <fieldset class="modal-fieldset">
                     <legend class="modal-fieldset-legend">{{ _("Item config") }}</legend>
@@ -61,7 +68,7 @@
                         {% set item = {"type": default_item.type, "config": default_item.config, "id": value, "value": remember_item["config"][value]} %}
 
                         {% if default_item %}
-                            {% include "items/" + item["type"] + ".html" %}
+                            {% include "items/item.html" %}
                         {% endif %}
                     {% endfor %}
                 </fieldset>

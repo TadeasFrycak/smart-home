@@ -10,6 +10,7 @@ class AlarmClock(Tile):
     TYPE = "alarm_clock"
     VISIBLE = True
     NAME = gettext("Alarm Clock")
+    PROTOCOLS_ABLE = ["mqtt", "magic_packet", "alarm"]
     VALUE = {"main": False, "monday": False, "tuesday": False, "wednesday": False, "thursday": False, "friday": False,
              "saturday": False, "sunday": False}
 

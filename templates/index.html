@@ -19,8 +19,9 @@
         <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
     {% endif %}
     <script type="text/javascript">
-        function store(object, attribute, value=null) {
-          if (value === null) {
+    // TODO this is old, remove in 0.11.9
+        {#function store(object, attribute, value=null) {
+          if (value === null) {  // Read
             let data =  $(object).attr("data-" + attribute);
 
             if (data !== undefined) {
@@ -37,15 +38,32 @@
             }
             return data;
           }
-          else {
+          else {  // Write
             if (typeof value === "object") {
               value = JSON.stringify(value);
             }
+
             return $(object).attr("data-" + attribute, value);
+          }
+        }#}
+
+        function store(object, attribute, value=null) {
+          // Read
+          if (value === null) {
+            return $(object).data(attribute);
+          }
+
+          // Write
+          else {
+            return $(object).data(attribute, value);
           }
         }
     </script>
+
+    <!-- Modules -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery/jquery.ui.touch-punch.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/socket/socket.io.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vue/vue.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/sortable/sortable.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/swiper/swiper.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/moment/moment.min.js') }}" defer></script>
@@ -53,7 +71,9 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/hammer/hammer.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/fotorama/fotorama.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/clockpicker/bootstrap-clockpicker.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/vue/v-calendar.umd.min.js') }}" defer></script>
 
+    <!-- Own -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/acom.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/modal_edit_events.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/modal_events.js') }}" defer></script>
@@ -64,7 +84,35 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/player.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/init.js') }}" defer></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/tiles.js') }}" defer></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/vue/v-calendar.umd.min.js') }}" defer></script>
+
+    <!-- Tiles -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles/alarm_clock.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles/value_double.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles/toggle.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles/prusa.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles/value.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/tiles/general.js') }}"></script>
+
+    <!-- Items -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/date_range_picker.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/progress_bar.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/button_group.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/clock_picker.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/icon_picker.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/dropdown.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/slider.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/button.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/toggle.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/image.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/graph.js') }}" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/input.js') }}" defer></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/items/general.js') }}" defer></script>
+    
+    {#<script src="/static/js/amcharts/core.js"></script>
+    <script src="/static/js/amcharts/charts.js"></script>
+    <script src="/static/js/amcharts/themes/animated.js"></script>#}
 {% endblock %}
 
 {% block title %}{{ _("Home") }}{% endblock %}

@@ -25,6 +25,17 @@ class Protocol:
 
     # Timer
     _TIME = "time"
+    _ON_VALUE = "on_value"
+    _REPEAT = "repeat"
+
+    # Prusa
+    _COMMAND = "command"
+    _ARGUMENT = "argument"
+    _READ_ALL = "read_all"
+    _SEND_VALUE = "send_value"
+
+    # RTSP
+    _URL = "url"
 
     def __init__(self, terminal, general):
         self._terminal = terminal

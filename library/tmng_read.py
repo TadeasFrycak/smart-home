@@ -90,7 +90,7 @@ class TemplateManagerRead:
     def get_display_tile(self, tile_id):
         tile = self.get_tile(tile_id)
         for num, item in enumerate(tile["modal"]):
-            tile["modal"][num]["value"] = self.__default_items.get_object(item["type"]).on_display_value(item["value"])
+            tile["modal"][num]["value"] = self.__default_items.get_object(item["type"]).on_display_value(item["value"], item["config"])
         return tile
 
     def get_tile_type(self, tile_id):

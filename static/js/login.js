@@ -1,21 +1,4 @@
 $(document).ready(function() {
-  socketio.on("login_result", function(data){
-    if (data.status === true) {
-      $.post("/login", {}, function () {
-        window.location.href = $("#login-form").attr("action");
-      });
-    }
-    else {
-      console.log("Wrong username or password");
-      $(".horizontal-middle").effect("shake");
-      $("#password").addClass("invalid");
-      setTimeout(() => { $("#password").removeClass("invalid"); }, 3000);
-      $("#username").removeAttr("disabled");
-      $("#password").removeAttr("disabled");
-      $("#password").val("");
-    }
-  });
-
   let inputNames = ["#username", "#password"];
   for (let i=0; i < inputNames.length; i++) {
     $(inputNames[i]).bind("cut copy paste", function(e) {
@@ -70,10 +53,25 @@ $(document).ready(function() {
       $("#username").attr("disabled", "disabled");
       $("#password").attr("disabled", "disabled");
 
-      socketio.emit("login", {
+      $.post("/login", {
         "username": $("#username").val().toLowerCase().trim(),
         "password": $("#password").val(),
         "remember": 1,
+      }, function (result) {
+        if (result.status) {
+          window.location.href = $("#login-form").attr("action");
+        }
+
+        else {
+          console.log("Wrong username or password");
+          notify(_("Login"), _("Username or password is wrong!"), "danger", 5000);
+
+          $(".horizontal-middle").effect("shake");
+
+          $("#username").removeAttr("disabled");
+          $("#password").addClass("invalid").removeAttr("disabled").val("");
+          setTimeout(() => { $("#password").removeClass("invalid"); }, 3000);
+        }
       });
     }
   });

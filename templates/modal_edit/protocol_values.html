@@ -9,7 +9,7 @@
                 {% set item = {"type": default_item.type, "config": default_item.config, "id": value, "value": protocol_value["config"][value]} %}
 
                 {% if default_item %}
-                    {% include "items/" + item["type"] + ".html" %}
+                    {% include "items/item.html" %}
                 {% endif %}
             {% endfor %}
         </fieldset>

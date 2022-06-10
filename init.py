@@ -1,4 +1,7 @@
-import gevent.monkey; gevent.monkey.patch_all() # patch_thread() # thread=True, select=False)
+import random
+import string
+
+import gevent.monkey; gevent.monkey.patch_all()  # patch_thread() # thread=True, select=False)
 from library.logger import AuthLogger, TerminalLogger, ChangesLogger, ChangesEditLogger
 from library.tmng_rewrite import TemplateManagerRewrite
 from library.tmng_write import TemplateManagerWrite
@@ -11,7 +14,6 @@ from library.updater import Updater
 from library.validator import Validator
 from config.items.general import Items
 from config.tiles.general import Tiles
-from library.doorbird import Doorbird
 from library.imng import ImageManager
 from library.terminal import Terminal
 from library.fmng import FileManager
@@ -54,8 +56,6 @@ except ModuleNotFoundError as e:
 OK = "ok"
 INDEX = "index"
 
-users = []
-
 # Initialise
 # eventlet.monkey_patch()
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -77,6 +77,7 @@ class User(UserMixin, database.Model):
     last_name = database.Column(database.String(20), nullable=False)
     role = database.Column(database.String(20), nullable=False, default="visitor")
     username = database.Column(database.String(40), nullable=False, unique=True)
+    salt = database.Column(database.String(8), nullable=False)
     password = database.Column(database.String(80), nullable=False)
     register_date = database.Column(database.DateTime, nullable=False, default=datetime.datetime.utcnow)
     mode = database.Column(database.String(5), nullable=False, default="smart")
@@ -85,8 +86,13 @@ class User(UserMixin, database.Model):
     # Todo https://docs-sqlalchemy.readthedocs.io/ko/latest/core/type_basics.html
     # TODO několik dalších věcí jako login_dates, mac_adress, ips, ...
 
+    @staticmethod
+    def __generate_salt(n=8):
+        return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
+
     def set_password(self, password):
-        self.password = generate_password_hash(password, method="sha256")
+        self.salt = self.__generate_salt()
+        self.password = generate_password_hash(self.salt + password, method="sha256")
 
     def set_sex(self, sex):
         # gender.Detector(case_sensitive=False)
@@ -94,7 +100,7 @@ class User(UserMixin, database.Model):
         pass
 
     def check_password(self, password):
-        return check_password_hash(self.password, password)
+        return check_password_hash(self.password, self.salt + password)
 
     def __repr__(self):
         return "<User {0}>".format(self.username)
@@ -189,11 +195,12 @@ sun = Sun(
     latitude=float(fmng.config["position"]["latitude"]),
     longitude=float(fmng.config["position"]["longitude"]))
 prevent_hack = PreventHack()
-doorbird = Doorbird(
-    ip=fmng.config["doorbird"]["ip"],
-    username=fmng.config["doorbird"]["username"],
-    password=fmng.config["doorbird"]["password"]
-)
+# TODO remove in 11.9
+# doorbird = Doorbird(
+#     ip=fmng.config["doorbird"]["ip"],
+#     username=fmng.config["doorbird"]["username"],
+#     password=fmng.config["doorbird"]["password"]
+# )
 
 
 def get_protocols_config():
@@ -201,15 +208,25 @@ def get_protocols_config():
 
 
 def tile_publish(tile_id, value):
-    updater.tile_value(tile_id, value)
     tile = tmng_r.get_tile(tile_id)
+
+    if not tile["protocols"]:
+        updater.tile_value(tile_id, value)
+        emit("notify", {"title": gettext("Warning"), "message": gettext("This tile is not paired to any protocol!"),
+                        "type": "warning", "delay": 5000})
+
     for protocol in tile["protocols"]:
         default_protocols.get_object(protocol["type"]).publish(config=protocol["config"], value=value)
 
 
 def item_publish(tile_id, value, item_id):
-    updater.item_value(tile_id, item_id, value)
     item = tmng_r.get_item(tile_id, item_id)
+
+    if not item["protocols"]:
+        updater.item_value(tile_id, item_id, value)
+        emit("notify", {"title": gettext("Warning"), "message": gettext("This item is not paired to any protocol!"),
+                        "type": "warning", "delay": 5000})
+
     for protocol in item["protocols"]:
         default_protocols.get_object(protocol["type"]).publish(config=protocol["config"], value=value)
 
@@ -243,7 +260,7 @@ acom = Acom(
     tmng_rwr=tmng_rwr,
     refactoring=refactoring,
     app=app,
-    doorbird=doorbird,
+    # doorbird=doorbird,
     sun=sun,
     refresh_clients=refresh_clients,
     fmng=fmng

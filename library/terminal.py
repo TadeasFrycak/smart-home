@@ -80,13 +80,13 @@ class Terminal:
 
             self.print(self.FG_COLORS["black"] + self.BG_COLORS["white"] + self.SPECIAL[
                 "bold"] + "\t\t\t\t\t ↓ About ↓ " + self.END)
-            self.print(self.FG_COLORS["white"] + self.SPECIAL[
-                "bold"] + "\t\t\t\t\tAuthors\t" + self.END + "Fryčák, Szkandera")
+            #self.print(self.FG_COLORS["white"] + self.SPECIAL[
+            #    "bold"] + "\t\t\t\t\tAuthors\t" + self.END + "Fryčák, Szkandera")
             self.print(self.FG_COLORS["white"] + self.SPECIAL[
                 "bold"] + "\t\t\t\t\tVersion\t" + self.END + os.path.basename(os.getcwd()))
             self.print(self.FG_COLORS["white"] + self.SPECIAL[
                 "bold"] + "\t\t\t\t\tCreated\t" + self.END + "26.05.2019 17:29")
-            self.go_forward(11)
+            self.go_forward(12)
 
     @staticmethod
     def go_forward(amount):
@@ -132,10 +132,10 @@ class Terminal:
         #     self.__logger.debug(data)
         #     self.print(self.FG_COLORS["green"] + self.SPECIAL["bold"] + "PHack:\t" + self.END + self.FG_COLORS["white"] + data)
 
-    def mqtt(self, data):
+    def protocol(self, name, data):
         if self.__priority == 0:
             self.__logger.debug(data)
-            self.print(self.FG_COLORS["blue"] + self.SPECIAL["bold"] + "MQTT\t" + self.END + self.FG_COLORS[
+            self.print(self.FG_COLORS["blue"] + self.SPECIAL["bold"] + name + "\t" + self.END + self.FG_COLORS[
                 "white"] + data)
 
     def client(self, data):

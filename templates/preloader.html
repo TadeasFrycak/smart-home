@@ -1,21 +1,23 @@
-<div class="loader">
-	<div class="loader-inner">
-		<div class="loader-line-wrap">
-			<div class="loader-line"></div>
-		</div>
-		<div class="loader-line-wrap">
-			<div class="loader-line"></div>
-		</div>
-		<div class="loader-line-wrap">
-			<div class="loader-line"></div>
-		</div>
-		<div class="loader-line-wrap">
-			<div class="loader-line"></div>
-		</div>
-		<div class="loader-line-wrap">
-			<div class="loader-line"></div>
-		</div>
-	</div>
+<div class="loader-black">
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="too-long-loading" style="display:none;position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 80%;left:50%">{{ _("Wait a moment please...") }}</div>
 <div class="turn-on-javascript" style="position:absolute;max-width:510px;transform: translate(-50%, -50%);top: 80%;left:50%">{{ _("Turn on JavaScript please...") }}</div>
@@ -62,6 +64,17 @@
         from { opacity: 0; }
         to   { opacity: 1; }
     }
+    .loader-black {
+        background: #000;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 99998;
+    }
+
     .loader {
         background: #000;
         background: radial-gradient(#222, #000);
@@ -157,6 +170,13 @@
     }
 </style>
 <script type="text/javascript">
+  if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+    // console.info("This page is reloaded" );
+    $(".loader").hide().fadeIn();
+  } else {
+    // console.info("This page is not reloaded");
+  }
+
   var wait = false;
   $(".turn-on-javascript").hide();
   let myVar = setTimeout(myTimer, 8000);
@@ -173,6 +193,7 @@
         {
           $(".preloader").css("pointer-events", "none");
           $(".too-long-loading").hide().fadeOut(1000);
+          $(".loader-black").show().fadeOut(1000);
           $(".loader").show().fadeOut(1000, function()
           {
               $(".preloader").remove();

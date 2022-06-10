@@ -10,6 +10,7 @@ from config.items.slider import Slider
 from config.items.toggle import Toggle
 from config.items.input import Input
 from config.items.graph import Graph
+from config.items.image import Image
 
 
 class Items:
@@ -25,7 +26,8 @@ class Items:
         Slider(),
         Toggle(),
         Input(),
-        Graph()
+        Graph(),
+        Image()
     ]
 
     def __init__(self):

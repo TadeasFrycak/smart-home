@@ -1,19 +1,35 @@
 from config.protocols.magic_packet import MagicPacket
 from config.protocols.mqtt import MQTT
-from config.protocols.timer import Timer
+from config.protocols.rtsp import RTSP
+# from config.protocols.prusa import Prusa
+from config.protocols.timer import Alarm
 
 
 class Protocols:
     def __init__(self, terminal, updater, fmng, tmng_r):
-        self.__updater = updater
+        self.updater = updater
         self.__fmng = fmng
         self.__tmng_r = tmng_r
 
         self.__instances = [
-            MQTT(terminal, self),
             MagicPacket(terminal, self),
-            Timer(terminal, self)
+            MQTT(terminal, self),
+            Alarm(terminal, self),
+            RTSP(terminal, self)
+            # Prusa(terminal, self)
         ]
+
+    def get_tile_value(self, tile_id):
+        tile = self.__tmng_r.get_tile(tile_id)
+
+        if tile:
+            return tile["value"]
+
+    def get_item_value(self, tile_id, item_id):
+        item = self.__tmng_r.get_item(tile_id, item_id)
+
+        if item:
+            return item["value"]
 
     def get_count(self, protocol_type, config):
         number = 0
@@ -31,7 +47,23 @@ class Protocols:
                             number += 1
         return number
 
-    def update(self, protocol_type, value, config_part):
+    def config(self, protocol_type, tile_id, item_id=None):
+        # Get pages (number and content)
+        for page in self.__fmng.devices:
+            # Get tiles (number and content)
+            for tile in page[self.__tmng_r.CHILDREN]:
+                if item_id:
+                    for item in tile["modal"]:
+                        for protocol in item["protocols"]:
+                            if protocol["type"] == protocol_type:
+                                return protocol["config"]
+
+                else:
+                    for protocol in tile["protocols"]:
+                        if protocol["type"] == protocol_type:
+                            return protocol["config"]
+
+    def update(self, protocol_type, value, config_part, save=True):
         # Get pages (number and content)
         for page in self.__fmng.devices:
             # Get tiles (number and content)
@@ -49,11 +81,11 @@ class Protocols:
                                 can.append(False)
 
                         if all(can):
-                            self.__updater.tile_value(tile["id"], value)
-                            for protocol_inner in tile["protocols"]:
-                                if protocol_inner["type"] != protocol_type:
-                                    self.get_object(protocol_inner["type"]).publish(protocol_inner["config"], value)
-                            break
+                            if self.updater.tile_value(tile["id"], value, save=save):
+                                for protocol_inner in tile["protocols"]:
+                                    if protocol_inner["type"] != protocol_type:
+                                        self.get_object(protocol_inner["type"]).publish(protocol_inner["config"], value)
+                                break
 
                 for item in tile["modal"]:
                     for protocol in item["protocols"]:
@@ -69,11 +101,11 @@ class Protocols:
                                     can.append(False)
 
                             if all(can):
-                                self.__updater.item_value(tile_id=tile["id"], item_id=item["id"], value=value)
-                                for protocol_inner in item["protocols"]:
-                                    if protocol_inner["type"] != protocol_type:
-                                        self.get_object(protocol_inner["type"]).publish(protocol_inner["config"], value)
-                                break
+                                if self.updater.item_value(tile_id=tile["id"], item_id=item["id"], value=value, save=save):
+                                    for protocol_inner in item["protocols"]:
+                                        if protocol_inner["type"] != protocol_type:
+                                            self.get_object(protocol_inner["type"]).publish(protocol_inner["config"], value)
+                                    break
 
     def get_protocol_edit_objects(self):
         items = {}

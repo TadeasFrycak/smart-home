@@ -2,7 +2,7 @@ from config.protocols.default import Protocol
 from flask_babel import gettext
 import gpiozero
 
-
+# TODO
 class RaspberryPi(Protocol):
     TYPE = "raspberry_pi"
     VISIBLE = True

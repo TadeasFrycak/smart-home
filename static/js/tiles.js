@@ -7,11 +7,11 @@ $(document).ready(function(){
 function initializeHammerTile(object) {
     let hammer = new Hammer(object, {cssProps: {userSelect: true}});
     hammer.on("tap", function(el) {
-        tapped($(el.target).closest(".tile-item"));
+      tapped($(el.target).closest(".tile-item"));
     });
 
     hammer.on("press", function(el) {
-        pressed($(el.target).closest(".tile-item"));
+      pressed($(el.target).closest(".tile-item"));
     });
 }
 
@@ -40,8 +40,13 @@ function pressed(object) {
     }
 }
 
-$(".tile-item").on("value-transmit", function() {
-  let tileID = store($(this), "id")
-  let tileValue = store($(this), "value")
-  socketio.emit("tile_value", {"tile_id": tileID, "value": tileValue});
-});
+function tileValueTransmit(object) {
+  object.on("value-transmit", function() {
+    let tileID = store($(this), "id")
+    let tileValue = store($(this), "value")
+    socketio.emit("tile_value", {"tile_id": tileID, "value": tileValue});
+  });
+}
+
+tileValueTransmit($(".tile-item"));
+

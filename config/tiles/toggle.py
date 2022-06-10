@@ -10,6 +10,7 @@ class Toggle(Tile):
     TYPE = "toggle"
     VISIBLE = True
     NAME = gettext("Toggle")
+    PROTOCOLS_ABLE = ["mqtt", "magic_packet", "alarm"]
     VALUE = False
 
     @property

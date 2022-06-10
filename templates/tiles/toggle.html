@@ -1,42 +1,8 @@
-<div class="tile-item" data-id="{{ tile.id }}" data-type="{{ tile.type }}" data-value="{{ tile.value }}" data-config='{{ tile.config | tojson | safe }}'>
-    <div class="tile {% if tile.value == 1 %}tile-active{% endif %}">
-        <span class="toggle-dot" {% if tile.value == 1 %}style="background-color: rgba(0, 196, 42, 0.28);"{% endif %}></span>
-        <div class="tile-text">
-            <img alt="{{ _('Icon') }}" src="{{ url_for('static', filename='img/icons/' + tile.config.icon) }}" class="tile-icon icon-invert">
-            <span class="tile-label">{{ tile.label }}</span>
-            <span class="tile-status">{% if tile.value == 1 %}{{ _("On") }}{% else %}{{ _("Off") }}{% endif %}</span>
-        </div>
+<div class="tile {% if tile.value == 1 %}tile-active{% endif %}">
+    <span class="toggle-dot" {% if tile.value == 1 %}style="background-color: rgba(0, 196, 42, 0.28);"{% endif %}></span>
+    <div class="tile-text">
+        <img alt="{{ _('Icon') }}" src="{{ url_for('static', filename='img/icons/' + tile.config.icon) }}" class="tile-icon icon-invert">
+        <span class="tile-label">{{ tile.label }}</span>
+        <span class="tile-status">{% if tile.value == 1 %}{{ _("On") }}{% else %}{{ _("Off") }}{% endif %}</span>
     </div>
-
-    <script type="text/javascript">
-      $('.tile-item[data-id="{{ tile.id }}"]').on("value-receive", function() {
-        let value = store($(this), "value");
-        // Turn tile off
-        if (value === true) {
-          $(this).find(".tile-status").text(_("On"));
-          $(this).find(".toggle-dot").css("background-color", "rgba(0, 196, 42, 0.28)");
-        }
-        // Turn tile on
-        else {
-          $(this).find(".tile-status").text(_("Off"));
-          $(this).find(".toggle-dot").css("background-color", "rgba(255, 0, 0, 0.28)");  // TODO tohle půjde do class, JS bude akorát switchovat classy
-        }
-
-        $(this).find(".tile").toggleClass("tile-active");
-      });
-
-      $('.tile-item[data-id="{{ tile.id }}"]').on("tap", function() {
-        let value = !$(this).find(".tile").hasClass("tile-active");
-        store($(this), "value", value).trigger("value-transmit");
-      });
-
-      $('.tile-item[data-id="{{ tile.id }}"]').on("config-receive", function() {
-        let config = store($(this), "config");
-        if ("{{ url_for('static', filename='img/icons/') }}" + config.icon !== $(this).attr("src")) {
-          $(this).find("img").fadeOut("fast", function() {
-            $(this).attr("src", "{{ url_for('static', filename='img/icons/') }}" + config.icon).fadeIn("fast");
-          });
-        }
-      });
-    </script>
 </div>

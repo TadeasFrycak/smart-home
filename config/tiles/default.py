@@ -13,7 +13,8 @@ class Tile:
     TYPE = None
     VISIBLE = False
     NAME = gettext("Unnamed")
-    PROTOCOL = None
+    PROTOCOLS_ABLE = []
+    PROTOCOLS = []
 
     LABEL = gettext("Unnamed")
     VALUE = None
@@ -29,6 +30,7 @@ class Tile:
     _VALUE = "value"
     _CONFIG = "config"
     _PROTOCOLS = "protocols"
+    _PROTOCOLS_ABLE = "protocols_able"
 
     _ICON = "icon"
 
@@ -57,7 +59,7 @@ class Tile:
     def _merge(default, kwargs):
         """
         Merge config with default object
-        :param default: default object
+        :param default: default objecton_display_value
         :param kwargs: config
         :return: merged object
         """
@@ -103,7 +105,7 @@ class Tile:
             self._TYPE: self.TYPE,
             self._MODAL: [],
             self._VALUE: value,
-            self._PROTOCOLS: [],
+            self._PROTOCOLS: self.PROTOCOLS,
             self._VISIBLE: True,  # TODO this is for implement in future
             self._CONFIG: self._merge(default=self.config, kwargs=kwargs)
         }
@@ -123,6 +125,7 @@ class Tile:
             self._NAME: self.NAME,
             self._LABEL: self.LABEL,
             self._VALUE: self.VALUE,
-            self._PROTOCOLS: [],
+            self._PROTOCOLS: self.PROTOCOLS,
+            self._PROTOCOLS_ABLE: self.PROTOCOLS_ABLE,
             self._CONFIG: self.edit_config
         }

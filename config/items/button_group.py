@@ -10,20 +10,19 @@ class ButtonGroup(Item):
     TYPE = "button_group"
     VISIBLE = True
     NAME = gettext("Button group")
-    DESCRIPTION = gettext("Toggle/Radio")
+    PROTOCOLS_ABLE = ["mqtt"]
 
-    VALUE = gettext("Second")
+    VALUE = "second"
 
     @property
     def config(self):
         return {
             self._LABEL: self.NAME,
-            self._BUTTONS: True,
             self._CHECKBOX: False,
             self._OPTIONS: [
-                gettext("First"),
-                self.VALUE,
-                gettext("Third"),
+                ["first",    gettext("First")],
+                [self.VALUE, gettext("Second")],
+                ["third",    gettext("Third")]
             ]
         }
 
@@ -34,10 +33,9 @@ class ButtonGroup(Item):
         # TODO lepší bude asi jen inicializovat daný type jednou a poté už jen vytvářet objekty
         return {
             self._LABEL: Input().make_object(value=self.config[self._LABEL], label=gettext("Label")),
-            self._BUTTONS: Toggle().make_object(value=self.config[self._BUTTONS], placeholder="Default is buttons",
-                                                label=gettext("Use buttons (RR)")),
+            # TODO sem dát místo Toggle BTN group
             self._CHECKBOX: Toggle().make_object(value=self.config[self._CHECKBOX], placeholder="Default is radio",
                                                  label=gettext("Checkbox mode (RR)")),
             self._OPTIONS: Input().make_object(value=self.config[self._OPTIONS], placeholder=gettext("Option"),
-                                               list=True, label=gettext("Options (RR)"))
+                                               list=True, count=2, label=gettext("Options (RR)"))
         }

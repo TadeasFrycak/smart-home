@@ -23,7 +23,7 @@ $(document).ready(function(){
 
   // Smazání Tilu
   $(document.body).on("click", "#delete-tile", function() {
-    let tileID = store($(".modal-here"), "tile-id");
+    let tileID = isModalOpen().tile_id;
 
     socketio.emit("tile_delete", {"tile_id": tileID});
   });
@@ -58,7 +58,7 @@ $(document).ready(function(){
 
 // ( < modal_init.js )
 function modalEditItemDelete(object) {
-  let tileID = store($(".modal-here"), "tile-id");
+  let tileID = isModalOpen().tile_id;
   socketio.emit("modal_item_delete", {"tile_id": tileID, "id" : store($(object).closest(".modal-edit-item"), "id")});
 }
 
@@ -71,7 +71,7 @@ function validateID(value) {
 // ( < modal_init.js )
 function modalEditItemTextChanged(object) {
   let itemName = store($(object), "id");
-  let tileID = store($(".modal-here"), "tile-id");
+  let tileID = isModalOpen().tile_id;
   let newValue = store($(object), "value");
   socketio.emit("modal_item_config", {
     "value_name": itemName,
@@ -88,47 +88,31 @@ function tileTypeChanged(tileID,type_name) {
 }
 
 // ( < modal_init.js )
-function tileProtocol(tileID,type_name, state) {
-  console.log(tileID, type_name, state)
-  // DEBUG.logDebug("Change Tile Type to: " + type_name + " (ID: "+tileID+") ");
-  socketio.emit("tile_protocol", {"tile_id": tileID, "new_protocol": type_name, "state": state});
+function tileProtocol(object) {
+  DEBUG.log("Tile protocol changed");
+
+  let protocols = store(object, "value");
+  let tileID = isModalOpen().tile_id;
+
+  socketio.emit("tile_protocol", {"tile_id": tileID, "protocols": protocols});
 }
 
 // ( < modal_init.js )
-function modalItemProtocol(tileID, itemID, type_name, state) {
-  console.log(tileID, type_name, state)
-  // DEBUG.logDebug("Change Tile Type to: " + type_name + " (ID: "+tileID+") ");
-  socketio.emit("modal_item_protocol", {"tile_id": tileID, "id": itemID, "new_protocol": type_name, "state": state});
+function modalItemProtocol(object) {
+  DEBUG.log("Item protocol changed");
+  let protocols = store(object, "value");
+  let tileID = isModalOpen().tile_id;
+  let itemID = store(object, "id");
+  socketio.emit("modal_item_protocol", {"tile_id": tileID, "id": itemID, "protocols": protocols});
 }
 
 // ( < modal_init.js )
 function modalEditTileTitleChanged() {
   let tile_name = $("#tile_name").val();
   // let tile_id = $("#tile-id").val();
-  let tileID = store($(".modal-here"), "tile-id");
+  let tileID = isModalOpen().tile_id;
 
   // $("#tile-mqtt-path").val("home/" + tile_id);
 
   socketio.emit("tile_label", {"tile_id": tileID, "new_label": tile_name});
-}
-
-// ( < modal_init.js )
-function modalEditTileIDchanged(object) {
-  // ( > modal_edit_events.js )
-  let newID = store($(object), "value");
-
-  if (validateID(newID)) {
-    let config = store($(object), "config");
-    config["invalid"] = false;
-    store($(object), "config", config).trigger("config-receive");
-
-    let tileID = store($(".modal-here"), "tile-id");
-
-    socketio.emit("tile_id", {"tile_id": tileID, "new_id": newID});
-  }
-  else {
-    let config = store($(object), "config");
-    config["invalid"] = true;
-    store($(object), "config", config).trigger("config-receive");
-  }
 }

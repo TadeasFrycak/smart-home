@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-22 11:36+0100\n"
+"POT-Creation-Date: 2021-02-13 14:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -19,7 +19,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../routes_basic.py:53
+#: ../init.py:206 ../init.py:218 ../static/js/login.js:50
+#: ../static/js/register.js:194 ../static/js/register.js:197
+#: ../static/js/register.js:203 ../static/js/register.js:221
+msgid "Warning"
+msgstr "Varování"
+
+#: ../init.py:206
+msgid "This tile is not paired to any protocol!"
+msgstr "Tento tile není spárován s žádným protokolem!"
+
+#: ../init.py:218
+msgid "This item is not paired to any protocol!"
+msgstr "Tento item není spárován s žádným protokolem!"
+
+#: ../routes_auth.py:107 ../routes_basic.py:196
+msgid "Problem!"
+msgstr "Problém!"
+
+#: ../routes_auth.py:108
+msgid "Detected hacker in registrations!"
+msgstr "Detekován hacker v registraci!"
+
+#: ../routes_basic.py:48
 msgid ""
 "Your browser '{}' is not supported. Please download supported browser "
 "like Chromium, Firefox, Safari, ..."
@@ -27,37 +49,71 @@ msgstr ""
 "Váš prohlížeč '{}' již není podporován. Prosím, stáhněte si jiný moderní "
 "prohlížeč jako například Chrome, Firefox nebo Safari"
 
-#: ../routes_basic.py:212
-msgid "Problem!"
-msgstr "Problém!"
-
-#: ../routes_basic.py:213
+#: ../routes_basic.py:197
 msgid "Detected wrong SocketIO request!"
 msgstr "Detekován špatný SocketIO požadavek!"
 
-#: ../config/items/button.py:12 ../config/items/button.py:18
+#: ../routes_modal.py:28
+msgid "Info"
+msgstr "Info"
+
+#: ../routes_modal.py:28
+msgid "No content to show!"
+msgstr "Žádný obsah k zobrazení!"
+
+#: ../config/items/button.py:12
 msgid "Button"
 msgstr "Tlačítko"
 
-#: ../config/items/button.py:27 ../config/items/graph.py:27
-#: ../config/items/input.py:31 ../config/items/progress_bar.py:29
+#: ../config/items/button.py:29 ../config/items/button_group.py:35
+#: ../config/items/clock_picker.py:29 ../config/items/dropdown.py:33
+#: ../config/items/graph.py:35 ../config/items/icon_picker.py:30
+#: ../config/items/input.py:38 ../config/items/progress_bar.py:31
 #: ../config/items/slider.py:35 ../config/items/toggle.py:29
 msgid "Label"
 msgstr "Název"
 
-#: ../config/items/button.py:28 ../config/items/progress_bar.py:32
+#: ../config/items/button.py:30 ../config/items/progress_bar.py:34
 msgid "Color"
 msgstr "Barva"
+
+#: ../config/items/button_group.py:12
+msgid "Button group"
+msgstr "Skupina tlačítek"
+
+#: ../config/items/button_group.py:23 ../config/items/dropdown.py:22
+msgid "First"
+msgstr "První"
+
+#: ../config/items/button_group.py:24 ../config/items/dropdown.py:15
+msgid "Second"
+msgstr "Druhý"
+
+#: ../config/items/button_group.py:25 ../config/items/dropdown.py:24
+msgid "Third"
+msgstr "Třetí"
+
+#: ../config/items/button_group.py:38
+msgid "Checkbox mode (RR)"
+msgstr "Zaškrtávací mód (RR)"
+
+#: ../config/items/button_group.py:39 ../config/items/dropdown.py:34
+msgid "Option"
+msgstr "Možnost"
+
+#: ../config/items/button_group.py:40
+msgid "Options (RR)"
+msgstr "Možnosti (RR)"
 
 #: ../config/items/clock_picker.py:12
 msgid "Clock picker"
 msgstr "Výběr času"
 
-#: ../config/items/clock_picker.py:18
+#: ../config/items/clock_picker.py:21
 msgid "Click to set the time..."
 msgstr "Klikněte pro zadání času..."
 
-#: ../config/items/clock_picker.py:26 ../config/items/input.py:32
+#: ../config/items/clock_picker.py:30 ../config/items/input.py:39
 #: ../config/items/toggle.py:30
 msgid "Placeholder"
 msgstr "Předběžná výplň"
@@ -66,15 +122,13 @@ msgstr "Předběžná výplň"
 msgid "Date picker"
 msgstr "Výběr data"
 
-#: ../config/items/date_range_picker.py:13
-msgid "Pick a date or date range"
-msgstr "Vybere datum nebo rozsah"
-
-#: ../config/items/date_range_picker.py:27 ../config/items/slider.py:41
+#: ../config/items/date_range_picker.py:26 ../config/items/slider.py:41
 msgid "Range"
 msgstr "Rozsah"
 
-#: ../config/items/default.py:11 ../library/tmng_read.py:35
+#: ../config/items/default.py:16 ../config/protocols/default.py:8
+#: ../config/tiles/default.py:15 ../config/tiles/default.py:19
+#: ../library/tmng_read.py:33
 msgid "Unnamed"
 msgstr "Bez názvu"
 
@@ -82,43 +136,55 @@ msgstr "Bez názvu"
 msgid "Dropdown"
 msgstr "Rozbalovací nabídka"
 
-#: ../config/items/dropdown.py:13
-msgid "Pick a one from multiple options"
-msgstr "Vyberte jeden nebo více nastavení"
+#: ../config/items/dropdown.py:35
+msgid "Options (partially RR)"
+msgstr ""
 
-#: ../config/items/graph.py:12 ../config/items/graph.py:19
+#: ../config/items/graph.py:16
 msgid "Graph"
 msgstr "Graf"
 
-#: ../config/items/input.py:12 ../config/items/input.py:19
+#: ../config/items/icon_picker.py:12
+msgid "Icon picker"
+msgstr "Výběr ikony"
+
+#: ../config/items/input.py:12
 msgid "Input"
 msgstr "Vstupní pole"
 
-#: ../config/items/input.py:13
-msgid "Field for free typing"
-msgstr "Pole pro volné psaní"
+#: ../config/items/input.py:40
+msgid "Prepend text"
+msgstr "Předřazený text"
 
-#: ../config/items/input.py:33
+#: ../config/items/input.py:41
+msgid "Inputs count (RR)"
+msgstr "Počet vstupů (RR)"
+
+#: ../config/items/input.py:42
 msgid "Readonly"
 msgstr "Pouze pro čtení"
 
-#: ../config/items/input.py:34
-msgid "Invalid"
-msgstr "Nevalidní"
+#: ../config/items/input.py:43
+msgid "Value list (RR)"
+msgstr "Seznam hodnot (RR)"
 
-#: ../config/items/input.py:35
-msgid "Confirm button (refresh required)"
-msgstr "Potvrzovací tlačítko (!)"
+#: ../config/items/input.py:45
+msgid "Number"
+msgstr "Číselný vstup"
 
-#: ../config/items/progress_bar.py:12 ../config/items/progress_bar.py:18
+#: ../config/items/input.py:46
+msgid "Confirm button"
+msgstr "Potvrzovací tlačítko"
+
+#: ../config/items/progress_bar.py:12
 msgid "Progress bar"
-msgstr ""
+msgstr "Ukazatel průběhu"
 
-#: ../config/items/progress_bar.py:30 ../config/items/slider.py:38
+#: ../config/items/progress_bar.py:32 ../config/items/slider.py:38
 msgid "Maximal value"
 msgstr "Maximální hodnota"
 
-#: ../config/items/progress_bar.py:31 ../config/items/slider.py:37
+#: ../config/items/progress_bar.py:33 ../config/items/slider.py:37
 msgid "Minimal value"
 msgstr "Minimální hodnota"
 
@@ -126,21 +192,13 @@ msgstr "Minimální hodnota"
 msgid "Separator"
 msgstr "Oddělovač"
 
-#: ../config/items/separator.py:13
-msgid "Separate content"
-msgstr "Oddělí obsah"
-
-#: ../config/items/slider.py:12 ../config/items/slider.py:19
+#: ../config/items/slider.py:12
 msgid "Slider"
 msgstr "Posuvník"
 
-#: ../config/items/slider.py:13
-msgid "Slide to set value"
-msgstr "Posunutím se nastaví hodnota"
-
 #: ../config/items/slider.py:36
 msgid "Suffix"
-msgstr ""
+msgstr "Přípona"
 
 #: ../config/items/slider.py:39
 msgid "Step value"
@@ -154,19 +212,138 @@ msgstr "Plynulý"
 msgid "Disabled"
 msgstr "Vypnutý"
 
-#: ../config/items/toggle.py:12 ../config/items/toggle.py:19
+#: ../config/items/toggle.py:12 ../config/tiles/toggle.py:12
 msgid "Toggle"
 msgstr "Přepínač"
 
-#: ../config/items/toggle.py:13
-msgid "Toggle value - on/off"
+#: ../config/protocols/magic_packet.py:61
+msgid "Magic Packet"
+msgstr "Magic Packet"
+
+#: ../config/protocols/magic_packet.py:82
+#: ../templates/modal_client_list.html:27
+msgid "MAC"
+msgstr "MAC"
+
+#: ../config/protocols/magic_packet.py:83
+#: ../templates/modal_client_list.html:19
+msgid "IP"
+msgstr "IP"
+
+#: ../config/protocols/mqtt.py:162
+msgid "MQTT"
+msgstr "MQTT"
+
+#: ../config/protocols/mqtt.py:183
+msgid "Path"
+msgstr "Cesta"
+
+#: ../config/protocols/prusa.py:151 ../config/tiles/prusa.py:12
+msgid "Prusa"
+msgstr "Průša"
+
+#: ../config/protocols/prusa.py:175
+msgid "Command"
+msgstr "Příkaz"
+
+#: ../config/protocols/prusa.py:176
+msgid "Argument"
+msgstr "Argument"
+
+#: ../config/protocols/prusa.py:177
+msgid "Read tile states"
 msgstr ""
 
-#: ../library/acom.py:232 ../library/acom.py:243
+#: ../config/protocols/prusa.py:178
+msgid "Send my value"
+msgstr "Posílat mou hodnotu"
+
+#: ../config/protocols/raspberry_pi.py:9
+msgid "RPi"
+msgstr "RPi"
+
+#: ../config/protocols/raspberry_pi.py:22
+msgid "Pin"
+msgstr "Pin"
+
+#: ../config/protocols/raspberry_pi.py:23
+msgid "BCM"
+msgstr "BCM"
+
+#: ../config/protocols/timer.py:36 ../templates/items/clock_picker.html:7
+msgid "Alarm"
+msgstr "Budík"
+
+#: ../config/protocols/timer.py:58
+msgid "Time"
+msgstr "Čas"
+
+#: ../config/protocols/timer.py:60
+msgid "Repeat"
+msgstr "Opakovat"
+
+#: ../config/protocols/timer.py:61 ../templates/tiles/alarm_clock.html:12
+msgid "Monday"
+msgstr "Pondělí"
+
+#: ../config/protocols/timer.py:62 ../templates/tiles/alarm_clock.html:15
+msgid "Tuesday"
+msgstr "Úterý"
+
+#: ../config/protocols/timer.py:63 ../templates/tiles/alarm_clock.html:18
+msgid "Wednesday"
+msgstr "Středa"
+
+#: ../config/protocols/timer.py:64 ../templates/tiles/alarm_clock.html:21
+msgid "Thursday"
+msgstr "Čtvrtek"
+
+#: ../config/protocols/timer.py:65 ../templates/tiles/alarm_clock.html:24
+msgid "Friday"
+msgstr "Pátek"
+
+#: ../config/protocols/timer.py:66 ../templates/tiles/alarm_clock.html:27
+msgid "Saturday"
+msgstr "Sobota"
+
+#: ../config/protocols/timer.py:67 ../templates/tiles/alarm_clock.html:30
+msgid "Sunday"
+msgstr "Neděle"
+
+#: ../config/protocols/timer.py:68
+msgid "Auto off"
+msgstr "Automatické vypnutí"
+
+#: ../config/tiles/alarm_clock.py:12
+msgid "Alarm Clock"
+msgstr "Budík"
+
+#: ../config/tiles/alarm_clock.py:28 ../config/tiles/toggle.py:27
+#: ../config/tiles/value_double.py:27
+msgid "Tile icon"
+msgstr "Ikona tilu"
+
+#: ../config/tiles/blank.py:12
+msgid "Blank"
+msgstr "Prázdný"
+
+#: ../config/tiles/player.py:12
+msgid "Player"
+msgstr "Přehrávač"
+
+#: ../config/tiles/value.py:12
+msgid "Value"
+msgstr "Hodnota"
+
+#: ../config/tiles/value_double.py:12
+msgid "Value Double"
+msgstr "Dvojitá hodnota"
+
+#: ../library/acom.py:226 ../library/acom.py:243
 msgid "Doorbell"
 msgstr "Zvonek"
 
-#: ../library/acom.py:233
+#: ../library/acom.py:227
 msgid "Someone ring on the doorbell!"
 msgstr "Někdo zazvonil!"
 
@@ -310,75 +487,27 @@ msgstr[0] "%(num)s rok"
 msgstr[1] "%(num)s roky"
 msgstr[2] "%(num)s let"
 
-#: ../static/js/acom.js:202 ../templates/modal_doorbird.html:31
+#: ../static/js/acom.js:19 ../templates/slide.html:66
+msgid "Reload"
+msgstr "Obnovit"
+
+#: ../static/js/acom.js:461
 msgid "FPS"
-msgstr ""
+msgstr "FPS"
 
-#: ../static/js/acom.js:419 ../static/js/acom.js:425
-#: ../templates/tiles/toggle.html:7
-msgid "On"
-msgstr "On"
-
-#: ../static/js/acom.js:420 ../static/js/acom.js:424
-#: ../templates/tiles/toggle.html:7
-msgid "Off"
-msgstr "Off"
-
-#: ../static/js/acom.js:552 ../templates/slide.html:6
+#: ../static/js/acom.js:594 ../templates/slide.html:6
 msgid "Online"
 msgstr "Online"
 
-#: ../static/js/acom.js:589 ../static/js/main.js:88 ../static/js/main.js:89
+#: ../static/js/acom.js:630 ../static/js/acom.js:633 ../static/js/acom.js:637
 msgid "Offline"
 msgstr "Offline"
 
-#: ../static/js/edit_events.js:31 ../static/js/edit_events.js:42
-msgid "Slide"
-msgstr "Stránka"
-
-#: ../static/js/edit_events.js:31
-msgid "is already on the end!"
-msgstr "je již na konci!"
-
-#: ../static/js/edit_events.js:42
-msgid "is already on the beginning!"
-msgstr "je již na začátku!"
-
-#: ../static/js/events.js:129 ../templates/slide.html:15
-msgid "Edit mode"
-msgstr "Upravovací mód"
-
-#: ../static/js/events.js:174 ../templates/slide.html:2
-msgid "Exit edit mode"
-msgstr "Ukončit upravovací mód"
-
-#: ../static/js/login.js:44 ../static/js/register.js:200
-#: ../templates/auth/login.html:16 ../templates/auth/login.html:57
-#: ../templates/modal_user_list.html:37
-msgid "Username"
-msgstr "Uživatelské jméno"
-
-#: ../static/js/login.js:49 ../static/js/register.js:203
-#: ../templates/auth/login.html:23 ../templates/auth/login.html:64
-msgid "Password"
-msgstr "Heslo"
-
-#: ../static/js/login.js:58 ../static/js/register.js:224
-msgid "and"
-msgstr "a"
-
-#: ../static/js/login.js:67 ../static/js/register.js:206
-#: ../static/js/register.js:209 ../static/js/register.js:215
-#: ../static/js/register.js:233
-msgid "Warning"
-msgstr "Varování"
-
-#: ../static/js/main.js:88 ../static/js/main.js:96 ../static/js/main.js:103
-#: ../templates/base.html:50
+#: ../static/js/acom.js:633 ../templates/base.html:48
 msgid "SH"
 msgstr "ChD"
 
-#: ../static/js/main.js:89
+#: ../static/js/acom.js:637
 msgid ""
 "Server is now offline. The page will be auto-reloaded after server will "
 "be online. If you think that this message is wrong or this is a bug, you "
@@ -388,99 +517,123 @@ msgstr ""
 "naváže znovu se serverem spojení. Pokud si myslíte, že je tahle zpráva "
 "chyba, můžete stránku obnovit manuálně pomocí tlačítka níže."
 
-#: ../static/js/main.js:96 ../static/js/main.js:97
-msgid "Restarting"
-msgstr "Restartování"
+#: ../static/js/edit_events.js:31 ../static/js/edit_events.js:42
+msgid "Slide"
+msgstr "Plocha"
 
-#: ../static/js/main.js:97
-msgid ""
-"Server is now restarting. If the server will not turn on automatically "
-"within a minute, please refresh the page manually"
-msgstr ""
-"Server se nyní restartuje. Pokud se stránka neobnoví automaticky do "
-"minuty, prosím, obnovte ji manuálně pomocí tlačítka níže."
+#: ../static/js/edit_events.js:31
+msgid "is already on the end!"
+msgstr "je již na konci!"
 
-#: ../static/js/main.js:103 ../static/js/main.js:104
-msgid "Turned off"
-msgstr "Vypnuto"
+#: ../static/js/edit_events.js:42
+msgid "is already on the beginning!"
+msgstr "je již na začátku!"
 
-#: ../static/js/main.js:104
-msgid ""
-"Server was turned off. Please, reload the page when you turn on the "
-"server."
-msgstr "Server byl vypnut. Prosím, obnovte stránku, až server opět zapnete."
+#: ../static/js/events.js:123 ../templates/slide.html:15
+msgid "Edit mode"
+msgstr "Upravovací mód"
 
-#: ../static/js/main.js:122 ../templates/slide.html:68
-msgid "Reload"
-msgstr "Obnovit"
+#: ../static/js/events.js:167 ../templates/slide.html:2
+msgid "Exit edit mode"
+msgstr "Ukončit upravovací mód"
 
-#: ../static/js/register.js:194 ../templates/auth/login.html:43
+#: ../static/js/login.js:27 ../static/js/register.js:188
+#: ../templates/auth/login.html:16 ../templates/auth/login.html:57
+#: ../templates/modal_user_list.html:37
+msgid "Username"
+msgstr "Uživatelské jméno"
+
+#: ../static/js/login.js:32 ../static/js/register.js:191
+#: ../templates/auth/login.html:23 ../templates/auth/login.html:64
+msgid "Password"
+msgstr "Heslo"
+
+#: ../static/js/login.js:41 ../static/js/register.js:212
+msgid "and"
+msgstr "a"
+
+#: ../static/js/login.js:67 ../templates/auth/login.html:3
+#: ../templates/auth/login.html:14 ../templates/auth/login.html:30
+#: ../templates/auth/logout.html:16
+msgid "Login"
+msgstr "Přihlásit"
+
+#: ../static/js/login.js:67
+msgid "Username or password is wrong!"
+msgstr "Uživatelské jméno nebo heslo je špatně!"
+
+#: ../static/js/register.js:182 ../templates/auth/login.html:43
 #: ../templates/modal_user_list.html:21
 msgid "First name"
 msgstr "Jméno"
 
-#: ../static/js/register.js:197 ../templates/auth/login.html:50
+#: ../static/js/register.js:185 ../templates/auth/login.html:50
 #: ../templates/modal_user_list.html:29
 msgid "Last name"
 msgstr "Příjmení"
 
-#: ../static/js/register.js:206
+#: ../static/js/register.js:194
 msgid "Password must contain all the required characters!"
 msgstr "Heslo musí obsahovat všechny povinné znaky!"
 
-#: ../static/js/register.js:209
+#: ../static/js/register.js:197
 msgid "Password must NOT contain your name or username!"
 msgstr "Heslo nesmí obsahovat Vaše jméno nebo Vaše uživatelské jméno!"
 
-#: ../static/js/register.js:212 ../templates/auth/login.html:79
+#: ../static/js/register.js:200 ../templates/auth/login.html:79
 msgid "Repeat password"
 msgstr "Heslo znovu"
 
-#: ../static/js/register.js:215
+#: ../static/js/register.js:203
 msgid "Passwords does not match!"
 msgstr "Hesla se neshodují!"
 
-#: ../templates/base.html:2 ../templates/base.html:46 ../templates/base.html:53
+#: ../static/js/register.js:247 ../templates/error.html:3
+#: ../templates/error.html:36
+msgid "Error"
+msgstr "Chyba"
+
+#: ../static/js/register.js:247
+msgid "Username is already taken!"
+msgstr "Uživatelské jméno je již zabráno!"
+
+#: ../templates/base.html:2 ../templates/base.html:44 ../templates/base.html:51
 msgid "en-GB"
 msgstr "cs-CZ"
 
-#: ../templates/base.html:42 ../templates/base.html:43
+#: ../templates/base.html:40 ../templates/base.html:41
 msgid "Smart home"
 msgstr "Chytrá domácnost"
 
-#: ../templates/base.html:44
+#: ../templates/base.html:42
 msgid "control, use, have fun"
 msgstr "kontrolovat, používat, užívat"
-
-#: ../templates/error.html:3 ../templates/error.html:36
-msgid "Error"
-msgstr "Chyba"
 
 #: ../templates/error.html:32
 msgid "error icon"
 msgstr "ikona chyby"
 
-#: ../templates/index.html:69
+#: ../templates/index.html:100
 msgid "Home"
 msgstr "Domů"
 
-#: ../templates/index.html:116
+#: ../templates/index.html:147
 msgid "Let's start"
 msgstr "Začněme"
 
-#: ../templates/index.html:117
+#: ../templates/index.html:148
 msgid ""
 "Let's make your first slide, you can add this slide by the button bellow."
 " After that, you can add your tiles in edit mode."
 msgstr ""
-"Vytvořte si novou stránku pomocí tlačítka níže. Poté si budete moci "
+"Vytvořte si novou plochu pomocí tlačítka níže. Poté si budete moci "
 "přidat jakékoli tily pomocí edit módu."
 
-#: ../templates/index.html:118
+#: ../templates/index.html:149
 msgid "Add new slide"
-msgstr "Přidat novou stránku"
+msgstr "Přidat novou plochu"
 
-#: ../templates/modal.html:17 ../templates/modal_edit.html:92
+#: ../templates/modal.html:17 ../templates/modal_doorbird.html:41
 msgid "Close"
 msgstr "Zavřít"
 
@@ -505,14 +658,6 @@ msgstr "zde"
 #: ../templates/modal_client_list.html:4 ../templates/slide.html:38
 msgid "Client list"
 msgstr "Seznam klientů"
-
-#: ../templates/modal_client_list.html:19
-msgid "IP"
-msgstr "IP"
-
-#: ../templates/modal_client_list.html:27
-msgid "MAC"
-msgstr "MAC"
 
 #: ../templates/modal_client_list.html:35
 msgid "Connected"
@@ -551,74 +696,9 @@ msgstr "URL prohlížeče"
 msgid "Delete"
 msgstr "Smazat"
 
-#: ../templates/modal_doorbird.html:8
-msgid "Info"
-msgstr ""
-
-#: ../templates/modal_doorbird.html:12
-msgid "Image resolution"
-msgstr "Rozlišení obrázků"
-
-#: ../templates/modal_doorbird.html:20
-msgid "Video resolution"
-msgstr "Rozlišení videa"
-
-#: ../templates/modal_doorbird.html:28
-msgid "Framerate"
-msgstr "Snímková frekvence"
-
-#: ../templates/modal_doorbird.html:36 ../templates/modal_doorbird.html:38
+#: ../templates/modal_doorbird.html:22
 msgid "Live video"
 msgstr "Živý náhled"
-
-#: ../templates/modal_doorbird.html:42
-msgid "Unlock"
-msgstr "Odemknout"
-
-#: ../templates/modal_doorbird.html:46
-msgid "Light on"
-msgstr "Světlo"
-
-#: ../templates/modal_doorbird.html:50
-msgid "Take photo"
-msgstr "Vyfotit"
-
-#: ../templates/modal_edit.html:4
-msgid "Tile name"
-msgstr "Název tilu"
-
-#: ../templates/modal_edit.html:10
-msgid "Tile type"
-msgstr "Typ tilu"
-
-#: ../templates/modal_edit.html:23 ../templates/modal_edit.html:31
-msgid "Tile ID"
-msgstr "ID tilu"
-
-#: ../templates/modal_edit.html:36 ../templates/modal_edit.html:38
-#: ../templates/modal_edit/item_values.html:31
-msgid "MQTT path"
-msgstr "MQTT cesta"
-
-#: ../templates/modal_edit.html:45
-msgid "Add modal items"
-msgstr "Přidat modal itemy"
-
-#: ../templates/modal_edit.html:57
-msgid "Modal items"
-msgstr "Modal itemy"
-
-#: ../templates/modal_edit.html:59
-msgid "Unpack all"
-msgstr "Rozbalit vše"
-
-#: ../templates/modal_edit.html:60
-msgid "Pack all"
-msgstr "Sbalit vše"
-
-#: ../templates/modal_edit.html:91
-msgid "Up"
-msgstr "Nahoru"
 
 #: ../templates/modal_settings.html:4 ../templates/slide.html:37
 msgid "Settings"
@@ -695,11 +775,11 @@ msgstr "Nižší kontrolér"
 msgid "Register date"
 msgstr "Datum registrace"
 
-#: ../templates/preloader.html:20
+#: ../templates/preloader.html:22
 msgid "Wait a moment please..."
 msgstr "Počkejte chvíli prosím..."
 
-#: ../templates/preloader.html:21
+#: ../templates/preloader.html:23
 msgid "Turn on JavaScript please..."
 msgstr "Zapněte JavaScript prosím..."
 
@@ -707,7 +787,7 @@ msgstr "Zapněte JavaScript prosím..."
 msgid "Doorbird"
 msgstr "Doorbird"
 
-#: ../templates/slide.html:28 ../templates/slide.html:90
+#: ../templates/slide.html:28
 msgid "Add"
 msgstr "Přidat"
 
@@ -735,26 +815,13 @@ msgstr "APK aplikace"
 msgid "Save"
 msgstr "Uložit"
 
-#: ../templates/slide.html:61
-msgid "Shutdown"
-msgstr "Vypnout"
-
-#: ../templates/slide.html:62
-msgid "Restart"
-msgstr "Restartovat"
-
-#: ../templates/slide.html:70
+#: ../templates/slide.html:68
 msgid "Reload all"
 msgstr "Obnovit všechno"
 
-#: ../templates/slide.html:75
+#: ../templates/slide.html:73
 msgid "Logout"
 msgstr "Odhlásit"
-
-#: ../templates/auth/login.html:3 ../templates/auth/login.html:14
-#: ../templates/auth/login.html:30 ../templates/auth/logout.html:16
-msgid "Login"
-msgstr "Přihlásit"
 
 #: ../templates/auth/login.html:33
 msgid "I do not have an account"
@@ -800,98 +867,49 @@ msgstr "Odhlášen"
 msgid "See you later"
 msgstr "Nashledanou"
 
-#: ../templates/items/clock_picker.html:5
-msgid "Alarm"
-msgstr "Budík"
-
-#: ../templates/items/clock_picker.html:16
-msgid "Done"
-msgstr "Hotovo"
-
-#: ../templates/items/date_range_picker.html:16
+#: ../templates/items/date_range_picker.html:15
 msgid "en"
 msgstr "cs"
 
-#: ../templates/items/input.html:11
-msgid "Submit"
-msgstr "Potvrdit"
-
-#: ../templates/modal_edit/icon_item.html:1
-#: ../templates/modal_edit/icons.html:2 ../templates/tiles/alarm_clock.html:4
-#: ../templates/tiles/icon.html:4 ../templates/tiles/toggle.html:5
-#: ../templates/tiles/value_double.html:4
+#: ../templates/items/icon_picker.html:6 ../templates/tiles/alarm_clock.html:3
+#: ../templates/tiles/prusa.html:3 ../templates/tiles/toggle.html:4
+#: ../templates/tiles/value_double.html:3
 msgid "Icon"
 msgstr "Ikona"
 
-#: ../templates/modal_edit/item_values.html:2
-msgid "Menu"
-msgstr "Menu"
+#: ../templates/items/input.html:37
+msgid "Submit"
+msgstr "Potvrdit"
 
-#: ../templates/modal_edit/item_values.html:19
-msgid "Preview"
-msgstr "Náhled"
-
-#: ../templates/modal_edit/item_values.html:27
-msgid "Item"
-msgstr "Item"
-
-#: ../templates/modal_edit/item_values.html:28
-msgid "ID"
-msgstr "ID"
-
-#: ../templates/modal_edit/item_values.html:37
-msgid "Item config"
-msgstr "Konfigurace itemu"
-
-#: ../templates/tiles/alarm_clock.html:13
-msgid "Monday"
-msgstr "Pondělí"
-
-#: ../templates/tiles/alarm_clock.html:16
-msgid "Tuesday"
-msgstr "Úterý"
-
-#: ../templates/tiles/alarm_clock.html:19
-msgid "Wednesday"
-msgstr "Středa"
-
-#: ../templates/tiles/alarm_clock.html:22
-msgid "Thursday"
-msgstr "Čtvrtek"
-
-#: ../templates/tiles/alarm_clock.html:25
-msgid "Friday"
-msgstr "Pátek"
-
-#: ../templates/tiles/alarm_clock.html:28
-msgid "Saturday"
-msgstr "Sobota"
-
-#: ../templates/tiles/alarm_clock.html:31
-msgid "Sunday"
-msgstr "Neděle"
-
-#: ../templates/tiles/player.html:10
+#: ../templates/tiles/player.html:9
 msgid "Thumbnail"
 msgstr "Náhled"
 
-#: ../templates/tiles/player.html:11
+#: ../templates/tiles/player.html:10
 msgid "Previous"
 msgstr "Předchozí"
 
-#: ../templates/tiles/player.html:12
+#: ../templates/tiles/player.html:11
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: ../templates/tiles/player.html:13
+#: ../templates/tiles/player.html:12
 msgid "Play"
 msgstr "Přehrát"
 
-#: ../templates/tiles/player.html:14
+#: ../templates/tiles/player.html:13
 msgid "Next"
 msgstr "Další"
 
-#: ../templates/tiles/value.html:9
+#: ../templates/tiles/toggle.html:6
+msgid "On"
+msgstr "On"
+
+#: ../templates/tiles/toggle.html:6
+msgid "Off"
+msgstr "Off"
+
+#: ../templates/tiles/value.html:8
 msgid "N/A"
 msgstr "N/A"
 
@@ -962,11 +980,127 @@ msgstr "N/A"
 #~ msgstr "Není hotové"
 
 #~ msgid "Field for free typing"
-#~ msgstr "Pole pro psaní"
+#~ msgstr "Pole pro volné psaní"
 
 #~ msgid "Separate contents"
 #~ msgstr "Oddělí obsahy"
 
 #~ msgid "Choose..."
 #~ msgstr "Vyberte..."
+
+#~ msgid "Pick a date or date range"
+#~ msgstr "Vybere datum nebo rozsah"
+
+#~ msgid "Pick a one from multiple options"
+#~ msgstr "Vyberte jeden nebo více nastavení"
+
+#~ msgid "Invalid"
+#~ msgstr "Nevalidní"
+
+#~ msgid "Confirm button (refresh required)"
+#~ msgstr "Potvrzovací tlačítko (!)"
+
+#~ msgid "Separate content"
+#~ msgstr "Oddělí obsah"
+
+#~ msgid "Slide to set value"
+#~ msgstr "Posunutím se nastaví hodnota"
+
+#~ msgid "Toggle value - on/off"
+#~ msgstr ""
+
+#~ msgid "Restarting"
+#~ msgstr "Restartování"
+
+#~ msgid ""
+#~ "Server is now restarting. If the "
+#~ "server will not turn on automatically"
+#~ " within a minute, please refresh the"
+#~ " page manually"
+#~ msgstr ""
+#~ "Server se nyní restartuje. Pokud se "
+#~ "stránka neobnoví automaticky do minuty, "
+#~ "prosím, obnovte ji manuálně pomocí "
+#~ "tlačítka níže."
+
+#~ msgid "Turned off"
+#~ msgstr "Vypnuto"
+
+#~ msgid ""
+#~ "Server was turned off. Please, reload"
+#~ " the page when you turn on the"
+#~ " server."
+#~ msgstr "Server byl vypnut. Prosím, obnovte stránku, až server opět zapnete."
+
+#~ msgid "Image resolution"
+#~ msgstr "Rozlišení obrázků"
+
+#~ msgid "Video resolution"
+#~ msgstr "Rozlišení videa"
+
+#~ msgid "Framerate"
+#~ msgstr "Snímková frekvence"
+
+#~ msgid "Unlock"
+#~ msgstr "Odemknout"
+
+#~ msgid "Light on"
+#~ msgstr "Světlo"
+
+#~ msgid "Take photo"
+#~ msgstr "Vyfotit"
+
+#~ msgid "Tile name"
+#~ msgstr "Název tilu"
+
+#~ msgid "Tile type"
+#~ msgstr "Typ tilu"
+
+#~ msgid "Tile ID"
+#~ msgstr "ID tilu"
+
+#~ msgid "MQTT path"
+#~ msgstr "MQTT cesta"
+
+#~ msgid "Add modal items"
+#~ msgstr "Přidat modal itemy"
+
+#~ msgid "Modal items"
+#~ msgstr "Modal itemy"
+
+#~ msgid "Unpack all"
+#~ msgstr "Rozbalit vše"
+
+#~ msgid "Pack all"
+#~ msgstr "Sbalit vše"
+
+#~ msgid "Up"
+#~ msgstr "Nahoru"
+
+#~ msgid "Shutdown"
+#~ msgstr "Vypnout"
+
+#~ msgid "Restart"
+#~ msgstr "Restartovat"
+
+#~ msgid "Done"
+#~ msgstr "Hotovo"
+
+#~ msgid "Menu"
+#~ msgstr "Menu"
+
+#~ msgid "Preview"
+#~ msgstr "Náhled"
+
+#~ msgid "Item"
+#~ msgstr "Item"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Item config"
+#~ msgstr "Konfigurace itemu"
+
+#~ msgid "No modal to show!"
+#~ msgstr ""
 

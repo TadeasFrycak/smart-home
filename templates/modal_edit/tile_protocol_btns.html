@@ -1,0 +1,21 @@
+<!-- Make options -->
+{% set protocol_options = [] %}
+{% for item, value in protocol_config.items() %}
+    {% if value.visible == True %}
+        {% if value.type in tile_config[tile.type]["protocols_able"] %}
+            {% do protocol_options.append([value.type, value.name]) %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+<!-- Find values -->
+{% set protocol_values = [] %}
+{% for value in tile["protocols"] %}
+    {% if value["type"] == value.type %}
+        {% do protocol_values.append(value.type) %}
+    {% endif %}
+{% endfor %}
+
+<!-- Render -->
+{% set item = {"type": "button_group", "id": "protocol-btn", "config": {"label": _("Tile protocols"), "checkbox": true, "options": protocol_options}, "value": protocol_values} %}
+{% include "items/item.html" %}

@@ -3,6 +3,7 @@ from routes_slide import *
 
 # Client connect/disconnect
 @socketio.on("connect", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio_login_required
 # @check_browser
 def client_connect():
     """
@@ -15,6 +16,7 @@ def client_connect():
 
     else:
         username = None
+
     # TODO vlastní logger - clients.log pro logování přístupů ze zařízení na účtě atd.
     clients.add_client(ip=request.environ.get("HTTP_X_REAL_IP", request.remote_addr), sid=request.sid,
                        user_agent=request.user_agent, accept_languages=request.accept_languages,
@@ -27,6 +29,7 @@ def client_connect():
 
 
 @socketio.on("disconnect", namespace=app.config["SOCKETIO_NAMESPACE"])
+@socketio_login_required
 @check_browser
 def client_disconnect():
     """

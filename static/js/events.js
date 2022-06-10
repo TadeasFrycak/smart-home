@@ -84,11 +84,11 @@ function hideDropdown(myThis, e) {
     });
 }
 
-function modalClose() {
+function modalClose(tile_id) {
   $(".modal-here").empty();
   store($(".modal-here"), "type", false)
   $(".clockpicker-popover").hide();
-  socketio.emit("modal_close", {"tab_id": sessionStorage.tabID});
+  socketio.emit("modal_close", {"tile_id": tile_id, "tab_id": sessionStorage.tabID});
 }
 
 function displayModal(modal, type, tile_id) {
@@ -98,7 +98,7 @@ function displayModal(modal, type, tile_id) {
     // navigator[vibrate](50);
   $(".modal-here").empty().append(modal);
   $("#my-modal").modal({ keyboard: true }).on("hide.bs.modal", function (e) {
-    modalClose();
+    modalClose(tile_id);
   });
   let tileID = (typeof tile_id !== "undefined") ? tile_id : null;
   store($(".modal-here"), "tile-id", tileID);

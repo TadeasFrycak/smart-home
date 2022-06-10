@@ -1,0 +1,7 @@
+<div class="tile-item" data-id="{{ tile.id }}" data-type="{{ tile.type }}" data-value='{% if tile.value %}{{ tile.value | tojson | safe }}{% endif %}' data-config='{{ tile.config | tojson | safe }}'>
+    {% include "tiles/" + tile.type + ".html" %}
+
+    <script type="text/javascript" defer>
+      tile($('.tile-item[data-id="{{ tile.id }}"]'));
+    </script>
+</div>

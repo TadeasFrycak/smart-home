@@ -67,7 +67,7 @@ class Validator:
                         else:
                             return device
 
-                except Exception:
+                except KeyError:
                     pass
 
         return True
