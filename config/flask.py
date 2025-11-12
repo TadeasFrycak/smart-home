@@ -23,7 +23,7 @@ class DevelopmentConfig:
     LANGUAGES = ["cs", "en"]
     BABEL_DEFAULT_LOCALE = "en"
 
-    SQLALCHEMY_DATABASE_URI = "sqlite:///data/database.sqlite"
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(os.getcwd(), 'data', 'database.sqlite')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SESSION_COOKIE_NAME = "home-session"

@@ -1,7 +1,7 @@
 from pkg_resources import DistributionNotFound, VersionConflict
 from library.logger import TerminalLogger
 from library.terminal import Terminal
-from distutils.version import StrictVersion
+from packaging import version
 import pkg_resources
 import subprocess
 import platform
@@ -86,9 +86,9 @@ with open("requirements.txt", mode="r") as f:
 
             if split_dependency[0] == "#" and split_dependency[1] == "python":
                 # terminal.error("Python requirement is not valid")
-                dependency_version = StrictVersion(split_dependency[3])
+                dependency_version = version.parse(split_dependency[3])
                 try:
-                    python_version = StrictVersion(platform.python_version())
+                    python_version = version.parse(platform.python_version())
                     if ((python_version >= dependency_version) and split_dependency[2] == ">=") or ((python_version == dependency_version) and split_dependency[2] == "==") or ((python_version <= dependency_version) and split_dependency[2] == "<="):
                         pass
 

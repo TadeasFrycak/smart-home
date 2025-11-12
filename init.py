@@ -64,7 +64,7 @@ app = Flask(__name__, static_url_path="/static")
 app.config.from_object("config.flask.DevelopmentConfig")
 app.config["TRAP_HTTP_EXCEPTIONS"] = True
 
-database = SQLAlchemy(app=app)
+database = SQLAlchemy(app)
 socketio = SocketIO(app=app, cookie=app.config["SOCKETIO_COOKIE_NAME"], async_mode=None)
 babel = Babel(app=app)
 babeljs = BabelJS(app=app)
@@ -92,7 +92,7 @@ class User(UserMixin, database.Model):
 
     def set_password(self, password):
         self.salt = self.__generate_salt()
-        self.password = generate_password_hash(self.salt + password, method="sha256")
+        self.password = generate_password_hash(self.salt + password, method="pbkdf2:sha256")
 
     def set_sex(self, sex):
         # gender.Detector(case_sensitive=False)
@@ -105,8 +105,8 @@ class User(UserMixin, database.Model):
     def __repr__(self):
         return "<User {0}>".format(self.username)
 
-
-database.create_all(app=app)
+with app.app_context():
+    database.create_all()
 
 # Initialise own modules
 fmng = FileManager()
@@ -229,7 +229,6 @@ def item_publish(tile_id, value, item_id):
 
     for protocol in item["protocols"]:
         default_protocols.get_object(protocol["type"]).publish(config=protocol["config"], value=value)
-
 
 app.jinja_env.globals.update(
     refactor=refactoring.refactor,

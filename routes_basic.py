@@ -205,7 +205,6 @@ def socketio_prevent_hack(func):
 
 
 # Babel
-@babel.localeselector
 def get_locale():
     """
     Get best language
@@ -256,4 +255,6 @@ def ping():
 def ping_http():
     return "my-pong"
 
+
+babel.locale_selector_func = get_locale
 
