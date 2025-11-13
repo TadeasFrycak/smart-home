@@ -80,13 +80,14 @@ def modal_close(data):
     :return: None
     """
 
-    tile_id = data["tile_id"]
     tab_id = data["tab_id"]
 
-    for item in tmng_r.get_tile(tile_id)["modal"]:
-        default_items.get_object(item["type"]).modal_close()
+    if "tile_id" in data:
+        tile_id = data["tile_id"]
+        for item in tmng_r.get_tile(tile_id)["modal"]:
+            default_items.get_object(item["type"]).modal_close()
 
-    leave_room(tile_id)
+        leave_room(tile_id)
 
     refresh_clients.set_data(tab_id=tab_id, ip=request.environ.get("HTTP_X_REAL_IP", request.remote_addr),
                              browser=request.user_agent.browser, modal_type=False, modal_id=False,

@@ -1,5 +1,6 @@
 from logging.handlers import TimedRotatingFileHandler
 import logging
+import os
 
 # TODO do configu (location dir) možná?
 LOG_DIR = "logs/"
@@ -29,7 +30,9 @@ class AuthLogger:
         self.__log.setLevel(self.__priority)
 
         formatter = logging.Formatter("%(asctime)s - %(type)s - %(user)s: %(message)s")
-
+        
+        os.makedirs(LOG_DIR, exist_ok=True)
+        
         fh = TimedRotatingFileHandler(LOG_DIR + "auth.log", when="midnight", backupCount=365)
         fh.setLevel(self.__priority)
         fh.setFormatter(formatter)
@@ -72,6 +75,8 @@ class ChangesLogger:
         self.__log.setLevel(self.__priority)
 
         formatter = logging.Formatter("%(asctime)s - %(user)s - %(type)s - %(func)s: %(message)s")
+        
+        os.makedirs(LOG_DIR, exist_ok=True)
 
         fh = TimedRotatingFileHandler(LOG_DIR + "changes.log", when="midnight", backupCount=31)
         fh.setLevel(self.__priority)
@@ -102,6 +107,8 @@ class ChangesEditLogger:
         self.__log.setLevel(self.__priority)
 
         formatter = logging.Formatter("%(asctime)s - %(user)s - %(type)s - %(func)s: %(message)s")
+        
+        os.makedirs(LOG_DIR, exist_ok=True)
 
         fh = TimedRotatingFileHandler(LOG_DIR + "changes_edit.log", when="midnight", backupCount=365)
         fh.setLevel(self.__priority)
@@ -135,7 +142,9 @@ class TerminalLogger:
         self.__log.setLevel(self.__priority)
 
         formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
-
+        
+        os.makedirs(LOG_DIR, exist_ok=True)
+        
         fh = TimedRotatingFileHandler(LOG_DIR + "terminal.log", when="midnight", backupCount=31)
         fh.setLevel(self.__priority)
         fh.setFormatter(formatter)

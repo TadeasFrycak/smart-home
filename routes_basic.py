@@ -112,9 +112,18 @@ def socketio_prevent_hack(func):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.tab_id(data["tab_id"]))
 
-        elif (func_name == "get_edit_modal" or func_name == "modal_close") and check_args(args=["tile_id", "tab_id"], data=data):
+        elif func_name == "get_edit_modal" and check_args(args=["tile_id", "tab_id"], data=data):
             tests.append(validator.tile_id(data["tile_id"]))
             tests.append(validator.tab_id(data["tab_id"]))
+
+        elif func_name == "modal_close":
+            if check_args(args=["tab_id"], data=data):
+                tests.append(validator.tab_id(data["tab_id"]))
+            elif check_args(args=["tile_id", "tab_id"], data=data):
+                tests.append(validator.tile_id(data["tile_id"]))
+                tests.append(validator.tab_id(data["tab_id"]))
+            else:
+                tests.append(False)
 
         elif func_name == "get_add_modal" and check_args(args=["slide_index", "tab_id"], data=data):
             tests.append(validator.slide_index(data["slide_index"]))
