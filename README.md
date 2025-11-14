@@ -92,16 +92,28 @@ python3 run.py
 
 The application will be accessible at `http://0.0.0.0:5000` by default.
 
+After running the script, you will see a terminal output like this:
+![Terminal](docs/terminal.png)
+
+## Project Structure
+
+The project is organized into the following directories:
+
+-   **`config/`**: Contains all configuration files for the application, items, protocols and tiles.
+-   **`data/`**: Contains the application's data, such as the database and device information.
+-   **`docs/`**: Contains documentation and images for the project.
+-   **`library/`**: Contains custom Python modules used throughout the application.
+-   **`static/`**: Contains static assets such as CSS, JavaScript, and images.
+-   **`templates/`**: Contains HTML templates for the web interface.
+-   **`translations/`**: Contains translation files for supporting multiple languages.
+
 ## Configuration
 
-The application's configuration is located in the `config/` directory. The main configuration file is `config/main.ini`.
+The application's configuration is located in the `config/` directory.
 
-- **`config/main.ini`**: Main application settings.
-- **`config/flask.py`**: Flask-specific configuration.
-- **`config/blacklist.ini`**: A list of blocked MAC addresses.
-- **`config/whitelist.ini`**: A list of allowed MAC addresses.
+### `main.ini`
 
-Here is an example of the `config/main.ini` file:
+Main application settings, such as database configuration, API keys, and other global settings.
 
 ```ini
 [default]
@@ -118,6 +130,49 @@ changes_priority = 1
 changes_edit_priority = 1
 log_only = false
 ```
+
+-   **registrations**: (true/false) Enable or disable user registrations.
+-   **latitude/longitude**: Your location for accurate sunrise/sunset times (used for the "Smart" theme).
+-   **auth\_priority, terminal\_priority, changes\_priority, changes\_edit\_priority**: Logging levels for different parts of the application.
+-   **log\_only**: (true/false) If true, the terminal UI will not be displayed, and all output will be directed to log files.
+
+### `flask.py`
+
+This file contains Flask-specific configuration. For example:
+
+```python
+class DevelopmentConfig(Config):
+    DEBUG = True
+    SECRET_KEY = "123"
+    HOST = "0.0.0.0"
+    PORT = 5000
+```
+
+- **DEBUG**: (True/False) Enables or disables debug mode.
+- **SECRET_KEY**: A secret key for signing session cookies.
+- **HOST**: The host interface to bind to.
+- **PORT**: The port to listen on.
+
+### `blacklist.ini` and `whitelist.ini`
+
+These files are used to control access to the application based on MAC addresses.
+
+**`blacklist.ini`**
+```ini
+[blacklist]
+aa:bb:cc:dd:ee:ff
+```
+
+**`whitelist.ini`**
+```ini
+[whitelist]
+11:22:33:44:55:66
+```
+
+### `config/items/`, `config/protocols/`, `config/tiles/`
+
+These directories contain configuration files for each type of item, protocol, and tile. More on that later.
+
 
 ## Multilanguage Support
 
@@ -393,14 +448,41 @@ Here is a quick-start for adding new protocols. For more implementation details 
 
 ### Login and Registration
 
-![Login](docs/login.png)
-![Register](docs/register.png)
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/login.png" alt="Login" width="400px">
+      <br>
+      <sub><b>Login</b></sub>
+    </td>
+    <td align="center">
+      <img src="docs/register.png" alt="Register" width="400px">
+      <br>
+      <sub><b>Register</b></sub>
+    </td>
+  </tr>
+</table>
 
 ### Main Dashboard
 
 The main dashboard consists of "Slides" which are pages that can be swiped through. Each slide contains "Tiles" which represent devices.
 
 ![Dashboard](docs/normal.png)
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/modal.png" alt="Modal Light" width="400px">
+      <br>
+      <sub><b>Modal (Light)</b></sub>
+    </td>
+    <td align="center">
+      <img src="docs/modal-dark.png" alt="Modal Dark" width="400px">
+      <br>
+      <sub><b>Modal (Dark)</b></sub>
+    </td>
+  </tr>
+</table>
 
 ### Edit Mode
 
@@ -412,7 +494,20 @@ The edit mode allows you to add, remove, and reorder slides and tiles.
 
 Long-pressing a tile opens a modal with more detailed information and controls, which are called "Items".
 
-![Modal](docs/modal.png)
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/modal-edit.png" alt="Modal Edit Light" width="400px">
+      <br>
+      <sub><b>Modal Edit (Light)</b></sub>
+    </td>
+    <td align="center">
+      <img src="docs/modal-edit-dark.png" alt="Modal Edit Dark" width="400px">
+      <br>
+      <sub><b>Modal Edit (Dark)</b></sub>
+    </td>
+  </tr>
+</table>
 
 ### Settings
 
