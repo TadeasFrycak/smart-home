@@ -12,7 +12,7 @@ class Updater:
     def tile_value(self, tile_id, value, save=True):
         def send():
             self.__socketio.emit("tile_value_result", {self.__tmng_r.TILE_ID: tile_id, self.__tmng_r.VALUE: value},
-                                 namespace="/com", broadcast=True)
+                                 namespace="/com")
 
         if self.__tmng_r.get_tile_type(tile_id=tile_id) == "value":  # TODO
             value = value.copy()
@@ -30,17 +30,17 @@ class Updater:
             new = self.__tmng_rwr.modal_item_value(tile_id=tile_id, item_id=item_id, new_value=value)
             if new:
                 self.__socketio.emit("modal_item_value_result", {"tile_id": tile_id, "value": new, "id": item_id},
-                                     namespace="/com", broadcast=True, room=tile_id)
+                                     namespace="/com", room=tile_id)
                 return True
         else:
             self.__socketio.emit("modal_item_value_result", {"tile_id": tile_id, "value": value, "id": item_id},
-                                 namespace="/com", broadcast=True, room=tile_id)
+                                 namespace="/com", room=tile_id)
 
     def __notify(self, title, msg, color, delay=5000):
         self.__socketio.emit("notify", {"title": title,
                                         "message": msg,
                                         "type": color,
-                                        "delay": delay}, namespace="/com", broadcast=True)
+                                        "delay": delay}, namespace="/com")
 
     def error(self, device, msg):
         self.__notify("FAIL - {}".format(device), msg, "danger", 0)
