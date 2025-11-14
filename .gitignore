@@ -214,3 +214,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Smart Home
+temp/refresh_data.json
+data/
+logs/

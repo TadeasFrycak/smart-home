@@ -95,6 +95,14 @@ The application will be accessible at `http://0.0.0.0:5000` by default.
 After running the script, you will see a terminal output like this:
 ![Terminal](docs/terminal.png)
 
+### Initial Credentials
+
+The application is pre-configured with a default user for testing purposes.
+
+-   **Username**: `admin`
+-   **Password**: `Testamen-01`
+
+
 ## Project Structure
 
 The project is organized into the following directories:
