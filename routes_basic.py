@@ -204,7 +204,7 @@ def socketio_prevent_hack(func):
         else:
             socketio.emit("notify", {"title": gettext("Problem!"),
                                      "message": gettext("Detected wrong SocketIO request!"), "type": "danger",
-                                     "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"], broadcast=True)
+                                     "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"])
             # emit("reload")
             # disconnect()
             # TODO

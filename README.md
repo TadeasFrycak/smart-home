@@ -12,7 +12,18 @@ Smart Home is a modular and extensible open-source platform for home automation.
 
 - **Intuitive Dashboard**: A clean and modern web interface for managing your smart home devices.
 - **Modular and Extensible**: Easily add new devices, protocols, and UI components (Tiles and Items).
-- **User Management**: A robust user management system with roles and permissions (Owner, Administrator, Manager, Visitor).
+- **User Management**: A robust user management system with roles and permissions.
+
+### User Roles
+
+The application defines the following user roles, each with a specific set of permissions:
+
+-   **Visitor**: The most basic role. Visitors can view the dashboard and control devices, but they cannot edit anything.
+-   **Manager**: Managers can do everything a Visitor can, plus they can edit the layout of the dashboard, including adding, removing, and reordering slides and tiles.
+-   **Administrator**: Administrators have all the permissions of a Manager, and they can also access the client list and blacklist/whitelist settings.
+-   **Owner**: The highest level of permission. Owners have full control over the application, including all Administrator permissions, plus the ability to manage users (add, remove, and change roles).
+
+**⚠️ Disclaimer:** If a user attempts to perform an action for which they do not have the required permissions, the request will be silently ignored by the server.
 - **Real-time Communication**: Uses Flask-SocketIO for real-time updates between the server and clients.
 - **Persistence**: Everything is immediately persisted (currently opened modal, changes in configuration, ...)
 - **Customizable UI**:

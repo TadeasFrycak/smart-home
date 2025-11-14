@@ -53,19 +53,14 @@
                         {{ _("Role") }}
                     </div>
                     <div class="col-sm-9">
-                        <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ user.role | title }}
-                            </button>
-                            <div class="dropdown-menu">
-                                <!-- <a class="dropdown-item" href="#">{{ _("Owner") }}</a> -->
-                                <a class="dropdown-item" href="#">{{ _("Administrator") }}</a>
-                                <a class="dropdown-item" href="#">{{ _("Manager") }}</a>
-                                <a class="dropdown-item" href="#">{{ _("Visitor") }}</a>
-                                <!-- <a class="dropdown-item" href="#">{{ _("Higher controller") }}</a>
-                                <a class="dropdown-item" href="#">{{ _("Lower controller") }}</a> -->
-                            </div>
-                        </div>
+                        <span class="modal-item" data-type="dropdown" data-value="{{ user.role | title }}">
+                            <select data-menu data-user-id="{{ user.id }}" class="user-role-dropdown">
+                                <option value="owner" {% if user.role == "owner" %}selected{% endif %}>{{ _("Owner") }}</option>
+                                <option value="administrator" {% if user.role == "administrator" %}selected{% endif %}>{{ _("Administrator") }}</option>
+                                <option value="manager" {% if user.role == "manager" %}selected{% endif %}>{{ _("Manager") }}</option>
+                                <option value="visitor" {% if user.role == "visitor" %}selected{% endif %}>{{ _("Visitor") }}</option>
+                            </select>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group-sm row" style="margin-bottom: 10px;">
@@ -80,18 +75,7 @@
                 <div class="form-group-sm row">
                     <div class="col-sm-12">
                         Logs:
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" readonly>2020-06-21 18:24:44,201 - WARNING: This device is not a Raspberry!
-2020-06-21 18:24:44,207 - DEBUG: Log (16): Sending CONNECT (u1, p1, wr0, wq0, wf0, c1, k60) client_id=b''
-2020-06-21 18:24:44,208 - DEBUG: Log (16): Received CONNACK (0, 0)
-2020-06-21 18:24:44,208 - DEBUG: Connected with result code 0
-2020-06-21 18:24:44,208 - DEBUG: Log (16): Sending SUBSCRIBE (d0, m1) [(b'home_receive/#', 0)]
-2020-06-21 18:24:44,209 - DEBUG: Log (16): Received SUBACK
-2020-06-21 18:24:44,881 - DEBUG: Connected 192.168.0.101 (chrome; 83.0.4103.97; cs)
-2020-06-21 18:24:45,141 - DEBUG: Connected 192.168.0.101 (chrome; 69.0.3497.100; en-US)
-2020-06-21 18:24:45,180 - DEBUG: Disconnected 192.168.0.101 (chrome; 69.0.3497.100; en-US)
-2020-06-21 18:24:45,513 - DEBUG: Connected 192.168.0.104 (chrome; 83.0.4103.106; cs-CZ,cs;q=0.9,en-US;q=0.8,en;q=0.7)
-2020-06-21 18:24:45,687 - DEBUG: Connected 192.168.0.101 (chrome; 69.0.3497.100; en-US)
-2020-06-21 18:24:45,907 - DEBUG: Connected 192.168.0.101 (chrome; 83.0.4103.97; cs)</textarea>
+                    <textarea class="form-control" id="logs-{{ user.id }}" rows="7" readonly>{{ user.logs | join('\n') }}</textarea>
                     </div>
                 </div>
             </form>
@@ -102,4 +86,39 @@
         </div>
     </div>
     {% endfor %}
+    <script>
+        $(document).ready(function() {
+            // Initialize custom dropdowns
+            $(".user-role-dropdown").each(function() {
+                let dropdown = $(this);
+                let modalItem = dropdown.closest('.modal-item');
+                let userId = dropdown.attr("data-user-id");
+
+                item(modalItem);
+
+                modalItem.on('value-transmit', function() {
+                    let newRole = store(this, "value");
+                    let newRoleValue = newRole.toLowerCase();
+
+                    // TODO socketio should be used in the future
+                    $.ajax({
+                        url: "/user/" + userId + "/role",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ role: newRoleValue }),
+                        success: function(response) {
+                            if (response.status) {
+                                $("#modal-normal-content").load("/modal/user-list");
+                            } else {
+                                notify("{{ _('Error') }}", response.message, "danger");
+                            }
+                        },
+                        error: function() {
+                            notify("{{ _('Error') }}", "{{ _('An error occurred.') }}", "danger");
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 {% endblock %}

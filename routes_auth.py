@@ -106,7 +106,7 @@ def register():
     else:
         socketio.emit("notify", {"title": gettext("Problem!"),
                                  "message": gettext("Detected hacker in registrations!"), "type": "danger",
-                                 "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"], broadcast=True)  # TODO tady je to hacker
+                                 "delay": 5000}, namespace=app.config["SOCKETIO_NAMESPACE"])  # TODO tady je to hacker
 
 
 @socketio.on("user_mode", namespace=app.config["SOCKETIO_NAMESPACE"])
@@ -147,11 +147,32 @@ def user_background(data):
     emit("user_background_result", {"background": background}, room=current_user.username)
 
 
-# TODO remove this after GUI
-@app.route("/role/<role>")
+@app.route("/user/<user_id>/role", methods=["POST"])
+@login_required
+@role_required("owner")
 @check_browser
-def change_role(role):
-    user = User.query.filter_by(username=current_user.username).first()
-    user.role = role
+def change_role(user_id):
+    """
+    Change user role
+    :param user_id: id of user to be changed
+    :return: JSON with status
+    """
+    if current_user.id == int(user_id):
+        return {"status": False, "message": gettext("You can't change your own role!")}
+
+    user = User.query.get(user_id)
+    if not user:
+        return {"status": False, "message": gettext("User not found!")}
+
+    new_role = request.get_json().get("role")
+    if new_role not in ["owner", "administrator", "manager", "visitor"]:
+        return {"status": False, "message": gettext("Invalid role!")}
+
+    user.role = new_role
     database.session.commit()
-    return redirect("/")
+
+    changes_logger.change(username=current_user.username, func_name="change_role",
+                            message="Changed role of user '{}' to '{}'".format(user.username, new_role))
+
+    return {"status": True}
+

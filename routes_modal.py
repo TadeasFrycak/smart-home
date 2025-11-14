@@ -167,14 +167,22 @@ def get_user_list_modal(data):
     prepared_users = []
 
     for user in all_users:
+        all_logs = []
+        all_logs.extend(auth_logger.get_user_logs(user.username))
+        all_logs.extend(changes_logger.get_user_logs(user.username))
+        all_logs.extend(changes_edit_logger.get_user_logs(user.username))
+        all_logs.sort()
+
         prepared_users.append(
             {
+                "id": user.id,
                 "username": user.username,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "register_date": user.register_date,
                 "role": user.role,
-                "mode": user.mode
+                "mode": user.mode,
+                "logs": all_logs
             }
         )
 

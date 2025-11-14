@@ -11,8 +11,35 @@ PRIORITY = [logging.DEBUG, logging.WARNING, logging.ERROR]
 #      musí logovat hned, ale debugy logovat až po určité době nebo před ukončením serveru/vypnutí, aby se nezničila
 #      karta na RPi hned
 
+class BaseLogger:
+    def __init__(self, log_name, priority=0, when="midnight", backup_count=365):
+        self.log_file = os.path.join(LOG_DIR, f"{log_name}.log")
+        self.priority = PRIORITY[priority]
+        self.log = logging.getLogger(log_name)
+        self.log.setLevel(self.priority)
+        
+        os.makedirs(LOG_DIR, exist_ok=True)
+        
+        fh = TimedRotatingFileHandler(self.log_file, when=when, backupCount=backup_count)
+        fh.setLevel(self.priority)
+        self.log.addHandler(fh)
 
-class AuthLogger:
+    def get_user_logs(self, username):
+        user_logs = []
+        if not os.path.exists(self.log_file):
+            return []
+
+        try:
+            with open(self.log_file, "r") as f:
+                for line in f:
+                    if "- " + username in line:
+                        user_logs.append(line.strip())
+        except Exception as e:
+            print(f"Error reading log file {self.log_file}: {e}")
+        
+        return user_logs
+
+class AuthLogger(BaseLogger):
     """
     AuthLogger class
     """
@@ -21,22 +48,10 @@ class AuthLogger:
         """
         Init of AuthLogger class
         """
-
-        assert isinstance(priority, int), "auth priority should be int"
-
-        self.__priority = PRIORITY[priority]
-
-        self.__log = logging.getLogger("auth")
-        self.__log.setLevel(self.__priority)
-
+        super().__init__("auth", priority)
         formatter = logging.Formatter("%(asctime)s - %(type)s - %(user)s: %(message)s")
-        
-        os.makedirs(LOG_DIR, exist_ok=True)
-        
-        fh = TimedRotatingFileHandler(LOG_DIR + "auth.log", when="midnight", backupCount=365)
-        fh.setLevel(self.__priority)
-        fh.setFormatter(formatter)
-        self.__log.addHandler(fh)
+        self.log.handlers[0].setFormatter(formatter)
+
 
     def login(self, username, message):
         """
@@ -46,19 +61,19 @@ class AuthLogger:
         :return:
         """
 
-        self.__log.debug(str(message).strip(), extra={"user": username, "type": "login"})
+        self.log.debug(str(message).strip(), extra={"user": username, "type": "login"})
 
     def logout(self, username, message):
-        self.__log.debug(str(message).strip(), extra={"user": username, "type": "logout"})
+        self.log.debug(str(message).strip(), extra={"user": username, "type": "logout"})
 
     def wrong_login(self, username, message):
-        self.__log.warning(str(message).strip(), extra={"user": username, "type": "wrong login"})
+        self.log.warning(str(message).strip(), extra={"user": username, "type": "wrong login"})
 
     # def register(self, username, message):
     #     self.__log.warning(str(message).strip(), extra={"user": username, "type": "register"})
 
 
-class ChangesLogger:
+class ChangesLogger(BaseLogger):
     """
     ChangesLogger class
     """
@@ -67,30 +82,18 @@ class ChangesLogger:
         """
         Init of AuthLogger class
         """
-        assert isinstance(priority, int), "changes priority should be int"
-
-        self.__priority = PRIORITY[priority]
-
-        self.__log = logging.getLogger("changes")
-        self.__log.setLevel(self.__priority)
-
+        super().__init__("changes", priority, backup_count=31)
         formatter = logging.Formatter("%(asctime)s - %(user)s - %(type)s - %(func)s: %(message)s")
-        
-        os.makedirs(LOG_DIR, exist_ok=True)
-
-        fh = TimedRotatingFileHandler(LOG_DIR + "changes.log", when="midnight", backupCount=31)
-        fh.setLevel(self.__priority)
-        fh.setFormatter(formatter)
-        self.__log.addHandler(fh)
+        self.log.handlers[0].setFormatter(formatter)
 
     def change(self, username, func_name, message):
-        self.__log.debug(str(message).strip(), extra={"user": username, "func": func_name, "type": "change"})
+        self.log.debug(str(message).strip(), extra={"user": username, "func": func_name, "type": "change"})
 
     def server(self, username, func_name, message):
-        self.__log.warning(str(message).strip(), extra={"user": username, "func": func_name, "type": "server"})
+        self.log.warning(str(message).strip(), extra={"user": username, "func": func_name, "type": "server"})
 
 
-class ChangesEditLogger:
+class ChangesEditLogger(BaseLogger):
     """
     ChangesEditLogger class
     """
@@ -99,33 +102,21 @@ class ChangesEditLogger:
         """
         Init of AuthLogger class
         """
-        assert isinstance(priority, int), "changes priority should be int"
-
-        self.__priority = PRIORITY[priority]
-
-        self.__log = logging.getLogger("changes_edit")
-        self.__log.setLevel(self.__priority)
-
+        super().__init__("changes_edit", priority)
         formatter = logging.Formatter("%(asctime)s - %(user)s - %(type)s - %(func)s: %(message)s")
-        
-        os.makedirs(LOG_DIR, exist_ok=True)
-
-        fh = TimedRotatingFileHandler(LOG_DIR + "changes_edit.log", when="midnight", backupCount=365)
-        fh.setLevel(self.__priority)
-        fh.setFormatter(formatter)
-        self.__log.addHandler(fh)
+        self.log.handlers[0].setFormatter(formatter)
 
     def change(self, username, func_name, message):
-        self.__log.debug(str(message).strip(), extra={"user": username, "func": func_name, "type": "change"})
+        self.log.debug(str(message).strip(), extra={"user": username, "func": func_name, "type": "change"})
 
     def add(self, username, func_name, message):
-        self.__log.warning(str(message).strip(), extra={"user": username, "func": func_name, "type": "add"})
+        self.log.warning(str(message).strip(), extra={"user": username, "func": func_name, "type": "add"})
 
     def remove(self, username, func_name, message):
-        self.__log.warning(str(message).strip(), extra={"user": username, "func": func_name, "type": "remove"})
+        self.log.warning(str(message).strip(), extra={"user": username, "func": func_name, "type": "remove"})
 
 
-class TerminalLogger:
+class TerminalLogger(BaseLogger):
     """
     TerminalLogger class
     """
@@ -134,21 +125,9 @@ class TerminalLogger:
         """
         Init of TerminalLogger class
         """
-
-        assert isinstance(priority, int), "terminal priority should be int"
-        self.__priority = PRIORITY[priority]
-
-        self.__log = logging.getLogger("terminal")
-        self.__log.setLevel(self.__priority)
-
+        super().__init__("terminal", priority, backup_count=31)
         formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
-        
-        os.makedirs(LOG_DIR, exist_ok=True)
-        
-        fh = TimedRotatingFileHandler(LOG_DIR + "terminal.log", when="midnight", backupCount=31)
-        fh.setLevel(self.__priority)
-        fh.setFormatter(formatter)
-        self.__log.addHandler(fh)
+        self.log.handlers[0].setFormatter(formatter)
 
     def debug(self, message):
         """
@@ -157,7 +136,7 @@ class TerminalLogger:
         :return:
         """
 
-        self.__log.debug(str(message).strip())
+        self.log.debug(str(message).strip())
 
     def warning(self, message):
         """
@@ -166,7 +145,7 @@ class TerminalLogger:
         :return:
         """
 
-        self.__log.warning(str(message).strip())
+        self.log.warning(str(message).strip())
 
     def error(self, message):
         """
@@ -175,4 +154,4 @@ class TerminalLogger:
         :return:
         """
 
-        self.__log.error(str(message).strip())
+        self.log.error(str(message).strip())
